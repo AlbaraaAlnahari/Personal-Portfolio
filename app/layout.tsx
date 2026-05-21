@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/web-vitals";
 import "@/styles/globals.css";
+import { Navigation } from "@/components/layout/Navigation";
 
 export const metadata: Metadata = {
   title: "Albaraa OS — AI Software Lab",
@@ -95,8 +95,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.vercel.com" />
       </head>
       <body className="bg-background-primary text-foreground-primary antialiased">
+        {/* Navigation */}
+        <Navigation />
+
         {/* Main content */}
-        <div className="relative min-h-screen">
+        <div className="relative min-h-screen pt-16">
           {/* Background gradient (optional) */}
           <div className="fixed inset-0 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-br from-background-primary via-background-secondary to-background-tertiary opacity-50" />

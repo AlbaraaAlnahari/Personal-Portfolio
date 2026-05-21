@@ -3,11 +3,8 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { Button } from "@/components/ui/Button";
-import { EnhancedAICoreSphere } from "@/components/ai-core/EnhancedAICoreSphere";
-import { AIOSEnvironment } from "@/components/ai-core/AIOSEnvironment";
+import { ImprovedHeroSection } from "@/components/sections/ImprovedHeroSection";
 import {
-  fadeInUpVariants,
   containerVariants,
   itemVariants,
   pageTransitionVariants,
@@ -15,7 +12,7 @@ import {
 
 /**
  * Home Page - Landing experience
- * Foundation only - placeholder for full content
+ * Phase 2: Improved Hero with clear messaging and cinematic loading
  */
 export default function Home() {
   return (
@@ -25,48 +22,8 @@ export default function Home() {
       variants={pageTransitionVariants}
       className="min-h-screen"
     >
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden">
-        <AIOSEnvironment intensity="subtle">
-          <Container className="relative z-10">
-            <motion.div
-              variants={containerVariants}
-              className="flex flex-col items-center justify-center gap-12 text-center"
-            >
-              {/* Enhanced AI Core Sphere - Neural Engine */}
-              <motion.div variants={itemVariants}>
-                <EnhancedAICoreSphere size="lg" glow interactive showDiagnostics />
-              </motion.div>
-
-            {/* Heading */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-                <span className="text-accent-cyan glow-cyan">Albaraa OS</span>
-                <br />
-                <span className="text-foreground-primary">AI Software Lab</span>
-              </h1>
-              <p className="text-xl text-foreground-secondary max-w-2xl mx-auto">
-                Futuristic portfolio experience powered by intelligent design and
-                cutting-edge technology.
-              </p>
-            </motion.div>
-
-            {/* CTA Buttons */}
-            <motion.div
-              variants={itemVariants}
-              className="flex gap-4 flex-wrap justify-center"
-            >
-              <Button variant="primary" size="lg" glow>
-                Explore Projects
-              </Button>
-              <Button variant="glass" size="lg">
-                Learn More
-              </Button>
-            </motion.div>
-          </motion.div>
-        </Container>
-        </AIOSEnvironment>
-      </section>
+      {/* Improved Hero Section */}
+      <ImprovedHeroSection />
 
       {/* Featured Section - Foundation placeholder */}
       <section className="py-20 md:py-32 relative">
