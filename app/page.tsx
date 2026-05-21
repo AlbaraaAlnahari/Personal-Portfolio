@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Button } from "@/components/ui/Button";
-import { AICoreSphere } from "@/components/ai-core/AICoreSphere";
+import { EnhancedAICoreSphere } from "@/components/ai-core/EnhancedAICoreSphere";
+import { AIOSEnvironment } from "@/components/ai-core/AIOSEnvironment";
 import {
   fadeInUpVariants,
   containerVariants,
@@ -26,45 +27,16 @@ export default function Home() {
     >
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            className="absolute w-96 h-96 bg-accent-cyan/5 rounded-full filter blur-3xl"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-            }}
-            transition={{
-              duration: 8,
-              ease: "easeInOut",
-              repeat: Infinity,
-            }}
-            style={{ top: "-10%", right: "-5%" }}
-          />
-          <motion.div
-            className="absolute w-96 h-96 bg-accent-purple/5 rounded-full filter blur-3xl"
-            animate={{
-              x: [0, -100, 0],
-              y: [0, -50, 0],
-            }}
-            transition={{
-              duration: 10,
-              ease: "easeInOut",
-              repeat: Infinity,
-            }}
-            style={{ bottom: "-10%", left: "-5%" }}
-          />
-        </div>
-
-        <Container className="relative z-10">
-          <motion.div
-            variants={containerVariants}
-            className="flex flex-col items-center justify-center gap-12 text-center"
-          >
-            {/* AI Core Sphere */}
-            <motion.div variants={itemVariants}>
-              <AICoreSphere size="lg" glow interactive />
-            </motion.div>
+        <AIOSEnvironment intensity="subtle">
+          <Container className="relative z-10">
+            <motion.div
+              variants={containerVariants}
+              className="flex flex-col items-center justify-center gap-12 text-center"
+            >
+              {/* Enhanced AI Core Sphere - Neural Engine */}
+              <motion.div variants={itemVariants}>
+                <EnhancedAICoreSphere size="lg" glow interactive showDiagnostics />
+              </motion.div>
 
             {/* Heading */}
             <motion.div variants={itemVariants} className="space-y-4">
@@ -93,6 +65,7 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </Container>
+        </AIOSEnvironment>
       </section>
 
       {/* Featured Section - Foundation placeholder */}
