@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
-import { EnhancedAICoreSphere } from "@/components/ai-core/EnhancedAICoreSphere";
-import { AIOSEnvironment } from "@/components/ai-core/AIOSEnvironment";
-import { SystemDiagnostics } from "./SystemDiagnostics";
+import { AliveAICore } from "@/components/ai-core/AliveAICore";
+import { EnvironmentalAtmosphere } from "@/components/environment/EnvironmentalAtmosphere";
+import { IntegratedDiagnostics } from "@/components/environment/IntegratedDiagnostics";
 import {
   fadeInUpVariants,
   containerVariants,
@@ -32,23 +32,22 @@ export function ImprovedHeroSection() {
         },
       }}
     >
-      <AIOSEnvironment intensity="subtle">
+      <EnvironmentalAtmosphere intensity="subtle" variant="hero">
         <Container className="relative z-10 w-full">
           <motion.div
             variants={containerVariants}
             className="flex flex-col items-center justify-center gap-12 text-center max-w-3xl mx-auto"
           >
-            {/* AI Core Sphere - The Engine */}
+            {/* Alive AI Core - The Emotional Heart */}
             <motion.div
               variants={itemVariants}
               className="relative"
             >
               <div className="relative">
-                <EnhancedAICoreSphere
+                <AliveAICore
                   size="lg"
-                  glow
                   interactive
-                  showDiagnostics={false}
+                  showMetrics
                 />
                 <motion.div
                   className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 text-center"
@@ -159,9 +158,9 @@ export function ImprovedHeroSection() {
           </motion.div>
         </Container>
 
-        {/* System Diagnostics */}
-        <SystemDiagnostics />
-      </AIOSEnvironment>
+        {/* Integrated System Diagnostics */}
+        <IntegratedDiagnostics />
+      </EnvironmentalAtmosphere>
 
       {/* Subtle scroll indicator */}
       <motion.div
