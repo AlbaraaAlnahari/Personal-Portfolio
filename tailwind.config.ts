@@ -22,6 +22,10 @@ const config: Config = {
           secondary: "#00ff9f", // neon green
           tertiary: "#ff006e", // hot pink
           quaternary: "#b537f2", // purple
+          cyan: "#00d9ff",
+          green: "#00ff9f",
+          pink: "#ff006e",
+          purple: "#b537f2",
         },
 
         // Glassmorphism & depth
@@ -92,6 +96,14 @@ const config: Config = {
         glass: "1.5rem",
       },
 
+      borderColor: {
+        glass: {
+          light: "rgba(255, 255, 255, 0.1)",
+          lighter: "rgba(255, 255, 255, 0.15)",
+          lightest: "rgba(255, 255, 255, 0.2)",
+        },
+      },
+
       animation: {
         // Smooth fade in/out
         "fade-in": "fadeIn 0.6s ease-out",
@@ -102,16 +114,16 @@ const config: Config = {
         "glow-pulse-fast": "glowPulse 1.5s ease-in-out infinite",
 
         // Subtle movement
-        "float": "float 6s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
         "float-slow": "float 8s ease-in-out infinite",
 
         // Holographic/shimmer
-        "shimmer": "shimmer 2s ease-in-out infinite",
-        "hologram": "hologram 4s ease-in-out infinite",
+        shimmer: "shimmer 2s ease-in-out infinite",
+        hologram: "hologram 4s ease-in-out infinite",
 
         // Text/typing
-        "type": "type 3s steps(40, end)",
-        "blink": "blink 0.7s infinite",
+        type: "type 3s steps(40, end)",
+        blink: "blink 0.7s infinite",
 
         // Loading
         "spin-slow": "spin 8s linear infinite",
@@ -238,47 +250,7 @@ const config: Config = {
     },
   },
 
-  plugins: [
-    require("@tailwindcss/forms"),
-    function ({
-      matchUtilities,
-      theme,
-    }: {
-      matchUtilities: any;
-      theme: any;
-    }) {
-      matchUtilities(
-        {
-          "bg-glass": (value) => ({
-            "@supports (backdrop-filter: blur(0))": {
-              backgroundColor: value,
-              backdropFilter: "blur(10px) saturate(180%)",
-              border: "1px solid rgba(255, 255, 255, 0.18)",
-            },
-          }),
-        },
-        {
-          values: theme("backgroundColor"),
-        }
-      );
-
-      matchUtilities(
-        {
-          "glow-text": (value) => ({
-            textShadow: `0 0 20px ${value}, 0 0 40px ${value}20`,
-          }),
-        },
-        {
-          values: {
-            cyan: "rgb(0, 217, 255)",
-            green: "rgb(0, 255, 159)",
-            pink: "rgb(255, 0, 110)",
-            purple: "rgb(181, 55, 242)",
-          },
-        }
-      );
-    },
-  ],
+  plugins: [],
 };
 
 export default config;

@@ -2,9 +2,7 @@
    ALBARAA OS — Global Styles
    ============================================ */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* ============================================
    CSS CUSTOM PROPERTIES
@@ -215,36 +213,46 @@ select:focus-visible {
    ============================================ */
 
 .glass-panel {
-  @apply relative rounded-glass border border-glass-light;
-  @apply bg-glass backdrop-blur-lg;
-  @apply shadow-glass-sm;
+  position: relative;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 18, 41, 0.4);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(180%);
+  box-shadow: 0 4px 30px rgba(0, 217, 255, 0.1);
 }
 
 .glass-panel-lg {
-  @apply glass-panel shadow-glass-lg;
+  position: relative;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 18, 41, 0.4);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(180%);
+  box-shadow: 0 12px 48px rgba(0, 217, 255, 0.2);
 }
 
 .glow-base {
-  @apply transition-all duration-300;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glow-cyan {
-  @apply glow-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
 }
 
 .glow-green {
-  @apply glow-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
 }
 
 .glow-pink {
-  @apply glow-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
 }
 
 .glow-purple {
-  @apply glow-base;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   text-shadow: 0 0 10px rgba(181, 55, 242, 0.5);
 }
 
