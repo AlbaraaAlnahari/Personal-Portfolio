@@ -181,15 +181,25 @@ export function NeuralNavigationNodes({
         const labelY = staticY + labelOffsetY;
 
         return (
-          <div key={node.id} style={{ pointerEvents: "none" }}>
+          <div
+            key={node.id}
+            style={{
+              pointerEvents: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+            }}
+            className="select-none"
+          >
             {/* ORBITAL CONTAINER - Node and Label orbit together */}
             <motion.div
-              className="absolute pointer-events-none"
+              className="absolute pointer-events-none select-none"
               style={{
                 left: "50%",
                 top: "50%",
                 width: 0,
                 height: 0,
+                userSelect: "none",
+                WebkitUserSelect: "none",
               }}
               animate={{
                 rotate: node.orbitDirection === "cw" ? 360 : -360,
@@ -237,13 +247,16 @@ export function NeuralNavigationNodes({
                 onClick={() => handleNodeClick(node.sectionId)}
                 onMouseEnter={() => handleHover(node.id)}
                 onMouseLeave={() => handleHover(null)}
-                className={`absolute flex flex-col items-center justify-center w-14 h-14 rounded-full border-2 cursor-pointer pointer-events-auto transition-all duration-300 ${
+                className={`absolute flex flex-col items-center justify-center w-14 h-14 rounded-full border-2 cursor-pointer pointer-events-auto transition-all duration-300 select-none ${
                   isHoveredNode ? "border-current" : "border-current/50"
                 } ${node.color} group`}
                 style={{
                   left: `${staticX}px`,
                   top: `${staticY}px`,
                   transform: "translate(-50%, -50%)",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  WebkitTouchCallout: "none",
                 }}
                 animate={{
                   scale: isHoveredNode ? 1.5 : 1,
@@ -268,7 +281,12 @@ export function NeuralNavigationNodes({
 
                 {/* Node icon */}
                 <motion.span
-                  className="text-2xl relative z-10 font-bold leading-none"
+                  className="text-2xl relative z-10 font-bold leading-none select-none pointer-events-none"
+                  style={{
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    cursor: "pointer",
+                  }}
                   animate={{
                     scale: isHoveredNode ? 1.3 : 1,
                   }}
@@ -317,11 +335,13 @@ export function NeuralNavigationNodes({
 
               {/* HOLOGRAPHIC LABEL - Anchored to node, counter-rotated to stay readable */}
               <motion.div
-                className="absolute pointer-events-auto"
+                className="absolute pointer-events-auto select-none"
                 style={{
                   left: `${staticX}px`,
                   top: `${staticY}px`,
                   transform: "translate(-50%, calc(-100% - 16px))",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
                 }}
                 animate={{
                   // Counter-rotate to keep text horizontal while parent orbits
@@ -342,12 +362,14 @@ export function NeuralNavigationNodes({
                 }}
               >
                 <div
-                  className="px-3 py-2 rounded-lg font-mono text-sm whitespace-nowrap backdrop-blur-xl border pointer-events-auto"
+                  className="px-3 py-2 rounded-lg font-mono text-sm whitespace-nowrap backdrop-blur-xl border pointer-events-auto select-none cursor-default"
                   style={{
                     background: `linear-gradient(135deg, rgba(${node.colorValue.match(/\d+/g)?.join(", ")}, 0.2) 0%, rgba(${node.colorValue.match(/\d+/g)?.join(", ")}, 0.05) 100%), rgba(10, 14, 39, 0.9)`,
                     border: `1px solid ${node.colorValue}60`,
                     boxShadow: `0 0 24px ${node.colorValue}40, inset 0 1px 2px rgba(255, 255, 255, 0.2)`,
                     color: node.colorValue,
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
                   }}
                 >
                   <div className="font-semibold">{node.label}</div>
