@@ -180,47 +180,26 @@ export function ImprovedHeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
       >
-        {/* Guidance text */}
+        {/* Command-center style guidance text */}
         <div className="flex items-center gap-1.5">
           <span className="text-xs text-foreground-secondary/70 font-mono tracking-widest">
-            EXPLORE
+            &gt; EXPLORE
           </span>
         </div>
 
-        {/* Cascading chevron animation */}
-        <div className="flex flex-col items-center gap-1">
-          {/* First chevron */}
-          <motion.div
-            animate={{ y: [0, 6, 0], opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-lg text-accent-cyan"
-          >
-            ↓
-          </motion.div>
-
-          {/* Second chevron - staggered */}
-          <motion.div
-            animate={{ y: [0, 6, 0], opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            className="text-lg text-accent-cyan -mt-3"
-          >
-            ↓
-          </motion.div>
-
-          {/* Third chevron - staggered */}
-          <motion.div
-            animate={{ y: [0, 6, 0], opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-            className="text-lg text-accent-cyan -mt-3"
-          >
-            ↓
-          </motion.div>
-        </div>
+        {/* Chevron animation synchronized with 4s AI Core breathing */}
+        <motion.div
+          animate={{ y: [0, 8, 0], opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="text-lg text-accent-cyan"
+        >
+          ↓
+        </motion.div>
 
         {/* Subtle glow indicator */}
         <motion.div
           animate={{ opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="w-1.5 h-1.5 rounded-full bg-accent-green"
           style={{
             boxShadow: "0 0 8px rgba(0, 255, 159, 0.6)",

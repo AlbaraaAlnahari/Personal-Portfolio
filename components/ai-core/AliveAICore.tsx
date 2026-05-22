@@ -345,9 +345,10 @@ export function AliveAICore({
                 strokeWidth: [0.4, 0.7, 0.4],
               }}
               transition={{
-                duration: 6,
+                duration: 3,
                 ease: "easeInOut",
                 repeat: Infinity,
+                delay: i * 0.15,
               }}
             />
           );

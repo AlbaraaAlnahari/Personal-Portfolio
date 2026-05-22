@@ -30,12 +30,12 @@ export function NeuralNavigationNodes({
   const mousePos = useMousePosition({ centerX, centerY, throttle: 16 });
 
   const navigationNodes: NavigationNode[] = [
-    { id: "about", label: "About", icon: "◆", color: "text-accent-cyan", angle: 0, radius: 180, sectionId: "about" },
-    { id: "projects", label: "Projects", icon: "▲", color: "text-accent-green", angle: Math.PI * 0.67, radius: 180, sectionId: "projects" },
+    { id: "about", label: "About", icon: "◆", color: "text-accent-cyan", angle: 0, radius: 190, sectionId: "about" },
+    { id: "projects", label: "Projects", icon: "▲", color: "text-accent-green", angle: Math.PI * 0.67, radius: 190, sectionId: "projects" },
     { id: "experience", label: "Experience", icon: "●", color: "text-accent-purple", angle: Math.PI * 1.33, radius: 180, sectionId: "experience" },
-    { id: "skills", label: "Skills", icon: "◇", color: "text-accent-cyan", angle: Math.PI * 2, radius: 180, sectionId: "skills" },
+    { id: "skills", label: "Skills", icon: "◇", color: "text-accent-cyan", angle: Math.PI * 2, radius: 170, sectionId: "skills" },
     { id: "contact", label: "Contact", icon: "★", color: "text-accent-green", angle: -Math.PI * 0.67, radius: 180, sectionId: "contact" },
-    { id: "ai", label: "AI Terminal", icon: "◈", color: "text-accent-purple", angle: -Math.PI * 1.33, radius: 180, sectionId: "ai-assistant" },
+    { id: "ai", label: "AI Terminal", icon: "◈", color: "text-accent-purple", angle: -Math.PI * 1.33, radius: 170, sectionId: "ai-assistant" },
   ];
 
   useEffect(() => {
@@ -107,16 +107,21 @@ export function NeuralNavigationNodes({
               {node.icon}
             </span>
 
-            {/* Node label tooltip */}
+            {/* Node label tooltip - Holographic glass panel */}
             <motion.div
-              className="absolute bottom-full mb-2 px-2 py-1 rounded bg-background-primary/80 border border-glass-light/50 text-xs whitespace-nowrap opacity-0 pointer-events-none"
-              animate={{
-                opacity: isNearMouse ? 0.9 : 0,
-                y: isNearMouse ? -4 : 0,
+              className="absolute bottom-full mb-3 px-3 py-1.5 rounded-lg backdrop-blur-md border border-transparent bg-gradient-to-b from-accent-cyan/20 via-background-primary/60 to-background-primary/80 text-xs whitespace-nowrap opacity-0 pointer-events-none font-mono tracking-[0.15em]"
+              style={{
+                background: "linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(181, 55, 242, 0.05) 100%), rgba(10, 14, 39, 0.8)",
+                boxShadow: "0 8px 32px rgba(0, 217, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1)",
+                borderImage: "linear-gradient(135deg, rgba(0, 217, 255, 0.5), rgba(181, 55, 242, 0.3)) 1",
               }}
-              transition={{ duration: 0.2 }}
+              animate={{
+                opacity: isNearMouse ? 0.95 : 0,
+                y: isNearMouse ? -6 : 0,
+              }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <span className="text-foreground-primary">{node.label}</span>
+              <span className="text-accent-cyan">{node.label}</span>
             </motion.div>
 
             {/* Active state indicator */}

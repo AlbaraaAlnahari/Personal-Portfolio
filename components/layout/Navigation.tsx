@@ -45,13 +45,14 @@ export function Navigation() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-40 bg-background-primary/80 backdrop-blur-lg border-b border-glass-light shadow-glass-md"
+      className="fixed top-0 left-0 right-0 z-40 bg-background-primary/80 backdrop-blur-lg border-t border-transparent shadow-glass-md"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
       style={{
         height: "var(--nav-height)",
         boxShadow: "0 0 30px rgba(0, 217, 255, 0.08), var(--shadow-glass-md)",
+        borderImage: "linear-gradient(90deg, rgba(0,217,255,0.1) 0%, rgba(0,217,255,0.05) 50%, transparent 100%) 1",
       }}
     >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
@@ -61,6 +62,14 @@ export function Navigation() {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           className="flex-shrink-0"
+          animate={{
+            opacity: [0.85, 1, 0.85],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
           <Link
             href="#"
@@ -85,15 +94,15 @@ export function Navigation() {
                 href={item.href}
                 className={`text-sm transition-all duration-300 relative group inline-block px-2 py-1 rounded ${
                   activeItem === item.label
-                    ? "text-accent-cyan drop-shadow-[0_0_8px_rgba(0,217,255,0.4)]"
-                    : "text-foreground-secondary hover:text-accent-cyan hover:drop-shadow-[0_0_8px_rgba(0,217,255,0.5)]"
+                    ? "text-accent-cyan drop-shadow-[0_0_6px_rgba(0,217,255,0.4)] bg-accent-cyan/5"
+                    : "text-foreground-secondary hover:text-accent-cyan hover:drop-shadow-[0_0_6px_rgba(0,217,255,0.3)] hover:scale-105"
                 }`}
                 onMouseEnter={() => setActiveItem(item.label)}
                 onMouseLeave={() => setActiveItem("home")}
               >
                 {item.label}
                 <span
-                  className={`absolute bottom-0 left-0 h-px bg-gradient-to-r from-accent-cyan to-accent-green transition-all duration-300 ${
+                  className={`absolute bottom-0 left-0 h-px bg-gradient-to-r from-accent-cyan to-accent-green transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) ${
                     activeItem === item.label ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
@@ -105,8 +114,8 @@ export function Navigation() {
         {/* Right Zone: Resume Button */}
         <motion.div
           variants={itemVariants}
-          whileHover={{ scale: 1.08 }}
-          transition={{ duration: 0.2 }}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="flex-shrink-0"
         >
           <a
@@ -116,9 +125,11 @@ export function Navigation() {
               boxShadow: "0 0 20px rgba(0, 217, 255, 0.4), 0 0 40px rgba(181, 55, 242, 0.2)",
             }}
             onMouseEnter={(e) => {
+              e.currentTarget.style.transition = "box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)";
               e.currentTarget.style.boxShadow = "0 0 30px rgba(0, 217, 255, 0.6), 0 0 50px rgba(181, 55, 242, 0.3)";
             }}
             onMouseLeave={(e) => {
+              e.currentTarget.style.transition = "box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)";
               e.currentTarget.style.boxShadow = "0 0 20px rgba(0, 217, 255, 0.4), 0 0 40px rgba(181, 55, 242, 0.2)";
             }}
           >

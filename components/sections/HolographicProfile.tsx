@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 interface HolographicProfileProps {
   initials?: string;
+  backgroundImage?: string;
   systemMetrics?: {
     neural: number;
     coherence: number;
@@ -13,6 +14,7 @@ interface HolographicProfileProps {
 
 export function HolographicProfile({
   initials = "AOS",
+  backgroundImage,
   systemMetrics = { neural: 85, coherence: 92, latency: 5 },
 }: HolographicProfileProps) {
   return (
@@ -45,18 +47,41 @@ export function HolographicProfile({
       />
 
       {/* Holographic center content */}
-      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-background-primary/40 to-background-tertiary/20 border border-accent-cyan/20 backdrop-blur-sm flex flex-col items-center justify-center space-y-4">
-        {/* Profile initials or content */}
-        <motion.div
-          className="text-4xl font-bold text-accent-cyan"
-          animate={{ opacity: [0.9, 1, 0.9] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {initials}
-        </motion.div>
+      <motion.div
+        className="absolute inset-6 rounded-full border border-accent-cyan/20 overflow-hidden flex flex-col items-center justify-center"
+        style={{
+          background: backgroundImage
+            ? `url('${backgroundImage}') center/cover`
+            : "linear-gradient(135deg, rgba(10, 14, 39, 0.4) 0%, rgba(21, 26, 58, 0.2) 100%)",
+          backdropFilter: "blur(8px)",
+        }}
+        animate={{
+          scale: [1, 1.02, 1],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        {/* Gradient overlay for readability when image is present */}
+        {backgroundImage && (
+          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/20 via-transparent to-background-primary/40 pointer-events-none" />
+        )}
 
-        {/* System metrics display */}
-        <div className="space-y-1 text-center">
+        {/* Profile initials (show if no image) */}
+        {!backgroundImage && (
+          <motion.div
+            className="text-4xl font-bold text-accent-cyan"
+            animate={{ opacity: [0.9, 1, 0.9] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {initials}
+          </motion.div>
+        )}
+
+        {/* System metrics display - overlaid on image or bottom of initials area */}
+        <div className={`${backgroundImage ? "absolute bottom-6 left-0 right-0" : ""} space-y-1 text-center z-10`}>
           <motion.div
             className="text-xs text-accent-green font-mono"
             animate={{ opacity: [0.6, 0.9, 0.6] }}
@@ -72,7 +97,7 @@ export function HolographicProfile({
             <span className="text-accent-green">Coherence:</span> {systemMetrics.coherence}%
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Floating system indicator dots */}
       {[0, 1, 2].map((i) => {

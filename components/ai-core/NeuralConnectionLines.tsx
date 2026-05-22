@@ -25,12 +25,12 @@ export function NeuralConnectionLines({
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
   const connectionLines: ConnectionLine[] = [
-    { id: "about", angle: 0, radius: 180, color: "url(#gradient-cyan)", colorValue: "rgb(0, 217, 255)" },
-    { id: "projects", angle: Math.PI * 0.67, radius: 180, color: "url(#gradient-green)", colorValue: "rgb(0, 255, 159)" },
+    { id: "about", angle: 0, radius: 190, color: "url(#gradient-cyan)", colorValue: "rgb(0, 217, 255)" },
+    { id: "projects", angle: Math.PI * 0.67, radius: 190, color: "url(#gradient-green)", colorValue: "rgb(0, 255, 159)" },
     { id: "experience", angle: Math.PI * 1.33, radius: 180, color: "url(#gradient-purple)", colorValue: "rgb(181, 55, 242)" },
-    { id: "skills", angle: Math.PI * 2, radius: 180, color: "url(#gradient-cyan)", colorValue: "rgb(0, 217, 255)" },
+    { id: "skills", angle: Math.PI * 2, radius: 170, color: "url(#gradient-cyan)", colorValue: "rgb(0, 217, 255)" },
     { id: "contact", angle: -Math.PI * 0.67, radius: 180, color: "url(#gradient-green)", colorValue: "rgb(0, 255, 159)" },
-    { id: "ai", angle: -Math.PI * 1.33, radius: 180, color: "url(#gradient-purple)", colorValue: "rgb(181, 55, 242)" },
+    { id: "ai", angle: -Math.PI * 1.33, radius: 170, color: "url(#gradient-purple)", colorValue: "rgb(181, 55, 242)" },
   ];
 
   useEffect(() => {
@@ -99,16 +99,16 @@ export function NeuralConnectionLines({
               y2={y2}
               stroke={line.colorValue}
               strokeWidth={isActive ? 2.5 : 1.5}
-              opacity={isActive ? 0.7 : 0.25}
+              opacity={isActive ? 0.8 : 0.2}
               strokeDasharray="5,5"
               filter="url(#neural-glow)"
               animate={{
                 strokeDashoffset: [0, -10],
-                opacity: isActive ? [0.7, 0.9, 0.7] : [0.2, 0.35, 0.2],
+                opacity: isActive ? [0.8, 0.95, 0.8] : [0.2, 0.35, 0.2],
               }}
               transition={{
-                strokeDashoffset: { duration: 4, repeat: Infinity, ease: "linear" },
-                opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                strokeDashoffset: { duration: isActive ? 2 : 4, repeat: Infinity, ease: "linear" },
+                opacity: { duration: isActive ? 2 : 4, repeat: Infinity, ease: "easeInOut" },
               }}
             />
 
