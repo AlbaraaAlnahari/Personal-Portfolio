@@ -21,6 +21,7 @@ import {
  */
 export function ImprovedHeroSection() {
   const [activeSection, setActiveSection] = useState<string>("");
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   return (
     <motion.section
@@ -44,7 +45,7 @@ export function ImprovedHeroSection() {
       }}
     >
       {/* Neural Connection Lines Layer */}
-      <NeuralConnectionLines activeSection={activeSection} />
+      <NeuralConnectionLines activeSection={activeSection} hoveredNode={hoveredNode} />
 
       <EnvironmentalAtmosphere intensity="subtle">
         <Container className="relative z-10 w-full">
@@ -68,7 +69,11 @@ export function ImprovedHeroSection() {
               </div>
 
               {/* Neural Navigation Nodes */}
-              <NeuralNavigationNodes activeSection={activeSection} />
+              <NeuralNavigationNodes
+                activeSection={activeSection}
+                hoveredNode={hoveredNode}
+                onHover={setHoveredNode}
+              />
             </motion.div>
 
             {/* Primary Information */}

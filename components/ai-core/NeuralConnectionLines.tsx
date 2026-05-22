@@ -3,34 +3,87 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
-interface ConnectionLine {
+interface NeuralConnectionLine {
   id: string;
   angle: number;
   radius: number;
   color: string;
   colorValue: string;
+  orbitSpeed: number;
+  orbitDirection: "cw" | "ccw";
 }
 
 interface NeuralConnectionLinesProps {
   centerX?: number;
   centerY?: number;
   activeSection?: string;
+  hoveredNode?: string | null;
 }
 
 export function NeuralConnectionLines({
   centerX = 0,
   centerY = 0,
   activeSection,
+  hoveredNode,
 }: NeuralConnectionLinesProps) {
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
-  const connectionLines: ConnectionLine[] = [
-    { id: "about", angle: 0, radius: 190, color: "url(#gradient-cyan)", colorValue: "rgb(0, 217, 255)" },
-    { id: "projects", angle: Math.PI * 0.67, radius: 190, color: "url(#gradient-green)", colorValue: "rgb(0, 255, 159)" },
-    { id: "experience", angle: Math.PI * 1.33, radius: 180, color: "url(#gradient-purple)", colorValue: "rgb(181, 55, 242)" },
-    { id: "skills", angle: Math.PI * 2, radius: 170, color: "url(#gradient-cyan)", colorValue: "rgb(0, 217, 255)" },
-    { id: "contact", angle: -Math.PI * 0.67, radius: 180, color: "url(#gradient-green)", colorValue: "rgb(0, 255, 159)" },
-    { id: "ai", angle: -Math.PI * 1.33, radius: 170, color: "url(#gradient-purple)", colorValue: "rgb(181, 55, 242)" },
+  // Connection lines matching the new orbital system
+  const connectionLines: NeuralConnectionLine[] = [
+    {
+      id: "about",
+      angle: 0,
+      radius: 220,
+      color: "url(#gradient-cyan)",
+      colorValue: "rgb(0, 217, 255)",
+      orbitSpeed: 28,
+      orbitDirection: "cw",
+    },
+    {
+      id: "projects",
+      angle: Math.PI / 3,
+      radius: 200,
+      color: "url(#gradient-green)",
+      colorValue: "rgb(0, 255, 159)",
+      orbitSpeed: 32,
+      orbitDirection: "ccw",
+    },
+    {
+      id: "experience",
+      angle: (Math.PI * 2) / 3,
+      radius: 210,
+      color: "url(#gradient-purple)",
+      colorValue: "rgb(181, 55, 242)",
+      orbitSpeed: 30,
+      orbitDirection: "cw",
+    },
+    {
+      id: "skills",
+      angle: Math.PI,
+      radius: 195,
+      color: "url(#gradient-cyan)",
+      colorValue: "rgb(0, 217, 255)",
+      orbitSpeed: 35,
+      orbitDirection: "ccw",
+    },
+    {
+      id: "contact",
+      angle: (Math.PI * 4) / 3,
+      radius: 215,
+      color: "url(#gradient-green)",
+      colorValue: "rgb(0, 255, 159)",
+      orbitSpeed: 27,
+      orbitDirection: "cw",
+    },
+    {
+      id: "ai",
+      angle: (Math.PI * 5) / 3,
+      radius: 205,
+      color: "url(#gradient-purple)",
+      colorValue: "rgb(181, 55, 242)",
+      orbitSpeed: 33,
+      orbitDirection: "ccw",
+    },
   ];
 
   useEffect(() => {
@@ -59,23 +112,23 @@ export function NeuralConnectionLines({
       <defs>
         {/* Gradients for connection lines */}
         <linearGradient id="gradient-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="rgb(0, 217, 255)" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="rgb(0, 217, 255)" stopOpacity="0.4" />
           <stop offset="100%" stopColor="rgb(0, 217, 255)" stopOpacity="0.1" />
         </linearGradient>
 
         <linearGradient id="gradient-green" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="rgb(0, 255, 159)" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="rgb(0, 255, 159)" stopOpacity="0.4" />
           <stop offset="100%" stopColor="rgb(0, 255, 159)" stopOpacity="0.1" />
         </linearGradient>
 
         <linearGradient id="gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="rgb(181, 55, 242)" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="rgb(181, 55, 242)" stopOpacity="0.4" />
           <stop offset="100%" stopColor="rgb(181, 55, 242)" stopOpacity="0.1" />
         </linearGradient>
 
         {/* Glow filter */}
         <filter id="neural-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="1" result="coloredBlur" />
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
           <feMerge>
             <feMergeNode in="coloredBlur" />
             <feMergeNode in="SourceGraphic" />
@@ -83,52 +136,101 @@ export function NeuralConnectionLines({
         </filter>
       </defs>
 
-      {/* Connection lines */}
+      {/* Connection lines - G wrapper for orbital rotation */}
       {connectionLines.map((line) => {
-        const x2 = centerX + Math.cos(line.angle) * line.radius;
-        const y2 = centerY + Math.sin(line.angle) * line.radius;
+        const x2 = Math.cos(line.angle) * line.radius;
+        const y2 = Math.sin(line.angle) * line.radius;
         const isActive = activeSection === line.id;
+        const isHoveredLine = hoveredNode === line.id;
 
         return (
-          <g key={line.id}>
-            {/* Animated dash pattern */}
+          <motion.g
+            key={line.id}
+            animate={{
+              rotate: line.orbitDirection === "cw" ? 360 : -360,
+            }}
+            transition={{
+              rotate: {
+                duration: line.orbitSpeed,
+                repeat: Infinity,
+                ease: "linear",
+              },
+            }}
+            style={{
+              transformOrigin: "0px 0px",
+              transformBox: "fill-box",
+            }}
+          >
+            {/* Animated dash pattern - neural energy flow */}
             <motion.line
               x1={centerX}
               y1={centerY}
-              x2={x2}
-              y2={y2}
+              x2={centerX + x2}
+              y2={centerY + y2}
               stroke={line.colorValue}
-              strokeWidth={isActive ? 2.5 : 1.5}
-              opacity={isActive ? 0.8 : 0.2}
-              strokeDasharray="5,5"
+              strokeWidth={isActive ? 3 : isHoveredLine ? 2 : 1.5}
+              opacity={isActive ? 0.9 : isHoveredLine ? 0.6 : 0.25}
+              strokeDasharray="6,4"
               filter="url(#neural-glow)"
               animate={{
                 strokeDashoffset: [0, -10],
-                opacity: isActive ? [0.8, 0.95, 0.8] : [0.2, 0.35, 0.2],
+                opacity: isActive ? [0.85, 1, 0.85] : isHoveredLine ? [0.5, 0.7, 0.5] : [0.2, 0.35, 0.2],
               }}
               transition={{
-                strokeDashoffset: { duration: isActive ? 2 : 4, repeat: Infinity, ease: "linear" },
-                opacity: { duration: isActive ? 2 : 4, repeat: Infinity, ease: "easeInOut" },
+                strokeDashoffset: {
+                  duration: isActive ? 1.5 : isHoveredLine ? 2 : 4,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
+                opacity: {
+                  duration: isActive ? 1.5 : isHoveredLine ? 2 : 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
             />
 
-            {/* Glow layer (outer) */}
+            {/* Active state glow layer */}
             {isActive && (
               <motion.line
                 x1={centerX}
                 y1={centerY}
-                x2={x2}
-                y2={y2}
+                x2={centerX + x2}
+                y2={centerY + y2}
                 stroke={line.colorValue}
-                strokeWidth={4}
+                strokeWidth={5}
                 opacity={0}
+                filter="url(#neural-glow)"
                 animate={{
-                  opacity: [0.2, 0.4, 0.2],
+                  opacity: [0.15, 0.35, 0.15],
                 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
             )}
-          </g>
+
+            {/* Neural node at endpoint - subtle visual marker */}
+            <motion.circle
+              cx={centerX + x2}
+              cy={centerY + y2}
+              r={isActive ? 4 : isHoveredLine ? 3 : 2}
+              fill={line.colorValue}
+              opacity={isActive ? 0.8 : isHoveredLine ? 0.5 : 0.2}
+              animate={{
+                r: isActive ? [3, 5, 3] : isHoveredLine ? [2.5, 3.5, 2.5] : 2,
+              }}
+              transition={{
+                r: {
+                  duration: isActive ? 2 : isHoveredLine ? 1.5 : 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }}
+            />
+          </motion.g>
         );
       })}
     </svg>
