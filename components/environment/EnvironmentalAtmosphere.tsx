@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { EngineeringOverlay } from "./EngineeringOverlay";
 
 interface EnvironmentalAtmosphereProps {
   children: ReactNode;
@@ -97,6 +98,9 @@ export function EnvironmentalAtmosphere({
             `,
           }}
         />
+
+        {/* Layer 2.5: Engineering Overlay (robotics atmosphere) */}
+        <EngineeringOverlay intensity={intensity} />
 
         {/* Layer 3: Ambient neural particles (intelligent floating) */}
         {AMBIENT_PARTICLES.map((particle) => (

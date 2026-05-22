@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useMousePosition } from "@/hooks/useMousePosition";
 
 interface AliveAICoreProps {
   size?: "sm" | "md" | "lg";
@@ -27,8 +28,52 @@ export function AliveAICore({
   };
 
   const { container, sphere, particles } = sizeMap[size];
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerCenter, setContainerCenter] = useState({ x: 0, y: 0 });
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [metrics, setMetrics] = useState({ projects: 4, systems: 85 });
+
+  // Track mouse position for interactive effects
+  const mousePos = useMousePosition({ centerX: containerCenter.x, centerY: containerCenter.y, throttle: 16 });
+
+  // Update container center position
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setContainerCenter({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    });
+
+    const handleResize = () => {
+      const newRect = containerRef.current?.getBoundingClientRect();
+      if (newRect) {
+        setContainerCenter({
+          x: newRect.left + newRect.width / 2,
+          y: newRect.top + newRect.height / 2,
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Calculate tilt based on mouse position (subtle effect)
+  useEffect(() => {
+    const deltaX = mousePos.x - containerCenter.x;
+    const deltaY = mousePos.y - containerCenter.y;
+    const maxDistance = 300;
+
+    // Subtle rotation capped at ±10 degrees
+    const rotateX = (deltaY / maxDistance) * 10;
+    const rotateY = -(deltaX / maxDistance) * 10;
+
+    setTilt({
+      x: Math.max(-10, Math.min(10, rotateX)),
+      y: Math.max(-10, Math.min(10, rotateY)),
+    });
+  }, [mousePos.x, mousePos.y, containerCenter.x, containerCenter.y]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -96,10 +141,23 @@ export function AliveAICore({
 
   return (
     <motion.div
+      ref={containerRef}
       className="relative flex items-center justify-center"
-      style={{ width: container, height: container }}
+      style={{
+        width: container,
+        height: container,
+        perspective: "1000px",
+      }}
+      animate={
+        interactive
+          ? {
+              rotateX: tilt.x,
+              rotateY: tilt.y,
+            }
+          : {}
+      }
+      transition={{ duration: 0.2, ease: "easeOut" }}
       whileHover={interactive ? { scale: 1.15 } : {}}
-      transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
     >
       {/* Outer Holographic Rings - represents neural tiers */}
       <motion.div

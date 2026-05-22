@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { HolographicProfile } from "./HolographicProfile";
 import {
   containerVariants,
   itemVariants,
@@ -55,9 +56,13 @@ export function AboutModule() {
             variants={containerVariants}
             className="grid grid-cols-1 lg:grid-cols-2 gap-8"
           >
-            {/* Left: Profile Overview */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              <GlassPanel className="p-6 space-y-4">
+            {/* Left: Holographic Profile */}
+            <motion.div variants={itemVariants} className="space-y-6 flex flex-col items-center justify-start">
+              {/* Holographic Profile System */}
+              <HolographicProfile initials="AOS" systemMetrics={{ neural: 87, coherence: 94, latency: 3 }} />
+
+              {/* Profile Text Below */}
+              <GlassPanel className="p-6 space-y-4 w-full">
                 <div>
                   <h3 className="text-sm text-accent-cyan font-mono tracking-widest mb-3">
                     ENGINEERING PROFILE
