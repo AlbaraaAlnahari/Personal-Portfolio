@@ -43,6 +43,10 @@
   --font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
     Consolas, "Courier New", monospace;
 
+  /* Layout heights */
+  --nav-height: 48px;
+  --hero-top-offset: 48px;
+
   /* Z-index scale */
   --z-dropdown: 1000;
   --z-sticky: 1020;
@@ -303,9 +307,33 @@ select:focus-visible {
 }
 
 /* ============================================
-   PRINT STYLES
+   PERFORMANCE OPTIMIZATIONS
    ============================================ */
 
+/* GPU acceleration for animated elements */
+.animate-gpu {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimized scroll performance */
+main {
+  -webkit-overflow-scrolling: touch;
+}
+
+section {
+  contain: layout style paint;
+}
+
+/* Optimized transitions for smooth motion */
+.motion-reduce-duration {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Print Styles */
 @media print {
   body {
     background: white;

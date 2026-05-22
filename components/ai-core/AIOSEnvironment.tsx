@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { FloatingCodeSnippet } from "./FloatingCodeSnippet";
 import { HolographicFragment } from "./HolographicFragment";
 
@@ -10,12 +10,30 @@ interface AIOSEnvironmentProps {
   intensity?: "subtle" | "medium" | "vivid";
 }
 
+// Deterministic particle data - no Math.random() during render
+const AIOS_PARTICLES = Array.from({ length: 12 }, (_, i) => {
+  const hash = (i * 7919) % 10000;
+  const nextHash = ((i + 1) * 7919) % 10000;
+  const thirdHash = ((i + 2) * 7919) % 10000;
+
+  return {
+    id: i,
+    left: (hash / 10000) * 100,
+    top: (nextHash / 10000) * 100,
+    motionY: ((hash / 10000) - 0.5) * 100,
+    motionX: ((nextHash / 10000) - 0.5) * 100,
+    duration: 10 + (thirdHash / 10000) * 8,
+    delay: i * 0.5,
+  };
+});
+
 /**
  * AIOS Environment Component
  * Creates a living AI workspace atmosphere around the core
  * Subtle ambient motion, particles, diagnostics, and holographic elements
  */
 export function AIOSEnvironment({ children, intensity = "subtle" }: AIOSEnvironmentProps) {
+  const [cognitionMetric, setCognitionMetric] = useState(85);
   const intensityMap = {
     subtle: { particleOpacity: 0.15, fragmentOpacity: 0.2, codeOpacity: 0.1 },
     medium: { particleOpacity: 0.25, fragmentOpacity: 0.3, codeOpacity: 0.15 },
@@ -23,6 +41,14 @@ export function AIOSEnvironment({ children, intensity = "subtle" }: AIOSEnvironm
   };
 
   const settings = intensityMap[intensity];
+
+  // Update metrics dynamically client-side only
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCognitionMetric(Math.floor(Math.random() * 20 + 80));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Code snippets related to AI and software engineering
   const codeSnippets = [
@@ -116,31 +142,31 @@ export function AIOSEnvironment({ children, intensity = "subtle" }: AIOSEnvironm
         ))}
 
         {/* Ambient neural particles - subtle floating motion */}
-        {[...Array(12)].map((_, i) => (
+        {AIOS_PARTICLES.map((particle) => (
           <motion.div
-            key={`particle-${i}`}
+            key={`particle-${particle.id}`}
             className="absolute rounded-full pointer-events-none"
             style={{
-              width: 2 + (i % 3) * 1.5,
-              height: 2 + (i % 3) * 1.5,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: ["#00d9ff", "#00ff9f", "#b537f2"][i % 3],
+              width: 2 + (particle.id % 3) * 1.5,
+              height: 2 + (particle.id % 3) * 1.5,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              background: ["#00d9ff", "#00ff9f", "#b537f2"][particle.id % 3],
               opacity: settings.particleOpacity,
-              boxShadow: `0 0 ${8 + i}px ${
-                ["rgba(0, 217, 255, 0.6)", "rgba(0, 255, 159, 0.6)", "rgba(181, 55, 242, 0.6)"][i % 3]
+              boxShadow: `0 0 ${8 + particle.id}px ${
+                ["rgba(0, 217, 255, 0.6)", "rgba(0, 255, 159, 0.6)", "rgba(181, 55, 242, 0.6)"][particle.id % 3]
               }`,
             }}
             animate={{
-              y: [0, (Math.random() - 0.5) * 100, 0],
-              x: [0, (Math.random() - 0.5) * 100, 0],
+              y: [0, particle.motionY, 0],
+              x: [0, particle.motionX, 0],
               opacity: [settings.particleOpacity * 0.3, settings.particleOpacity, settings.particleOpacity * 0.3],
             }}
             transition={{
-              duration: 10 + Math.random() * 8,
+              duration: particle.duration,
               ease: "easeInOut",
               repeat: Infinity,
-              delay: i * 0.5,
+              delay: particle.delay,
             }}
           />
         ))}
@@ -212,7 +238,7 @@ export function AIOSEnvironment({ children, intensity = "subtle" }: AIOSEnvironm
       >
         <div className="space-y-0.5 text-accent-cyan/60">
           <div>AIOS v4.2 | Neural Engine Active</div>
-          <div>Cognition: {Math.floor(Math.random() * 20 + 80)}% | Sync: Optimal</div>
+          <div>Cognition: {cognitionMetric}% | Sync: Optimal</div>
         </div>
       </motion.div>
     </div>

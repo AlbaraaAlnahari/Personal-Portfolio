@@ -9,6 +9,22 @@ interface EnvironmentalAtmosphereProps {
   variant?: "hero" | "section" | "full";
 }
 
+// Deterministic particle data - no Math.random() during render
+const AMBIENT_PARTICLES = Array.from({ length: 15 }, (_, i) => {
+  // Use deterministic algorithm based on index
+  const hash = (i * 7919) % 10000; // Deterministic "randomness"
+  const nextHash = ((i + 1) * 7919) % 10000;
+
+  return {
+    id: i,
+    left: (hash / 10000) * 100,
+    top: (nextHash / 10000) * 100,
+    motionX: ((hash / 10000) - 0.5) * 80,
+    motionY: ((nextHash / 10000) - 0.5) * 80,
+    delay: i * 0.3,
+  };
+});
+
 /**
  * Environmental Atmosphere Component
  * Creates a living, breathing workspace atmosphere
@@ -17,7 +33,6 @@ interface EnvironmentalAtmosphereProps {
 export function EnvironmentalAtmosphere({
   children,
   intensity = "subtle",
-  variant = "hero",
 }: EnvironmentalAtmosphereProps) {
   const intensityMap = {
     subtle: {
@@ -84,26 +99,26 @@ export function EnvironmentalAtmosphere({
         />
 
         {/* Layer 3: Ambient neural particles (intelligent floating) */}
-        {[...Array(15)].map((_, i) => (
+        {AMBIENT_PARTICLES.map((particle) => (
           <motion.div
-            key={`ambient-${i}`}
+            key={`ambient-${particle.id}`}
             className="absolute rounded-full pointer-events-none"
             style={{
-              width: 1.5 + (i % 3) * 1.2,
-              height: 1.5 + (i % 3) * 1.2,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: ["#00d9ff", "#00ff9f", "#b537f2"][i % 3],
+              width: 1.5 + (particle.id % 3) * 1.2,
+              height: 1.5 + (particle.id % 3) * 1.2,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              background: ["#00d9ff", "#00ff9f", "#b537f2"][particle.id % 3],
               opacity: settings.particleOpacity,
-              boxShadow: `0 0 ${6 + i * 0.5}px ${
+              boxShadow: `0 0 ${6 + particle.id * 0.5}px ${
                 ["rgba(0, 217, 255, 0.5)", "rgba(0, 255, 159, 0.5)", "rgba(181, 55, 242, 0.5)"][
-                  i % 3
+                  particle.id % 3
                 ]
               }`,
             }}
             animate={{
-              y: [0, (Math.random() - 0.5) * 80 * settings.motionScale, 0],
-              x: [0, (Math.random() - 0.5) * 80 * settings.motionScale, 0],
+              y: [0, particle.motionY * settings.motionScale, 0],
+              x: [0, particle.motionX * settings.motionScale, 0],
               opacity: [
                 settings.particleOpacity * 0.3,
                 settings.particleOpacity,
@@ -111,10 +126,10 @@ export function EnvironmentalAtmosphere({
               ],
             }}
             transition={{
-              duration: 12 + Math.random() * 8,
+              duration: 12,
               ease: "easeInOut",
               repeat: Infinity,
-              delay: i * 0.3,
+              delay: particle.delay,
             }}
           />
         ))}
@@ -191,7 +206,7 @@ export function EnvironmentalAtmosphere({
                   opacity: [0.15, 0.35, 0.15],
                 }}
                 transition={{
-                  duration: 4 + i * 0.5,
+                  duration: 6,
                   ease: "easeInOut",
                   repeat: Infinity,
                 }}
@@ -199,6 +214,42 @@ export function EnvironmentalAtmosphere({
             );
           })}
         </motion.svg>
+      </div>
+
+      {/* Subtle system indicators (atmospheric) */}
+      <div className="absolute top-8 right-12 w-2 h-2 rounded-full pointer-events-none">
+        <motion.div
+          className="w-full h-full bg-accent-cyan"
+          style={{
+            boxShadow: "0 0 8px rgba(0, 217, 255, 0.6)",
+          }}
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 3,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+      </div>
+
+      <div className="absolute bottom-24 left-12 w-2 h-2 rounded-full pointer-events-none">
+        <motion.div
+          className="w-full h-full bg-accent-green"
+          style={{
+            boxShadow: "0 0 8px rgba(0, 255, 159, 0.5)",
+          }}
+          animate={{
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{
+            duration: 4,
+            ease: "easeInOut",
+            repeat: Infinity,
+            delay: 0.5,
+          }}
+        />
       </div>
 
       {/* Content layer */}

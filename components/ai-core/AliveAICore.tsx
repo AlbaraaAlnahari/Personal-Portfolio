@@ -59,7 +59,7 @@ export function AliveAICore({
       scale: [1, 1.25, 1],
       opacity: [1, 0.6, 1],
       transition: {
-        duration: 2.5,
+        duration: 4,
         ease: "easeInOut",
         repeat: Infinity,
       },
@@ -86,7 +86,7 @@ export function AliveAICore({
       opacity: [0.3, 1, 0.3],
       scale: [0.8, 1.3, 0.8],
       transition: {
-        duration: 5 + (index % 3) * 0.5,
+        duration: 6,
         ease: "easeInOut",
         repeat: Infinity,
         delay: (index * 0.2) % 2,
@@ -287,7 +287,7 @@ export function AliveAICore({
                 strokeWidth: [0.4, 0.7, 0.4],
               }}
               transition={{
-                duration: 3 + (i % 3) * 0.3,
+                duration: 6,
                 ease: "easeInOut",
                 repeat: Infinity,
               }}

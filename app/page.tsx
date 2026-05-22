@@ -1,9 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Container } from "@/components/layout/Container";
-import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ImprovedHeroSection } from "@/components/sections/ImprovedHeroSection";
+import { AboutModule } from "@/components/sections/AboutModule";
+import { ProjectsSystems } from "@/components/sections/ProjectsSystems";
+import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
+import { SkillsMatrix } from "@/components/sections/SkillsMatrix";
+import { OrganizationsLeadership } from "@/components/sections/OrganizationsLeadership";
+import { ContactTerminal } from "@/components/sections/ContactTerminal";
+import { AskAlbaraAI } from "@/components/sections/AskAlbaraAI";
+import { ResumeInterface } from "@/components/sections/ResumeInterface";
+import { Container } from "@/components/layout/Container";
 import {
   containerVariants,
   itemVariants,
@@ -12,7 +19,7 @@ import {
 
 /**
  * Home Page - Landing experience
- * Phase 2: Improved Hero with clear messaging and cinematic loading
+ * Phase 3: Full portfolio experience with integrated AI OS system modules
  */
 export default function Home() {
   return (
@@ -25,50 +32,125 @@ export default function Home() {
       {/* Improved Hero Section */}
       <ImprovedHeroSection />
 
-      {/* Featured Section - Foundation placeholder */}
-      <section className="py-20 md:py-32 relative">
-        <Container>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-12"
-          >
-            <motion.div variants={itemVariants}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="text-accent-green">Featured</span> Work
-              </h2>
-              <p className="text-foreground-secondary text-lg max-w-2xl">
-                Showcase of premium projects and innovative solutions powered by AI.
-              </p>
-            </motion.div>
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
 
-            {/* Grid placeholder */}
-            <motion.div
-              variants={containerVariants}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {[1, 2, 3].map((i) => (
-                <motion.div key={i} variants={itemVariants}>
-                  <GlassPanel
-                    className="aspect-video flex items-center justify-center"
-                    interactive
-                    glow
-                  >
-                    <div className="text-center">
-                      <div className="text-sm text-foreground-secondary">
-                        Project {i}
-                      </div>
-                      <div className="text-accent-cyan mt-2">Foundation Only</div>
-                    </div>
-                  </GlassPanel>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </Container>
-      </section>
+      {/* About Module */}
+      <AboutModule />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Projects Systems */}
+      <ProjectsSystems />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Experience Timeline */}
+      <ExperienceTimeline />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Skills Matrix */}
+      <SkillsMatrix />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Organizations & Leadership */}
+      <OrganizationsLeadership />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Contact Terminal */}
+      <ContactTerminal />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Ask Albaraa AI */}
+      <AskAlbaraAI />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Resume Interface */}
+      <ResumeInterface />
 
       {/* Footer */}
       <footer className="border-t border-glass-light py-12 mt-20">

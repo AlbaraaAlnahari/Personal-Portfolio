@@ -9,6 +9,21 @@ interface CinematicLoadingScreenProps {
   autoClose?: boolean;
 }
 
+// Deterministic particle data for loading screen - no Math.random() during render
+const LOADING_PARTICLES = Array.from({ length: 8 }, (_, i) => {
+  const hash = (i * 6131) % 10000;
+  const nextHash = ((i + 1) * 6131) % 10000;
+
+  return {
+    id: i,
+    left: (hash / 10000) * 100,
+    top: (nextHash / 10000) * 100,
+    motionY: ((hash / 10000) - 0.5) * 100,
+    duration: 6 + (nextHash / 10000) * 4,
+    color: ["#00d9ff", "#b537f2"][i % 2],
+  };
+});
+
 /**
  * Cinematic Loading Screen Component
  * Boot sequence experience: "Booting Albaraa OS"
@@ -20,7 +35,6 @@ export function CinematicLoadingScreen({
   autoClose = true,
 }: CinematicLoadingScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
-  const [completedLines, setCompletedLines] = useState(0);
 
   const bootLines = [
     { text: "> Booting Albaraa OS...", delay: 0 },
@@ -32,14 +46,15 @@ export function CinematicLoadingScreen({
   ];
 
   useEffect(() => {
-    // Auto-close after duration
-    if (autoClose) {
-      const timer = setTimeout(() => {
-        handleClose();
-      }, duration);
-      return () => clearTimeout(timer);
-    }
-  }, [duration, autoClose]);
+    if (!autoClose) return;
+
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+      onComplete?.();
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [duration, autoClose, onComplete]);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -119,22 +134,22 @@ export function CinematicLoadingScreen({
         />
 
         {/* Subtle particles */}
-        {[...Array(8)].map((_, i) => (
+        {LOADING_PARTICLES.map((particle) => (
           <motion.div
-            key={`particle-${i}`}
+            key={`particle-${particle.id}`}
             className="absolute w-1 h-1 rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: ["#00d9ff", "#b537f2"][i % 2],
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              background: particle.color,
               opacity: 0.2,
             }}
             animate={{
-              y: [0, (Math.random() - 0.5) * 100, 0],
+              y: [0, particle.motionY, 0],
               opacity: [0.1, 0.3, 0.1],
             }}
             transition={{
-              duration: 6 + Math.random() * 4,
+              duration: particle.duration,
               ease: "easeInOut",
               repeat: Infinity,
             }}

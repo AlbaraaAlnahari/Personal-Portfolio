@@ -99,7 +99,7 @@ export default function RootLayout({
         <Navigation />
 
         {/* Main content */}
-        <div className="relative min-h-screen pt-16">
+        <div className="relative min-h-screen pt-12">
           {/* Background gradient (optional) */}
           <div className="fixed inset-0 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-br from-background-primary via-background-secondary to-background-tertiary opacity-50" />

@@ -29,14 +29,22 @@ export function EnhancedAICoreSphere({
 
   const { container, sphere, particles } = sizeMap[size];
 
-  // Randomized diagnostic values for authenticity
+  // Deterministic initial diagnostics for hydration stability
   const [diagnostics, setDiagnostics] = useState({
-    neural: Math.floor(Math.random() * 20 + 80),
-    coherence: Math.floor(Math.random() * 15 + 85),
-    latency: Math.floor(Math.random() * 8 + 2),
+    neural: 85,
+    coherence: 90,
+    latency: 5,
   });
 
+  // Randomized diagnostic values updated client-side only
   useEffect(() => {
+    // Set different initial values after hydration
+    setDiagnostics({
+      neural: Math.floor(Math.random() * 20 + 80),
+      coherence: Math.floor(Math.random() * 15 + 85),
+      latency: Math.floor(Math.random() * 8 + 2),
+    });
+
     const interval = setInterval(() => {
       setDiagnostics({
         neural: Math.floor(Math.random() * 20 + 80),
@@ -47,20 +55,20 @@ export function EnhancedAICoreSphere({
     return () => clearInterval(interval);
   }, []);
 
-  // Neural particle variants with intelligent motion
-  const neuralParticleVariants = {
+  // Neural particle variants with deterministic motion - create per particle
+  const createParticleVariants = (index: number) => ({
     animate: {
       y: [0, -25, 0],
-      x: [0, Math.random() * 20 - 10, 0],
+      x: [0, ((index * 7919) % 10000) / 10000 * 20 - 10, 0],
       opacity: [0.2, 1, 0.2],
       scale: [0.8, 1.2, 0.8],
       transition: {
-        duration: 4 + Math.random() * 2,
+        duration: 4 + (((index + 1) * 7919) % 10000) / 10000 * 2,
         ease: "easeInOut",
         repeat: Infinity,
       },
     },
-  };
+  });
 
   // Breathing energy effect
   const breathingVariants = {
@@ -220,7 +228,7 @@ export function EnhancedAICoreSphere({
               top: `${startY + particles / 2}px`,
               left: `${startX + particles / 2}px`,
             }}
-            variants={neuralParticleVariants}
+            variants={createParticleVariants(i)}
             animate="animate"
           />
         );

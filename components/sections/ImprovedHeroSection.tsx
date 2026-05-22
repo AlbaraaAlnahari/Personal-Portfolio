@@ -7,7 +7,6 @@ import { AliveAICore } from "@/components/ai-core/AliveAICore";
 import { EnvironmentalAtmosphere } from "@/components/environment/EnvironmentalAtmosphere";
 import { IntegratedDiagnostics } from "@/components/environment/IntegratedDiagnostics";
 import {
-  fadeInUpVariants,
   containerVariants,
   itemVariants,
 } from "@/lib/motion/variants";
@@ -20,7 +19,14 @@ import {
 export function ImprovedHeroSection() {
   return (
     <motion.section
-      className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden"
+      className="relative overflow-hidden"
+      style={{
+        minHeight: "calc(100vh - var(--nav-height))",
+        paddingTop: "var(--nav-height)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       initial="hidden"
       animate="visible"
       variants={{
@@ -32,96 +38,84 @@ export function ImprovedHeroSection() {
         },
       }}
     >
-      <EnvironmentalAtmosphere intensity="subtle" variant="hero">
+      <EnvironmentalAtmosphere intensity="subtle">
         <Container className="relative z-10 w-full">
           <motion.div
             variants={containerVariants}
-            className="flex flex-col items-center justify-center gap-12 text-center max-w-3xl mx-auto"
+            className="flex flex-col items-center justify-center gap-10 text-center max-w-3xl mx-auto py-16"
           >
-            {/* Alive AI Core - The Emotional Heart */}
+            {/* Alive AI Core - Floating holographic neural orb */}
             <motion.div
               variants={itemVariants}
               className="relative"
             >
-              <div className="relative">
-                <AliveAICore
-                  size="lg"
-                  interactive
-                  showMetrics
-                />
-                <motion.div
-                  className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <p className="text-xs text-accent-cyan/60 font-mono">
-                    Neural Engine | AI Systems | Innovation Core
-                  </p>
-                </motion.div>
-              </div>
+              <AliveAICore
+                size="lg"
+                interactive
+              />
             </motion.div>
 
             {/* Primary Information */}
-            <motion.div variants={itemVariants} className="space-y-4 pt-8">
+            <motion.div variants={itemVariants} className="space-y-4 pt-2">
               {/* Main Name */}
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                 <span className="text-accent-cyan glow-cyan">Albaraa</span>
-                <br />
-                <span className="text-foreground-primary">Alnahari</span>
+                <span className="text-foreground-primary"> Alnahari</span>
               </h1>
 
               {/* Subtitle - Roles */}
-              <h2 className="text-lg md:text-2xl text-accent-green font-medium tracking-wide">
-                Software Engineering Student · AI Builder · Full-Stack Developer
-              </h2>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-accent-green font-normal tracking-wide opacity-80">
+                <span className="text-sm md:text-lg">Software Engineering Student</span>
+                <span className="hidden sm:inline text-accent-green/40">·</span>
+                <span className="text-sm md:text-lg">AI Builder</span>
+                <span className="hidden sm:inline text-accent-green/40">·</span>
+                <span className="text-sm md:text-lg">Full-Stack Developer</span>
+              </div>
 
               {/* Description - What he builds */}
-              <p className="text-lg md:text-xl text-foreground-secondary max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base md:text-lg text-foreground-secondary/80 max-w-xl mx-auto leading-relaxed">
                 I build AI-powered products, modern web experiences, and intelligent systems
                 that turn ideas into usable software.
               </p>
             </motion.div>
 
-            {/* Primary CTAs */}
+            {/* CTAs Group - One intentional action section */}
             <motion.div
               variants={itemVariants}
-              className="flex gap-4 flex-col sm:flex-row flex-wrap justify-center pt-8"
+              className="flex flex-col items-center gap-5 pt-2"
             >
-              {/* Primary CTA - Projects */}
-              <Button
-                variant="primary"
-                size="lg"
-                glow
-                onClick={() => {
-                  document.getElementById("projects")?.scrollIntoView({
-                    behavior: "smooth"
-                  });
-                }}
-              >
-                View Projects
-              </Button>
+              {/* Primary & Secondary Buttons */}
+              <div className="flex gap-3 flex-col sm:flex-row flex-wrap justify-center">
+                {/* Primary CTA - Projects */}
+                <Button
+                  variant="primary"
+                  size="lg"
+                  glow
+                  onClick={() => {
+                    document.getElementById("projects")?.scrollIntoView({
+                      behavior: "smooth"
+                    });
+                  }}
+                >
+                  View Projects
+                </Button>
 
-              {/* Secondary CTA - Resume */}
-              <Button
-                variant="glass"
-                size="lg"
-                onClick={() => {
-                  const link = document.createElement('a');
-                  link.href = '/resume.pdf';
-                  link.download = 'Albaraa_Alnahari_Resume.pdf';
-                  link.click();
-                }}
-              >
-                Download Resume
-              </Button>
-            </motion.div>
+                {/* Secondary CTA - Resume */}
+                <Button
+                  variant="glass"
+                  size="lg"
+                  onClick={() => {
+                    const link = document.createElement('a');
+                    link.href = '/resume.pdf';
+                    link.download = 'Albaraa_Alnahari_Resume.pdf';
+                    link.click();
+                  }}
+                >
+                  Download Resume
+                </Button>
+              </div>
 
-            {/* Tertiary CTA - Contact */}
-            <motion.div
-              variants={itemVariants}
-              className="pt-4"
-            >
+              {/* Tertiary CTA - Contact Link */}
               <a
                 href="#contact"
                 className="text-sm text-foreground-secondary hover:text-accent-cyan transition-colors flex items-center justify-center gap-2"
@@ -131,15 +125,15 @@ export function ImprovedHeroSection() {
               </a>
             </motion.div>
 
-            {/* Trust Indicators / Quick Facts */}
+            {/* System Indicators / Active Metrics */}
             <motion.div
               variants={itemVariants}
-              className="pt-12 grid grid-cols-2 md:grid-cols-3 gap-8 w-full"
+              className="pt-10 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full"
             >
               {[
-                { number: "4+", label: "Projects" },
-                { number: "AI", label: "Focused" },
-                { number: "Full-Stack", label: "Expertise" },
+                { number: "4", label: "DEPLOYED SYSTEMS", icon: "●" },
+                { number: "∞", label: "NEURAL RUNTIME", icon: "●" },
+                { number: "●", label: "WORKSPACE ACTIVE", icon: "◆" },
               ].map((item) => (
                 <motion.div
                   key={item.label}
@@ -149,8 +143,9 @@ export function ImprovedHeroSection() {
                   <div className="text-2xl md:text-3xl font-bold text-accent-cyan">
                     {item.number}
                   </div>
-                  <div className="text-xs md:text-sm text-foreground-secondary">
-                    {item.label}
+                  <div className="text-xs md:text-sm text-foreground-secondary font-mono tracking-widest flex items-center gap-1.5 bg-background-primary/20 px-2 py-1 rounded">
+                    <span className="text-accent-green text-xs">{item.icon}</span>
+                    <span>{item.label}</span>
                   </div>
                 </motion.div>
               ))}
@@ -162,15 +157,59 @@ export function ImprovedHeroSection() {
         <IntegratedDiagnostics />
       </EnvironmentalAtmosphere>
 
-      {/* Subtle scroll indicator */}
+      {/* Cinematic scroll indicator - Guided exploration */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3 pointer-events-none"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
       >
-        <div className="text-xs text-foreground-secondary/50 font-mono">
-          scroll to explore
+        {/* Guidance text */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs text-foreground-secondary/70 font-mono tracking-widest">
+            EXPLORE
+          </span>
         </div>
+
+        {/* Cascading chevron animation */}
+        <div className="flex flex-col items-center gap-1">
+          {/* First chevron */}
+          <motion.div
+            animate={{ y: [0, 6, 0], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="text-lg text-accent-cyan"
+          >
+            ↓
+          </motion.div>
+
+          {/* Second chevron - staggered */}
+          <motion.div
+            animate={{ y: [0, 6, 0], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            className="text-lg text-accent-cyan -mt-3"
+          >
+            ↓
+          </motion.div>
+
+          {/* Third chevron - staggered */}
+          <motion.div
+            animate={{ y: [0, 6, 0], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            className="text-lg text-accent-cyan -mt-3"
+          >
+            ↓
+          </motion.div>
+        </div>
+
+        {/* Subtle glow indicator */}
+        <motion.div
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-1.5 h-1.5 rounded-full bg-accent-green"
+          style={{
+            boxShadow: "0 0 8px rgba(0, 255, 159, 0.6)",
+          }}
+        />
       </motion.div>
     </motion.section>
   );

@@ -50,13 +50,16 @@ export function HolographicFragment({
 }: HolographicFragmentProps) {
   const colors = colorMap[color];
 
+  // Deterministic duration based on delay to avoid Math.random() during render
+  const duration = 6 + ((delay * 5381) % 10000) / 10000 * 4;
+
   const fragmentVariants = {
     animate: {
       opacity: [opacity * 0.5, opacity, opacity * 0.5],
       scale: [0.95, 1.05, 0.95],
       rotate: [0, 5, 0],
       transition: {
-        duration: 6 + Math.random() * 4,
+        duration,
         ease: "easeInOut",
         repeat: Infinity,
         delay,

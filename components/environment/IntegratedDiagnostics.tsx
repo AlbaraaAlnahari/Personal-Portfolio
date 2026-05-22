@@ -73,15 +73,15 @@ export function IntegratedDiagnostics() {
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
     >
-      {/* Glass panel background */}
-      <div className="absolute inset-0 -m-4 rounded-lg bg-background-primary/40 backdrop-blur-sm border border-glass-light pointer-events-none" />
+      {/* Glass panel background - Subtle environmental HUD */}
+      <div className="absolute inset-0 -m-4 rounded-lg bg-background-primary/40 backdrop-blur-md border border-glass-lighter/60 shadow-glass-sm pointer-events-none" />
 
       {/* Diagnostics content */}
       <motion.div className="relative p-4 space-y-3">
         {/* Header */}
         <motion.div
           variants={itemVariants}
-          className="text-foreground-secondary/60 text-xs uppercase tracking-wider"
+          className="text-foreground-secondary/70 text-xs uppercase tracking-wider"
         >
           System Status
         </motion.div>
