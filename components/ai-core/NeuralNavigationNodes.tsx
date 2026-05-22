@@ -16,7 +16,7 @@ interface NeuralNavigationNode {
   orbitDirection: "cw" | "ccw";  // Clockwise or counterclockwise
   phaseOffset: number;     // Starting phase offset
   sectionId: string;
-  tooltipOffset?: number;  // Optional custom tooltip vertical offset
+  description?: string;    // Optional section description
 }
 
 interface NeuralNavigationNodesProps {
@@ -46,87 +46,90 @@ export function NeuralNavigationNodes({
   const mousePos = useMousePosition({ centerX, centerY, throttle: 16 });
 
   // Neural Navigation Nodes - Intelligently distributed across 360°
-  // Icons: futuristic minimal representations of each section
   const navigationNodes: NeuralNavigationNode[] = [
     {
       id: "about",
-      label: "Profile",
-      icon: "◯",  // Circle - identity/personal profile
+      label: "About",
+      icon: "◉",  // Filled circle with dot - identity/profile
       color: "text-accent-cyan",
       colorValue: "rgb(0, 217, 255)",
       angle: 0,              // 0° (top)
       orbitRadius: 220,
-      orbitSpeed: 28,        // 28s orbit
+      orbitSpeed: 28,
       orbitDirection: "cw",
       phaseOffset: 0,
       sectionId: "about",
-      tooltipOffset: -60,    // Move label down to avoid navbar
+      description: "Who I am",
     },
     {
       id: "projects",
-      label: "Modules",
-      icon: "▦",  // Horizontal bars - modular systems
+      label: "Projects",
+      icon: "▥",  // Horizontal bars - grid/modules
       color: "text-accent-green",
       colorValue: "rgb(0, 255, 159)",
-      angle: Math.PI / 3,     // 60°
+      angle: Math.PI / 3,
       orbitRadius: 200,
-      orbitSpeed: 32,         // 32s orbit
+      orbitSpeed: 32,
       orbitDirection: "ccw",
       phaseOffset: 0.5,
       sectionId: "projects",
+      description: "What I build",
     },
     {
       id: "experience",
-      label: "Timeline",
-      icon: "◆",  // Diamond - temporal sequence/progression
+      label: "Experience",
+      icon: "⊢",  // Turnstile - timeline/chronological
       color: "text-accent-purple",
       colorValue: "rgb(181, 55, 242)",
-      angle: (Math.PI * 2) / 3, // 120°
+      angle: (Math.PI * 2) / 3,
       orbitRadius: 210,
-      orbitSpeed: 30,         // 30s orbit
+      orbitSpeed: 30,
       orbitDirection: "cw",
       phaseOffset: 0.3,
       sectionId: "experience",
+      description: "My journey",
     },
     {
       id: "skills",
-      label: "Systems",
-      icon: "◈",  // Star - interconnected systems/expertise
+      label: "Skills",
+      icon: "⚛",  // Atom - interconnected systems
       color: "text-accent-cyan",
       colorValue: "rgb(0, 217, 255)",
-      angle: Math.PI,         // 180° (bottom)
+      angle: Math.PI,
       orbitRadius: 195,
-      orbitSpeed: 35,         // 35s orbit
+      orbitSpeed: 35,
       orbitDirection: "ccw",
       phaseOffset: 0.7,
       sectionId: "skills",
-      tooltipOffset: 60,      // Move label up to avoid bottom edge
+      description: "What I know",
     },
     {
       id: "contact",
-      label: "Connect",
-      icon: "⟿",  // Wave - signal/communication/connection
+      label: "Contact",
+      icon: "⟿",  // Wave - signal/communication
       color: "text-accent-green",
       colorValue: "rgb(0, 255, 159)",
-      angle: (Math.PI * 4) / 3, // 240°
+      angle: (Math.PI * 4) / 3,
       orbitRadius: 215,
-      orbitSpeed: 27,         // 27s orbit
+      orbitSpeed: 27,
       orbitDirection: "cw",
       phaseOffset: 0.2,
       sectionId: "contact",
+      description: "Let's connect",
     },
     {
       id: "ai",
       label: "Terminal",
-      icon: "⊗",  // Circle with cross - control/input center
+      icon: "◲",  // Open square - command interface
       color: "text-accent-purple",
       colorValue: "rgb(181, 55, 242)",
-      angle: (Math.PI * 5) / 3, // 300°
+      angle: (Math.PI * 5) / 3,
       orbitRadius: 205,
-      orbitSpeed: 33,         // 33s orbit
+      orbitSpeed: 33,
       orbitDirection: "ccw",
       phaseOffset: 0.4,
       sectionId: "ai-assistant",
+      description: "Ask me anything",
     },
   ];
 
@@ -179,7 +182,7 @@ export function NeuralNavigationNodes({
 
         return (
           <div key={node.id} style={{ pointerEvents: "none" }}>
-            {/* ROTATING ORB + ICON (orbits with motion) */}
+            {/* ORBITAL CONTAINER - Node and Label orbit together */}
             <motion.div
               className="absolute pointer-events-none"
               style={{
@@ -199,7 +202,37 @@ export function NeuralNavigationNodes({
                 },
               }}
             >
-              {/* Node Button - positioned along orbital axis */}
+              {/* CONNECTOR LINE - from node toward center */}
+              {isHoveredNode && (
+                <motion.svg
+                  className="absolute pointer-events-none"
+                  style={{
+                    left: `${staticX}px`,
+                    top: `${staticY}px`,
+                    width: "100px",
+                    height: "100px",
+                    overflow: "visible",
+                  }}
+                  viewBox="-50 -50 100 100"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2={-staticX * 0.7}
+                    y2={-staticY * 0.7}
+                    stroke={node.colorValue}
+                    strokeWidth="1"
+                    opacity="0.4"
+                    strokeDasharray="3,3"
+                  />
+                </motion.svg>
+              )}
+
+              {/* NODE BUTTON - Interactive element */}
               <motion.button
                 onClick={() => handleNodeClick(node.sectionId)}
                 onMouseEnter={() => handleHover(node.id)}
@@ -211,14 +244,13 @@ export function NeuralNavigationNodes({
                   left: `${staticX}px`,
                   top: `${staticY}px`,
                   transform: "translate(-50%, -50%)",
-                  opacity: nearbyHoveredNode ? 0.4 : isHoveredNode ? 1 : 0.7,
                 }}
                 animate={{
-                  scale: isHoveredNode ? 1.4 : 1,
+                  scale: isHoveredNode ? 1.5 : 1,
                   opacity: nearbyHoveredNode ? 0.4 : isHoveredNode ? 1 : 0.7,
                 }}
                 transition={{
-                  scale: { duration: 0.3, ease: "easeOut" },
+                  scale: { duration: 0.4, ease: "easeOut" },
                   opacity: { duration: 0.2 },
                 }}
               >
@@ -229,23 +261,23 @@ export function NeuralNavigationNodes({
                     background: `radial-gradient(circle, currentColor 0%, transparent 70%)`,
                   }}
                   animate={{
-                    opacity: isHoveredNode ? 0.4 : 0.15,
+                    opacity: isHoveredNode ? 0.5 : 0.15,
                   }}
                   transition={{ duration: 0.3 }}
                 />
 
-                {/* Node icon - centered, responsive size */}
+                {/* Node icon */}
                 <motion.span
-                  className="text-2xl relative z-10 font-bold"
+                  className="text-2xl relative z-10 font-bold leading-none"
                   animate={{
-                    scale: isHoveredNode ? 1.2 : 1,
+                    scale: isHoveredNode ? 1.3 : 1,
                   }}
                   transition={{ duration: 0.3 }}
                 >
                   {node.icon}
                 </motion.span>
 
-                {/* Active section indicator - persistent glow */}
+                {/* Active section indicator */}
                 {activeSection === node.sectionId && (
                   <motion.div
                     className="absolute inset-0 rounded-full border-2 border-current pointer-events-none"
@@ -264,7 +296,7 @@ export function NeuralNavigationNodes({
                   />
                 )}
 
-                {/* Subtle idle pulse - continuous neural activity */}
+                {/* Idle pulse animation */}
                 <motion.div
                   className="absolute inset-0 rounded-full pointer-events-none"
                   animate={{
@@ -282,40 +314,53 @@ export function NeuralNavigationNodes({
                   }}
                 />
               </motion.button>
-            </motion.div>
 
-            {/* HOLOGRAPHIC LABEL (STATIC - NOT ROTATING) */}
-            {/* Positioned absolutely to stay readable and visible */}
-            <motion.div
-              className="absolute pointer-events-auto font-mono text-sm whitespace-nowrap"
-              style={{
-                left: `calc(50% + ${labelX}px)`,
-                top: `calc(50% + ${labelY}px)`,
-                transform: "translate(-50%, -50%)",
-                zIndex: isHoveredNode ? 40 : 20,
-                background: `linear-gradient(135deg, rgba(${node.colorValue === "rgb(0, 217, 255)" ? "0, 217, 255" : node.colorValue === "rgb(0, 255, 159)" ? "0, 255, 159" : "181, 55, 242"}, 0.15) 0%, rgba(${node.colorValue === "rgb(0, 217, 255)" ? "0, 217, 255" : node.colorValue === "rgb(0, 255, 159)" ? "0, 255, 159" : "181, 55, 242"}, 0.05) 100%), rgba(10, 14, 39, 0.85)`,
-                border: `1px solid ${node.colorValue}40`,
-                backdropFilter: "blur(12px)",
-                borderRadius: "0.75rem",
-                padding: "0.5rem 1rem",
-                boxShadow: isHoveredNode
-                  ? `0 0 20px ${node.colorValue}60, inset 0 1px 2px rgba(255, 255, 255, 0.15)`
-                  : `0 0 10px ${node.colorValue}20`,
-              }}
-              animate={{
-                opacity: isHoveredNode ? 1 : 0,
-                y: isHoveredNode ? -8 : 0,
-                scale: isHoveredNode ? 1 : 0.9,
-              }}
-              transition={{
-                duration: 0.3,
-                ease: "easeOut",
-              }}
-            >
-              <span style={{ color: node.colorValue }}>→</span>
-              <span className="ml-2" style={{ color: node.colorValue }}>
-                {node.label}
-              </span>
+              {/* HOLOGRAPHIC LABEL - Anchored to node, counter-rotated to stay readable */}
+              <motion.div
+                className="absolute pointer-events-auto"
+                style={{
+                  left: `${staticX}px`,
+                  top: `${staticY}px`,
+                  transform: "translate(-50%, calc(-100% - 16px))",
+                }}
+                animate={{
+                  // Counter-rotate to keep text horizontal while parent orbits
+                  rotate: node.orbitDirection === "cw" ? -360 : 360,
+                  opacity: isHoveredNode ? 1 : 0,
+                  scale: isHoveredNode ? 1 : 0.85,
+                  y: isHoveredNode ? 0 : 8,
+                }}
+                transition={{
+                  rotate: {
+                    duration: orbitDuration,
+                    repeat: Infinity,
+                    ease: "linear",
+                  },
+                  opacity: { duration: 0.3 },
+                  scale: { duration: 0.3 },
+                  y: { duration: 0.3 },
+                }}
+              >
+                <div
+                  className="px-3 py-2 rounded-lg font-mono text-sm whitespace-nowrap backdrop-blur-xl border pointer-events-auto"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(${node.colorValue.match(/\d+/g)?.join(", ")}, 0.2) 0%, rgba(${node.colorValue.match(/\d+/g)?.join(", ")}, 0.05) 100%), rgba(10, 14, 39, 0.9)`,
+                    border: `1px solid ${node.colorValue}60`,
+                    boxShadow: `0 0 24px ${node.colorValue}40, inset 0 1px 2px rgba(255, 255, 255, 0.2)`,
+                    color: node.colorValue,
+                  }}
+                >
+                  <div className="font-semibold">{node.label}</div>
+                  {node.description && (
+                    <div
+                      className="text-xs mt-1 opacity-70"
+                      style={{ color: node.colorValue }}
+                    >
+                      {node.description}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         );
