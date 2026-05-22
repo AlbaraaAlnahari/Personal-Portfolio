@@ -51,7 +51,7 @@ export function NeuralNavigationNodes({
     {
       id: "about",
       label: "Profile",
-      icon: "⦿",  // Circle with center dot - identity/profile
+      icon: "◯",  // Circle - identity/personal profile
       color: "text-accent-cyan",
       colorValue: "rgb(0, 217, 255)",
       angle: 0,              // 0° (top)
@@ -65,7 +65,7 @@ export function NeuralNavigationNodes({
     {
       id: "projects",
       label: "Modules",
-      icon: "⊞",  // Grid/modules icon
+      icon: "▦",  // Horizontal bars - modular systems
       color: "text-accent-green",
       colorValue: "rgb(0, 255, 159)",
       angle: Math.PI / 3,     // 60°
@@ -78,7 +78,7 @@ export function NeuralNavigationNodes({
     {
       id: "experience",
       label: "Timeline",
-      icon: "⊢",  // Timeline/chronological icon
+      icon: "◆",  // Diamond - temporal sequence/progression
       color: "text-accent-purple",
       colorValue: "rgb(181, 55, 242)",
       angle: (Math.PI * 2) / 3, // 120°
@@ -91,7 +91,7 @@ export function NeuralNavigationNodes({
     {
       id: "skills",
       label: "Systems",
-      icon: "◈",  // Neural network/systems icon
+      icon: "◈",  // Star - interconnected systems/expertise
       color: "text-accent-cyan",
       colorValue: "rgb(0, 217, 255)",
       angle: Math.PI,         // 180° (bottom)
@@ -105,7 +105,7 @@ export function NeuralNavigationNodes({
     {
       id: "contact",
       label: "Connect",
-      icon: "⟿",  // Signal/wave icon
+      icon: "⟿",  // Wave - signal/communication/connection
       color: "text-accent-green",
       colorValue: "rgb(0, 255, 159)",
       angle: (Math.PI * 4) / 3, // 240°
@@ -118,7 +118,7 @@ export function NeuralNavigationNodes({
     {
       id: "ai",
       label: "Terminal",
-      icon: "◉",  // Terminal/control icon
+      icon: "⊗",  // Circle with cross - control/input center
       color: "text-accent-purple",
       colorValue: "rgb(181, 55, 242)",
       angle: (Math.PI * 5) / 3, // 300°
