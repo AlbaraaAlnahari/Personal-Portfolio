@@ -25,13 +25,14 @@ export function ImprovedHeroSection() {
 
   return (
     <motion.section
-      className="relative overflow-hidden"
+      className="relative"
       style={{
         minHeight: "calc(100vh - var(--nav-height))",
         paddingTop: "var(--nav-height)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        overflow: "visible",
       }}
       initial="hidden"
       animate="visible"
@@ -56,7 +57,8 @@ export function ImprovedHeroSection() {
             {/* Alive AI Core - Floating holographic neural orb with Neural Navigation */}
             <motion.div
               variants={itemVariants}
-              className="relative w-96 h-96"
+              className="relative w-96 h-96 overflow-visible"
+              style={{ zIndex: 10 }}
               onMouseEnter={() => setActiveSection("ai-core")}
               onMouseLeave={() => setActiveSection("")}
             >

@@ -16,6 +16,7 @@ interface NeuralNavigationNode {
   orbitDirection: "cw" | "ccw";  // Clockwise or counterclockwise
   phaseOffset: number;     // Starting phase offset
   sectionId: string;
+  tooltipOffset?: number;  // Optional custom tooltip vertical offset
 }
 
 interface NeuralNavigationNodesProps {
@@ -45,11 +46,12 @@ export function NeuralNavigationNodes({
   const mousePos = useMousePosition({ centerX, centerY, throttle: 16 });
 
   // Neural Navigation Nodes - Intelligently distributed across 360°
+  // Icons: futuristic minimal representations of each section
   const navigationNodes: NeuralNavigationNode[] = [
     {
       id: "about",
-      label: "About",
-      icon: "◆",
+      label: "Profile",
+      icon: "⦿",  // Circle with center dot - identity/profile
       color: "text-accent-cyan",
       colorValue: "rgb(0, 217, 255)",
       angle: 0,              // 0° (top)
@@ -58,11 +60,12 @@ export function NeuralNavigationNodes({
       orbitDirection: "cw",
       phaseOffset: 0,
       sectionId: "about",
+      tooltipOffset: -60,    // Move label down to avoid navbar
     },
     {
       id: "projects",
-      label: "Projects",
-      icon: "▲",
+      label: "Modules",
+      icon: "⊞",  // Grid/modules icon
       color: "text-accent-green",
       colorValue: "rgb(0, 255, 159)",
       angle: Math.PI / 3,     // 60°
@@ -74,8 +77,8 @@ export function NeuralNavigationNodes({
     },
     {
       id: "experience",
-      label: "Experience",
-      icon: "●",
+      label: "Timeline",
+      icon: "⊢",  // Timeline/chronological icon
       color: "text-accent-purple",
       colorValue: "rgb(181, 55, 242)",
       angle: (Math.PI * 2) / 3, // 120°
@@ -87,8 +90,8 @@ export function NeuralNavigationNodes({
     },
     {
       id: "skills",
-      label: "Skills",
-      icon: "◇",
+      label: "Systems",
+      icon: "◈",  // Neural network/systems icon
       color: "text-accent-cyan",
       colorValue: "rgb(0, 217, 255)",
       angle: Math.PI,         // 180° (bottom)
@@ -97,11 +100,12 @@ export function NeuralNavigationNodes({
       orbitDirection: "ccw",
       phaseOffset: 0.7,
       sectionId: "skills",
+      tooltipOffset: 60,      // Move label up to avoid bottom edge
     },
     {
       id: "contact",
-      label: "Contact",
-      icon: "★",
+      label: "Connect",
+      icon: "⟿",  // Signal/wave icon
       color: "text-accent-green",
       colorValue: "rgb(0, 255, 159)",
       angle: (Math.PI * 4) / 3, // 240°
@@ -113,8 +117,8 @@ export function NeuralNavigationNodes({
     },
     {
       id: "ai",
-      label: "AI Terminal",
-      icon: "◈",
+      label: "Terminal",
+      icon: "◉",  // Terminal/control icon
       color: "text-accent-purple",
       colorValue: "rgb(181, 55, 242)",
       angle: (Math.PI * 5) / 3, // 300°
@@ -147,6 +151,7 @@ export function NeuralNavigationNodes({
       style={{
         width: "100%",
         height: "100%",
+        overflow: "visible",
       }}
     >
       {navigationNodes.map((node) => {
@@ -167,138 +172,152 @@ export function NeuralNavigationNodes({
         const isHoveredNode = hoveredNode === node.id;
         const nearbyHoveredNode = hoveredNode && hoveredNode !== node.id && distToMouse < 250;
 
+        // Smart label offset calculation to avoid clipping
+        const labelOffsetY = node.tooltipOffset || (staticY < 0 ? -60 : 60);
+        const labelX = staticX;
+        const labelY = staticY + labelOffsetY;
+
         return (
-          <motion.div
-            key={node.id}
-            className="absolute pointer-events-none"
-            style={{
-              left: "50%",
-              top: "50%",
-              width: 0,
-              height: 0,
-            }}
-            animate={{
-              // Orbital motion - each node orbits independently
-              rotate: node.orbitDirection === "cw" ? 360 : -360,
-            }}
-            transition={{
-              rotate: {
-                duration: orbitDuration,
-                repeat: Infinity,
-                ease: "linear",
-              },
-            }}
-          >
-            {/* Node Container - positioned along orbital axis */}
-            <motion.button
-              onClick={() => handleNodeClick(node.sectionId)}
-              onMouseEnter={() => handleHover(node.id)}
-              onMouseLeave={() => handleHover(null)}
-              className={`absolute flex flex-col items-center justify-center w-14 h-14 rounded-full border-2 cursor-pointer pointer-events-auto transition-all duration-300 ${
-                isHoveredNode ? "border-current" : "border-current/50"
-              } ${node.color} group`}
+          <div key={node.id} style={{ pointerEvents: "none" }}>
+            {/* ROTATING ORB + ICON (orbits with motion) */}
+            <motion.div
+              className="absolute pointer-events-none"
               style={{
-                left: `${staticX}px`,
-                top: `${staticY}px`,
-                transform: "translate(-50%, -50%)",
-                opacity: nearbyHoveredNode ? 0.4 : isHoveredNode ? 1 : 0.7,
+                left: "50%",
+                top: "50%",
+                width: 0,
+                height: 0,
               }}
               animate={{
-                scale: isHoveredNode ? 1.4 : 1,
-                opacity: nearbyHoveredNode ? 0.4 : isHoveredNode ? 1 : 0.7,
+                rotate: node.orbitDirection === "cw" ? 360 : -360,
               }}
               transition={{
-                scale: { duration: 0.3, ease: "easeOut" },
-                opacity: { duration: 0.2 },
+                rotate: {
+                  duration: orbitDuration,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
               }}
             >
-              {/* Node background glow */}
-              <motion.div
-                className="absolute inset-0 rounded-full pointer-events-none"
+              {/* Node Button - positioned along orbital axis */}
+              <motion.button
+                onClick={() => handleNodeClick(node.sectionId)}
+                onMouseEnter={() => handleHover(node.id)}
+                onMouseLeave={() => handleHover(null)}
+                className={`absolute flex flex-col items-center justify-center w-14 h-14 rounded-full border-2 cursor-pointer pointer-events-auto transition-all duration-300 ${
+                  isHoveredNode ? "border-current" : "border-current/50"
+                } ${node.color} group`}
                 style={{
-                  background: `radial-gradient(circle, currentColor 0%, transparent 70%)`,
+                  left: `${staticX}px`,
+                  top: `${staticY}px`,
+                  transform: "translate(-50%, -50%)",
+                  opacity: nearbyHoveredNode ? 0.4 : isHoveredNode ? 1 : 0.7,
                 }}
                 animate={{
-                  opacity: isHoveredNode ? 0.4 : 0.15,
+                  scale: isHoveredNode ? 1.4 : 1,
+                  opacity: nearbyHoveredNode ? 0.4 : isHoveredNode ? 1 : 0.7,
                 }}
-                transition={{ duration: 0.3 }}
-              />
-
-              {/* Node icon - centered, responsive size */}
-              <motion.span
-                className="text-2xl relative z-10 font-bold"
-                animate={{
-                  scale: isHoveredNode ? 1.2 : 1,
+                transition={{
+                  scale: { duration: 0.3, ease: "easeOut" },
+                  opacity: { duration: 0.2 },
                 }}
-                transition={{ duration: 0.3 }}
               >
-                {node.icon}
-              </motion.span>
-
-              {/* Active section indicator - persistent glow */}
-              {activeSection === node.sectionId && (
+                {/* Node background glow */}
                 <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-current pointer-events-none"
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{
+                    background: `radial-gradient(circle, currentColor 0%, transparent 70%)`,
+                  }}
                   animate={{
-                    boxShadow: [
-                      `0 0 15px ${node.colorValue}`,
-                      `0 0 35px ${node.colorValue}`,
-                      `0 0 15px ${node.colorValue}`,
-                    ],
+                    opacity: isHoveredNode ? 0.4 : 0.15,
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+
+                {/* Node icon - centered, responsive size */}
+                <motion.span
+                  className="text-2xl relative z-10 font-bold"
+                  animate={{
+                    scale: isHoveredNode ? 1.2 : 1,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {node.icon}
+                </motion.span>
+
+                {/* Active section indicator - persistent glow */}
+                {activeSection === node.sectionId && (
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-2 border-current pointer-events-none"
+                    animate={{
+                      boxShadow: [
+                        `0 0 15px ${node.colorValue}`,
+                        `0 0 35px ${node.colorValue}`,
+                        `0 0 15px ${node.colorValue}`,
+                      ],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                )}
+
+                {/* Subtle idle pulse - continuous neural activity */}
+                <motion.div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  animate={{
+                    scale: [1, 1.08, 1],
                   }}
                   transition={{
-                    duration: 2,
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
+                  style={{
+                    borderWidth: "1px",
+                    borderColor: "currentColor",
+                    opacity: 0.3,
+                  }}
                 />
-              )}
+              </motion.button>
+            </motion.div>
 
-              {/* Subtle idle pulse - continuous neural activity */}
-              <motion.div
-                className="absolute inset-0 rounded-full pointer-events-none"
-                animate={{
-                  scale: [1, 1.08, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  borderWidth: "1px",
-                  borderColor: "currentColor",
-                  opacity: 0.3,
-                }}
-              />
-
-              {/* Holographic label - appears on hover */}
-              <motion.div
-                className="absolute bottom-full mb-4 px-4 py-2 rounded-xl backdrop-blur-xl border pointer-events-none font-mono text-sm whitespace-nowrap"
-                style={{
-                  background: `linear-gradient(135deg, rgba(${node.colorValue === "rgb(0, 217, 255)" ? "0, 217, 255" : node.colorValue === "rgb(0, 255, 159)" ? "0, 255, 159" : "181, 55, 242"}, 0.15) 0%, rgba(${node.colorValue === "rgb(0, 217, 255)" ? "0, 217, 255" : node.colorValue === "rgb(0, 255, 159)" ? "0, 255, 159" : "181, 55, 242"}, 0.05) 100%), rgba(10, 14, 39, 0.85)`,
-                  border: `1px solid ${node.colorValue}40`,
-                  boxShadow: isHoveredNode
-                    ? `0 0 20px ${node.colorValue}60, inset 0 1px 2px rgba(255, 255, 255, 0.15)`
-                    : `0 0 10px ${node.colorValue}20`,
-                }}
-                animate={{
-                  opacity: isHoveredNode ? 1 : 0,
-                  y: isHoveredNode ? -8 : 0,
-                  scale: isHoveredNode ? 1 : 0.9,
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: "easeOut",
-                }}
-              >
-                <span style={{ color: node.colorValue }}>→</span>
-                <span className="ml-2" style={{ color: node.colorValue }}>
-                  {node.label}
-                </span>
-              </motion.div>
-            </motion.button>
-          </motion.div>
+            {/* HOLOGRAPHIC LABEL (STATIC - NOT ROTATING) */}
+            {/* Positioned absolutely to stay readable and visible */}
+            <motion.div
+              className="absolute pointer-events-auto font-mono text-sm whitespace-nowrap"
+              style={{
+                left: `calc(50% + ${labelX}px)`,
+                top: `calc(50% + ${labelY}px)`,
+                transform: "translate(-50%, -50%)",
+                zIndex: isHoveredNode ? 40 : 20,
+                background: `linear-gradient(135deg, rgba(${node.colorValue === "rgb(0, 217, 255)" ? "0, 217, 255" : node.colorValue === "rgb(0, 255, 159)" ? "0, 255, 159" : "181, 55, 242"}, 0.15) 0%, rgba(${node.colorValue === "rgb(0, 217, 255)" ? "0, 217, 255" : node.colorValue === "rgb(0, 255, 159)" ? "0, 255, 159" : "181, 55, 242"}, 0.05) 100%), rgba(10, 14, 39, 0.85)`,
+                border: `1px solid ${node.colorValue}40`,
+                backdropFilter: "blur(12px)",
+                borderRadius: "0.75rem",
+                padding: "0.5rem 1rem",
+                boxShadow: isHoveredNode
+                  ? `0 0 20px ${node.colorValue}60, inset 0 1px 2px rgba(255, 255, 255, 0.15)`
+                  : `0 0 10px ${node.colorValue}20`,
+              }}
+              animate={{
+                opacity: isHoveredNode ? 1 : 0,
+                y: isHoveredNode ? -8 : 0,
+                scale: isHoveredNode ? 1 : 0.9,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut",
+              }}
+            >
+              <span style={{ color: node.colorValue }}>→</span>
+              <span className="ml-2" style={{ color: node.colorValue }}>
+                {node.label}
+              </span>
+            </motion.div>
+          </div>
         );
       })}
     </div>
