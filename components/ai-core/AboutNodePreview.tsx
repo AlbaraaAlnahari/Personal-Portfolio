@@ -51,26 +51,10 @@ export function AboutNodePreview({
             <Image
               src="/images/albaraa-profile.webp"
               alt="Portrait of Albaraa Alnahari"
-              fill
-              className="object-cover"
-              sizes="56px"
-              priority={false}
-              onError={(e) => {
-                // Fallback if image fails
-                const img = e.currentTarget;
-                img.style.display = "none";
-              }}
+              width={60}
+              height={60}
+              className="h-14 w-14 rounded-md object-cover object-center"
             />
-            {/* Fallback placeholder */}
-            <div
-              className="absolute inset-0 flex items-center justify-center text-xs text-accent-cyan/40 font-mono"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(181, 55, 242, 0.1) 100%)",
-              }}
-            >
-              {/* Will be hidden if image loads */}
-            </div>
           </div>
 
           {/* Text content */}

@@ -89,27 +89,10 @@ export function AboutModule() {
                   src="/images/albaraa-profile.webp"
                   alt="Portrait of Albaraa Alnahari"
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 400px"
+                  sizes="(max-width: 768px) 85vw, (max-width: 1200px) 40vw, 360px"
+                  className="object-cover object-center"
                   priority
-                  onError={(e) => {
-                    // If image fails to load, show placeholder
-                    const img = e.currentTarget;
-                    img.style.display = "none";
-                  }}
                 />
-
-                {/* Fallback placeholder when image not found */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-background-primary via-background-primary to-background-secondary">
-                  <div className="text-center px-6">
-                    <div className="text-xs text-accent-cyan/60 font-mono mb-2">
-                      PORTRAIT ASSET
-                    </div>
-                    <div className="text-sm text-foreground-secondary/60">
-                      Image pending
-                    </div>
-                  </div>
-                </div>
 
                 {/* Identity label below */}
                 <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background-primary via-background-primary/80 to-transparent pointer-events-none">
