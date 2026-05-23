@@ -46,17 +46,15 @@ export function AboutNodePreview({
 
         {/* Profile row with image and text */}
         <div className="flex items-center gap-3">
-          {/* Thumbnail - enlarged for better portrait recognition */}
-          <div className="relative rounded-lg border border-accent-cyan/30 overflow-hidden bg-background-primary/60 flex-shrink-0" style={{ width: "72px", height: "84px" }}>
-            <div className="absolute inset-0 overflow-hidden">
-              <Image
-                src="/images/albaraa-profile.svg"
-                alt="Portrait of Albaraa Alnahari"
-                width={80}
-                height={92}
-                className="w-full h-full object-contain object-bottom origin-bottom scale-[2.0]"
-              />
-            </div>
+          {/* Thumbnail - premium portrait identity preview */}
+          <div className="relative h-[80px] w-[72px] shrink-0 overflow-hidden rounded-xl border border-accent-cyan/40 bg-background-primary/50">
+            <Image
+              src="/images/albaraa-profile.svg"
+              alt="Portrait of Albaraa Alnahari"
+              fill
+              sizes="72px"
+              className="object-contain object-bottom origin-bottom scale-[1.9]"
+            />
           </div>
 
           {/* Text content */}
