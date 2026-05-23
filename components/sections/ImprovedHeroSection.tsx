@@ -1,12 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { AliveAICore } from "@/components/ai-core/AliveAICore";
-import { NeuralNavigationNodes } from "@/components/ai-core/NeuralNavigationNodes";
-import { NeuralConnectionLines } from "@/components/ai-core/NeuralConnectionLines";
+import { NeuralNavigation } from "@/components/ai-core/NeuralNavigation";
 import { EnvironmentalAtmosphere } from "@/components/environment/EnvironmentalAtmosphere";
 import { IntegratedDiagnostics } from "@/components/environment/IntegratedDiagnostics";
 import {
@@ -20,15 +18,12 @@ import {
  * Balances: 70% usability, 30% cinematic wow
  */
 export function ImprovedHeroSection() {
-  const [activeSection, setActiveSection] = useState<string>("");
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   return (
     <motion.section
       className="relative"
       style={{
         minHeight: "calc(100vh - var(--nav-height))",
-        paddingTop: "var(--nav-height)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -45,41 +40,31 @@ export function ImprovedHeroSection() {
         },
       }}
     >
-      {/* Neural Connection Lines Layer */}
-      <NeuralConnectionLines activeSection={activeSection} hoveredNode={hoveredNode} />
-
       <EnvironmentalAtmosphere intensity="subtle">
         <Container className="relative z-10 w-full">
           <motion.div
             variants={containerVariants}
             className="flex flex-col items-center justify-center gap-10 text-center max-w-3xl mx-auto py-16"
           >
-            {/* Alive AI Core - Floating holographic neural orb with Neural Navigation */}
+            {/* Alive AI Core - Floating holographic neural orb */}
             <motion.div
               variants={itemVariants}
-              className="relative w-96 h-96 overflow-visible"
-              style={{ zIndex: 10 }}
-              onMouseEnter={() => setActiveSection("ai-core")}
-              onMouseLeave={() => setActiveSection("")}
+              className="relative w-96 h-96 flex items-center justify-center overflow-visible mt-10 md:mt-14"
+              style={{
+                zIndex: 10,
+              }}
             >
-              {/* AI Core Center */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <AliveAICore
-                  size="lg"
-                  interactive
-                />
-              </div>
-
-              {/* Neural Navigation Nodes */}
-              <NeuralNavigationNodes
-                activeSection={activeSection}
-                hoveredNode={hoveredNode}
-                onHover={setHoveredNode}
+              <AliveAICore
+                size="lg"
+                interactive
               />
+
+              {/* Neural Navigation Overlay */}
+              <NeuralNavigation isVisible={true} />
             </motion.div>
 
             {/* Primary Information */}
-            <motion.div variants={itemVariants} className="space-y-4 pt-2">
+            <motion.div variants={itemVariants} className="space-y-4 pt-12 md:pt-16">
               {/* Main Name */}
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                 <span className="text-accent-cyan glow-cyan">Albaraa</span>

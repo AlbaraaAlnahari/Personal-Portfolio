@@ -10,6 +10,23 @@ interface AliveAICoreProps {
   showMetrics?: boolean;
 }
 
+// Deterministic particle configuration - prevents hydration mismatch
+const NEURAL_PARTICLES = Array.from({ length: 10 }, (_, i) => ({
+  index: i,
+  size: `${4 + i * 0.7}px`,
+  angle: (i * Math.PI * 2) / 10,
+  colorIndex: i % 3,
+}));
+
+// Deterministic neural connection paths
+const NEURAL_CONNECTIONS = Array.from({ length: 10 }, (_, i) => ({
+  index: i,
+  angle: (i * Math.PI * 2) / 10,
+  nextAngle: ((i + 1) * Math.PI * 2) / 10,
+}));
+
+const PARTICLE_COLORS = ["#00d9ff", "#00ff9f", "#b537f2"];
+
 /**
  * Alive AI Core Component
  * The emotional heart of Albaraa OS
@@ -274,28 +291,26 @@ export function AliveAICore({
       />
 
       {/* Neural Particle Nodes - intelligent behavior */}
-      {[...Array(10)].map((_, i) => {
-        const angle = (i * Math.PI * 2) / 10;
+      {NEURAL_PARTICLES.map((particle) => {
         const distance = particles / 2;
-        const startX = Math.cos(angle) * distance;
-        const startY = Math.sin(angle) * distance;
-
-        const colors = ["#00d9ff", "#00ff9f", "#b537f2"];
-        const color = colors[i % 3];
+        const startX = Math.cos(particle.angle) * distance;
+        const startY = Math.sin(particle.angle) * distance;
+        const color = PARTICLE_COLORS[particle.colorIndex];
+        const glowSize = 18 + particle.index * 1.5;
 
         return (
           <motion.div
-            key={i}
+            key={particle.index}
             className="absolute rounded-full"
             style={{
-              width: 4 + i * 0.7,
-              height: 4 + i * 0.7,
+              width: particle.size,
+              height: particle.size,
               background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
-              boxShadow: `0 0 ${18 + i * 1.5}px ${color.replace(")", ", 0.8)").replace("rgb", "rgba")}`,
+              boxShadow: `0 0 ${glowSize}px rgba(0, 217, 255, 0.8)`,
               top: `${startY + particles / 2}px`,
               left: `${startX + particles / 2}px`,
             }}
-            custom={i}
+            custom={particle.index}
             variants={neuralParticleVariants}
             animate="animate"
           />
@@ -323,17 +338,15 @@ export function AliveAICore({
         </defs>
 
         {/* Intelligent neural paths */}
-        {[...Array(10)].map((_, i) => {
-          const angle = (i * Math.PI * 2) / 10;
-          const nextAngle = ((i + 1) * Math.PI * 2) / 10;
-          const x1 = 50 + Math.cos(angle) * 45;
-          const y1 = 50 + Math.sin(angle) * 45;
-          const x2 = 50 + Math.cos(nextAngle) * 45;
-          const y2 = 50 + Math.sin(nextAngle) * 45;
+        {NEURAL_CONNECTIONS.map((conn) => {
+          const x1 = 50 + Math.cos(conn.angle) * 45;
+          const y1 = 50 + Math.sin(conn.angle) * 45;
+          const x2 = 50 + Math.cos(conn.nextAngle) * 45;
+          const y2 = 50 + Math.sin(conn.nextAngle) * 45;
 
           return (
             <motion.line
-              key={`conn-${i}`}
+              key={`conn-${conn.index}`}
               x1={x1}
               y1={y1}
               x2={x2}
@@ -348,7 +361,7 @@ export function AliveAICore({
                 duration: 3,
                 ease: "easeInOut",
                 repeat: Infinity,
-                delay: i * 0.15,
+                delay: conn.index * 0.15,
               }}
             />
           );

@@ -11,11 +11,7 @@ interface SystemStatusItem {
   color: "cyan" | "green" | "purple";
 }
 
-interface AISystemStatusProps {
-  showOnMobile?: boolean;
-}
-
-export function AISystemStatus({ showOnMobile = false }: AISystemStatusProps) {
+export function AISystemStatus() {
   const [hoveredStatus, setHoveredStatus] = useState<string | null>(null);
 
   const statusItems: SystemStatusItem[] = [
@@ -60,12 +56,6 @@ export function AISystemStatus({ showOnMobile = false }: AISystemStatusProps) {
     cyan: "text-accent-cyan",
     green: "text-accent-green",
     purple: "text-accent-purple",
-  };
-
-  const borderClasses = {
-    cyan: "border-accent-cyan",
-    green: "border-accent-green",
-    purple: "border-accent-purple",
   };
 
   const shadowClasses = {

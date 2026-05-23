@@ -60,15 +60,19 @@ export function Navigation() {
         <motion.div
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2 }}
           className="flex-shrink-0"
           animate={{
             opacity: [0.85, 1, 0.85],
           }}
           transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
+            opacity: {
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+            whileHover: {
+              duration: 0.2,
+            },
           }}
         >
           <Link

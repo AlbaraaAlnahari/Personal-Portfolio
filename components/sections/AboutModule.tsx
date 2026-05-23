@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { HolographicProfile } from "./HolographicProfile";
+import { Button } from "@/components/ui/Button";
 import {
   containerVariants,
   itemVariants,
@@ -11,25 +12,37 @@ import {
 
 /**
  * About Module
- * Intelligent system overview and personal engineering profile
- * Cinematic composition with subtle interface layering
+ * Premium identity and engineering profile with real portrait
  */
 export function AboutModule() {
   const expertise = [
     "AI-enabled products",
     "Full-stack development",
-    "Robotics engineering",
+    "Robotics",
     "User research",
     "Technical leadership",
     "Scalable web systems",
   ];
 
   const technologies = [
-    { category: "Frontend", tools: "React, Next.js, TypeScript, Tailwind CSS" },
-    { category: "Backend", tools: "Python, Java, SQL, Supabase" },
-    { category: "AI/ML", tools: "Gemini API, Qwen API, Claude API, LLMs" },
-    { category: "DevOps", tools: "Git, Deployment, Performance Optimization" },
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Supabase",
+    "Python",
+    "Java",
+    "SQL",
+    "AI APIs",
+    "Tailwind CSS",
   ];
+
+  const handleScroll = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section id="about" className="py-20 md:py-32 relative">
@@ -39,112 +52,150 @@ export function AboutModule() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="space-y-16"
+          className="space-y-12"
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="space-y-3">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              <span className="text-accent-cyan">About</span> Albaraa
+          <motion.div variants={itemVariants} className="space-y-4">
+            <div className="text-sm font-mono text-accent-cyan tracking-widest">
+              ABOUT / IDENTITY MODULE
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+              Engineering intelligent
+              <br />
+              products with purpose.
             </h2>
-            <p className="text-foreground-secondary text-lg max-w-2xl">
-              Software Engineering student building AI-enabled products and intelligent systems
-            </p>
           </motion.div>
 
           {/* Main Content Grid */}
           <motion.div
             variants={containerVariants}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16"
           >
-            {/* Left: Holographic Profile */}
-            <motion.div variants={itemVariants} className="space-y-6 flex flex-col items-center justify-start">
-              {/* Holographic Profile System */}
-              <HolographicProfile initials="AOS" systemMetrics={{ neural: 87, coherence: 94, latency: 3 }} />
+            {/* Left: Portrait */}
+            <motion.div variants={itemVariants} className="space-y-6 flex flex-col items-center md:items-start">
+              {/* Portrait frame */}
+              <div className="relative w-full max-w-xs aspect-[4/5] rounded-2xl overflow-hidden border border-accent-cyan/30 bg-background-primary/40">
+                {/* Glow background */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 30% 30%, rgba(0, 217, 255, 0.2) 0%, rgba(181, 55, 242, 0.1) 40%, transparent 70%)",
+                  }}
+                />
 
-              {/* Profile Text Below */}
-              <GlassPanel className="p-6 space-y-4 w-full">
-                <div>
-                  <h3 className="text-sm text-accent-cyan font-mono tracking-widest mb-3">
-                    ENGINEERING PROFILE
-                  </h3>
-                  <p className="text-foreground-primary leading-relaxed">
-                    Albaraa Alnahari is a Software Engineering student with experience in creating
-                    intelligent, scalable products. Passionate about transforming complex problems
-                    into elegant technical solutions.
-                  </p>
-                </div>
+                {/* Image */}
+                <Image
+                  src="/images/albaraa-profile.webp"
+                  alt="Portrait of Albaraa Alnahari"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  priority
+                  onError={(e) => {
+                    // If image fails to load, show placeholder
+                    const img = e.currentTarget;
+                    img.style.display = "none";
+                  }}
+                />
 
-                <div className="pt-4 border-t border-glass-light">
-                  <h4 className="text-xs text-accent-green font-mono tracking-widest mb-3">
-                    CORE EXPERTISE
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {expertise.map((skill, index) => (
-                      <motion.span
-                        key={skill}
-                        variants={itemVariants}
-                        transition={{ delay: index * 0.05 }}
-                        className="px-3 py-1 rounded-md bg-background-primary/40 border border-glass-light/30 text-xs text-foreground-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-all"
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-              </GlassPanel>
-            </motion.div>
-
-            {/* Right: Technologies */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              {technologies.map((tech, index) => (
-                <motion.div
-                  key={tech.category}
-                  variants={itemVariants}
-                  transition={{ delay: index * 0.1 }}
-                  className="group"
-                >
-                  <GlassPanel className="p-4 hover:border-glass-lighter transition-all">
-                    <div>
-                      <h4 className="text-xs font-mono text-accent-green tracking-widest mb-2">
-                        {tech.category}
-                      </h4>
-                      <p className="text-sm text-foreground-secondary/80">
-                        {tech.tools}
-                      </p>
+                {/* Fallback placeholder when image not found */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-background-primary via-background-primary to-background-secondary">
+                  <div className="text-center px-6">
+                    <div className="text-xs text-accent-cyan/60 font-mono mb-2">
+                      PORTRAIT ASSET
                     </div>
-                  </GlassPanel>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
+                    <div className="text-sm text-foreground-secondary/60">
+                      Image pending
+                    </div>
+                  </div>
+                </div>
 
-          {/* Stats/Indicators */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-3 md:grid-cols-4 gap-4"
-          >
-            {[
-              { label: "Projects Built", value: "4+" },
-              { label: "Technologies", value: "12+" },
-              { label: "AI Products", value: "3" },
-              { label: "Bootcamps", value: "1st Place" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                variants={itemVariants}
-                transition={{ delay: index * 0.08 }}
-                className="text-center"
-              >
-                <GlassPanel className="p-4">
-                  <div className="text-xl md:text-2xl font-bold text-accent-cyan mb-1">
-                    {stat.value}
+                {/* Identity label below */}
+                <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background-primary via-background-primary/80 to-transparent pointer-events-none">
+                  <div className="text-xs font-mono text-accent-cyan/80 tracking-widest">
+                    ALBARAA ALNAHARI
                   </div>
-                  <div className="text-xs text-foreground-secondary">
-                    {stat.label}
+                  <div className="text-xs text-foreground-secondary/70 mt-0.5">
+                    IDENTITY PROFILE
                   </div>
-                </GlassPanel>
-              </motion.div>
-            ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right: Content */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              {/* Biography */}
+              <div>
+                <p className="text-lg text-foreground-primary leading-relaxed">
+                  Albaraa Alnahari is a Software Engineering student focused on building AI-enabled
+                  products, modern full-stack applications, robotics-driven experiences, and scalable
+                  digital systems. His work combines software engineering, product thinking, user research,
+                  and technical leadership to turn ambitious ideas into practical products.
+                </p>
+              </div>
+
+              {/* Focus Areas */}
+              <div>
+                <h3 className="text-xs font-mono text-accent-green tracking-widest mb-3">
+                  FOCUS AREAS
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {expertise.map((area, index) => (
+                    <motion.div
+                      key={area}
+                      variants={itemVariants}
+                      transition={{ delay: index * 0.05 }}
+                      className="px-3 py-1.5 rounded-md bg-background-primary/50 border border-accent-cyan/20 text-xs text-foreground-secondary/90 hover:border-accent-cyan/50 hover:text-accent-cyan transition-all"
+                    >
+                      {area}
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies */}
+              <div>
+                <h3 className="text-xs font-mono text-accent-purple tracking-widest mb-3">
+                  TECHNOLOGIES
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {technologies.map((tech, index) => (
+                    <motion.div
+                      key={tech}
+                      variants={itemVariants}
+                      transition={{ delay: index * 0.03 }}
+                      className="px-2.5 py-1 rounded-md bg-background-primary/40 border border-glass-light/20 text-xs text-foreground-secondary/80 hover:border-accent-purple/40 hover:text-foreground-primary transition-all"
+                    >
+                      {tech}
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="pt-4 flex gap-3 flex-col sm:flex-row">
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={(e) => {
+                    const link = document.createElement("a");
+                    link.href = "/resume.pdf";
+                    link.download = "Albaraa_Alnahari_Resume.pdf";
+                    link.click();
+                  }}
+                >
+                  Download Resume
+                </Button>
+                <Button
+                  variant="glass"
+                  size="md"
+                  onClick={(e) => handleScroll(e, "contact")}
+                >
+                  Get In Touch
+                </Button>
+              </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </Container>
