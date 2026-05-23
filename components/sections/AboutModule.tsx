@@ -60,9 +60,9 @@ export function AboutModule() {
               ABOUT / IDENTITY MODULE
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-              Engineering intelligent
+              Turning intelligence
               <br />
-              products with purpose.
+              into systems people can use.
             </h2>
           </motion.div>
 
@@ -109,9 +109,9 @@ export function AboutModule() {
             </motion.div>
 
             {/* Right: Content */}
-            <motion.div variants={itemVariants} className="space-y-6">
+            <motion.div variants={itemVariants} className="space-y-8">
               {/* Biography */}
-              <div>
+              <div className="border-b border-glass-light/20 pb-8">
                 <p className="text-lg text-foreground-primary leading-relaxed">
                   Albaraa Alnahari is a Software Engineering student focused on building AI-enabled
                   products, modern full-stack applications, robotics-driven experiences, and scalable
@@ -122,7 +122,7 @@ export function AboutModule() {
 
               {/* Focus Areas */}
               <div>
-                <h3 className="text-xs font-mono text-accent-green tracking-widest mb-3">
+                <h3 className="text-xs font-mono text-accent-green tracking-widest mb-4">
                   FOCUS AREAS
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -131,7 +131,7 @@ export function AboutModule() {
                       key={area}
                       variants={itemVariants}
                       transition={{ delay: index * 0.05 }}
-                      className="px-3 py-1.5 rounded-md bg-background-primary/50 border border-accent-cyan/20 text-xs text-foreground-secondary/90 hover:border-accent-cyan/50 hover:text-accent-cyan transition-all"
+                      className="px-3 py-1.5 rounded-lg bg-gradient-to-br from-accent-cyan/8 to-accent-purple/5 border border-accent-cyan/30 text-xs text-foreground-secondary/90 hover:border-accent-cyan/60 hover:text-accent-cyan hover:bg-accent-cyan/10 transition-all"
                     >
                       {area}
                     </motion.div>
@@ -141,7 +141,7 @@ export function AboutModule() {
 
               {/* Technologies */}
               <div>
-                <h3 className="text-xs font-mono text-accent-purple tracking-widest mb-3">
+                <h3 className="text-xs font-mono text-accent-purple tracking-widest mb-4">
                   TECHNOLOGIES
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -150,7 +150,7 @@ export function AboutModule() {
                       key={tech}
                       variants={itemVariants}
                       transition={{ delay: index * 0.03 }}
-                      className="px-2.5 py-1 rounded-md bg-background-primary/40 border border-glass-light/20 text-xs text-foreground-secondary/80 hover:border-accent-purple/40 hover:text-foreground-primary transition-all"
+                      className="px-2.5 py-1.5 rounded-lg bg-gradient-to-br from-accent-purple/8 to-accent-cyan/5 border border-accent-purple/25 text-xs text-foreground-secondary/80 hover:border-accent-purple/60 hover:text-accent-purple hover:bg-accent-purple/10 transition-all"
                     >
                       {tech}
                     </motion.div>

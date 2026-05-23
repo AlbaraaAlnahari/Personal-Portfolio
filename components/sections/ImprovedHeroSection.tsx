@@ -5,6 +5,7 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { AliveAICore } from "@/components/ai-core/AliveAICore";
 import { NeuralNavigation } from "@/components/ai-core/NeuralNavigation";
+import { NeuralSectionTransition } from "@/components/ai-core/NeuralSectionTransition";
 import { EnvironmentalAtmosphere } from "@/components/environment/EnvironmentalAtmosphere";
 import { IntegratedDiagnostics } from "@/components/environment/IntegratedDiagnostics";
 import {
@@ -198,6 +199,9 @@ export function ImprovedHeroSection() {
           }}
         />
       </motion.div>
+
+      {/* Neural Section Transition Overlay */}
+      <NeuralSectionTransition />
     </motion.section>
   );
 }

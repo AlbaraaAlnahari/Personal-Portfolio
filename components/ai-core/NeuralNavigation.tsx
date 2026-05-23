@@ -10,6 +10,7 @@ import {
   User,
 } from "lucide-react";
 import { AboutNodePreview } from "./AboutNodePreview";
+import { setNeuralTransition } from "./NeuralSectionTransition";
 
 interface NavNode {
   id: string;
@@ -120,6 +121,7 @@ interface NeuralNavigationProps {
 
 export function NeuralNavigation({ isVisible = true }: NeuralNavigationProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [activeNode, setActiveNode] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -135,11 +137,44 @@ export function NeuralNavigation({ isVisible = true }: NeuralNavigationProps) {
   const overlaySize = isMobile ? 360 : 640;
   const overlayCenter = overlaySize / 2;
 
-  const handleNodeClick = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleNodeClick = (node: NavNode) => {
+    setActiveNode(node.id);
+
+    // Get labels for transition based on node
+    const transitionLabels: Record<string, string> = {
+      "about": "OPENING IDENTITY MODULE",
+      "projects": "OPENING DEPLOYED SYSTEMS",
+      "experience": "OPENING JOURNEY ARCHIVE",
+      "skills": "OPENING CAPABILITY MATRIX",
+      "contact": "OPENING CONTACT INTERFACE",
+      "ai-assistant": "OPENING AI TERMINAL",
+    };
+
+    const label = transitionLabels[node.id] || "OPENING SYSTEM";
+
+    setNeuralTransition({
+      isActive: true,
+      label,
+      color: node.colorValue,
+    });
+
+    // Scroll to section after brief delay for transition effect
+    setTimeout(() => {
+      const element = document.getElementById(node.sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Clear transition after scroll completes
+      setTimeout(() => {
+        setNeuralTransition({
+          isActive: false,
+          label: "",
+          color: "rgb(0, 217, 255)",
+        });
+        setActiveNode(null);
+      }, 800);
+    }, 200);
   };
 
   if (!isVisible) return null;
@@ -232,9 +267,26 @@ export function NeuralNavigation({ isVisible = true }: NeuralNavigationProps) {
               }}
               onMouseEnter={() => setHoveredNode(node.id)}
               onMouseLeave={() => setHoveredNode(null)}
-              onClick={() => handleNodeClick(node.sectionId)}
+              onClick={() => handleNodeClick(node)}
               aria-label={node.label}
             />
+
+            {/* Pulse ring on click - subtle activation */}
+            {activeNode === node.id && (
+              <div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: `${nodeSize}px`,
+                  height: `${nodeSize}px`,
+                  left: "50%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                  border: `2px solid ${node.colorValue}`,
+                  animation: "neuralPulse 0.6s ease-out",
+                  zIndex: 25,
+                }}
+              />
+            )}
 
             {/* Node visual */}
             <div
@@ -299,6 +351,21 @@ export function NeuralNavigation({ isVisible = true }: NeuralNavigationProps) {
         @keyframes dash {
           to {
             stroke-dashoffset: -10;
+          }
+        }
+        @keyframes neuralPulse {
+          0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+          }
+          70% {
+            opacity: 0.6;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(2.2);
+            opacity: 0;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
           }
         }
       `}</style>
