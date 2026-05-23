@@ -48,13 +48,15 @@ export function AboutNodePreview({
         <div className="flex items-center gap-3">
           {/* Thumbnail */}
           <div className="relative w-14 h-14 rounded-md border border-accent-cyan/30 overflow-hidden bg-background-primary/60 flex-shrink-0">
-            <Image
-              src="/images/albaraa-profile.svg"
-              alt="Portrait of Albaraa Alnahari"
-              width={60}
-              height={60}
-              className="h-14 w-14 rounded-md object-cover object-center"
-            />
+            <div className="absolute inset-0 overflow-hidden">
+              <Image
+                src="/images/albaraa-profile.svg"
+                alt="Portrait of Albaraa Alnahari"
+                width={60}
+                height={60}
+                className="h-14 w-14 object-contain object-bottom origin-bottom scale-[1.8]"
+              />
+            </div>
           </div>
 
           {/* Text content */}

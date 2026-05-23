@@ -84,15 +84,17 @@ export function AboutModule() {
                   }}
                 />
 
-                {/* Image */}
-                <Image
-                  src="/images/albaraa-profile.svg"
-                  alt="Portrait of Albaraa Alnahari"
-                  fill
-                  sizes="(max-width: 768px) 85vw, (max-width: 1200px) 40vw, 360px"
-                  className="object-cover object-center"
-                  priority
-                />
+                {/* Image container - enlarged and bottom-anchored for premium presentation */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <Image
+                    src="/images/albaraa-profile.svg"
+                    alt="Portrait of Albaraa Alnahari"
+                    fill
+                    sizes="(max-width: 768px) 85vw, (max-width: 1200px) 40vw, 420px"
+                    className="object-contain object-bottom origin-bottom scale-[1.65]"
+                    priority
+                  />
+                </div>
 
                 {/* Identity label below */}
                 <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background-primary via-background-primary/80 to-transparent pointer-events-none">
