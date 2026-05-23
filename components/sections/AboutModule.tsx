@@ -91,7 +91,7 @@ export function AboutModule() {
                     alt="Portrait of Albaraa Alnahari"
                     fill
                     sizes="(max-width: 768px) 85vw, (max-width: 1200px) 40vw, 420px"
-                    className="object-contain object-bottom origin-bottom scale-[1.65]"
+                    className="object-contain object-bottom origin-bottom scale-[1.55]"
                     priority
                   />
                 </div>
