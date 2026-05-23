@@ -84,14 +84,14 @@ export function AboutModule() {
                   }}
                 />
 
-                {/* Image container - enlarged and bottom-anchored for premium presentation */}
-                <div className="absolute inset-0 overflow-hidden">
+                {/* Image container - professional portrait framing */}
+                <div className="absolute inset-x-6 top-6 bottom-24 overflow-hidden">
                   <Image
                     src="/images/albaraa-profile.svg"
                     alt="Portrait of Albaraa Alnahari"
                     fill
                     sizes="(max-width: 768px) 85vw, (max-width: 1200px) 40vw, 420px"
-                    className="object-contain object-bottom origin-bottom scale-[1.55]"
+                    className="object-contain object-bottom"
                     priority
                   />
                 </div>

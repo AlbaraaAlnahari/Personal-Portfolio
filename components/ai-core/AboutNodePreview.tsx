@@ -46,14 +46,14 @@ export function AboutNodePreview({
 
         {/* Profile row with image and text */}
         <div className="flex items-center gap-3">
-          {/* Thumbnail - premium portrait identity preview */}
-          <div className="relative h-[80px] w-[72px] shrink-0 overflow-hidden rounded-xl border border-accent-cyan/40 bg-background-primary/50">
+          {/* Thumbnail - face-focused profile preview */}
+          <div className="relative h-[88px] w-[76px] shrink-0 overflow-hidden rounded-xl border border-accent-cyan/40 bg-background-primary/50">
             <Image
               src="/images/albaraa-profile.svg"
               alt="Portrait of Albaraa Alnahari"
               fill
-              sizes="72px"
-              className="object-contain object-bottom origin-bottom scale-[1.9]"
+              sizes="76px"
+              className="object-contain object-top origin-top scale-[1.7]"
             />
           </div>
 
