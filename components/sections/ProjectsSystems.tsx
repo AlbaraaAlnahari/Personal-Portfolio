@@ -60,67 +60,85 @@ export function ProjectsSystems() {
       variants={itemVariants}
       className="relative group"
     >
+      {/* Ambient glow on hover */}
       <motion.div
-        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-40 pointer-events-none transition-opacity duration-300"
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-50 pointer-events-none transition-opacity duration-500"
         style={{
-          background: `radial-gradient(circle, rgba(0, 217, 255, 0.3) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.4) 0%, transparent 70%)`,
         }}
       />
-      <GlassPanel className="p-8 md:p-10 space-y-6 relative z-10 hover:border-glass-lighter transition-all">
+
+      <GlassPanel className="p-8 md:p-12 space-y-8 relative z-10 group-hover:border-accent-cyan/50 transition-all duration-500">
+        {/* System Identifier */}
+        <div className="flex items-center justify-between">
+          <div className="text-xs font-mono text-accent-cyan/70 tracking-widest">
+            SYSTEM 01 / FLAGSHIP
+          </div>
+          <div className="w-2 h-2 rounded-full bg-accent-green/60 animate-pulse" />
+        </div>
+
         {/* Header */}
-        <div className="space-y-3">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h3 className="text-3xl md:text-4xl font-bold text-accent-cyan mb-2">
-                {project.name}
-              </h3>
-              <p className="text-lg text-foreground-secondary">
-                {project.tagline}
-              </p>
-            </div>
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent-cyan mb-3">
+              {project.name}
+            </h3>
+            <p className="text-lg md:text-xl text-foreground-secondary">
+              {project.tagline}
+            </p>
           </div>
 
           {/* Achievement Badge */}
           {project.achievement && (
-            <div className="inline-block px-4 py-2 rounded-lg bg-accent-cyan/10 border border-accent-cyan/30">
-              <span className="text-sm text-accent-cyan font-medium">
-                {project.achievement}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="inline-block px-4 py-2 rounded-lg bg-accent-cyan/10 border border-accent-cyan/40 hover:border-accent-cyan/60 transition-all"
+            >
+              <span className="text-sm text-accent-cyan font-medium flex items-center gap-2">
+                <span>🏆</span> {project.achievement}
               </span>
-            </div>
+            </motion.div>
           )}
         </div>
 
         {/* Description */}
-        <p className="text-foreground-secondary/90 leading-relaxed text-lg">
-          {project.description}
-        </p>
+        <div className="border-t border-glass-light/30 pt-8">
+          <p className="text-foreground-secondary/90 leading-relaxed text-lg">
+            {project.description}
+          </p>
+        </div>
 
         {/* Metrics */}
         {project.metrics && (
-          <div className="grid grid-cols-3 gap-4 py-6 border-y border-glass-light">
+          <div className="grid grid-cols-3 gap-6 py-8 border-y border-glass-light/30">
             {Object.entries(project.metrics).map(([key, value]) => (
-              <div key={key}>
-                <div className="text-2xl font-bold text-accent-green mb-1">
+              <motion.div
+                key={key}
+                whileHover={{ y: -2 }}
+                className="text-center"
+              >
+                <div className="text-3xl font-bold text-accent-green mb-2">
                   {value}
                 </div>
-                <div className="text-xs text-foreground-secondary capitalize">
+                <div className="text-xs text-foreground-secondary/70 uppercase tracking-widest">
                   {key}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
 
         {/* Tech Stack */}
         <div>
-          <h4 className="text-xs font-mono text-accent-green tracking-widest mb-3">
+          <h4 className="text-xs font-mono text-accent-purple tracking-widest mb-4">
             TECHNOLOGY STACK
           </h4>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((tech) => (
               <motion.span
                 key={tech}
-                className="px-3 py-1.5 rounded-md bg-background-primary/40 border border-glass-light/40 text-xs text-foreground-secondary hover:text-accent-cyan hover:border-accent-cyan/50 transition-all"
+                whileHover={{ scale: 1.05 }}
+                className="px-3 py-1.5 rounded-md bg-background-primary/50 border border-glass-light/40 text-xs text-foreground-secondary/90 hover:text-accent-cyan hover:border-accent-cyan/60 transition-all"
               >
                 {tech}
               </motion.span>
@@ -131,53 +149,71 @@ export function ProjectsSystems() {
         {/* CTA */}
         <motion.a
           href={`#project-${project.id}`}
-          whileHover={{ x: 4 }}
-          className="inline-flex items-center gap-2 text-sm text-accent-cyan hover:text-accent-green transition-colors mt-4"
+          whileHover={{ x: 6 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="inline-flex items-center gap-2 text-sm font-medium text-accent-cyan hover:text-accent-green transition-colors pt-4"
         >
-          <span>Explore System</span>
-          <span>→</span>
+          <span>Explore System Details</span>
+          <span className="text-lg">→</span>
         </motion.a>
       </GlassPanel>
     </motion.div>
   );
 
-  const RegularProject = ({ project }: { project: typeof projects[0] }) => (
+  const RegularProject = ({ project, index }: { project: typeof projects[0]; index: number }) => (
     <motion.div
       variants={itemVariants}
-      className="relative group"
+      className="relative group h-full"
     >
+      {/* Subtle glow on hover */}
       <motion.div
-        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-40 pointer-events-none transition-opacity duration-300"
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-30 pointer-events-none transition-opacity duration-300"
         style={{
           background: `radial-gradient(circle, rgba(0, 217, 255, 0.2) 0%, transparent 70%)`,
         }}
       />
-      <GlassPanel className="p-6 space-y-4 relative z-10 hover:border-glass-lighter transition-all h-full">
+
+      <GlassPanel className="p-6 md:p-8 space-y-6 relative z-10 group-hover:border-accent-cyan/40 transition-all h-full flex flex-col">
+        {/* System number + status */}
+        <div className="flex items-start justify-between">
+          <span className="text-xs font-mono text-accent-cyan/60 tracking-widest">
+            SYSTEM {String(index + 2).padStart(2, "0")}
+          </span>
+          <div className="w-1.5 h-1.5 rounded-full bg-accent-green/50" />
+        </div>
+
+        {/* Title */}
         <div>
-          <h4 className="text-xl font-bold text-accent-cyan mb-1">
+          <h4 className="text-xl md:text-2xl font-bold text-accent-cyan mb-2 group-hover:text-accent-green transition-colors">
             {project.name}
           </h4>
-          <p className="text-sm text-foreground-secondary">
+          <p className="text-sm text-foreground-secondary/80">
             {project.tagline}
           </p>
         </div>
 
-        <p className="text-sm text-foreground-secondary/80 leading-relaxed">
+        {/* Description */}
+        <p className="text-sm text-foreground-secondary/75 leading-relaxed flex-grow">
           {project.description}
         </p>
 
+        {/* Divider */}
+        <div className="border-t border-glass-light/20" />
+
+        {/* Tech Stack */}
         <div>
-          <h5 className="text-xs font-mono text-accent-green tracking-widest mb-2">
-            STACK
+          <h5 className="text-xs font-mono text-accent-green/80 tracking-widest mb-3 uppercase">
+            Tech Stack
           </h5>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {project.tech.map((tech) => (
-              <span
+              <motion.span
                 key={tech}
-                className="px-2 py-1 rounded text-xs bg-background-primary/30 border border-glass-light/20 text-foreground-secondary"
+                whileHover={{ scale: 1.05 }}
+                className="px-2.5 py-1 rounded-sm text-xs bg-background-primary/40 border border-glass-light/30 text-foreground-secondary/80 hover:text-accent-cyan hover:border-accent-cyan/40 transition-all"
               >
                 {tech}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>
@@ -199,12 +235,17 @@ export function ProjectsSystems() {
           className="space-y-16"
         >
           {/* Header */}
-          <motion.div variants={itemVariants} className="space-y-3">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              <span className="text-accent-cyan">Deployed</span> Systems
+          <motion.div variants={itemVariants} className="space-y-4">
+            <div className="text-sm font-mono text-accent-green tracking-widest">
+              DEPLOYED SYSTEMS / FEATURED WORK
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+              Products designed to turn
+              <br />
+              intelligence into action.
             </h2>
-            <p className="text-foreground-secondary text-lg max-w-2xl">
-              AI-powered platforms and intelligent software modules in active operation
+            <p className="text-foreground-secondary/80 text-lg max-w-2xl leading-relaxed">
+              Intelligent platforms solving real problems. AI-powered systems designed with purpose, built for impact.
             </p>
           </motion.div>
 
@@ -216,8 +257,8 @@ export function ProjectsSystems() {
             variants={containerVariants}
             className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            {otherProjects.map((project) => (
-              <RegularProject key={project.id} project={project} />
+            {otherProjects.map((project, index) => (
+              <RegularProject key={project.id} project={project} index={index} />
             ))}
           </motion.div>
         </motion.div>
