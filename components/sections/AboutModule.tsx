@@ -86,7 +86,7 @@ export function AboutModule() {
 
                 {/* Image */}
                 <Image
-                  src="/images/albaraa-profile.webp"
+                  src="/images/albaraa-profile.svg"
                   alt="Portrait of Albaraa Alnahari"
                   fill
                   sizes="(max-width: 768px) 85vw, (max-width: 1200px) 40vw, 360px"

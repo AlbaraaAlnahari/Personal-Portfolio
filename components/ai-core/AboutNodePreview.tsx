@@ -49,7 +49,7 @@ export function AboutNodePreview({
           {/* Thumbnail */}
           <div className="relative w-14 h-14 rounded-md border border-accent-cyan/30 overflow-hidden bg-background-primary/60 flex-shrink-0">
             <Image
-              src="/images/albaraa-profile.webp"
+              src="/images/albaraa-profile.svg"
               alt="Portrait of Albaraa Alnahari"
               width={60}
               height={60}
