@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { IntelligenceEngineHero } from "@/components/sections/IntelligenceEngineHero";
 import { ImprovedHeroSection } from "@/components/sections/ImprovedHeroSection";
 import { AboutModule } from "@/components/sections/AboutModule";
 import { ProjectsSystems } from "@/components/sections/ProjectsSystems";
@@ -17,10 +18,9 @@ import {
   pageTransitionVariants,
 } from "@/lib/motion/variants";
 
-/**
- * Home Page - Landing experience
- * Phase 3: Full portfolio experience with integrated AI OS system modules
- */
+// Toggle: set to false to revert to the original orb hero
+const USE_INTELLIGENCE_ENGINE = true;
+
 export default function Home() {
   return (
     <motion.main
@@ -29,8 +29,12 @@ export default function Home() {
       variants={pageTransitionVariants}
       className="min-h-screen"
     >
-      {/* Improved Hero Section */}
-      <ImprovedHeroSection />
+      {/* Hero Section — Intelligence Engine or classic orb fallback */}
+      {USE_INTELLIGENCE_ENGINE ? (
+        <IntelligenceEngineHero />
+      ) : (
+        <ImprovedHeroSection />
+      )}
 
       {/* Section Transition Divider */}
       <div className="flex justify-center py-12 md:py-16">
