@@ -331,14 +331,18 @@ export function IntelligenceEngineHero() {
             >
               Explore Projects
             </button>
-            <button
-              className="px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
+            <a
+              href="/resume/Albaraa-Alnahari-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.12)",
                 color: "rgba(232,233,243,0.78)",
                 cursor: "pointer",
                 transition: "all 250ms ease",
+                textDecoration: "none",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
@@ -348,10 +352,9 @@ export function IntelligenceEngineHero() {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
                 e.currentTarget.style.background = "rgba(255,255,255,0.04)";
               }}
-              onClick={() => smoothScrollTo("resume")}
             >
               View Resume
-            </button>
+            </a>
           </div>
 
           {/* Status */}
@@ -552,18 +555,21 @@ export function IntelligenceEngineHero() {
             >
               Explore Projects
             </button>
-            <button
-              className="px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
+            <a
+              href="/resume/Albaraa-Alnahari-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.12)",
                 color: "rgba(232,233,243,0.78)",
                 cursor: "pointer",
+                textDecoration: "none",
               }}
-              onClick={() => smoothScrollTo("resume")}
             >
               View Resume
-            </button>
+            </a>
           </div>
 
           {/* Status */}

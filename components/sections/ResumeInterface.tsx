@@ -213,21 +213,38 @@ export function ResumeInterface() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
           >
-            <Button
-              variant="primary"
-              size="lg"
-              glow
-              className="sm:w-auto"
+            {/* Download → official PDF (real Button preserved; anchor carries
+                the link semantics so styling matches the approved design). */}
+            <a
+              href="/resume/Albaraa-Alnahari-Resume.pdf"
+              download="Albaraa-Alnahari-Resume.pdf"
+              className="contents"
             >
-              Download Full Resume
-            </Button>
-            <Button
-              variant="glass"
-              size="lg"
-              className="sm:w-auto"
+              <Button
+                variant="primary"
+                size="lg"
+                glow
+                className="sm:w-auto"
+                tabIndex={-1}
+              >
+                Download Full Resume
+              </Button>
+            </a>
+            <a
+              href="/resume/Albaraa-Alnahari-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contents"
             >
-              View PDF
-            </Button>
+              <Button
+                variant="glass"
+                size="lg"
+                className="sm:w-auto"
+                tabIndex={-1}
+              >
+                View PDF
+              </Button>
+            </a>
           </motion.div>
 
           {/* Status */}

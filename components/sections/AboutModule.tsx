@@ -239,8 +239,8 @@ export function AboutModule() {
                       className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple text-background-primary font-semibold shadow-[0_0_20px_rgba(0,217,255,0.35)] hover:shadow-[0_0_28px_rgba(0,217,255,0.5)]"
                       onClick={() => {
                         const link = document.createElement("a");
-                        link.href = "/resume.pdf";
-                        link.download = "Albaraa_Alnahari_Resume.pdf";
+                        link.href = "/resume/Albaraa-Alnahari-Resume.pdf";
+                        link.download = "Albaraa-Alnahari-Resume.pdf";
                         link.click();
                       }}
                     >

@@ -115,8 +115,8 @@ export function ImprovedHeroSection() {
                   size="lg"
                   onClick={() => {
                     const link = document.createElement('a');
-                    link.href = '/resume.pdf';
-                    link.download = 'Albaraa_Alnahari_Resume.pdf';
+                    link.href = '/resume/Albaraa-Alnahari-Resume.pdf';
+                    link.download = 'Albaraa-Alnahari-Resume.pdf';
                     link.click();
                   }}
                 >
