@@ -1,6 +1,6 @@
 "use client";
 
-
+import { useEffect, useRef, useState } from "react";
 import type { ReactorState } from "./IntelligenceEngineModel";
 import { COMMAND_MODULES, DESKTOP_MODULE_POSITIONS } from "./CommandModuleData";
 
@@ -12,16 +12,23 @@ import { COMMAND_MODULES, DESKTOP_MODULE_POSITIONS } from "./CommandModuleData";
 interface ConnectorNetworkProps {
   activeModule: ReactorState | null;
   reducedMotion: boolean;
+  /**
+   * Production hero: pass `true` once the radial cards are rendered. When
+   * defined, connector endpoints dock to the MEASURED reactor-facing edge of
+   * each real card (robust to the card's actual on-screen box). When omitted
+   * (e.g. the experimental comparison route), the original position-based
+   * docking is used unchanged.
+   */
+  cardsReady?: boolean;
 }
 
 // Center of the reactor in percentage space
 const REACTOR_CENTER = { x: 50, y: 50 };
 
-// Approximate card dimensions as percentage of the (square) reactor container.
-// Cards are centered at their position via translate(-50%, -50%), so to make
-// the connector visibly DOCK at the card's inner-facing edge we compute the
-// line/box intersection and pull back by a small breathing gap.
-// Per-module widths because labels vary in length (EXPERIENCE wider than ABOUT).
+// ─────────────────────────────────────────────────────────────────────────
+// LEGACY position-based docking (unchanged) — only used when cardsReady is
+// undefined, so the shared experimental route keeps its exact prior behavior.
+// ─────────────────────────────────────────────────────────────────────────
 const CARD_WIDTH_PCT: Record<string, number> = {
   about: 16,
   skills: 17,
@@ -31,45 +38,98 @@ const CARD_WIDTH_PCT: Record<string, number> = {
   experience: 23,
 };
 const CARD_HEIGHT_PCT = 8;
-// Visible breathing gap between line tip and card body — ~7px on a 620px container
 const BREATH_GAP_PCT = 1.2;
 
-function computeDocking(
+function computeDockingLegacy(
   mx: number,
   my: number,
   cardW: number,
   cardH: number
-): { endX: number; endY: number; ux: number; uy: number } {
-  // Direction unit vector from card center toward reactor center
+): { endX: number; endY: number } {
   const dx = REACTOR_CENTER.x - mx;
   const dy = REACTOR_CENTER.y - my;
   const len = Math.hypot(dx, dy) || 1;
   const ux = dx / len;
   const uy = dy / len;
-
-  // Distance from card center to its bounding-box edge along (ux, uy).
-  // Whichever of horizontal/vertical edge intersects first wins —
-  // this naturally picks the card's nearest inner-facing edge.
   const tx = Math.abs(ux) > 1e-4 ? cardW / 2 / Math.abs(ux) : Infinity;
   const ty = Math.abs(uy) > 1e-4 ? cardH / 2 / Math.abs(uy) : Infinity;
   const edgeDist = Math.min(tx, ty);
-
-  // Line endpoint sits OUTSIDE the card by BREATH_GAP_PCT (toward reactor)
   const total = edgeDist + BREATH_GAP_PCT;
-  return {
-    endX: mx + ux * total,
-    endY: my + uy * total,
-    ux,
-    uy,
-  };
+  return { endX: mx + ux * total, endY: my + uy * total };
 }
+
+type Dock = { x: number; y: number };
 
 export default function ConnectorNetwork({
   activeModule,
   reducedMotion,
+  cardsReady,
 }: ConnectorNetworkProps) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [measuredDocks, setMeasuredDocks] = useState<Record<string, Dock>>({});
+  const useMeasured = cardsReady !== undefined;
+
+  // Measure each rendered card's true reactor-facing edge and place the dock
+  // there. Re-measures when cards appear (cardsReady) and on any container
+  // resize, so endpoints stay docked across the approved desktop widths.
+  useEffect(() => {
+    if (!useMeasured) return;
+    const svg = svgRef.current;
+    const container = svg?.parentElement;
+    if (!container) return;
+
+    let raf = 0;
+    const measure = () => {
+      const cr = container.getBoundingClientRect();
+      if (!cr.width || !cr.height) return;
+      const cW = cr.width;
+      const cH = cr.height;
+      // Tiny docking stub (px) so the port reads as sitting on the card edge.
+      const DOCK_GAP_PX = 3;
+      const next: Record<string, Dock> = {};
+      for (const mod of COMMAND_MODULES) {
+        const el = container.querySelector<HTMLElement>(
+          `[data-connector-card="${mod.id}"]`
+        );
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        const cx = (r.left + r.right) / 2 - cr.left;
+        const cy = (r.top + r.bottom) / 2 - cr.top;
+        // Unit vector from the card's real center toward the reactor core.
+        let ux = cW / 2 - cx;
+        let uy = cH / 2 - cy;
+        const L = Math.hypot(ux, uy) || 1;
+        ux /= L;
+        uy /= L;
+        // Distance from card center to the bounding-box edge along that ray —
+        // whichever edge (vertical/horizontal) the ray meets first.
+        const tx = Math.abs(ux) > 1e-4 ? r.width / 2 / Math.abs(ux) : Infinity;
+        const ty = Math.abs(uy) > 1e-4 ? r.height / 2 / Math.abs(uy) : Infinity;
+        const edge = Math.min(tx, ty) + DOCK_GAP_PX;
+        const dx = cx + ux * edge;
+        const dy = cy + uy * edge;
+        next[mod.id] = { x: (dx / cW) * 100, y: (dy / cH) * 100 };
+      }
+      setMeasuredDocks(next);
+    };
+
+    measure();
+    // One more pass after layout settles (font metrics, reveal transition).
+    raf = requestAnimationFrame(measure);
+
+    const ro = new ResizeObserver(() => measure());
+    ro.observe(container);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [useMeasured, cardsReady]);
+
   return (
     <svg
+      ref={svgRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ zIndex: 5 }}
       viewBox="0 0 100 100"
@@ -97,19 +157,29 @@ export default function ConnectorNetwork({
         const pos = DESKTOP_MODULE_POSITIONS[mod.id];
         if (!pos) return null;
 
-        // Parse position percentages to get module center
-        const mx = parseFloat(pos.left);
-        const my = parseFloat(pos.top);
-        const cardW = CARD_WIDTH_PCT[mod.id] ?? 20;
-        const { endX, endY } = computeDocking(mx, my, cardW, CARD_HEIGHT_PCT);
+        // Resolve the endpoint: measured card edge (production) or legacy.
+        let endX: number;
+        let endY: number;
+        if (useMeasured) {
+          const d = measuredDocks[mod.id];
+          if (!d) return null; // cards not measured yet → draw nothing for it
+          endX = d.x;
+          endY = d.y;
+        } else {
+          const mx = parseFloat(pos.left);
+          const my = parseFloat(pos.top);
+          const cardW = CARD_WIDTH_PCT[mod.id] ?? 20;
+          const docked = computeDockingLegacy(mx, my, cardW, CARD_HEIGHT_PCT);
+          endX = docked.endX;
+          endY = docked.endY;
+        }
 
         const isActive = activeModule === mod.id;
         const isIdle = !activeModule;
 
         return (
           <g key={mod.id}>
-            {/* Base connector line — terminates at card-edge docking point,
-                NOT the card center, so each card visibly docks at its line tip */}
+            {/* Base connector line — terminates at the card-edge dock point */}
             <line
               x1={endX}
               y1={endY}
@@ -139,7 +209,7 @@ export default function ConnectorNetwork({
               />
             )}
 
-            {/* Energy pulse — travels from card-edge docking point to core */}
+            {/* Energy pulse — travels from card-edge dock point to core */}
             {isActive && !reducedMotion && (
               <circle r="0.8" fill={mod.accentColor} opacity="0.8">
                 <animateMotion
@@ -163,9 +233,8 @@ export default function ConnectorNetwork({
               </circle>
             )}
 
-            {/* Terminal docking dot — sits precisely where the line meets
-                the card edge. Outer ring + inner core for a polished
-                "this card is docked here" anchor point. */}
+            {/* Terminal docking dot — sits precisely where the line meets the
+                card edge. Outer ring + inner core for a polished port anchor. */}
             <circle
               cx={endX}
               cy={endY}

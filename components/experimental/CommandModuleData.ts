@@ -17,6 +17,12 @@ export interface CommandModule {
   previewTitle: string;
   previewDescription: string;
   previewAction: string;
+  /**
+   * When true, the module is a visually-coherent placeholder: it responds to
+   * the Intelligence Engine (accent / glow) but has no real destination yet,
+   * so it must NOT navigate. Used for TERMINAL until a real command layer ships.
+   */
+  comingSoon?: boolean;
 }
 
 export const COMMAND_MODULES: CommandModule[] = [
@@ -83,8 +89,10 @@ export const COMMAND_MODULES: CommandModule[] = [
     accentColor: "#E7F7FF",
     accentGlow: "rgba(231,247,255,0.35)",
     previewTitle: "Terminal",
-    previewDescription: "Interactive command layer for exploring the portfolio.",
-    previewAction: "Initialize terminal",
+    previewDescription:
+      "Interactive command layer for exploring the portfolio. Calibrating — online soon.",
+    previewAction: "Coming online",
+    comingSoon: true,
   },
 ];
 
@@ -113,7 +121,8 @@ export const MODULE_SECTION_ANCHORS: Record<string, string> = {
   experience: "experience",
   skills: "skills",
   contact: "contact",
-  terminal: "ai-assistant",
+  // terminal: intentionally unmapped — it is a "coming online" placeholder
+  // (no real command experience exists yet), so it must not navigate anywhere.
 };
 
 // =====================================================

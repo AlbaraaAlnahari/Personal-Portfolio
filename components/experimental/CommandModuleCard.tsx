@@ -32,7 +32,8 @@ export default function CommandModuleCard({
 
   return (
     <motion.button
-      className="group absolute flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer select-none"
+      className="group absolute flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer select-none outline-none ie-focus"
+      data-connector-card={module.id}
       style={{
         ...style,
         background: isSelected

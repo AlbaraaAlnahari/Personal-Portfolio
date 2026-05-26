@@ -85,6 +85,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Respect reduced-motion: anchor navigation jumps instantly */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Consistent cyan focus-visible ring for interactive hero/nav controls,
+   matching the Intelligence Engine accent (keyboard focus only). */
+.ie-focus:focus-visible {
+  outline: 2px solid #00d9ff !important;
+  outline-offset: 2px !important;
+}
+
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
