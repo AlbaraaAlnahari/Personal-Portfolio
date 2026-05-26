@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
@@ -41,6 +41,17 @@ export function AboutModule() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const reduce = useReducedMotion();
+  // One calm opacity emergence for the verification frame/route, tied to the
+  // section reveal. No continuous motion; instant under reduced motion.
+  const frameReveal = {
+    hidden: { opacity: reduce ? 1 : 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: reduce ? 0 : 0.7, ease: "easeOut", delay: reduce ? 0 : 0.2 },
+    },
   };
 
   return (
@@ -95,6 +106,62 @@ export function AboutModule() {
                       className="object-contain object-bottom"
                       priority
                     />
+
+                    {/* Identity Verification Frame — refined technical framing
+                        (corner brackets, calibration ticks, terminal node).
+                        Purely decorative; the portrait image is untouched. */}
+                    <motion.div
+                      variants={frameReveal}
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none"
+                    >
+                      {/* corner brackets — partial, never a full box */}
+                      <span
+                        className="absolute top-1 left-1 w-7 h-7 border-t border-l rounded-tl"
+                        style={{ borderColor: "rgba(0,217,255,0.38)" }}
+                      />
+                      <span
+                        className="absolute top-1 right-1 w-7 h-7 border-t border-r rounded-tr"
+                        style={{ borderColor: "rgba(0,217,255,0.38)" }}
+                      />
+                      <span
+                        className="absolute bottom-1 left-1 w-7 h-7 border-b border-l rounded-bl"
+                        style={{ borderColor: "rgba(0,217,255,0.26)" }}
+                      />
+                      <span
+                        className="absolute bottom-1 right-1 w-7 h-7 border-b border-r rounded-br"
+                        style={{ borderColor: "rgba(0,217,255,0.26)" }}
+                      />
+
+                      {/* top calibration rule */}
+                      <span className="absolute top-1 left-1/2 -translate-x-1/2 flex items-end gap-[3px] h-2">
+                        {[3, 5, 7, 5, 3].map((h, i) => (
+                          <span
+                            key={i}
+                            className="w-px bg-accent-cyan/35"
+                            style={{ height: `${h}px` }}
+                          />
+                        ))}
+                      </span>
+
+                      {/* terminal node + faint coordinate label (top-right) */}
+                      <span className="absolute top-[10px] right-9 flex items-center gap-1.5">
+                        <span className="font-mono text-[8px] tracking-[0.25em] text-accent-cyan/45">
+                          ID·001
+                        </span>
+                        <span
+                          className="w-1 h-1 rounded-full bg-accent-cyan"
+                          style={{ boxShadow: "0 0 6px rgba(0,217,255,0.7)" }}
+                        />
+                      </span>
+
+                      {/* left-edge micro coordinate ticks */}
+                      <span className="absolute left-1 top-1/2 -translate-y-1/2 flex flex-col gap-2">
+                        <span className="w-1.5 h-px bg-accent-cyan/30" />
+                        <span className="w-2.5 h-px bg-accent-cyan/45" />
+                        <span className="w-1.5 h-px bg-accent-cyan/30" />
+                      </span>
+                    </motion.div>
                   </div>
 
                   {/* Faint holographic floor line beneath portrait */}
@@ -109,14 +176,68 @@ export function AboutModule() {
                   />
                 </div>
 
-                {/* Compact holographic identity plaque */}
-                <div className="relative mt-3 w-fit min-w-[220px] px-5 py-2.5 rounded-xl backdrop-blur-md bg-background-primary/65 border border-accent-cyan/30 shadow-[0_4px_24px_rgba(0,217,255,0.1)]">
-                  <div className="text-xs font-mono text-accent-cyan/80 tracking-widest">
-                    ALBARAA ALNAHARI
+                {/* Identity origin node — compact authenticated plaque */}
+                <div className="relative mt-4 w-fit min-w-[240px] px-5 py-3 rounded-xl backdrop-blur-md bg-background-primary/65 border border-accent-cyan/30 shadow-[0_4px_24px_rgba(0,217,255,0.1)]">
+                  {/* origin port dot — seats the badge as a node */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-accent-cyan"
+                    style={{ boxShadow: "0 0 8px rgba(0,217,255,0.8)" }}
+                  />
+
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-mono text-accent-cyan/80 tracking-widest">
+                        ALBARAA ALNAHARI
+                      </div>
+                      <div className="text-[11px] text-foreground-secondary/70 mt-0.5 tracking-wide">
+                        IDENTITY PROFILE
+                      </div>
+                    </div>
+
+                    {/* compact verification status */}
+                    <span className="flex items-center gap-1.5 shrink-0">
+                      <svg
+                        width="11"
+                        height="11"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#00ff9f"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      <span className="font-mono text-[8px] leading-[1.3] tracking-[0.16em] text-accent-green/80">
+                        IDENTITY
+                        <br />
+                        VERIFIED
+                      </span>
+                    </span>
                   </div>
-                  <div className="text-xs text-foreground-secondary/70 mt-0.5">
-                    IDENTITY PROFILE
-                  </div>
+
+                  {/* Identity retrieval route — emits toward the Profile Summary
+                      (desktop only; simplified away when columns stack). */}
+                  <motion.span
+                    variants={frameReveal}
+                    aria-hidden="true"
+                    className="hidden md:flex absolute top-1/2 -translate-y-1/2 left-full items-center"
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-accent-cyan/75 -ml-[3px]"
+                      style={{ boxShadow: "0 0 6px rgba(0,217,255,0.55)" }}
+                    />
+                    <span
+                      className="h-px w-10"
+                      style={{
+                        background:
+                          "linear-gradient(to right, rgba(0,217,255,0.5), rgba(0,217,255,0.06))",
+                      }}
+                    />
+                    <span className="w-1 h-1 rounded-full bg-accent-cyan/45" />
+                  </motion.span>
                 </div>
               </div>
             </motion.div>
@@ -143,8 +264,25 @@ export function AboutModule() {
                 />
 
                 <div className="relative space-y-7">
-                  {/* Module header — status dot + label + decorative ID */}
-                  <div className="flex items-center justify-between gap-4">
+                  {/* Module header — receiving dock + status + decorative ID */}
+                  <div className="relative flex items-center justify-between gap-4">
+                    {/* receiving dock — resolves the identity retrieval route
+                        (desktop only; aligns the route to this entry point) */}
+                    <motion.span
+                      variants={frameReveal}
+                      aria-hidden="true"
+                      className="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-7 items-center"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-accent-cyan/45" />
+                      <span
+                        className="h-px w-5"
+                        style={{
+                          background:
+                            "linear-gradient(to right, rgba(0,217,255,0.06), rgba(0,217,255,0.5))",
+                        }}
+                      />
+                    </motion.span>
+
                     <div className="flex items-center gap-2.5">
                       <div
                         className="w-1.5 h-1.5 rounded-full bg-accent-cyan/85"
