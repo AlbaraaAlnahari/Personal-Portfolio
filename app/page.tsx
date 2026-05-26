@@ -167,7 +167,7 @@ export default function Home() {
             className="text-center text-foreground-secondary text-sm"
           >
             <motion.p variants={itemVariants}>
-              &copy; 2024 Albaraa OS. Crafted with precision and futuristic vision.
+              &copy; 2026 Albaraa OS. Crafted with precision and futuristic vision.
             </motion.p>
           </motion.div>
         </Container>

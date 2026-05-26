@@ -18,27 +18,27 @@ export function ContactTerminal() {
   const contactMethods = [
     {
       label: "Email",
-      value: "albaraa@example.com",
+      value: "albaraa.a.alnahari@gmail.com",
       icon: "✉",
-      action: "mailto:albaraa@example.com",
+      action: "mailto:albaraa.a.alnahari@gmail.com",
     },
     {
       label: "LinkedIn",
-      value: "linkedin.com/in/albaraa",
+      value: "linkedin.com/in/albaraa-alnahari",
       icon: "◆",
-      action: "https://linkedin.com/in/albaraa",
+      action: "https://www.linkedin.com/in/albaraa-alnahari",
     },
     {
       label: "GitHub",
-      value: "github.com/albaraa",
+      value: "github.com/AlbaraaAlnahari",
       icon: "◇",
-      action: "https://github.com/albaraa",
+      action: "https://github.com/AlbaraaAlnahari",
     },
     {
-      label: "Twitter",
-      value: "@albaraa_dev",
+      label: "X",
+      value: "x.com/x_ff",
       icon: "▲",
-      action: "https://twitter.com/albaraa_dev",
+      action: "https://x.com/x_ff",
     },
   ];
 

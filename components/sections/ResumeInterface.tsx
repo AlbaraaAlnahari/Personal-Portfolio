@@ -22,16 +22,10 @@ export function ResumeInterface() {
       icon: "◇",
       items: [
         {
-          title: "Computer Science & Engineering Focus",
-          organization: "Advanced Technical Training",
-          date: "2021 - Present",
-          description: "Deep specialization in AI, full-stack development, and product engineering",
-        },
-        {
-          title: "Bootcamp Excellence Program",
-          organization: "Intensive Coding Bootcamp",
-          date: "2023",
-          description: "Accelerated full-stack development with focus on AI integration and startup scaling",
+          title: "Bachelor of Software Engineering",
+          organization: "University of Jeddah",
+          date: "Expected 2027",
+          description: "Software engineering studies with a focus on AI-enabled products, full-stack development, and systems thinking.",
         },
       ],
     },
@@ -41,16 +35,10 @@ export function ResumeInterface() {
       icon: "★",
       items: [
         {
-          title: "Professional Cloud Architect",
-          organization: "Cloud Computing Certification",
-          date: "2024",
-          description: "Advanced infrastructure design and deployment optimization",
-        },
-        {
-          title: "AI Engineering Specialization",
-          organization: "Advanced AI Systems",
-          date: "2024",
-          description: "LLM integration, prompt engineering, and AI product development",
+          title: "Robotics Engineer Certification",
+          organization: "Smart Method",
+          date: "2025",
+          description: "Hands-on certification in AI robotics, 3D modeling, and automation.",
         },
       ],
     },
@@ -60,16 +48,10 @@ export function ResumeInterface() {
       icon: "●",
       items: [
         {
-          title: "1st Place - AI Innovation Hackathon",
-          organization: "DocuPilot Project",
-          date: "2024",
-          description: "Winner of premier AI innovation competition with intelligent document processing system",
-        },
-        {
-          title: "Technical Leadership Recognition",
-          organization: "Community Excellence Award",
-          date: "2024",
-          description: "Recognition for mentorship, community building, and technical innovation",
+          title: "1st Place — AI Innovation Bootcamp",
+          organization: "DocuPilot",
+          date: "2026",
+          description: "First place for DocuPilot, an AI business operations platform built during the AI Innovation Bootcamp.",
         },
       ],
     },
@@ -77,13 +59,11 @@ export function ResumeInterface() {
 
   const coreCompetencies = [
     "Full-Stack Development",
-    "AI & Machine Learning",
-    "Product Strategy",
-    "Systems Architecture",
-    "Team Leadership",
-    "User Research",
-    "Cloud Infrastructure",
-    "Startup Scaling",
+    "AI-Powered Product Development",
+    "Product Research",
+    "Robotics Engineering",
+    "Systems Thinking",
+    "Technical Leadership",
   ];
 
   return (

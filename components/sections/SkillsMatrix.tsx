@@ -19,31 +19,31 @@ export function SkillsMatrix() {
       name: "Programming Languages",
       icon: "◆",
       color: "text-accent-cyan",
-      skills: ["JavaScript", "TypeScript", "Python", "Java", "SQL"],
+      skills: ["JavaScript", "TypeScript", "Python", "Java", "C++", "SQL"],
     },
     {
       name: "AI & Machine Learning",
       icon: "●",
       color: "text-accent-green",
-      skills: ["LLM APIs", "Gemini", "Claude", "Qwen", "Prompt Engineering"],
+      skills: ["LLM APIs", "Gemini", "Claude", "Qwen", "Prompt Engineering", "OpenCV"],
     },
     {
       name: "Frontend Development",
       icon: "◈",
       color: "text-accent-purple",
-      skills: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Responsive Design"],
+      skills: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Flutter", "Responsive Design"],
     },
     {
-      name: "Backend & Databases",
+      name: "Data & Backend",
       icon: "◇",
       color: "text-accent-cyan",
-      skills: ["Supabase", "Node.js", "REST APIs", "Database Design", "Authentication"],
+      skills: ["Supabase", "MySQL", "Pandas", "NumPy", "Data Analysis"],
     },
     {
       name: "Tools & Infrastructure",
       icon: "▲",
       color: "text-accent-green",
-      skills: ["Git", "GitHub", "Figma", "VS Code", "Deployment"],
+      skills: ["Git", "GitHub", "VS Code", "PyCharm", "Figma"],
     },
     {
       name: "Leadership & Soft Skills",
@@ -150,7 +150,7 @@ export function SkillsMatrix() {
           >
             {[
               { label: "Skill Categories", value: "6" },
-              { label: "Total Skills", value: "25+" },
+              { label: "Total Skills", value: "30+" },
               { label: "AI Technologies", value: "5+" },
               { label: "Full-Stack Capable", value: "✓" },
             ].map((stat, index) => (

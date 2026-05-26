@@ -15,6 +15,8 @@ interface Project {
   recognition?: string;
   tech: string[];
   accent: Accent;
+  link?: string;
+  linkLabel?: string;
 }
 
 const flagship: Project = {
@@ -28,6 +30,8 @@ const flagship: Project = {
   recognition: "1st Place — AI Innovation Bootcamp",
   tech: ["Next.js", "TypeScript", "Supabase", "Gemini API", "Qwen API", "Zod"],
   accent: "cyan",
+  link: "https://docupilot.site",
+  linkLabel: "Live Site",
 };
 
 const supporting: Project[] = [
@@ -41,6 +45,8 @@ const supporting: Project[] = [
       "AI-powered roadmap generator with personalized learning timelines and adaptive educational systems.",
     tech: ["React.js", "Tailwind CSS", "Claude API"],
     accent: "purple",
+    link: "https://github.com/AlbaraaAlnahari/TechPath",
+    linkLabel: "View Project",
   },
   {
     id: "sanadk",
@@ -62,6 +68,8 @@ const supporting: Project[] = [
     description: "AI-powered flashcard generation system with modular architecture.",
     tech: ["Java", "API Integration"],
     accent: "cyan",
+    link: "https://github.com/ProgAm1/Slide-Mind-Project",
+    linkLabel: "View Project",
   },
 ];
 
@@ -236,6 +244,20 @@ function FlagshipCard({ project }: { project: Project }) {
                 ))}
               </div>
             </div>
+
+            {/* External action */}
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.name} — ${project.linkLabel}`}
+                className={`inline-flex items-center gap-2 text-sm font-mono tracking-wide ${a.text} hover:opacity-80 transition-opacity no-underline`}
+              >
+                {project.linkLabel}
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
           </div>
 
           {/* Right: abstract workflow diagram */}
@@ -435,6 +457,20 @@ function SupportingCard({ project, index }: { project: Project; index: number })
             ))}
           </div>
         </div>
+
+        {/* External action */}
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${project.name} — ${project.linkLabel}`}
+            className={`inline-flex items-center gap-1.5 text-xs font-mono tracking-wide ${a.text} hover:opacity-80 transition-opacity no-underline`}
+          >
+            {project.linkLabel}
+            <span aria-hidden="true">→</span>
+          </a>
+        )}
       </div>
     </motion.div>
   );
