@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type MutableRefObject } from "react";
+import { useRef, useState, useEffect, type MutableRefObject } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import IntelligenceEngineModel, {
@@ -65,6 +65,31 @@ export default function IntelligenceReactor3D({
   });
   const activePointerRef = pointerRef ?? localPointerRef;
 
+  // Viewport-gated render loop. The turbine renders at full rate ("always")
+  // whenever the Hero is in or near the viewport, so it looks identical while
+  // visible. Once the Hero is well offscreen we switch to "demand", which
+  // stops the continuous render loop (and all useFrame work) — eliminating
+  // ~7.8k draw calls/sec during the rest of the page scroll. The component
+  // stays mounted, so returning to the Hero resumes seamlessly with no model
+  // reinitialization or visual flash. A 300px margin restarts the loop just
+  // before the Hero re-enters view.
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [frameloop, setFrameloop] = useState<"always" | "demand">("always");
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry) setFrameloop(entry.isIntersecting ? "always" : "demand");
+      },
+      { root: null, rootMargin: "300px 0px 300px 0px", threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   // Camera position: closer for hero presence
   // Mobile: slightly further back to ensure full silhouette fits
   const cameraZ = isMobile ? 3.4 : 3.2;
@@ -72,8 +97,9 @@ export default function IntelligenceReactor3D({
   const fov = isMobile ? 40 : 36;
 
   return (
-    <div className="w-full h-full">
+    <div ref={wrapperRef} className="w-full h-full">
       <Canvas
+        frameloop={frameloop}
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{
           antialias: true,
