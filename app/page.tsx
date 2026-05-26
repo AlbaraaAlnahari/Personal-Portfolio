@@ -123,21 +123,6 @@ export default function Home() {
         />
       </div>
 
-      {/* Contact Terminal */}
-      <ContactTerminal />
-
-      {/* Section Transition Divider */}
-      <div className="flex justify-center py-12 md:py-16">
-        <motion.div
-          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
-          initial={{ opacity: 0, scaleX: 0 }}
-          whileInView={{ opacity: 0.5, scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ transformOrigin: "center" }}
-        />
-      </div>
-
       {/* Ask Albaraa AI */}
       <AskAlbaraAI />
 
@@ -155,6 +140,21 @@ export default function Home() {
 
       {/* Resume Interface */}
       <ResumeInterface />
+
+      {/* Section Transition Divider */}
+      <div className="flex justify-center py-12 md:py-16">
+        <motion.div
+          className="w-12 h-px bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 0.5, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ transformOrigin: "center" }}
+        />
+      </div>
+
+      {/* Contact Terminal — final primary conversion section */}
+      <ContactTerminal />
 
       {/* Footer */}
       <footer className="border-t border-glass-light py-12 mt-20">
