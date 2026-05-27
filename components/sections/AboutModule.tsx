@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import {
@@ -35,13 +36,10 @@ export function AboutModule() {
     "Tailwind CSS",
   ];
 
-  const handleScroll = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // Route-aware navigation: the "Get In Touch" CTA now points to the
+  // dedicated /contact route (works on both the temporary long Home and the
+  // new /about route, where an in-page #contact anchor no longer exists).
+  const router = useRouter();
 
   const reduce = useReducedMotion();
   // One calm opacity emergence for the verification frame/route, tied to the
@@ -388,7 +386,7 @@ export function AboutModule() {
                       variant="glass"
                       size="md"
                       className="w-full sm:w-auto px-6 py-2.5 border border-accent-cyan/30 text-foreground-primary hover:border-accent-cyan/60 hover:text-accent-cyan"
-                      onClick={(e) => handleScroll(e, "contact")}
+                      onClick={() => router.push("/contact")}
                     >
                       Get In Touch
                     </Button>

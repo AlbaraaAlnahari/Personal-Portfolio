@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -15,20 +16,26 @@ import { useEffect, useRef, useState } from "react";
  * second prominent Resume button — Resume lives inside the menu instead.
  */
 export function Navigation() {
-  const [activeItem, setActiveItem] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
+  const pathname = usePathname();
 
+  // Multi-page route navigation. Section chapters (Projects/Experience/Skills/
+  // Leadership) now live within the About/Work/Impact routes.
   const navItems = [
-    { label: "About", href: "#about" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Skills", href: "#skills" },
-    { label: "Leadership", href: "#leadership" },
-    { label: "Resume", href: "#resume" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Work", href: "/work" },
+    { label: "Impact", href: "/impact" },
+    { label: "Resume", href: "/resume" },
+    { label: "Contact", href: "/contact" },
   ];
+
+  // Route-aware active state: the current route's item stays active
+  // persistently; hovering another item only adds a transient CSS treatment.
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
   // Close the mobile menu on Escape or click outside the nav.
   useEffect(() => {
@@ -126,18 +133,17 @@ export function Navigation() {
             >
               <Link
                 href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 className={`text-sm transition-all duration-300 relative group inline-block px-2 py-1 rounded ${
-                  activeItem === item.label
+                  isActive(item.href)
                     ? "text-accent-cyan drop-shadow-[0_0_6px_rgba(0,217,255,0.4)] bg-accent-cyan/5"
                     : "text-foreground-secondary hover:text-accent-cyan hover:drop-shadow-[0_0_6px_rgba(0,217,255,0.3)] hover:scale-105"
                 }`}
-                onMouseEnter={() => setActiveItem(item.label)}
-                onMouseLeave={() => setActiveItem("home")}
               >
                 {item.label}
                 <span
                   className={`absolute bottom-0 left-0 h-px bg-gradient-to-r from-accent-cyan to-accent-green transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) ${
-                    activeItem === item.label ? "w-full" : "w-0 group-hover:w-full"
+                    isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
@@ -147,7 +153,8 @@ export function Navigation() {
 
         {/* Right Zone: Resume (desktop) + Menu trigger (mobile) */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          {/* Resume Button — desktop only (mobile reaches Resume via the menu) */}
+          {/* Official PDF action — desktop only. Distinct from the Resume page
+              nav item: this opens the official résumé document directly. */}
           <motion.div
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
@@ -155,7 +162,9 @@ export function Navigation() {
             className="hidden lg:block"
           >
             <a
-              href="#resume"
+              href="/resume/Albaraa-Alnahari-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-accent-cyan to-accent-purple text-background-primary font-medium text-sm transition-all duration-300 inline-block relative"
               style={{
                 boxShadow: "0 0 20px rgba(0, 217, 255, 0.4), 0 0 40px rgba(181, 55, 242, 0.2)",
@@ -169,7 +178,7 @@ export function Navigation() {
                 e.currentTarget.style.boxShadow = "0 0 20px rgba(0, 217, 255, 0.4), 0 0 40px rgba(181, 55, 242, 0.2)";
               }}
             >
-              Resume
+              View PDF
             </a>
           </motion.div>
 
@@ -234,12 +243,17 @@ export function Navigation() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="group flex items-center gap-3 px-3.5 py-3 rounded-lg text-sm text-foreground-secondary hover:text-accent-cyan hover:bg-accent-cyan/5 transition-colors outline-none ie-focus"
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={`group flex items-center gap-3 px-3.5 py-3 rounded-lg text-sm transition-colors outline-none ie-focus ${
+                    isActive(item.href)
+                      ? "text-accent-cyan bg-accent-cyan/5"
+                      : "text-foreground-secondary hover:text-accent-cyan hover:bg-accent-cyan/5"
+                  }`}
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-300"
                     style={{
-                      background: "rgba(0,217,255,0.35)",
+                      background: isActive(item.href) ? "rgba(0,217,255,0.9)" : "rgba(0,217,255,0.35)",
                       boxShadow: "0 0 0 2px rgba(0,217,255,0.06)",
                     }}
                   />

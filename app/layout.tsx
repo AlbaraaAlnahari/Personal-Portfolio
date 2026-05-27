@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 import { Navigation } from "@/components/layout/Navigation";
-import { AISystemStatus } from "@/components/environment/AISystemStatus";
+import { RouteAwareAISystemStatus } from "@/components/environment/RouteAwareAISystemStatus";
 
 export const metadata: Metadata = {
   title: "Albaraa OS — AI Software Lab",
@@ -99,8 +99,8 @@ export default function RootLayout({
         {/* Navigation */}
         <Navigation />
 
-        {/* System Status Indicators */}
-        <AISystemStatus />
+        {/* System Status Indicators — scoped to Home only */}
+        <RouteAwareAISystemStatus />
 
         {/* Main content */}
         <div className="relative min-h-screen pt-12">

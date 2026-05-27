@@ -11,12 +11,8 @@ import { OrganizationsLeadership } from "@/components/sections/OrganizationsLead
 import { ContactTerminal } from "@/components/sections/ContactTerminal";
 import { AskAlbaraAI } from "@/components/sections/AskAlbaraAI";
 import { ResumeInterface } from "@/components/sections/ResumeInterface";
-import { Container } from "@/components/layout/Container";
-import {
-  containerVariants,
-  itemVariants,
-  pageTransitionVariants,
-} from "@/lib/motion/variants";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { pageTransitionVariants } from "@/lib/motion/variants";
 
 // Toggle: set to false to revert to the original orb hero
 const USE_INTELLIGENCE_ENGINE = true;
@@ -157,21 +153,7 @@ export default function Home() {
       <ContactTerminal />
 
       {/* Footer */}
-      <footer className="border-t border-glass-light py-12 mt-20">
-        <Container>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center text-foreground-secondary text-sm"
-          >
-            <motion.p variants={itemVariants}>
-              &copy; 2026 Albaraa OS. Crafted with precision and futuristic vision.
-            </motion.p>
-          </motion.div>
-        </Container>
-      </footer>
+      <SiteFooter />
     </motion.main>
   );
 }
