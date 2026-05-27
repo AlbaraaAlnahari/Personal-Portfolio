@@ -37,11 +37,15 @@
   --radius-xl: 2rem;
 
   /* Typography */
-  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji";
-  --font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
-    Consolas, "Courier New", monospace;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "SF Pro Display", "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+  --font-family-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo,
+    Monaco, Consolas, "Liberation Mono", monospace;
+  /* Bind Tailwind's font theme tokens to the Apple-compatible stacks above so
+     the font-sans / font-mono utilities and --default-font-family inherit the
+     same system typography (English font-family only — no other change). */
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
 
   /* Layout heights */
   --nav-height: 48px;
