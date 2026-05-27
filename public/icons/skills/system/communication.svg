@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Communication</title>
+  <path d="M8 16a8 8 0 0 1 8-8h25a8 8 0 0 1 8 8v15a8 8 0 0 1-8 8H25L14 50v-11a8 8 0 0 1-6-8V16Z" stroke="#D4A85A" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M20 20h18M20 27h13" stroke="#19D3FF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M47 18h4a5 5 0 0 1 5 5v17a5 5 0 0 1-5 5h-5l-7 6v-12" stroke="#0E6A83" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

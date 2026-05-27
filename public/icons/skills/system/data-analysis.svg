@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Data Analysis</title>
+  <circle cx="27" cy="27" r="18" stroke="#19D3FF" stroke-width="3"/>
+  <path d="M39.5 39.5 53 53" stroke="#19D3FF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M17 35V27M25 35V22M33 35V17" stroke="#0E6A83" stroke-width="3" stroke-linecap="round"/>
+  <path d="m15 22 9-6 8 4 10-10" stroke="#27E6A2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m37 10h5v5" stroke="#27E6A2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

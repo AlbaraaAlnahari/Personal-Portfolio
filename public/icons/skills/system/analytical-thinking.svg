@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Analytical Thinking</title>
+  <path d="M26 8c-10 0-18 8-18 18 0 7 4 12 10 15v8h16v-7c7-2 12-8 12-16 0-10-9-18-20-18Z" stroke="#D4A85A" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M18 52h16M21 57h10" stroke="#D4A85A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M18 27h7l4-8 5 16 4-8h8" stroke="#27E6A2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="26" cy="8" r="2.5" fill="#19D3FF"/>
+</svg>
