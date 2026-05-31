@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import type { CommandModule } from "./CommandModuleData";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // MODULE PREVIEW PANEL — compact glass/graphite card
@@ -22,11 +23,13 @@ export default function ModulePreviewPanel({
   variant,
   onNavigate,
 }: ModulePreviewPanelProps) {
+  const { t } = useLanguage();
   const isDesktop = variant === "desktop";
+  const copy = module ? t.modules[module.id as keyof typeof t.modules] : null;
 
   return (
     <AnimatePresence mode="wait">
-      {module && (
+      {module && copy && (
         <motion.div
           key={module.id}
           className={`${
@@ -83,13 +86,13 @@ export default function ModulePreviewPanel({
                   className="text-sm font-medium"
                   style={{ color: "#e8e9f3" }}
                 >
-                  {module.previewTitle}
+                  {copy.previewTitle}
                 </div>
                 <div
                   className="text-[9px] font-mono tracking-[0.2em]"
                   style={{ color: module.accentColor + "90" }}
                 >
-                  {module.label} / {module.subtitle}
+                  {copy.label} / {copy.subtitle}
                 </div>
               </div>
             </div>
@@ -99,7 +102,7 @@ export default function ModulePreviewPanel({
               className="text-xs leading-relaxed mb-3"
               style={{ color: "rgba(160,165,197,0.7)" }}
             >
-              {module.previewDescription}
+              {copy.previewDescription}
             </p>
 
             {/* Action hint / navigation button */}
@@ -108,7 +111,7 @@ export default function ModulePreviewPanel({
                 onClick={onNavigate}
                 className="flex items-center gap-1.5 cursor-pointer group/action"
                 style={{ background: "none", border: "none", padding: 0 }}
-                aria-label={`Navigate to ${module.previewTitle} section`}
+                aria-label={`${copy.previewAction}: ${copy.previewTitle}`}
               >
                 <div
                   className="w-1 h-1 rounded-full"
@@ -124,7 +127,7 @@ export default function ModulePreviewPanel({
                     transition: "color 200ms ease",
                   }}
                 >
-                  {module.previewAction.toUpperCase()} →
+                  {copy.previewAction.toUpperCase()} →
                 </span>
               </button>
             ) : (
@@ -140,7 +143,7 @@ export default function ModulePreviewPanel({
                   className="text-[10px] font-mono tracking-[0.15em]"
                   style={{ color: module.accentColor + "80" }}
                 >
-                  {module.previewAction.toUpperCase()}
+                  {copy.previewAction.toUpperCase()}
                 </span>
               </div>
             )}

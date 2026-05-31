@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // OFFICIAL RESUME VAULT — the signature focal object of
@@ -23,6 +24,8 @@ const PDF_PATH = "/resume/Albaraa-Alnahari-Resume.pdf";
 const PDF_FILENAME = "Albaraa-Alnahari-Resume.pdf";
 
 export function OfficialResumeVault() {
+  const { t } = useLanguage();
+  const v = t.resume.vault;
   const reduce = useReducedMotion();
   const [active, setActive] = useState(false);
 
@@ -35,13 +38,13 @@ export function OfficialResumeVault() {
 
   // Verification-route appearance, intensified when an action is engaged.
   const spineBg = active
-    ? "linear-gradient(to bottom, transparent, rgba(0,217,255,0.85) 20%, rgba(0,255,159,0.55) 80%, transparent)"
-    : "linear-gradient(to bottom, transparent, rgba(0,217,255,0.38) 20%, rgba(0,217,255,0.18) 80%, transparent)";
+    ? "linear-gradient(to bottom, transparent, rgba(var(--rgb-cyan),0.85) 20%, rgba(var(--rgb-green),0.55) 80%, transparent)"
+    : "linear-gradient(to bottom, transparent, rgba(var(--rgb-cyan),0.38) 20%, rgba(var(--rgb-cyan),0.18) 80%, transparent)";
   const portStyle = (lit: boolean) => ({
-    backgroundColor: lit ? "rgba(0,217,255,1)" : "rgba(0,217,255,0.6)",
+    backgroundColor: lit ? "rgba(var(--rgb-cyan),1)" : "rgba(var(--rgb-cyan),0.6)",
     boxShadow: lit
-      ? "0 0 10px rgba(0,217,255,0.85)"
-      : "0 0 5px rgba(0,217,255,0.4)",
+      ? "0 0 10px rgba(var(--rgb-cyan),0.85)"
+      : "0 0 5px rgba(var(--rgb-cyan),0.4)",
   });
 
   return (
@@ -53,19 +56,19 @@ export function OfficialResumeVault() {
         style={{
           opacity: active ? 1 : 0.85,
           background:
-            "radial-gradient(60% 60% at 32% 30%, rgba(0,217,255,0.16) 0%, transparent 72%)",
+            "radial-gradient(60% 60% at 32% 30%, rgba(var(--rgb-cyan),0.16) 0%, transparent 72%)",
         }}
       />
 
       <div
-        className="relative h-full rounded-2xl overflow-hidden transition-shadow duration-500"
+        className="t-surface relative h-full rounded-2xl overflow-hidden transition-shadow duration-500"
         style={{
           background:
             "linear-gradient(150deg, rgba(18,22,46,0.94) 0%, rgba(10,14,39,0.97) 100%)",
-          border: "1px solid rgba(0,217,255,0.32)",
+          border: "1px solid rgba(var(--rgb-cyan),0.32)",
           boxShadow: active
-            ? "0 0 56px rgba(0,217,255,0.18), inset 0 1px 0 rgba(255,255,255,0.06)"
-            : "0 0 44px rgba(0,217,255,0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
+            ? "0 0 56px rgba(var(--rgb-cyan),0.18), inset 0 1px 0 rgba(255,255,255,0.06)"
+            : "0 0 44px rgba(var(--rgb-cyan),0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
         }}
       >
         {/* Top edge trace */}
@@ -74,7 +77,7 @@ export function OfficialResumeVault() {
           className="absolute top-0 left-8 right-8 h-px"
           style={{
             background:
-              "linear-gradient(to right, transparent, rgba(0,217,255,0.65), transparent)",
+              "linear-gradient(to right, transparent, rgba(var(--rgb-cyan),0.65), transparent)",
           }}
         />
 
@@ -83,14 +86,14 @@ export function OfficialResumeVault() {
           <div className="flex items-center gap-2.5">
             <span
               className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
-              style={{ boxShadow: "0 0 9px rgba(0,217,255,0.85)" }}
+              style={{ boxShadow: "0 0 9px rgba(var(--rgb-cyan),0.85)" }}
             />
             <span className="text-[10px] md:text-[11px] font-mono tracking-[0.3em] text-accent-cyan/90">
-              OFFICIAL RESUME
+              {v.label}
             </span>
           </div>
-          <span className="text-[9px] font-mono tracking-[0.26em] text-foreground-secondary/40">
-            VAULT / 00
+          <span dir="ltr" className="ltr-isolate text-[9px] font-mono tracking-[0.26em] text-foreground-secondary/40">
+            {v.tag}
           </span>
         </div>
 
@@ -103,7 +106,7 @@ export function OfficialResumeVault() {
               className="absolute inset-0 rounded-lg blur-md transition-opacity duration-500"
               style={{
                 opacity: active ? 1 : 0.55,
-                background: "rgba(0,217,255,0.14)",
+                background: "rgba(var(--rgb-cyan),0.14)",
               }}
             />
             <svg
@@ -121,14 +124,14 @@ export function OfficialResumeVault() {
               <path
                 d="M10 4 H88 L112 28 V150 H10 Z"
                 fill="url(#vault-page)"
-                stroke="rgba(0,217,255,0.45)"
+                stroke="rgba(var(--rgb-cyan),0.45)"
                 strokeWidth="1.2"
               />
               {/* folded corner */}
               <path
                 d="M88 4 V28 H112 Z"
-                fill="rgba(0,217,255,0.16)"
-                stroke="rgba(0,217,255,0.5)"
+                fill="rgba(var(--rgb-cyan),0.16)"
+                stroke="rgba(var(--rgb-cyan),0.5)"
                 strokeWidth="1.2"
               />
               {/* header bar */}
@@ -138,7 +141,7 @@ export function OfficialResumeVault() {
                 width="48"
                 height="6"
                 rx="2"
-                fill="rgba(0,217,255,0.75)"
+                fill="rgba(var(--rgb-cyan),0.75)"
               />
               {/* text lines */}
               {[58, 70, 82, 94, 106, 118].map((y, i) => (
@@ -160,7 +163,7 @@ export function OfficialResumeVault() {
                 height="12"
                 rx="2.5"
                 fill="none"
-                stroke="rgba(0,217,255,0.6)"
+                stroke="rgba(var(--rgb-cyan),0.6)"
                 strokeWidth="1"
               />
               <text
@@ -170,7 +173,7 @@ export function OfficialResumeVault() {
                 fontSize="7"
                 fontFamily="ui-monospace, monospace"
                 letterSpacing="1"
-                fill="rgba(0,217,255,0.9)"
+                fill="rgba(var(--rgb-cyan),0.9)"
               >
                 PDF
               </text>
@@ -183,8 +186,8 @@ export function OfficialResumeVault() {
                 className="absolute left-[8%] right-[8%] h-px rounded-full"
                 style={{
                   background:
-                    "linear-gradient(to right, transparent, rgba(0,217,255,0.85), transparent)",
-                  boxShadow: "0 0 8px rgba(0,217,255,0.6)",
+                    "linear-gradient(to right, transparent, rgba(var(--rgb-cyan),0.85), transparent)",
+                  boxShadow: "0 0 8px rgba(var(--rgb-cyan),0.6)",
                 }}
                 initial={{ top: "16%", opacity: 0 }}
                 animate={{
@@ -216,10 +219,10 @@ export function OfficialResumeVault() {
               className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[7px] font-mono tracking-[0.3em] transition-colors duration-500"
               style={{
                 writingMode: "vertical-rl",
-                color: active ? "rgba(0,217,255,0.6)" : "rgba(0,217,255,0.28)",
+                color: active ? "rgba(var(--rgb-cyan),0.6)" : "rgba(var(--rgb-cyan),0.28)",
               }}
             >
-              AUTH ROUTE
+              {v.authRoute}
             </span>
 
             <div className="space-y-5 pl-8">
@@ -239,20 +242,21 @@ export function OfficialResumeVault() {
                     left: "-58px",
                     width: "31px",
                     background: active
-                      ? "linear-gradient(to right, rgba(0,217,255,0.7), rgba(0,217,255,0.9))"
-                      : "linear-gradient(to right, rgba(0,217,255,0.15), rgba(0,217,255,0.4))",
+                      ? "linear-gradient(to right, rgba(var(--rgb-cyan),0.7), rgba(var(--rgb-cyan),0.9))"
+                      : "linear-gradient(to right, rgba(var(--rgb-cyan),0.15), rgba(var(--rgb-cyan),0.4))",
                   }}
                 />
                 <div className="flex flex-wrap items-center gap-2.5">
                   <span
-                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-mono tracking-[0.18em]"
+                    dir="ltr"
+                    className="ltr-isolate inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-mono tracking-[0.18em]"
                     style={{
-                      background: "rgba(0,217,255,0.1)",
-                      border: "1px solid rgba(0,217,255,0.35)",
+                      background: "rgba(var(--rgb-cyan),0.1)",
+                      border: "1px solid rgba(var(--rgb-cyan),0.35)",
                       color: "rgba(120,225,255,0.95)",
                     }}
                   >
-                    PDF DOCUMENT
+                    {v.pdfDocument}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <svg
@@ -260,7 +264,7 @@ export function OfficialResumeVault() {
                       height="11"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="#00ff9f"
+                      stroke="var(--accent-green)"
                       strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -269,7 +273,7 @@ export function OfficialResumeVault() {
                       <path d="M20 6 9 17l-5-5" />
                     </svg>
                     <span className="text-[9px] font-mono tracking-[0.22em] text-accent-green/85">
-                      VERIFIED RECORD
+                      {v.verifiedRecord}
                     </span>
                   </span>
                 </div>
@@ -278,14 +282,14 @@ export function OfficialResumeVault() {
               {/* Filename + description */}
               <div className="space-y-2">
                 <p
-                  className="font-mono text-sm md:text-base text-foreground-primary/95 break-all"
+                  dir="ltr"
+                  className="ltr-isolate font-mono text-sm md:text-base text-foreground-primary/95 break-all"
                   style={{ letterSpacing: "0.01em" }}
                 >
                   {PDF_FILENAME}
                 </p>
                 <p className="text-sm text-foreground-secondary/70 leading-relaxed max-w-md">
-                  Official résumé on record — view it in a new tab or download
-                  the full document.
+                  {v.description}
                 </p>
               </div>
 
@@ -303,16 +307,16 @@ export function OfficialResumeVault() {
                     href={PDF_PATH}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="View the official résumé PDF in a new tab"
+                    aria-label={v.viewAria}
                     {...engage}
                     className="ie-focus inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap no-underline transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       background:
-                        "linear-gradient(135deg, #00d9ff 0%, #00a6cf 100%)",
+                        "linear-gradient(135deg, var(--accent) 0%, #00a6cf 100%)",
                       color: "#04121c",
                       boxShadow: active
-                        ? "0 0 34px rgba(0,217,255,0.5)"
-                        : "0 0 26px rgba(0,217,255,0.38)",
+                        ? "0 0 34px rgba(var(--rgb-cyan),0.5)"
+                        : "0 0 26px rgba(var(--rgb-cyan),0.38)",
                     }}
                   >
                     <svg
@@ -330,21 +334,21 @@ export function OfficialResumeVault() {
                       <path d="M10 14 21 3" />
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                     </svg>
-                    View PDF
+                    {v.viewPdf}
                   </a>
 
                   {/* Download → download the official PDF */}
                   <a
                     href={PDF_PATH}
                     download={PDF_FILENAME}
-                    aria-label="Download the official résumé PDF"
+                    aria-label={v.downloadAria}
                     {...engage}
                     className="ie-focus inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl font-medium text-sm whitespace-nowrap no-underline transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       background: active
-                        ? "rgba(0,217,255,0.1)"
-                        : "rgba(0,217,255,0.06)",
-                      border: "1px solid rgba(0,217,255,0.42)",
+                        ? "rgba(var(--rgb-cyan),0.1)"
+                        : "rgba(var(--rgb-cyan),0.06)",
+                      border: "1px solid rgba(var(--rgb-cyan),0.42)",
                       color: "#bfe9f7",
                     }}
                   >
@@ -363,7 +367,7 @@ export function OfficialResumeVault() {
                       <path d="m7 10 5 5 5-5" />
                       <path d="M5 21h14" />
                     </svg>
-                    Download Resume
+                    {v.download}
                   </a>
                 </div>
               </div>
@@ -377,7 +381,7 @@ export function OfficialResumeVault() {
           className="absolute bottom-0 left-8 right-8 h-px"
           style={{
             background:
-              "linear-gradient(to right, transparent, rgba(0,217,255,0.22), transparent)",
+              "linear-gradient(to right, transparent, rgba(var(--rgb-cyan),0.22), transparent)",
           }}
         />
       </div>

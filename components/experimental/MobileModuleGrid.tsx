@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { COMMAND_MODULES, type CommandModule } from "./CommandModuleData";
 import type { ReactorState } from "./IntelligenceEngineModel";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // MOBILE MODULE GRID — deliberate 2-column × 3-row neural console
@@ -27,13 +28,14 @@ export default function MobileModuleGrid({
   onSelect,
   reducedMotion,
 }: MobileModuleGridProps) {
+  const { t, isAr } = useLanguage();
   return (
     <div className="w-full">
       {/* Console framing label */}
       <div className="flex items-center gap-2.5 mb-3 px-0.5">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[rgba(0,217,255,0.18)]" />
         <span className="text-[8px] font-mono tracking-[0.3em] text-[rgba(0,217,255,0.42)]">
-          NEURAL MODULES
+          {t.hero.modulesLabel}
         </span>
         <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[rgba(0,217,255,0.18)]" />
       </div>
@@ -44,6 +46,7 @@ export default function MobileModuleGrid({
           const isActive = activeModule === mod.id;
           const isSoon = !!mod.comingSoon;
           const rgb = hexToRgb(mod.accentColor);
+          const copy = t.modules[mod.id as keyof typeof t.modules];
 
           return (
             <motion.button
@@ -52,8 +55,8 @@ export default function MobileModuleGrid({
               onClick={() => onSelect(mod)}
               aria-label={
                 isSoon
-                  ? `${mod.previewTitle} — coming online soon`
-                  : `${mod.previewTitle}: ${mod.previewDescription}`
+                  ? `${copy.previewTitle} — ${t.hero.soonAria}`
+                  : `${copy.previewTitle}: ${copy.previewDescription}`
               }
               aria-disabled={isSoon || undefined}
               whileTap={reducedMotion ? undefined : { scale: 0.97 }}
@@ -121,10 +124,15 @@ export default function MobileModuleGrid({
                 </svg>
               </div>
 
-              {/* Label column */}
+              {/* Label column — Arabic shows ONE clean phrase (no stacked
+                  sub-label); the SOON badge is preserved in both languages. */}
               <div className="flex flex-col min-w-0">
                 <span
-                  className="text-[11px] font-mono tracking-[0.16em] leading-none"
+                  className={
+                    isAr
+                      ? "text-[13px] font-mono leading-tight"
+                      : "text-[11px] font-mono tracking-[0.16em] leading-none"
+                  }
                   style={{
                     color: isActive
                       ? mod.accentColor
@@ -132,20 +140,22 @@ export default function MobileModuleGrid({
                     transition: "color 300ms ease",
                   }}
                 >
-                  {mod.label}
+                  {copy.label}
                 </span>
                 <div className="flex items-center gap-1.5 mt-1.5">
-                  <span
-                    className="text-[8px] font-mono tracking-[0.2em] leading-none"
-                    style={{
-                      color: isActive
-                        ? mod.accentColor + "aa"
-                        : "rgba(170,180,207,0.55)",
-                      transition: "color 300ms ease",
-                    }}
-                  >
-                    {mod.subtitle}
-                  </span>
+                  {!isAr && (
+                    <span
+                      className="text-[8px] font-mono tracking-[0.2em] leading-none"
+                      style={{
+                        color: isActive
+                          ? mod.accentColor + "aa"
+                          : "rgba(170,180,207,0.55)",
+                        transition: "color 300ms ease",
+                      }}
+                    >
+                      {copy.subtitle}
+                    </span>
+                  )}
                   {isSoon && (
                     <span
                       className="text-[7px] font-mono tracking-[0.16em] leading-none px-1 py-0.5 rounded-[3px]"
@@ -155,7 +165,7 @@ export default function MobileModuleGrid({
                         border: "1px solid rgba(231,247,255,0.14)",
                       }}
                     >
-                      SOON
+                      {t.hero.soon}
                     </span>
                   )}
                 </div>

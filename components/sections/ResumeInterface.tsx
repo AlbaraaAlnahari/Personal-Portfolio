@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { OfficialResumeVault } from "@/components/sections/resume-dossier/OfficialResumeVault";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 /**
  * Resume Interface — VERIFIED CAREER DOSSIER
@@ -16,56 +17,36 @@ import { OfficialResumeVault } from "@/components/sections/resume-dossier/Offici
  * PDF wiring is preserved exactly inside OfficialResumeVault.
  */
 
+// Credential identifiers map to the resume dictionary
+// (t.resume.credentials.<id>); structural fields (index/featured) stay here,
+// localized text fields are read from the dictionary inside CredentialModule.
+type CredentialId = "education" | "certification" | "achievement";
+
 interface Credential {
-  id: string;
+  id: CredentialId;
   index: string;
-  kind: string;
-  title: string;
-  organization: string;
-  date: string;
   featured?: boolean;
 }
 
 const credentials: Credential[] = [
-  {
-    id: "education",
-    index: "01",
-    kind: "EDUCATION",
-    title: "Bachelor of Software Engineering",
-    organization: "University of Jeddah",
-    date: "Expected 2027",
-  },
-  {
-    id: "certification",
-    index: "02",
-    kind: "CERTIFICATION",
-    title: "Robotics Engineer Certification",
-    organization: "Smart Method",
-    date: "2025",
-  },
-  {
-    id: "achievement",
-    index: "03",
-    kind: "ACHIEVEMENT",
-    title: "1st Place — AI Innovation Bootcamp",
-    organization: "DocuPilot",
-    date: "2026",
-    featured: true,
-  },
+  { id: "education", index: "01" },
+  { id: "certification", index: "02" },
+  { id: "achievement", index: "03", featured: true },
 ];
 
+// Capability signal ids map to t.resume.competencies.<id>; order is preserved.
 const competencies = [
-  "Full-Stack Development",
-  "AI-Powered Product Development",
-  "Product Research",
-  "Robotics Engineering",
-  "Systems Thinking",
-  "Technical Leadership",
-];
-
-const languages = ["Arabic", "English"];
+  "fullStack",
+  "aiProduct",
+  "productResearch",
+  "robotics",
+  "systemsThinking",
+  "techLeadership",
+] as const;
 
 export function ResumeInterface() {
+  const { t, displayFont } = useLanguage();
+  const r = t.resume;
   const reduce = useReducedMotion();
 
   const ease = [0.4, 0, 0.2, 1] as const;
@@ -95,24 +76,24 @@ export function ResumeInterface() {
           className="space-y-9 md:space-y-11"
         >
           {/* ── Section header / system declaration ───────────────── */}
-          <motion.header variants={rise} className="space-y-4 max-w-3xl">
+          <motion.header variants={rise} className="readability-field space-y-4 max-w-3xl">
             <div className="flex items-center gap-2.5">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
-                style={{ boxShadow: "0 0 8px rgba(0,217,255,0.7)" }}
+                style={{ boxShadow: "0 0 8px rgba(var(--rgb-cyan),0.7)" }}
               />
               <span className="text-xs font-mono tracking-[0.26em] text-accent-cyan/80">
-                SYSTEM DOSSIER / VERIFIED CREDENTIALS
+                {r.eyebrow}
               </span>
             </div>
             <h2
               id="resume-heading"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05]"
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] ${displayFont}`}
             >
-              Verified <span className="text-accent-cyan">Career</span> Dossier
+              {r.heading.lead} <span className="text-accent-cyan">{r.heading.accent}</span> {r.heading.trail}
             </h2>
             <p className="text-foreground-secondary/80 text-base md:text-lg leading-relaxed">
-              Verified professional record and official résumé access.
+              {r.intro}
             </p>
           </motion.header>
 
@@ -131,7 +112,7 @@ export function ResumeInterface() {
 
           {/* ── Credential records ledger ─────────────────────────── */}
           <motion.div variants={rise} className="space-y-5">
-            <SubHeader label="VERIFIED CREDENTIALS" count="03 RECORDS" />
+            <SubHeader label={r.credentialsLabel} count={r.credentialsCount} />
             <div className="relative">
               {/* registry rail — connects the three records (md+) */}
               <div
@@ -139,7 +120,7 @@ export function ResumeInterface() {
                 className="hidden md:block absolute top-0 left-[14%] right-[14%] h-px"
                 style={{
                   background:
-                    "linear-gradient(to right, transparent, rgba(0,217,255,0.28), transparent)",
+                    "linear-gradient(to right, transparent, rgba(var(--rgb-cyan),0.28), transparent)",
                 }}
               />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:pt-6">
@@ -158,8 +139,8 @@ export function ResumeInterface() {
           {/* ── Capability signal bus ─────────────────────────────── */}
           <motion.div variants={rise} className="space-y-5">
             <SubHeader
-              label="CAPABILITY SIGNALS"
-              count="06 SIGNALS ONLINE"
+              label={r.signalsLabel}
+              count={r.signalsCount}
               accent="green"
             />
             {/* Single auto-flow grid fills row-by-row (01,02 / 03,04 / 05,06)
@@ -172,7 +153,7 @@ export function ResumeInterface() {
                 className="absolute left-[3px] top-5 bottom-5 w-px"
                 style={{
                   background:
-                    "linear-gradient(to bottom, transparent, rgba(0,217,255,0.32) 22%, rgba(0,255,159,0.22) 78%, transparent)",
+                    "linear-gradient(to bottom, transparent, rgba(var(--rgb-cyan),0.32) 22%, rgba(var(--rgb-green),0.22) 78%, transparent)",
                 }}
               />
               {/* right column bus rail (sm+) */}
@@ -181,7 +162,7 @@ export function ResumeInterface() {
                 className="hidden sm:block absolute left-[calc(50%+27px)] top-5 bottom-5 w-px"
                 style={{
                   background:
-                    "linear-gradient(to bottom, transparent, rgba(0,217,255,0.32) 22%, rgba(0,255,159,0.22) 78%, transparent)",
+                    "linear-gradient(to bottom, transparent, rgba(var(--rgb-cyan),0.32) 22%, rgba(var(--rgb-green),0.22) 78%, transparent)",
                 }}
               />
               {competencies.map((comp, i) => (
@@ -193,13 +174,13 @@ export function ResumeInterface() {
                   <span
                     aria-hidden="true"
                     className="absolute left-[3px] top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-cyan/55 group-hover:bg-accent-cyan transition-all duration-300"
-                    style={{ boxShadow: "0 0 6px rgba(0,217,255,0.35)" }}
+                    style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.35)" }}
                   />
                   <span className="font-mono text-[10px] text-accent-cyan/55 tracking-wider w-5 shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-sm text-foreground-secondary/85 group-hover:text-foreground-primary transition-colors duration-300">
-                    {comp}
+                    {r.competencies[comp]}
                   </span>
                 </div>
               ))}
@@ -215,9 +196,12 @@ export function ResumeInterface() {
 // Identity dossier — premium ID-record panel (supports the vault)
 // ─────────────────────────────────────────────────────────────────────────
 function IdentityDossier() {
+  const { t } = useLanguage();
+  const id = t.resume.identity;
+  const languages = [id.languages.arabic, id.languages.english];
   return (
     <div
-      className="relative h-full rounded-2xl p-6 md:p-7 overflow-hidden flex flex-col"
+      className="t-surface relative h-full rounded-2xl p-6 md:p-7 overflow-hidden flex flex-col"
       style={{
         background:
           "linear-gradient(160deg, rgba(16,20,42,0.86) 0%, rgba(10,14,39,0.93) 100%)",
@@ -231,7 +215,7 @@ function IdentityDossier() {
         className="absolute -top-10 -left-10 w-40 h-40 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(0,217,255,0.1) 0%, transparent 65%)",
+            "radial-gradient(circle, rgba(var(--rgb-cyan),0.1) 0%, transparent 65%)",
         }}
       />
 
@@ -239,20 +223,20 @@ function IdentityDossier() {
         {/* header */}
         <div className="flex items-center justify-between gap-3">
           <span className="text-[10px] font-mono tracking-[0.26em] text-accent-cyan/80">
-            IDENTITY DOSSIER
+            {id.dossierLabel}
           </span>
-          <span className="text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/40">
-            ID / 001
+          <span dir="ltr" className="ltr-isolate text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/40">
+            {id.idTag}
           </span>
         </div>
 
         {/* name + positioning */}
         <div className="space-y-2">
           <h3 className="text-2xl md:text-[1.7rem] font-bold text-foreground-primary leading-tight">
-            Albaraa Alnahari
+            {id.name}
           </h3>
           <p className="text-sm text-accent-cyan/90 font-medium leading-relaxed">
-            Software Engineering Student · AI Builder · Full-Stack Developer
+            {id.role}
           </p>
         </div>
 
@@ -260,12 +244,12 @@ function IdentityDossier() {
         <div className="flex-1 flex flex-col justify-center gap-4 py-1">
           <RoutedDivider />
           <dl className="space-y-3.5">
-            <MetaRow label="LOCATION">
+            <MetaRow label={id.locationLabel}>
               <span className="text-sm text-foreground-primary/90">
-                Saudi Arabia
+                {id.location}
               </span>
             </MetaRow>
-            <MetaRow label="LANGUAGES">
+            <MetaRow label={id.languagesLabel}>
               <span className="text-sm text-foreground-primary/90">
                 {languages.map((l, i) => (
                   <span key={l}>
@@ -285,8 +269,8 @@ function IdentityDossier() {
 
         {/* state markers — anchored at the base */}
         <div className="flex flex-wrap gap-2">
-          <StateChip color="cyan" label="IDENTITY VERIFIED" />
-          <StateChip color="green" label="RECORD ONLINE" />
+          <StateChip color="cyan" label={id.chipVerified} />
+          <StateChip color="green" label={id.chipOnline} />
         </div>
       </div>
     </div>
@@ -331,8 +315,8 @@ function StateChip({
   color: "cyan" | "green";
   label: string;
 }) {
-  const hex = color === "cyan" ? "#00d9ff" : "#00ff9f";
-  const rgb = color === "cyan" ? "0,217,255" : "0,255,159";
+  const hex = color === "cyan" ? "var(--accent)" : "var(--accent-green)";
+  const rgb = color === "cyan" ? "var(--rgb-cyan)" : "var(--rgb-green)";
   return (
     <span
       className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[9px] font-mono tracking-[0.18em]"
@@ -389,19 +373,21 @@ function CredentialModule({
   reduce: boolean | null;
   index: number;
 }) {
+  const { t } = useLanguage();
+  const data = t.resume.credentials[credential.id];
   const featured = credential.featured;
   return (
     <article
-      className="group relative h-full rounded-xl p-5 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
+      className="t-surface group relative h-full rounded-xl p-5 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
       style={{
         background: featured
-          ? "linear-gradient(150deg, rgba(0,217,255,0.06) 0%, rgba(12,16,40,0.92) 55%)"
+          ? "linear-gradient(150deg, rgba(var(--rgb-cyan),0.06) 0%, rgba(12,16,40,0.92) 55%)"
           : "linear-gradient(150deg, rgba(16,20,42,0.78) 0%, rgba(10,14,39,0.9) 100%)",
         border: featured
-          ? "1px solid rgba(0,217,255,0.32)"
+          ? "1px solid rgba(var(--rgb-cyan),0.32)"
           : "1px solid rgba(150,165,205,0.16)",
         boxShadow: featured
-          ? "0 0 24px rgba(0,217,255,0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
+          ? "0 0 24px rgba(var(--rgb-cyan),0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
           : "none",
       }}
     >
@@ -411,7 +397,7 @@ function CredentialModule({
         className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
           background:
-            "radial-gradient(120% 80% at 0% 0%, rgba(0,217,255,0.08) 0%, transparent 60%)",
+            "radial-gradient(120% 80% at 0% 0%, rgba(var(--rgb-cyan),0.08) 0%, transparent 60%)",
         }}
       />
 
@@ -424,26 +410,26 @@ function CredentialModule({
           className="w-1.5 h-1.5 rounded-full transition-all duration-300"
           style={{
             backgroundColor: featured
-              ? "rgba(0,217,255,0.95)"
-              : "rgba(0,217,255,0.6)",
+              ? "rgba(var(--rgb-cyan),0.95)"
+              : "rgba(var(--rgb-cyan),0.6)",
             boxShadow: featured
-              ? "0 0 8px rgba(0,217,255,0.7)"
-              : "0 0 5px rgba(0,217,255,0.4)",
+              ? "0 0 8px rgba(var(--rgb-cyan),0.7)"
+              : "0 0 5px rgba(var(--rgb-cyan),0.4)",
           }}
         />
         <span
           className="w-px h-6"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(0,217,255,0.4), transparent)",
+              "linear-gradient(to bottom, rgba(var(--rgb-cyan),0.4), transparent)",
           }}
         />
       </div>
 
       <div className="relative space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[9px] font-mono tracking-[0.22em] text-foreground-secondary/45">
-            CRED / {credential.index}
+          <span dir="ltr" className="ltr-isolate text-[9px] font-mono tracking-[0.22em] text-foreground-secondary/45">
+            {t.resume.credPrefix} / {credential.index}
           </span>
           {/* compact verification indicator (icon only — reduces repetition) */}
           <span className="inline-flex items-center">
@@ -452,7 +438,7 @@ function CredentialModule({
               height="13"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#00ff9f"
+              stroke="var(--accent-green)"
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -460,7 +446,7 @@ function CredentialModule({
             >
               <path d="M20 6 9 17l-5-5" />
             </svg>
-            <span className="sr-only">Verified</span>
+            <span className="sr-only">{t.resume.verified}</span>
           </span>
         </div>
 
@@ -470,26 +456,26 @@ function CredentialModule({
               width="10"
               height="10"
               viewBox="0 0 24 24"
-              fill="rgba(0,217,255,0.85)"
+              fill="rgba(var(--rgb-cyan),0.85)"
               stroke="none"
               aria-hidden="true"
             >
               <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77 5.82 21l1.18-6.88-5-4.87 7.1-1.01L12 2z" />
             </svg>
           )}
-          {credential.kind}
+          {data.kind}
         </div>
 
         <div className="space-y-1">
           <h4 className="text-sm font-semibold text-foreground-primary leading-snug">
-            {credential.title}
+            {data.title}
           </h4>
-          <p className="text-xs text-accent-cyan/80">{credential.organization}</p>
+          <p className="text-xs text-accent-cyan/80">{data.organization}</p>
         </div>
 
         <div className="flex items-center justify-between pt-2.5 border-t border-glass-light/25">
           <span className="text-[11px] font-mono text-foreground-secondary/55">
-            {credential.date}
+            {data.date}
           </span>
           <motion.span
             className="w-1.5 h-1.5 rounded-full bg-accent-green/70"

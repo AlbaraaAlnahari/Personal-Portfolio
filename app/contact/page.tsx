@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { ContactTerminal } from "@/components/sections/ContactTerminal";
+import { ContactDirectLine } from "@/components/sections/ContactDirectLine";
+import { InteriorBlueprintField } from "@/components/layout/InteriorBlueprintField";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
@@ -11,9 +12,12 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main className="min-h-screen">
-      <h1 className="sr-only">Contact Albaraa Alnahari</h1>
-      <ContactTerminal />
-      <SiteFooter />
+      <InteriorBlueprintField />
+      <div className="relative z-10">
+        <h1 className="sr-only">Contact Albaraa Alnahari — Direct Line</h1>
+        <ContactDirectLine />
+        <SiteFooter />
+      </div>
     </main>
   );
 }

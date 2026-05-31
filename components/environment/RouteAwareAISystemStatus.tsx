@@ -1,16 +1,17 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { AISystemStatus } from "./AISystemStatus";
-
 /**
- * Route-aware wrapper for the cockpit diagnostic overlays.
- * In the multi-page editorial architecture these belong to the cinematic Home
- * entry only — interior routes stay calm and clean. Renders the unchanged
- * AISystemStatus on "/" and nothing elsewhere. No visual/animation change.
+ * Route-aware slot for the cockpit diagnostic overlays.
+ *
+ * Phase 1 (home identity closure): the four floating corner HUD labels (AI
+ * WORKSPACE ACTIVE / NEURAL SYSTEMS STABLE / ENGINEERING LAYER LOADED /
+ * DEVELOPER MODE SYNCED) are intentionally hidden. They collided with the
+ * header (the top pair overlapped the ALBARAA lockup and the View PDF action)
+ * and read as decorative AI-cockpit noise that fought the premium, calm
+ * editorial direction. The overlay component (./AISystemStatus) is left intact
+ * so it can be re-enabled deliberately later — re-wiring it is a one-line
+ * change here.
  */
 export function RouteAwareAISystemStatus() {
-  const pathname = usePathname();
-  if (pathname !== "/") return null;
-  return <AISystemStatus />;
+  return null;
 }

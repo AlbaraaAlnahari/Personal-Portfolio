@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { OrganizationsLeadership } from "@/components/sections/OrganizationsLeadership";
+import { InteriorBlueprintField } from "@/components/layout/InteriorBlueprintField";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
@@ -12,10 +13,13 @@ export const metadata: Metadata = {
 export default function ImpactPage() {
   return (
     <main className="min-h-screen">
-      <h1 className="sr-only">Impact — applied experience and leadership</h1>
-      <ExperienceTimeline />
-      <OrganizationsLeadership />
-      <SiteFooter />
+      <InteriorBlueprintField />
+      <div className="relative z-10">
+        <h1 className="sr-only">Impact — applied experience and leadership</h1>
+        <ExperienceTimeline />
+        <OrganizationsLeadership />
+        <SiteFooter />
+      </div>
     </main>
   );
 }

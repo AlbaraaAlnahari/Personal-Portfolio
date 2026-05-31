@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 760" role="img" aria-labelledby="t d">
+<title id="t">The Voice — ALBARAA background signature character</title>
+<desc id="d">A refined hand-drawn editorial male character presenting with a microphone and an expressive raised hand.</desc>
+<style>
+  :root { --paper:#F5F2EA; --ink:#081126; --cyan:#00C2E6; --mist:#8A93A7; }
+  .paper { fill:var(--paper); }
+  .ink { fill:var(--ink); }
+  .line { fill:none; stroke:var(--paper); stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+  .detail { fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
+  .fine { fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .cyan { fill:var(--cyan); }
+  .cyan-line { fill:none; stroke:var(--cyan); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+<!-- transparent production illustration: no background and no grid -->
+<g id="voice-character">
+  <!-- small origin mark only; quiet enough for background use -->
+  <circle class="cyan" cx="54" cy="666" r="9"/>
+  <path class="cyan-line" opacity=".74" d="M68 666h52"/>
+  <path class="line" opacity=".58" stroke-width="3" d="M126 666h42"/>
+
+  <!-- swept hair: warm illustrated silhouette -->
+  <path class="paper" d="M219 132c-7-43 16-83 57-99 37-15 84-7 105 23 14 19 12 47-5 63 0-19-8-32-21-39 2 25-23 43-52 47-23 4-49 1-84 5z"/>
+  <path class="detail" d="M221 120c0-36 24-67 61-79 35-11 76-2 93 25 8 13 8 30 2 43-5-17-15-28-28-33"/>
+  <path class="detail" d="M225 106c-25 13-40 33-38 56 1 16 9 29 22 35"/>
+
+  <!-- face / ear / neck -->
+  <path class="paper" d="M221 118c35 3 71 1 101-12 20-8 35-20 43-34v70c0 53-34 94-81 94-43 0-72-33-72-80v-34c0-9 3-13 9-4z"/>
+  <path class="paper" d="M216 151c-21-7-35 9-29 31 4 18 18 27 34 21z"/>
+  <path class="detail" d="M220 153c-15-5-24 6-20 20 3 12 11 17 20 14"/>
+  <path class="ink" d="M263 146c7 0 11 7 11 15s-4 15-11 15-11-7-11-15 4-15 11-15zm57-4c7 0 11 7 11 15s-4 15-11 15-11-7-11-15 4-15 11-15z"/>
+  <path class="detail" d="M267 195c12 17 32 22 48 7"/>
+  <path class="fine" d="M246 132c9-8 21-10 31-5 M308 125c11-7 24-5 33 4"/>
+  <path class="paper" d="M258 222v37l47 14 37-23v-38c-19 19-50 27-84 10z"/>
+
+  <!-- tee torso, hand-drawn but polished -->
+  <path class="paper" d="M247 253c-31 6-57 23-71 49l-38 120 50 18 31-74 2 140h156l-5-139 32 69 50-22-41-112c-12-27-36-44-68-50-20 26-65 30-98 1z"/>
+  <path class="detail" d="M247 255c17 23 67 32 99-2 M220 320c-3 60-2 117 0 182 M374 317c-2 58-1 121 2 184"/>
+  <path class="cyan-line" opacity=".8" d="M247 256c15 17 30 25 49 27 21 2 37-7 51-29"/>
+
+  <!-- presenting hand on left -->
+  <path class="paper" d="M179 298c-33 12-55 37-68 77l-17 52 43 23 29-49 39-38 15-42z"/>
+  <path class="detail" d="M178 300c-31 14-50 37-61 74l-17 50 M103 424l34 20"/>
+  <path class="paper" d="M103 425c-18-5-35-1-47 11-7 8-2 14 8 13l19-3-23 17c-9 7-5 15 6 12l29-10-17 15c-8 8-2 14 8 11 29-8 49-22 60-42l-11-26z"/>
+  <path class="detail" d="M65 449l29-10 M68 474l32-17 M85 489l27-17"/>
+
+  <!-- microphone arm -->
+  <path class="paper" d="M398 295c28 18 44 44 46 80l-6 62-47 4-15-65-42-48z"/>
+  <path class="detail" d="M401 297c26 19 39 45 40 76l-5 61 M392 437l44-4"/>
+  <path class="paper" d="M404 341c17-4 31 3 37 18l18 45-30 14-31-38c-12-15-10-33 6-39z"/>
+  <g transform="rotate(-36 424 302)">
+    <rect x="412" y="228" width="27" height="105" rx="13.5" class="paper"/>
+    <rect x="406" y="214" width="39" height="34" rx="17" class="paper"/>
+    <path class="detail" d="M414 246h25 M416 256h22"/>
+    <rect x="418" y="292" width="15" height="20" rx="4" class="cyan"/>
+  </g>
+
+  <!-- trousers in moving stance -->
+  <path class="paper" d="M216 495h161l10 36-42 163h-48l-12-121-53 122h-52l39-176z"/>
+  <path class="detail" d="M219 505c44 8 104 8 157 0 M283 533l12 132"/>
+  <path class="paper" d="M175 678l53 2 15 26c-24 22-70 25-101 16-14-4-15-16-2-23z"/>
+  <path class="detail" d="M159 704h55 M151 716h67"/>
+  <path class="paper" d="M299 678h49l56 25c15 7 13 20-3 23h-110z"/>
+  <path class="detail" d="M323 697h42 M310 710h64"/>
+</g>
+</svg>

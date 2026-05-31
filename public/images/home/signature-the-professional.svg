@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 760" role="img" aria-labelledby="t d">
+<title id="t">The Professional — ALBARAA background signature character</title>
+<desc id="d">A refined hand-drawn editorial male character in a tailored suit calmly adjusting his cuff.</desc>
+<style>
+  :root { --paper:#F5F2EA; --ink:#081126; --cyan:#00C2E6; --mist:#8A93A7; }
+  .paper { fill:var(--paper); }
+  .ink { fill:var(--ink); }
+  .line { fill:none; stroke:var(--paper); stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+  .detail { fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
+  .fine { fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .cyan { fill:var(--cyan); }
+  .cyan-line { fill:none; stroke:var(--cyan); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+<!-- transparent production illustration: no background and no grid -->
+<g id="professional-character">
+  <circle class="cyan" cx="497" cy="666" r="9"/>
+  <path class="cyan-line" opacity=".74" d="M436 666h47"/>
+  <path class="line" opacity=".58" stroke-width="3" d="M385 666h42"/>
+
+  <!-- hair -->
+  <path class="paper" d="M190 132c-8-44 16-84 58-100 39-15 86-6 108 25 15 21 12 47-5 63 0-19-8-33-22-40 1 27-26 45-55 48-24 3-51 0-84 4z"/>
+  <path class="detail" d="M193 120c1-37 25-68 62-80 36-11 78-2 95 26 8 13 8 31 2 43-6-17-15-28-29-33"/>
+  <path class="detail" d="M197 106c-25 13-40 33-38 56 1 16 9 29 22 35"/>
+
+  <!-- face -->
+  <path class="paper" d="M192 118c36 3 72 1 103-12 19-8 34-20 42-34v70c0 54-35 94-82 94-43 0-72-33-72-80v-34c0-9 3-13 9-4z"/>
+  <path class="paper" d="M188 151c-22-7-35 9-30 31 4 18 18 27 34 21z"/>
+  <path class="detail" d="M192 153c-14-5-24 6-20 20 3 12 12 17 20 14"/>
+  <path class="ink" d="M236 146c7 0 11 7 11 15s-4 15-11 15-11-7-11-15 4-15 11-15zm58-4c7 0 11 7 11 15s-4 15-11 15-11-7-11-15 4-15 11-15z"/>
+  <path class="detail" d="M241 194c13 14 31 17 47 5"/>
+  <path class="fine" d="M219 132c9-8 21-10 31-5 M283 125c11-7 24-5 33 4"/>
+  <path class="paper" d="M232 223v36l43 17 40-20v-43c-20 20-50 27-83 10z"/>
+
+  <!-- shirt / tie -->
+  <path class="paper" d="M228 257l47 19 42-20 13 60-53 49-57-50z"/>
+  <path class="ink" d="M266 277l19 0 12 26-22 62-22-62z"/>
+  <path class="cyan" d="M268 278h18l7 13-18 16-17-16z"/>
+
+  <!-- tailored suit torso -->
+  <path class="paper" d="M216 253c-37 10-64 36-73 78l-18 180h294l-22-179c-8-41-35-69-74-79l-48 104z"/>
+  <path class="detail" d="M218 257l57 100 49-101 M275 357v148"/>
+  <path class="ink" d="M215 270l47 89-39 90-55 42 14-152zm110-1l-40 90 39 93 56 39-18-154z"/>
+  <path class="line" stroke-width="4" d="M212 276l39 79-27 69 M329 277l-31 79 27 68"/>
+
+  <!-- relaxed arm -->
+  <path class="paper" d="M170 301c-29 22-43 53-43 92l16 76 50-5 11-75 28-70z"/>
+  <path class="detail" d="M169 304c-27 23-38 54-37 87l14 73"/>
+  <path class="paper" d="M141 458c14-10 32-11 49-3l-4 27c-16 13-36 14-53 3z"/>
+  <path class="detail" d="M146 470h35"/>
+
+  <!-- crossed adjusting-cuff arms -->
+  <path class="paper" d="M360 309c29 18 47 42 53 73l-31 61-46-16 16-49-63 33-18-34 57-55z"/>
+  <path class="detail" d="M359 312c27 18 42 42 48 69l-27 57 M338 427l43 11"/>
+  <path class="paper" d="M383 405c-17-6-31-3-45 5l-70 31 15 32 77-20c18-5 28-18 23-48z"/>
+  <path class="paper" d="M275 436c-19-3-36 2-50 15l16 25 45-7 17-18z"/>
+  <path class="detail" d="M231 454l40-8 M242 467l41-8"/>
+  <rect x="282" y="440" width="14" height="10" rx="2" class="cyan"/>
+
+  <!-- trousers / shoes -->
+  <path class="paper" d="M171 504h215l-23 191h-55l-37-137-28 137h-59l-17-164z"/>
+  <path class="detail" d="M174 511c54 9 153 9 208 0 M273 540l35 139"/>
+  <path class="paper" d="M180 680h63l13 28c-27 18-65 20-98 12-14-4-15-16-2-23z"/>
+  <path class="detail" d="M173 704h58 M165 715h70"/>
+  <path class="paper" d="M307 680h57l49 23c15 7 13 19-3 22H301z"/>
+  <path class="detail" d="M329 698h43 M317 710h63"/>
+
+  <!-- restrained micro signal -->
+  <path class="cyan-line" opacity=".68" d="M392 169c16 6 26 19 30 34 M399 151c24 9 39 28 45 51"/>
+</g>
+</svg>

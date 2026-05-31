@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // SYSTEM PREVIEW FRAME — a restrained "deployed interface"
@@ -19,7 +20,7 @@ interface SystemPreviewFrameProps {
   domain?: string;
   /** show a truthful LIVE indicator (only for genuinely live sites) */
   live?: boolean;
-  /** rgb triple, e.g. "0, 217, 255" */
+  /** rgb triple, e.g. "var(--rgb-cyan)" */
   rgb: string;
   sizes: string;
   priority?: boolean;
@@ -37,6 +38,7 @@ export function SystemPreviewFrame({
   sizes,
   priority = false,
 }: SystemPreviewFrameProps) {
+  const { t } = useLanguage();
   return (
     <div
       className="group/frame relative rounded-xl overflow-hidden transition-all duration-500"
@@ -68,7 +70,10 @@ export function SystemPreviewFrame({
               <circle cx="12" cy="12" r="9" />
               <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
             </svg>
-            <span className="font-mono text-[10px] tracking-wide text-foreground-secondary/70 truncate">
+            <span
+              dir="ltr"
+              className="ltr-isolate font-mono text-[10px] tracking-wide text-foreground-secondary/70 truncate"
+            >
               {domain}
             </span>
           </div>
@@ -79,10 +84,10 @@ export function SystemPreviewFrame({
             <span className="inline-flex items-center gap-1.5">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-accent-green"
-                style={{ boxShadow: "0 0 7px rgba(0,255,159,0.8)" }}
+                style={{ boxShadow: "0 0 7px rgba(var(--rgb-green),0.8)" }}
               />
               <span className="font-mono text-[9px] tracking-[0.2em] text-accent-green/85">
-                LIVE
+                {t.work.frame.live}
               </span>
             </span>
           )}

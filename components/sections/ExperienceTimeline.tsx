@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Container } from "@/components/layout/Container";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // EXPERIENCE — MISSION DEPLOYMENT LOG / APPLIED OPERATIONS RECORD
@@ -14,20 +15,18 @@ import { Container } from "@/components/layout/Container";
 // =====================================================
 
 type OutcomeKind = "metric" | "deliverable";
+type MissionId = "soum" | "smartmethod" | "alaqsa";
 
+// Structural mission data only — all copy reads from t by mission id.
+// outcomeValues pair stable outcome keys with verified numeric values
+// (numbers never translated). Deliverable missions carry no values.
 interface MissionData {
-  id: string;
+  id: MissionId;
   index: string;
-  role: string;
-  org: string;
-  period: string;
-  domainSignal: string;
-  summary: string;
-  /** rgb triple for inline domain accent, e.g. "0, 217, 255" */
+  /** rgb triple for inline domain accent, e.g. "var(--rgb-cyan)" */
   rgb: string;
   outcomeKind: OutcomeKind;
-  outcomes: { value?: string; label: string }[];
-  tags: string[];
+  outcomeValues: { key: string; value?: string }[];
 }
 
 // Only verified, already-approved Experience facts. No invented metrics.
@@ -35,61 +34,38 @@ const MISSIONS: MissionData[] = [
   {
     id: "soum",
     index: "01",
-    role: "Product Management Intern",
-    org: "Soum",
-    period: "Nov 2025 – Mar 2026",
-    domainSignal: "PRODUCT / USER RESEARCH",
-    summary:
-      "Supported product development through user research, competitive benchmarking, and prioritization of high-value use cases.",
-    rgb: "0, 217, 255",
+    rgb: "var(--rgb-cyan)",
     outcomeKind: "metric",
-    outcomes: [
-      { value: "100+", label: "USERS RESEARCHED" },
-      { value: "4+", label: "MARKET BENCHMARKS" },
-      { value: "3+", label: "PRIORITY USE CASES" },
+    outcomeValues: [
+      { key: "users", value: "100+" },
+      { key: "benchmarks", value: "4+" },
+      { key: "useCases", value: "3+" },
     ],
-    tags: ["Product Development", "User Research", "Market Benchmarks"],
   },
   {
     id: "smartmethod",
     index: "02",
-    role: "Robotics Engineering Intern",
-    org: "Smart Method",
-    period: "Jun 2025 – Dec 2025",
-    domainSignal: "ROBOTICS / AI PROTOTYPING",
-    summary:
-      "Built an AI-powered robotic arm and developed an AI chatbot prototype during hands-on robotics engineering work.",
-    rgb: "181, 55, 242",
+    rgb: "var(--rgb-purple)",
     outcomeKind: "deliverable",
-    outcomes: [
-      { label: "AI-Powered Robotic Arm" },
-      { label: "AI Chatbot Prototype" },
-      { label: "Robotics Engineer Certification" },
-    ],
-    tags: ["AI Robotics", "Robotic Arm", "AI Chatbot Prototype"],
+    outcomeValues: [{ key: "arm" }, { key: "chatbot" }, { key: "certification" }],
   },
   {
     id: "alaqsa",
     index: "03",
-    role: "Summer Program Director & Supervisor",
-    org: "Al-Aqsa Private Schools Institute",
-    period: "2023 – 2025 · Seasonal",
-    domainSignal: "LEADERSHIP / EDUCATION",
-    summary:
-      "Directed seasonal summer programs, coordinated educators, and helped expand student participation.",
-    rgb: "0, 255, 159",
+    rgb: "var(--rgb-green)",
     outcomeKind: "metric",
-    outcomes: [
-      { value: "70+", label: "STUDENTS SERVED" },
-      { value: "8+", label: "TEACHERS COORDINATED" },
-      { value: "30%", label: "ENROLLMENT GROWTH" },
+    outcomeValues: [
+      { key: "students", value: "70+" },
+      { key: "teachers", value: "8+" },
+      { key: "growth", value: "30%" },
     ],
-    tags: ["Program Direction", "Mentorship", "Team Coordination"],
   },
 ];
 
 export function ExperienceTimeline() {
   const reduce = useReducedMotion();
+  const { t, displayFont } = useLanguage();
+  const E = t.impact.experience;
 
   const rise: Variants = {
     hidden: { opacity: 0, y: reduce ? 0 : 22 },
@@ -118,27 +94,27 @@ export function ExperienceTimeline() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="space-y-5"
+            className="readability-field space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <div className="text-sm font-mono text-accent-cyan tracking-[0.22em]">
-                MISSION LOG / APPLIED EXPERIENCE
+                {E.eyebrow}
               </div>
               <div className="text-xs font-mono text-accent-cyan/55 tracking-[0.22em]">
-                03 MISSION RECORDS
+                {E.recordsLabel}
               </div>
             </div>
             <h2
               id="experience-heading"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]"
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] ${displayFont}`}
             >
-              Applied work, <span className="text-accent-cyan">deployed</span>
+              {E.headingLine1Before}
+              <span className="text-accent-cyan">{E.headingLine1Accent}</span>
               <br />
-              in real environments.
+              {E.headingLine2}
             </h2>
             <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-relaxed">
-              A verified progression across product management, robotics
-              engineering, and education leadership — recorded by outcome.
+              {E.intro}
             </p>
           </motion.div>
 
@@ -178,8 +154,11 @@ function MissionRecord({
   isLast: boolean;
   rise: Variants;
 }) {
-  const { index, role, org, period, domainSignal, summary, rgb, outcomeKind, outcomes, tags } =
-    mission;
+  const { index, rgb, outcomeKind, outcomeValues } = mission;
+  const { t } = useLanguage();
+  const E = t.impact.experience;
+  const M = E.missions[mission.id];
+  const { role, org, period, domainSignal, summary, tags } = M;
   // Activation drives the signature spine + evidence-lane illumination.
   // Wired to hover AND keyboard focus so both paths light the record.
   const [active, setActive] = useState(false);
@@ -217,7 +196,7 @@ function MissionRecord({
       {/* Record card */}
       <article
         tabIndex={0}
-        aria-label={`Mission log ${index}: ${role} at ${org}, ${period}`}
+        aria-label={E.recordAria(index, role, org, period)}
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
         onFocus={() => setActive(true)}
@@ -245,7 +224,7 @@ function MissionRecord({
             className="font-mono text-[11px] tracking-[0.22em]"
             style={{ color: `rgb(${rgb})` }}
           >
-            LOG / {index}
+            {E.logLabel} / {index}
           </span>
           <div className="flex items-center gap-2.5">
             <span className="font-mono text-[11px] tracking-[0.14em] text-foreground-secondary/55">
@@ -264,7 +243,7 @@ function MissionRecord({
                 style={{ background: `rgba(${rgb},0.8)` }}
                 aria-hidden="true"
               />
-              COMPLETED
+              {E.completed}
             </span>
           </div>
         </div>
@@ -275,7 +254,11 @@ function MissionRecord({
             {role}
           </h3>
           <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-            <span className="text-sm md:text-base font-semibold" style={{ color: `rgb(${rgb})` }}>
+            <span
+              dir="ltr"
+              className="ltr-isolate text-sm md:text-base font-semibold"
+              style={{ color: `rgb(${rgb})` }}
+            >
               {org}
             </span>
             <span className="font-mono text-[10px] tracking-[0.18em] text-foreground-secondary/45">
@@ -307,7 +290,7 @@ function MissionRecord({
               className="font-mono text-[9px] tracking-[0.24em] transition-colors duration-300"
               style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.6)` }}
             >
-              VERIFIED OUTCOME
+              {E.verifiedOutcome}
             </span>
             <span
               aria-hidden="true"
@@ -322,9 +305,9 @@ function MissionRecord({
 
           {outcomeKind === "metric" ? (
             <div className="grid grid-cols-3 gap-2 md:gap-2.5">
-              {outcomes.map((o) => (
+              {outcomeValues.map((o) => (
                 <div
-                  key={o.label}
+                  key={o.key}
                   className="rounded-lg border bg-background-primary/40 px-2.5 py-2"
                   style={{ borderColor: `rgba(${rgb},0.15)` }}
                 >
@@ -335,16 +318,16 @@ function MissionRecord({
                     {o.value}
                   </div>
                   <div className="mt-1 font-mono text-[8.5px] md:text-[9px] tracking-[0.08em] text-foreground-secondary/60 leading-tight">
-                    {o.label}
+                    {M.outcomes[o.key as keyof typeof M.outcomes]}
                   </div>
                 </div>
               ))}
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-2.5">
-              {outcomes.map((o) => (
+              {outcomeValues.map((o) => (
                 <div
-                  key={o.label}
+                  key={o.key}
                   className="flex items-center gap-2 rounded-lg border bg-background-primary/40 px-2.5 py-2"
                   style={{ borderColor: `rgba(${rgb},0.15)` }}
                 >
@@ -354,7 +337,7 @@ function MissionRecord({
                     aria-hidden="true"
                   />
                   <span className="text-[11px] md:text-xs font-medium text-foreground-secondary/85 leading-tight">
-                    {o.label}
+                    {M.outcomes[o.key as keyof typeof M.outcomes]}
                   </span>
                 </div>
               ))}
@@ -364,13 +347,13 @@ function MissionRecord({
 
         {/* Highlight tags */}
         <div className="mt-3.5 flex flex-wrap gap-1.5">
-          {tags.map((t) => (
+          {tags.map((tag) => (
             <span
-              key={t}
+              key={tag}
               className="px-2.5 py-1 rounded text-[11px] bg-background-primary/55 border text-foreground-secondary/85"
               style={{ borderColor: `rgba(${rgb},0.18)` }}
             >
-              {t}
+              {tag}
             </span>
           ))}
         </div>

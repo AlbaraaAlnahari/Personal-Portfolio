@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 660" role="img" aria-labelledby="title desc">
+<title id="title">The Professional — Suited character</title>
+<desc id="desc">An editorial male character in a tailored suit standing with calm confidence while adjusting his cuff.</desc>
+<style>
+:root{--ivory:#F5F2EA;--navy:#080F23;--cyan:#00C2E6;--blue:#157EAB;--slate:#667085;--soft:#253047;}
+.iv{stroke:var(--ivory);stroke-linecap:round;stroke-linejoin:round;fill:none}
+.cy{stroke:var(--cyan);stroke-linecap:round;stroke-linejoin:round;fill:none}
+.sl{stroke:var(--slate);stroke-linecap:round;stroke-linejoin:round;fill:none}
+.accent{transition:transform .35s ease,opacity .35s ease;transform-origin:center}
+.signal{stroke-dasharray:220;stroke-dashoffset:60;transition:stroke-dashoffset .42s cubic-bezier(.2,.7,.2,1),opacity .35s ease}
+svg:hover .accent,svg:focus .accent{transform:scale(1.06);opacity:1}
+svg:hover .signal,svg:focus .signal{stroke-dashoffset:0;opacity:1}
+@media(prefers-reduced-motion:reduce){.accent,.signal{transition:none;transform:none!important}.signal{stroke-dashoffset:0}}
+</style>
+<!-- quiet professional signal -->
+<g aria-hidden="true">
+  <circle class="accent" cx="448" cy="560" r="10" fill="#00C2E6"/>
+  <circle cx="448" cy="560" r="20" fill="none" stroke="#00C2E6" opacity=".18"/>
+  <path class="cy signal" stroke-width="3" opacity=".66" d="M426 560h-52l-36-34h-72"/>
+  <path class="sl" stroke-width="2" opacity=".45" d="M306 580h133"/>
+</g>
+<!-- floating verified/appointment cue -->
+<g aria-hidden="true" opacity=".76">
+  <rect x="368" y="104" width="100" height="54" rx="27" fill="none" stroke="#667085" stroke-width="3"/>
+  <circle cx="393" cy="131" r="6" fill="#00C2E6"/>
+  <path class="iv" stroke-width="3" d="M411 131h33"/>
+</g>
+<!-- male professional -->
+<g aria-hidden="true">
+  <!-- hair -->
+  <path fill="#080F23" stroke="#F5F2EA" stroke-width="6" d="M183 116c-5-49 35-80 85-77 39 3 67 32 67 70-18-17-39-22-61-22-33 0-57 14-91 29z"/>
+  <!-- face -->
+  <path fill="#F5F2EA" stroke="#F5F2EA" stroke-width="4" d="M189 108v48c0 43 31 75 72 75 43 0 74-35 74-80v-43c-22-13-47-18-72-17-25 1-47 8-74 17z"/>
+  <path fill="#F5F2EA" stroke="#F5F2EA" stroke-width="5" d="M193 140c-20-8-32 6-27 27 4 16 17 22 30 18"/>
+  <ellipse cx="238" cy="148" rx="7" ry="11" fill="#080F23"/>
+  <ellipse cx="290" cy="148" rx="7" ry="11" fill="#080F23"/>
+  <path class="iv" stroke="#080F23" stroke-width="5" d="M242 182c14 11 29 11 42 0"/>
+  <path fill="#080F23" d="M224 130c10-7 21-8 31-2l-3 5c-9-3-17-3-25 2zm53-2c12-7 23-5 32 3l-4 5c-8-5-17-6-26-2z"/>
+  <!-- neck/shirt -->
+  <path fill="#F5F2EA" stroke="#F5F2EA" stroke-width="5" d="M237 222v34h50v-34z"/>
+  <path fill="#F5F2EA" stroke="#F5F2EA" stroke-width="4" d="M232 252h60l-30 62z"/>
+  <!-- tailored jacket -->
+  <path fill="#101B33" stroke="#F5F2EA" stroke-width="7" d="M209 254c-32 10-54 33-60 66l-18 170h254l-18-170c-6-33-28-56-59-66l-46 60z"/>
+  <path fill="#157EAB" opacity=".6" d="M207 259l55 55-24 51-43-100zm103 0l-48 55 26 51 39-98z"/>
+  <path class="iv" stroke-width="4" d="M209 255l53 59 47-60 M262 314v165"/>
+  <path class="cy" stroke-width="4" d="M255 323l7 9 7-9"/>
+  <!-- left arm relaxed -->
+  <path fill="#101B33" stroke="#F5F2EA" stroke-width="7" d="M154 303c-22 19-30 48-28 80l13 72h35l12-75 28-65z"/>
+  <path fill="#F5F2EA" d="M137 447c9-8 25-9 37-2l-5 22c-14 8-27 7-38-2z"/>
+  <!-- right arm adjusting cuff -->
+  <path fill="#101B33" stroke="#F5F2EA" stroke-width="7" d="M361 302c25 22 34 48 31 77l-27 54-31-15 12-56-32-40z"/>
+  <path fill="#F5F2EA" stroke="#F5F2EA" stroke-width="5" d="M347 399c-18 0-42 8-64 19l12 24 68-9z"/>
+  <path fill="#F5F2EA" stroke="#F5F2EA" stroke-width="5" d="M280 416c-18-2-34 3-45 16l15 18 51-10z"/>
+  <rect x="282" y="421" width="13" height="9" rx="2" fill="#00C2E6"/>
+  <!-- trouser silhouette -->
+  <path fill="#080F23" stroke="#F5F2EA" stroke-width="7" d="M164 489h197l-25 121h-48l-26-98-21 98h-49z"/>
+  <!-- shoes -->
+  <path fill="#F5F2EA" d="M188 597h54v17c-22 13-51 14-75 7-8-3-6-12 3-16z"/>
+  <path fill="#F5F2EA" d="M286 597h54l27 15c10 6 7 15-5 16h-76z"/>
+  <path class="sl" stroke-width="3" opacity=".55" d="M160 628h210"/>
+</g>
+</svg>

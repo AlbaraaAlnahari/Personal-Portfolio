@@ -113,14 +113,16 @@ export const DESKTOP_MODULE_POSITIONS: Record<
 };
 
 // =====================================================
-// SECTION ANCHOR MAP — maps module ID → production section element ID
+// MODULE ROUTE MAP — maps module ID → dedicated interior route.
+// In the multi-page architecture the section chapters live inside the
+// About/Work/Impact routes, so the Hero routes (not in-page scrolls) here.
 // =====================================================
 export const MODULE_SECTION_ANCHORS: Record<string, string> = {
-  about: "about",
-  projects: "projects",
-  experience: "experience",
-  skills: "skills",
-  contact: "contact",
+  about: "/about",
+  projects: "/work",
+  experience: "/impact",
+  skills: "/about#skills",
+  contact: "/contact",
   // terminal: intentionally unmapped — it is a "coming online" placeholder
   // (no real command experience exists yet), so it must not navigate anywhere.
 };

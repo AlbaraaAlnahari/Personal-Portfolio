@@ -8,6 +8,7 @@ import {
   SanadkConceptVisual,
   SlideMindConceptVisual,
 } from "@/components/sections/projects/ProjectConceptVisuals";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // PROJECT SYSTEMS — Deployed systems gallery
@@ -21,25 +22,21 @@ import {
 type Accent = "cyan" | "purple" | "green";
 
 const accentTokens: Record<Accent, { rgb: string }> = {
-  cyan: { rgb: "0, 217, 255" },
-  purple: { rgb: "181, 55, 242" },
-  green: { rgb: "0, 255, 159" },
+  cyan: { rgb: "var(--rgb-cyan)" },
+  purple: { rgb: "var(--rgb-purple)" },
+  green: { rgb: "var(--rgb-green)" },
 };
 
+// Non-translatable tokens (brand name, tech stack, URL) live here; all
+// human-readable copy is read from the `work` dictionary inside FlagshipCard.
 const DOCUPILOT = {
-  systemLabel: "SYSTEM 01 / FLAGSHIP MODULE",
-  category: "AI SAAS / BUSINESS OPERATIONS",
   name: "DocuPilot",
-  tagline: "AI Business Operations Platform",
-  recognition: "1st Place — AI Innovation Bootcamp",
-  description:
-    "AI SaaS platform transforming business documents into structured workflows, approvals, and operational systems.",
   tech: ["Next.js", "TypeScript", "Supabase", "Gemini API", "Qwen API", "Zod"],
   link: "https://docupilot.site",
-  linkLabel: "Live Site",
 };
 
 export function ProjectsSystems() {
+  const { t, displayFont } = useLanguage();
   const reduce = useReducedMotion();
   const rise = {
     hidden: { opacity: 0, y: reduce ? 0 : 22 },
@@ -64,27 +61,27 @@ export function ProjectsSystems() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={rise}
-            className="space-y-5"
+            className="readability-field space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <div className="text-sm font-mono text-accent-green tracking-[0.22em]">
-                DEPLOYED SYSTEMS / FEATURED WORK
+                {t.work.header.eyebrow}
               </div>
               <div className="text-xs font-mono text-accent-cyan/60 tracking-[0.22em]">
-                04 PROJECT SYSTEMS
+                {t.work.header.index}
               </div>
             </div>
             <h2
               id="projects-heading"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]"
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] ${displayFont}`}
             >
-              Products designed to turn
+              {t.work.header.titleLead}
               <br />
-              <span className="text-accent-cyan">intelligence</span> into action.
+              <span className="text-accent-cyan">{t.work.header.titleAccent}</span>{" "}
+              {t.work.header.titleTrail}
             </h2>
             <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-relaxed">
-              A selection of AI-enabled products, accessibility experiences, and
-              software systems built to solve real problems.
+              {t.work.header.intro}
             </p>
           </motion.div>
 
@@ -119,15 +116,15 @@ export function ProjectsSystems() {
             >
               <ConceptModule
                 accent="cyan"
-                systemLabel="SYSTEM 03 / INCLUSIVE DESIGN"
-                category="ACCESSIBILITY / INCLUSIVE DESIGN"
-                name="Sanadk Accessibility App"
-                tagline="Accessible Mobility Experience"
-                description="Accessibility-first mobile experience for visually impaired and wheelchair users."
-                conceptLabel="ACCESSIBILITY GUIDANCE SIGNAL"
+                systemLabel={t.work.sanadk.systemLabel}
+                category={t.work.sanadk.category}
+                name={t.work.sanadk.name}
+                tagline={t.work.sanadk.tagline}
+                description={t.work.sanadk.description}
+                conceptLabel={t.work.sanadk.conceptLabel}
                 tech={["UX/UI", "Figma", "Accessibility Design"]}
                 visual={<SanadkConceptVisual rgb={accentTokens.cyan.rgb} />}
-                statusLabel="ACCESSIBILITY / UX CASE"
+                statusLabel={t.work.sanadk.statusLabel}
               />
             </motion.div>
 
@@ -140,16 +137,16 @@ export function ProjectsSystems() {
             >
               <ConceptModule
                 accent="purple"
-                systemLabel="SYSTEM 04 / STUDY AUTOMATION"
-                category="AI LEARNING TOOLS"
-                name="Slide-Mind Flashcard Generator"
-                tagline="AI Study System"
-                description="AI-powered flashcard generation system with modular architecture."
-                conceptLabel="KNOWLEDGE DISTILLATION ENGINE"
+                systemLabel={t.work.slidemind.systemLabel}
+                category={t.work.slidemind.category}
+                name={t.work.slidemind.name}
+                tagline={t.work.slidemind.tagline}
+                description={t.work.slidemind.description}
+                conceptLabel={t.work.slidemind.conceptLabel}
                 tech={["Java", "API Integration"]}
                 visual={<SlideMindConceptVisual rgb={accentTokens.purple.rgb} />}
                 link="https://github.com/ProgAm1/Slide-Mind-Project"
-                linkLabel="View Repository"
+                linkLabel={t.work.actions.viewRepository}
               />
             </motion.div>
           </div>
@@ -177,6 +174,7 @@ function ActionLink({
   size?: "sm" | "md";
   onActiveChange?: (active: boolean) => void;
 }) {
+  const { t } = useLanguage();
   const activity = onActiveChange
     ? {
         onMouseEnter: () => onActiveChange(true),
@@ -190,7 +188,7 @@ function ActionLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${name} — ${label} (opens in a new tab)`}
+      aria-label={`${name} — ${label} ${t.work.actions.opensNewTab}`}
       {...activity}
       className={`ie-focus inline-flex items-center gap-2 font-mono tracking-wide no-underline transition-opacity duration-300 hover:opacity-80 ${
         size === "md" ? "text-sm" : "text-xs"
@@ -223,6 +221,7 @@ function TechChips({ tech, rgb }: { tech: string[]; rgb: string }) {
 // 1 — DocuPilot flagship: identity + AI Operations Pipeline + live preview
 // ─────────────────────────────────────────────────────────────────────────
 function FlagshipCard({ reduce }: { reduce: boolean }) {
+  const { t } = useLanguage();
   const a = accentTokens.cyan;
   // Output routing: the pipeline emits → the deployed-interface preview. The
   // ports/trace brighten when the Live Site action is hovered/focused.
@@ -257,16 +256,16 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
           <div className="md:col-span-3 p-7 md:p-9 space-y-5">
             <div className="flex items-center justify-between gap-3">
               <div className="text-xs font-mono text-accent-cyan/70 tracking-[0.22em]">
-                {DOCUPILOT.systemLabel}
+                {t.work.docupilot.systemLabel}
               </div>
               <div
                 className="w-1.5 h-1.5 rounded-full bg-accent-green/75"
-                style={{ boxShadow: "0 0 8px rgba(0, 255, 159, 0.6)" }}
+                style={{ boxShadow: "0 0 8px rgba(var(--rgb-green), 0.6)" }}
               />
             </div>
 
             <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em]">
-              {DOCUPILOT.category}
+              {t.work.docupilot.category}
             </div>
 
             <div className="space-y-2">
@@ -274,7 +273,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
                 {DOCUPILOT.name}
               </h3>
               <p className="text-lg md:text-xl text-foreground-secondary/85">
-                {DOCUPILOT.tagline}
+                {t.work.docupilot.tagline}
               </p>
             </div>
 
@@ -288,20 +287,20 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
             >
               <span
                 className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
-                style={{ boxShadow: "0 0 6px rgba(0, 217, 255, 0.7)" }}
+                style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan), 0.7)" }}
               />
               <span className="text-xs text-accent-cyan font-medium tracking-wide">
-                {DOCUPILOT.recognition}
+                {t.work.docupilot.recognition}
               </span>
             </div>
 
             <p className="text-foreground-secondary/90 leading-relaxed">
-              {DOCUPILOT.description}
+              {t.work.docupilot.description}
             </p>
 
             <div>
               <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em] mb-3">
-                TECHNOLOGY STACK
+                {t.work.labels.technologyStack}
               </div>
               <div className="flex flex-wrap gap-2">
                 {DOCUPILOT.tech.map((t) => (
@@ -317,7 +316,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
 
             <ActionLink
               href={DOCUPILOT.link}
-              label={DOCUPILOT.linkLabel}
+              label={t.work.actions.liveSite}
               name={DOCUPILOT.name}
               rgb={a.rgb}
               size="md"
@@ -337,25 +336,25 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
                 className="h-5 w-px transition-all duration-500"
                 style={{
                   background: outputActive
-                    ? "linear-gradient(to bottom, rgba(0,217,255,0.85), rgba(0,217,255,0.2))"
-                    : "linear-gradient(to bottom, rgba(0,217,255,0.5), rgba(0,217,255,0.12))",
+                    ? "linear-gradient(to bottom, rgba(var(--rgb-cyan),0.85), rgba(var(--rgb-cyan),0.2))"
+                    : "linear-gradient(to bottom, rgba(var(--rgb-cyan),0.5), rgba(var(--rgb-cyan),0.12))",
                 }}
               />
               <span className="inline-flex items-center gap-1.5">
                 <span
                   className="w-1.5 h-1.5 rounded-full transition-all duration-500"
                   style={{
-                    backgroundColor: outputActive ? "rgba(0,217,255,1)" : "rgba(0,217,255,0.75)",
+                    backgroundColor: outputActive ? "rgba(var(--rgb-cyan),1)" : "rgba(var(--rgb-cyan),0.75)",
                     boxShadow: outputActive
-                      ? "0 0 10px rgba(0,217,255,0.85)"
-                      : "0 0 6px rgba(0,217,255,0.45)",
+                      ? "0 0 10px rgba(var(--rgb-cyan),0.85)"
+                      : "0 0 6px rgba(var(--rgb-cyan),0.45)",
                   }}
                 />
                 <span
                   className="font-mono text-[8px] tracking-[0.24em] transition-colors duration-500"
-                  style={{ color: outputActive ? "rgba(0,217,255,0.95)" : "rgba(0,217,255,0.65)" }}
+                  style={{ color: outputActive ? "rgba(var(--rgb-cyan),0.95)" : "rgba(var(--rgb-cyan),0.65)" }}
                 >
-                  SYSTEM OUTPUT
+                  {t.work.preview.systemOutput}
                 </span>
               </span>
               {/* downward route cue — output continues into the preview below */}
@@ -369,7 +368,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               >
                 <path
                   d="M4.5 0 V8 M1.5 5.5 L4.5 9 L7.5 5.5"
-                  stroke="rgb(0,217,255)"
+                  stroke="rgb(var(--rgb-cyan))"
                   strokeWidth="1.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -385,10 +384,10 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
             <div className="flex items-center gap-2.5">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
-                style={{ boxShadow: "0 0 8px rgba(0,217,255,0.7)" }}
+                style={{ boxShadow: "0 0 8px rgba(var(--rgb-cyan),0.7)" }}
               />
               <span className="text-xs font-mono text-accent-cyan/80 tracking-[0.22em]">
-                LIVE SYSTEM PREVIEW
+                {t.work.preview.livePreview}
               </span>
             </div>
             {/* Receiving end of the pipeline output route — docked port that
@@ -397,10 +396,10 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               <span
                 className="w-1.5 h-1.5 rounded-full transition-all duration-500"
                 style={{
-                  backgroundColor: outputActive ? "rgba(0,217,255,1)" : "rgba(0,217,255,0.7)",
+                  backgroundColor: outputActive ? "rgba(var(--rgb-cyan),1)" : "rgba(var(--rgb-cyan),0.7)",
                   boxShadow: outputActive
-                    ? "0 0 9px rgba(0,217,255,0.8)"
-                    : "0 0 5px rgba(0,217,255,0.4)",
+                    ? "0 0 9px rgba(var(--rgb-cyan),0.8)"
+                    : "0 0 5px rgba(var(--rgb-cyan),0.4)",
                 }}
                 aria-hidden="true"
               />
@@ -408,8 +407,8 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
                 className="hidden sm:block h-px w-5 transition-all duration-500"
                 style={{
                   background: outputActive
-                    ? "linear-gradient(to right, rgba(0,217,255,0.8), rgba(0,217,255,0.3))"
-                    : "linear-gradient(to right, rgba(0,217,255,0.45), rgba(0,217,255,0.1))",
+                    ? "linear-gradient(to right, rgba(var(--rgb-cyan),0.8), rgba(var(--rgb-cyan),0.3))"
+                    : "linear-gradient(to right, rgba(var(--rgb-cyan),0.45), rgba(var(--rgb-cyan),0.1))",
                 }}
                 aria-hidden="true"
               />
@@ -417,17 +416,17 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
                 className="text-[10px] font-mono tracking-[0.2em] transition-colors duration-500"
                 style={{ color: outputActive ? "rgba(120,225,255,0.95)" : "rgba(110,190,225,0.62)" }}
               >
-                OUTPUT / DEPLOYED INTERFACE
+                {t.work.preview.outputInterface}
               </span>
             </div>
           </div>
 
           <SystemPreviewFrame
             src="/images/projects/docupilot-decision-dashboard.png"
-            alt="DocuPilot Decision Dashboard — active projects, pending invoices, required approvals, high risks, and linked project indicators in the deployed AI operations platform."
+            alt={t.work.docupilotPreviewAlt}
             width={3446}
             height={1746}
-            label="DEPLOYED INTERFACE"
+            label={t.work.frame.deployedInterface}
             domain="docupilot.site"
             live
             rgb={a.rgb}
@@ -443,11 +442,12 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
 // AI Operations Pipeline — preserved exactly (DocuPilot system signature)
 // ─────────────────────────────────────────────────────────────────────────
 function WorkflowDiagram({ reduce }: { reduce: boolean }) {
+  const { t } = useLanguage();
   const stages = [
-    { label: "DOCUMENT INPUT", color: "rgb(0, 217, 255)" },
-    { label: "AI EXTRACTION", color: "rgb(181, 55, 242)" },
-    { label: "STRUCTURED WORKFLOW", color: "rgb(0, 255, 159)" },
-    { label: "APPROVAL SYSTEM", color: "rgb(0, 217, 255)" },
+    { key: "documentInput", label: t.work.pipeline.stages.documentInput, color: "rgb(var(--rgb-cyan))" },
+    { key: "aiExtraction", label: t.work.pipeline.stages.aiExtraction, color: "rgb(var(--rgb-purple))" },
+    { key: "structuredWorkflow", label: t.work.pipeline.stages.structuredWorkflow, color: "rgb(var(--rgb-green))" },
+    { key: "approvalSystem", label: t.work.pipeline.stages.approvalSystem, color: "rgb(var(--rgb-cyan))" },
   ];
 
   const cx = 28;
@@ -461,10 +461,10 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
       <svg viewBox="0 0 280 224" className="w-full h-auto" aria-hidden="true">
         <defs>
           <linearGradient id="docupilot-trace" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgb(0, 217, 255)" stopOpacity="0.5" />
-            <stop offset="33%" stopColor="rgb(181, 55, 242)" stopOpacity="0.5" />
-            <stop offset="66%" stopColor="rgb(0, 255, 159)" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="rgb(0, 217, 255)" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="rgb(var(--rgb-cyan))" stopOpacity="0.5" />
+            <stop offset="33%" stopColor="rgb(var(--rgb-purple))" stopOpacity="0.5" />
+            <stop offset="66%" stopColor="rgb(var(--rgb-green))" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="rgb(var(--rgb-cyan))" stopOpacity="0.5" />
           </linearGradient>
         </defs>
 
@@ -483,7 +483,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
         {stages.map((stage, i) => {
           const cy = cyStart + i * cySpacing;
           return (
-            <g key={stage.label}>
+            <g key={stage.key}>
               <circle
                 cx={cx}
                 cy={cy}
@@ -512,7 +512,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
 
         {/* Traveling pulse — paused under reduced motion */}
         {!reduce && (
-          <circle cx={cx} cy={cyStart} r="2.5" fill="rgb(0, 217, 255)">
+          <circle cx={cx} cy={cyStart} r="2.5" fill="rgb(var(--rgb-cyan))">
             <animate
               attributeName="cy"
               values={`${cyStart};${cyStart + cySpacing};${cyStart + 2 * cySpacing};${cyStart + 3 * cySpacing};${cyStart}`}
@@ -530,7 +530,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
         )}
       </svg>
       <div className="mt-3 text-center text-[10px] font-mono text-foreground-secondary/55 tracking-[0.22em]">
-        AI OPERATIONS PIPELINE
+        {t.work.pipeline.title}
       </div>
     </div>
   );
@@ -540,6 +540,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
 // 2 — TechPath secondary feature: real roadmap proof + content
 // ─────────────────────────────────────────────────────────────────────────
 function TechPathFeature() {
+  const { t } = useLanguage();
   const a = accentTokens.green;
   return (
     <div className="relative group">
@@ -568,7 +569,7 @@ function TechPathFeature() {
           <div className="p-6 md:p-8 lg:border-r border-glass-light/15 flex flex-col">
             <div className="flex items-center justify-between gap-3 mb-4">
               <div className="text-xs font-mono tracking-[0.22em]" style={{ color: `rgba(${a.rgb},0.85)` }}>
-                SYSTEM 02 / ADAPTIVE LEARNING ROUTE
+                {t.work.techpath.systemLabel}
               </div>
               <div
                 className="w-1.5 h-1.5 rounded-full"
@@ -577,11 +578,11 @@ function TechPathFeature() {
             </div>
             <SystemPreviewFrame
               src="/images/projects/techpath-roadmap.png"
-              alt="TechPath generated learning roadmap — overall progress, learning timeline with a Foundation / Backend Development phase, and a weekly study schedule."
+              alt={t.work.techpath.roadmapAlt}
               width={3456}
               height={1740}
-              label="GENERATED ROADMAP"
-              domain="techpath / roadmap"
+              label={t.work.frame.generatedRoadmap}
+              domain={t.work.techpath.domain}
               rgb={a.rgb}
               sizes="(max-width: 1024px) 100vw, 560px"
             />
@@ -590,23 +591,22 @@ function TechPathFeature() {
           {/* Right: content */}
           <div className="p-6 md:p-8 flex flex-col space-y-5">
             <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em]">
-              AI EDUCATION / PERSONALIZATION
+              {t.work.techpath.category}
             </div>
             <div className="space-y-2">
               <h3 className="text-2xl md:text-3xl font-bold" style={{ color: `rgb(${a.rgb})` }}>
                 TechPath
               </h3>
               <p className="text-base md:text-lg text-foreground-secondary/85">
-                AI Learning Roadmap Generator
+                {t.work.techpath.tagline}
               </p>
             </div>
             <p className="text-sm md:text-base text-foreground-secondary/85 leading-relaxed">
-              AI-powered roadmap generator with personalized learning timelines
-              and adaptive educational systems.
+              {t.work.techpath.description}
             </p>
             <div>
               <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em] mb-2.5">
-                TECH STACK
+                {t.work.labels.techStack}
               </div>
               <TechChips tech={["React.js", "Tailwind CSS", "Claude API"]} rgb={a.rgb} />
             </div>
@@ -619,7 +619,7 @@ function TechPathFeature() {
                   className="text-[9px] font-mono tracking-[0.24em]"
                   style={{ color: `rgba(${a.rgb},0.6)` }}
                 >
-                  ADAPTIVE ROUTE
+                  {t.work.labels.adaptiveRoute}
                 </span>
                 <div className="relative flex-1 flex items-center">
                   <span
@@ -644,7 +644,7 @@ function TechPathFeature() {
               </div>
               <ActionLink
                 href="https://github.com/AlbaraaAlnahari/TechPath"
-                label="View Repository"
+                label={t.work.actions.viewRepository}
                 name="TechPath"
                 rgb={a.rgb}
                 size="md"

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 interface AboutNodePreviewProps {
   isVisible: boolean;
@@ -16,9 +17,7 @@ export function AboutNodePreview({
   isVisible,
   position = { side: "left", offsetX: -10, offsetY: 0 },
 }: AboutNodePreviewProps) {
-  const baseOffset = position.side === "left" ? "-16px" : "16px";
-  const direction = position.side === "left" ? "right" : "left";
-
+  const { t } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
@@ -41,7 +40,7 @@ export function AboutNodePreview({
       <div className="px-4 py-3 rounded-lg backdrop-blur-md border border-accent-cyan/40 bg-background-primary/80 whitespace-nowrap pointer-events-none">
         {/* Micro label */}
         <div className="text-xs font-mono text-accent-cyan/70 tracking-widest mb-2">
-          IDENTITY MODULE
+          {t.about.preview.moduleLabel}
         </div>
 
         {/* Profile row with image and text */}
@@ -50,7 +49,7 @@ export function AboutNodePreview({
           <div className="relative h-[88px] w-[76px] shrink-0 overflow-hidden rounded-xl border border-accent-cyan/40 bg-background-primary/50">
             <Image
               src="/images/albaraa-profile.svg"
-              alt="Portrait of Albaraa Alnahari"
+              alt={t.about.portraitAlt}
               fill
               sizes="76px"
               className="object-contain object-top origin-top scale-[1.7]"
@@ -60,13 +59,13 @@ export function AboutNodePreview({
           {/* Text content */}
           <div className="flex flex-col gap-1">
             <div className="text-sm font-semibold text-foreground-primary">
-              Albaraa Alnahari
+              {t.about.preview.name}
             </div>
             <div className="text-xs text-foreground-secondary/80">
-              Profile Identity
+              {t.about.preview.role}
             </div>
             <div className="text-xs text-accent-cyan/70 pt-0.5">
-              Open About →
+              {t.about.preview.open}
             </div>
           </div>
         </div>

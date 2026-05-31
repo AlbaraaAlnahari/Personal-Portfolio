@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { CommandModule } from "./CommandModuleData";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // COMMAND MODULE CARD — premium graphite interface unit
@@ -28,6 +29,8 @@ export default function CommandModuleCard({
   onNavigate,
   style,
 }: CommandModuleCardProps) {
+  const { t, isAr } = useLanguage();
+  const copy = t.modules[module.id as keyof typeof t.modules];
   const dimmed = isAnySelected && !isSelected;
 
   return (
@@ -61,7 +64,7 @@ export default function CommandModuleCard({
       onClick={() => onNavigate?.(module.id)}
       onFocus={() => onActivate(module.id)}
       onBlur={() => onDeactivate()}
-      aria-label={`${module.previewTitle}: ${module.previewDescription}`}
+      aria-label={`${copy.previewTitle}: ${copy.previewDescription}`}
       initial={false}
       animate={{
         scale: isSelected ? 1.06 : dimmed ? 0.97 : 1,
@@ -113,10 +116,15 @@ export default function CommandModuleCard({
         )}
       </div>
 
-      {/* Label column */}
+      {/* Label column — in Arabic each pill shows ONE clean phrase (no stacked
+          sub-label); English keeps the label + sub-label pairing. */}
       <div className="flex flex-col items-start min-w-0">
         <span
-          className="text-[10px] font-mono tracking-[0.18em] leading-none"
+          className={
+            isAr
+              ? "text-[12px] font-mono leading-tight"
+              : "text-[10px] font-mono tracking-[0.18em] leading-none"
+          }
           style={{
             color: isSelected
               ? module.accentColor
@@ -126,21 +134,23 @@ export default function CommandModuleCard({
             transition: "color 300ms ease",
           }}
         >
-          {module.label}
+          {copy.label}
         </span>
-        <span
-          className="text-[8px] font-mono tracking-[0.15em] leading-none mt-0.5"
-          style={{
-            color: isSelected
-              ? module.accentColor + "90"
-              : dimmed
-                ? "rgba(170,180,207,0.42)"
-                : "rgba(180,190,217,0.6)",
-            transition: "color 300ms ease",
-          }}
-        >
-          {module.subtitle}
-        </span>
+        {!isAr && (
+          <span
+            className="text-[8px] font-mono tracking-[0.15em] leading-none mt-0.5"
+            style={{
+              color: isSelected
+                ? module.accentColor + "90"
+                : dimmed
+                  ? "rgba(170,180,207,0.42)"
+                  : "rgba(180,190,217,0.6)",
+              transition: "color 300ms ease",
+            }}
+          >
+            {copy.subtitle}
+          </span>
+        )}
       </div>
     </motion.button>
   );

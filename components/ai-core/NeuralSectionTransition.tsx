@@ -60,12 +60,12 @@ export function NeuralSectionTransition() {
             style={{
               top: "50%",
               background: `linear-gradient(90deg, transparent 0%, ${transition.color} 50%, transparent 100%)`,
+              transformOrigin: "center",
             }}
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             exit={{ scaleX: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            transformOrigin="center"
           />
 
           {/* Micro-label */}

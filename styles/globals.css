@@ -5,6 +5,56 @@
 @import "tailwindcss";
 
 /* ============================================
+   ARABIC TYPOGRAPHY — Thmanyah font faces
+   Self-hosted from /public/fonts/thmanyah. Loaded for Arabic only (the Arabic
+   language block below remaps the sans/mono tokens to "Thmanyah Sans"); English
+   never references these families, so its system typography is untouched.
+   Sans → body / UI / nav / labels.  Serif Display → heroic Arabic titles.
+   ============================================ */
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Serif Display";
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Serif Display";
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
    CSS CUSTOM PROPERTIES
    ============================================ */
 
@@ -21,6 +71,62 @@
   --color-accent-green: #00ff9f;
   --color-accent-pink: #ff006e;
   --color-accent-purple: #b537f2;
+
+  /* ── Semantic theme tokens (navy = default; the html[data-theme="warm"]
+     block below overrides these). Inline component styles read these via
+     var(), so the navy values here keep the navy theme byte-identical. ── */
+  --bg: #0a0e27;
+  --heading: #f5f2ea;
+  --text-body: rgba(231, 247, 255, 0.7);
+  --text-muted: rgba(160, 165, 197, 0.62);
+  --surface: rgba(10, 14, 28, 0.72);
+  --surface-deep: rgba(8, 11, 22, 0.62);
+  --surface-lit: rgba(13, 19, 38, 0.78);
+  --surface-inset: rgba(8, 11, 22, 0.5);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-idle: rgba(255, 255, 255, 0.1);
+  --accent: #00d9ff;
+  --accent-strong: #bdf3ff;
+  --accent-glow: rgba(0, 217, 255, 0.6);
+  --accent-green: #00ff9f;
+  --on-accent: #080f23;
+  --grid-line: 232, 237, 244;
+  --grid-minor-alpha: 0.085;
+  --grid-major-alpha: 0.17;
+  --grid-minor-alpha-i: 0.07;
+  --grid-major-alpha-i: 0.14;
+  --readability-wash: 8, 15, 35;
+  --text-strong: rgba(231, 247, 255, 0.92);
+  --placeholder: rgba(231, 247, 255, 0.32);
+  --contact-pill-bg: #f5f2ea;
+  --contact-pill-bg-hover: #fffdf7;
+  --contact-pill-text: #080f23;
+  --hero-bg: radial-gradient(ellipse at 50% 35%, #0f1435 0%, #080c22 55%, #040610 100%);
+  /* Accent RGB triples for rgba(var(--rgb-*), a) — also used by the per-section
+     accent config (Projects/Experience/Leadership) so bright accents deepen on
+     warm cream while staying byte-identical on navy. */
+  --rgb-cyan: 0, 217, 255;
+  --rgb-green: 0, 255, 159;
+  --rgb-purple: 181, 55, 242;
+  --accent-purple: #b537f2;
+  /* Neutral text RGB triples — used as rgba(var(--rgb-*), A) so any per-usage
+     alpha is preserved exactly (navy byte-identical) while flipping dark on
+     warm cream. */
+  --rgb-body: 231, 247, 255;
+  --rgb-muted: 160, 165, 197;
+  --rgb-ivory: 245, 242, 234;
+  /* Header chrome tokens */
+  --nav-surface: rgba(7, 11, 25, 0.82);
+  --nav-border: rgba(232, 237, 244, 0.09);
+  --nav-link-active: #eaf2fb;
+  --nav-link-idle: #9aa0c0;
+  /* Active route-rail link colour — text-colour-only active state (no underline,
+     no box). Navy uses a premium emerald accent; warm overrides to a deep mango.
+     The *-rgb triple backs low-alpha borders/fills (e.g. footer social icons). */
+  --nav-active: #2ee6a6;
+  --nav-active-rgb: 46, 230, 166;
+  --nav-muted: 160, 165, 197;
+  --nav-chrome: 245, 242, 234;
 
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -46,10 +152,15 @@
      same system typography (English font-family only — no other change). */
   --font-sans: var(--font-family-sans);
   --font-mono: var(--font-family-mono);
+  /* Arabic heroic-display stack (serif). Only consumed via the .font-ar-display
+     class, applied by the language hook on large Arabic titles. */
+  --font-family-display-ar: "Thmanyah Serif Display", "Thmanyah Sans", Georgia, serif;
 
-  /* Layout heights */
-  --nav-height: 48px;
-  --hero-top-offset: 48px;
+  /* Layout heights — premium header: taller on desktop so the ALBARAA lockup
+     and route navigation read confidently (md+ override below). The Hero's
+     min-height calc references --nav-height and stays in sync automatically. */
+  --nav-height: 56px;
+  --hero-top-offset: 56px;
 
   /* Z-index scale */
   --z-dropdown: 1000;
@@ -70,6 +181,214 @@
   --transition-fast: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   WARM CREAM THEME — token overrides
+   Activated by `<html data-theme="warm">`. Navy is the default (no attribute
+   or data-theme="navy"). This block ONLY adds warm overrides, so navy renders
+   byte-identical. It re-maps three layers at once:
+     1. Tailwind v4 --color-* tokens that back utility classes
+        (text-foreground, bg-background-primary, text-accent-cyan, …).
+     2. Legacy globals --color-* tokens (body bg/text, scrollbar/selection).
+     3. Semantic tokens read by inline component styles.
+   ============================================ */
+html[data-theme="warm"] {
+  background-color: #f5f2ea;
+
+  /* 1. Tailwind utility tokens */
+  --color-background-primary: #f5f2ea;
+  --color-background-secondary: #ece6db;
+  --color-background-tertiary: #e3dccd;
+  --color-background-glass: rgba(245, 242, 234, 0.6);
+  --color-background-glass-light: rgba(8, 15, 35, 0.06);
+  --color-foreground-primary: #0b1020;
+  --color-foreground-secondary: #474d5b;
+  --color-foreground-tertiary: #6b6256;
+  --color-foreground-muted: #8a8170;
+  --color-accent-cyan: #0b6b7d;
+  --color-accent-green: #0f8a5f;
+  --color-accent-purple: #7c3aed;
+  --color-background: #f5f2ea;
+  --color-foreground: #0b1020;
+  --color-success: #0f8a5f;
+  --color-warning: #9a6300;
+  --color-error: #c0143c;
+  --color-info: #0b6b7d;
+
+  /* 2. Legacy globals tokens */
+  --color-bg-primary: #f5f2ea;
+  --color-bg-secondary: #ece6db;
+  --color-bg-tertiary: #e3dccd;
+  --color-text-primary: #0b1020;
+  --color-text-secondary: #474d5b;
+
+  /* 3. Semantic tokens for inline component styles */
+  --bg: #f5f2ea;
+  --heading: #0b1020;
+  --text-body: #2e3440;
+  --text-muted: #4f5663;
+  --surface: #fbf8f1;
+  --surface-deep: #f0ebdf;
+  --surface-lit: #fefdfb;
+  --surface-inset: #efe9dc;
+  --border: rgba(8, 15, 35, 0.1);
+  --border-idle: rgba(8, 15, 35, 0.14);
+  --accent: #0b6b7d;
+  --accent-strong: #0b5566;
+  --accent-glow: rgba(11, 107, 125, 0.3);
+  --accent-green: #0f8a5f;
+  --on-accent: #f5f2ea;
+  --grid-line: 8, 15, 35;
+  /* Warm grid — tuned to the Fahd reference's perceived strength: a clearly
+     visible editorial graph-paper on cream, with a confident minor/major
+     hierarchy that structures the page without becoming the subject. Token ratio
+     is ~2× (major/minor); because the major layer stacks over the minor at every
+     5th line (230 = 5 × 46px), the rendered major reads ~2.7× the minor — a
+     crisp anchor. Colour stays deep navy (8,15,35) — never black, never cyan —
+     and geometry (46px minor / 230px major / 1px lines) is unchanged. The
+     readability fields below calm this stronger grid behind copy so content
+     still dominates. Navy grid (above) is untouched. */
+  --grid-minor-alpha: 0.14;
+  --grid-major-alpha: 0.28;
+  --grid-minor-alpha-i: 0.12;
+  --grid-major-alpha-i: 0.25;
+  /* Readability-field wash colour — a slightly cleaner/lighter warm ivory than
+     the page cream, so a backed content zone reads as gently lifted paper. */
+  --readability-wash: 251, 248, 241;
+  --text-strong: #16202e;
+  --placeholder: #8a8170;
+  --contact-pill-bg: #0b1020;
+  --contact-pill-bg-hover: #11203a;
+  --contact-pill-text: #f5f2ea;
+  --hero-bg: radial-gradient(ellipse at 50% 30%, #faf7f0 0%, #f3efe6 55%, #ece7db 100%);
+  --rgb-cyan: 11, 107, 125;
+  --rgb-green: 15, 138, 95;
+  --rgb-purple: 124, 58, 237;
+  --accent-purple: #7c3aed;
+  --rgb-body: 46, 52, 64;
+  --rgb-muted: 92, 100, 112;
+  --rgb-ivory: 11, 16, 32;
+  --nav-surface: rgba(245, 242, 234, 0.85);
+  --nav-border: rgba(8, 15, 35, 0.1);
+  --nav-link-active: #0b1020;
+  --nav-link-idle: #3b4250;
+  /* Active route-rail link colour — deep mango/golden (premium, not bright
+     yellow/red); text colour ONLY (no underline, no box). Inactive links stay
+     dark charcoal/navy (idle above); hover moves toward the same mango. */
+  --nav-active: #b86a16;
+  --nav-active-rgb: 184, 106, 22;
+  --nav-muted: 92, 100, 112;
+  --nav-chrome: 8, 15, 35;
+}
+
+/* Theme override helpers — let bespoke dark-navy panels (multi-stop gradients /
+   fills that can't be expressed as one inline token) flip to a light warm
+   surface in warm mode WITHOUT touching their navy appearance. In navy there is
+   no rule, so the element's own inline value renders unchanged. */
+html[data-theme="warm"] .t-surface {
+  background: var(--surface) !important;
+}
+html[data-theme="warm"] .t-surface-deep {
+  background: var(--surface-deep) !important;
+}
+html[data-theme="warm"] .t-surface-lit {
+  background: var(--surface-lit) !important;
+}
+/* Warm-only readability boost for the few pale low-alpha cyan micro-labels
+   (hero status / eyebrow). Navy keeps their original low-alpha cyan. */
+html[data-theme="warm"] .t-accent-label {
+  color: var(--accent) !important;
+}
+html[data-theme="warm"] .t-reactor-capsule {
+  /* No background stage in warm — the reactor floats directly on the cream
+     blueprint grid (the grid stays continuous behind it). The only paint here is
+     a tight, object-scale deep-teal core glow centred on the nucleus: it reads
+     as the reactor's own emission rather than a background patch, and gives the
+     core a touch more dimensional contrast on the lighter cream. No gray field,
+     no rectangle, no capsule, no hard edges. */
+  background: radial-gradient(
+    ellipse 34% 30% at 50% 45%,
+    rgba(11, 107, 125, 0.24) 0%,
+    rgba(11, 107, 125, 0.1) 44%,
+    rgba(11, 107, 125, 0) 72%
+  ) !important;
+  border-radius: 0 !important;
+}
+
+/* ── Solid dark footer end-cap (BOTH themes) ──────────────────────────────────
+   The end-page footer is a strong, opaque deep-navy closing block in BOTH navy
+   and warm — never cream, never transparent — so the fixed blueprint grid never
+   shows through the footer content, and every page ends on a premium dark cap.
+   The footer sits in the page's z-10 shell (above the z-0/z-1 fixed grid), so
+   its solid background fully occludes the grid; the main page grid ABOVE the
+   footer (the mt-20 gap) is untouched. In WARM, the footer subtree is re-pinned
+   to the dark-surface (navy) token values so copy, links, borders, and icons
+   stay readable ivory/slate with restrained bright-cyan accents on the dark
+   ground (the dark-ground logo is used in both themes via the component). Navy
+   only gains the explicit solid background — its footer text already uses these
+   light tokens. */
+.site-footer-dark {
+  background-color: #070b16;
+}
+html[data-theme="warm"] .site-footer-dark {
+  --text-muted: rgba(160, 165, 197, 0.62);
+  --text-body: rgba(231, 247, 255, 0.7);
+  --heading: #f5f2ea;
+  --accent: #00d9ff;
+  --accent-strong: #bdf3ff;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-idle: rgba(255, 255, 255, 0.1);
+  --rgb-cyan: 0, 217, 255;
+  /* The dark footer keeps the navy emerald link accent in BOTH themes (the
+     warm mango is for the cream page nav, not this dark closing block). */
+  --nav-active: #2ee6a6;
+  --nav-active-rgb: 46, 230, 166;
+}
+
+/* ============================================
+   ARABIC LANGUAGE + RTL
+   Active only when <html lang="ar"> (the server default; English when lang="en").
+   Arabic remaps the sans/mono font tokens to Thmanyah so ALL Arabic body, UI,
+   nav, and technical labels render in Thmanyah Sans automatically — English keeps
+   the Apple system stack untouched (it never names a Thmanyah family). Heroic
+   Arabic display titles opt into Thmanyah Serif Display through .font-ar-display
+   (the language hook applies it). Latin letter-spacing — the negative heading
+   tracking and the wide mono-label tracking — is neutralised because it fights
+   Arabic's cursive joining, and Arabic body copy gets a more open line-height.
+   ============================================ */
+html[lang="ar"] {
+  --font-family-sans: "Thmanyah Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "Thmanyah Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
+}
+/* Heroic Arabic display titles — serif display, only where the class is applied. */
+.font-ar-display {
+  font-family: var(--font-family-display-ar);
+}
+/* Arabic body copy reads better with a more open line-height. */
+html[lang="ar"] p,
+html[lang="ar"] li {
+  line-height: 1.85;
+}
+/* Neutralise tracking for Arabic — letter-spacing (the negative heading tracking
+   and the wide mono-label tracking) breaks Arabic's cursive joining. Headings go
+   to 0; elements that opted into a tracking utility drop to a tight, premium
+   value. Nothing that did not request tracking is affected. */
+html[lang="ar"] :is(h1, h2, h3, h4, h5, h6) {
+  letter-spacing: 0;
+}
+html[lang="ar"] [class*="tracking-"] {
+  letter-spacing: 0.02em !important;
+}
+/* Keep Latin technical strings (emails, URLs, code, brand/handle tokens) reading
+   LTR inside the RTL document so punctuation and slashes don't visually reorder.
+   Applied per-element by components on those values. */
+.ltr-isolate {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
 }
 
 /* ============================================
@@ -99,8 +418,48 @@ html {
 /* Consistent cyan focus-visible ring for interactive hero/nav controls,
    matching the Intelligence Engine accent (keyboard focus only). */
 .ie-focus:focus-visible {
-  outline: 2px solid #00d9ff !important;
+  outline: 2px solid var(--accent) !important;
   outline-offset: 2px !important;
+}
+
+/* Brand lockup link (header + footer) — a soft, premium hover surface and a
+   subtle, theme-aware focus ring that REPLACE the harsh full-bleed cyan box (the
+   global :focus / ie-focus rules) for the logo specifically. A mouse click never
+   shows a ring; only keyboard focus shows a small, tight ring (no large cyan
+   rectangle). Scoped to this class only — site-wide focus rings are unchanged. */
+.nav-logo-link {
+  border-radius: 12px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+/* Navy: subtle light hover surface on the dark bar. */
+.nav-logo-link:hover {
+  background-color: rgba(245, 242, 234, 0.06);
+}
+/* Warm cream: a subtle warm/ivory surface won't read on cream, so use a faint
+   dark surface + very low-opacity shadow — premium, never a cyan box. */
+html[data-theme="warm"] .nav-logo-link:hover {
+  background-color: rgba(8, 15, 35, 0.05);
+  box-shadow: 0 2px 12px rgba(8, 15, 35, 0.07);
+}
+.nav-logo-link:focus {
+  outline: none;
+}
+/* Keyboard focus only — tight (2px offset) and restrained per theme. */
+.nav-logo-link:focus-visible {
+  outline: 2px solid rgba(0, 217, 255, 0.45);
+  outline-offset: 2px;
+}
+html[data-theme="warm"] .nav-logo-link:focus-visible {
+  outline: 2px solid rgba(8, 15, 35, 0.4);
+}
+
+/* Header route-rail link (Home / About) — active state is text-COLOUR only (no
+   underline, no box, no persistent outline). The global :focus-visible rule
+   already keeps a mouse click outline-free; this extra :focus reset is a
+   harmless belt-and-suspenders. Keyboard focus still shows the subtle ie-focus
+   ring (its :focus-visible rule carries !important and is unaffected). */
+.nav-rail-link:focus {
+  outline: none;
 }
 
 body {
@@ -216,7 +575,12 @@ a {
    FOCUS STATES
    ============================================ */
 
-:focus {
+/* Keyboard focus ONLY — a mouse click must never leave a persistent outline.
+   :focus-visible matches keyboard / programmatic focus but not a plain mouse
+   click, so the accessible ring shows for keyboard users and disappears for
+   mouse users. (Replaces the old broad :focus rule that left a lingering cyan
+   box on header/footer controls after clicking.) */
+:focus-visible {
   outline: 2px solid var(--color-accent-cyan);
   outline-offset: 2px;
 }
@@ -233,6 +597,83 @@ select:focus-visible {
 /* ============================================
    UTILITY CLASSES
    ============================================ */
+
+/* ── Content readability field ──────────────────────────────────────────
+   A soft, non-boxy navy wash that sits ABOVE the fixed blueprint grid and
+   BEHIND a content block's text. It calms the grid behind copy/headings so
+   text clearly wins, while the side gutters and the open space between
+   sections keep the full-strength grid — the wash is scoped to the element,
+   never the page. The radial gradient fades to transparent before the
+   element's edge, so it reads as a gentle readability halo, not a solid
+   rectangle. Cards/panels already carry their own navy surface and do NOT use
+   this class; the footer never uses it. Deep-navy values (not black) preserve
+   the ALBARAA identity; the gradient stops are the single place to swap for a
+   future warm theme. */
+.readability-field {
+  position: relative;
+  isolation: isolate;
+}
+.readability-field::before {
+  content: "";
+  position: absolute;
+  inset: -1.25rem -1.5rem;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    115% 100% at 50% 42%,
+    rgba(var(--readability-wash), 0.42) 0%,
+    rgba(var(--readability-wash), 0.34) 40%,
+    rgba(var(--readability-wash), 0.16) 64%,
+    rgba(var(--readability-wash), 0) 82%
+  );
+}
+
+/* ── Warm Cream readability fields ──────────────────────────────────────────
+   Warm-only layering that calms the (one step darker) warm blueprint grid
+   behind copy while the side gutters and open inter-section space keep full
+   grid strength — the wash is scoped to each content block, never the page.
+     (1) The shared base .readability-field (every section's heading/intro
+         block) keeps its NAVY wash exactly as authored; the rule below lifts
+         ONLY its warm wash to a cleaner, stronger ivory halo so headings read
+         as intentionally placed on cream.
+     (2) .t-readability-field is a warm-ONLY companion for content groups that
+         must stay completely unbacked in navy — in navy there is no rule, so
+         those elements render byte-identical (no halo added).
+   Both paint a soft radial ivory halo that fades to transparent before the
+   element's edge (no rectangle, no card), sit ABOVE the grid and BELOW the text
+   (z-index:-1 within an isolate context), and never capture clicks. */
+html[data-theme="warm"] .t-readability-field {
+  position: relative;
+  isolation: isolate;
+}
+html[data-theme="warm"] .readability-field::before,
+html[data-theme="warm"] .t-readability-field::before {
+  content: "";
+  position: absolute;
+  inset: -1.25rem -1.5rem;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    118% 102% at 50% 40%,
+    rgba(var(--readability-wash), 0.85) 0%,
+    rgba(var(--readability-wash), 0.7) 42%,
+    rgba(var(--readability-wash), 0.3) 66%,
+    rgba(var(--readability-wash), 0) 84%
+  );
+}
+
+/* Warm Cream — keep the blueprint grid clearly visible on small screens. The
+   field wrapper dims to ~0.8 on mobile (a calm tuned for the old faint grid);
+   on the stronger warm grid that read too light, so minor lines began to
+   disappear. Warm-only + mobile-only lift: navy keeps its original mobile
+   dimming (untouched) and desktop (md+) is unchanged in both themes. */
+@media (max-width: 767px) {
+  html[data-theme="warm"] .blueprint-field {
+    opacity: 0.95;
+  }
+}
 
 .glass-panel {
   position: relative;
@@ -360,5 +801,14 @@ section {
 
   a {
     text-decoration: underline;
+  }
+}
+
+/* Premium header height — taller on tablet/desktop (md+) for the enlarged
+   ALBARAA lockup + route navigation. Mobile keeps the compact 56px base. */
+@media (min-width: 768px) {
+  :root {
+    --nav-height: 68px;
+    --hero-top-offset: 68px;
   }
 }

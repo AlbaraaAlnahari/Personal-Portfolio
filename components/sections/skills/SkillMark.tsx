@@ -56,18 +56,23 @@ export function SkillMark({
   name,
   size = 18,
   vivid = false,
+  warm = false,
   className,
 }: {
   name: string;
   size?: number;
   /** reveal full logo personality (selected node / console); idle is restrained */
   vivid?: boolean;
+  /** warm-cream theme: keep dark-fill marks dark (no invert, which would make
+      them disappear on cream) and lift idle opacity/saturation so marks read on
+      the light surface */
+  warm?: boolean;
   className?: string;
 }) {
   const src = srcFor(name);
   if (!src) return null;
-  const invert = INVERT.has(name);
-  const filter = [invert ? "invert(1) brightness(1.06)" : "", vivid ? "" : "saturate(0.82)"]
+  const invert = warm ? false : INVERT.has(name);
+  const filter = [invert ? "invert(1) brightness(1.06)" : "", vivid || warm ? "" : "saturate(0.82)"]
     .filter(Boolean)
     .join(" ");
   return (
@@ -82,7 +87,7 @@ export function SkillMark({
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        opacity: vivid ? 1 : 0.72,
+        opacity: vivid ? 1 : warm ? 0.92 : 0.72,
         filter: filter || undefined,
         transition: "opacity 200ms ease, filter 200ms ease",
       }}

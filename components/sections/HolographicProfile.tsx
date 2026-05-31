@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 interface HolographicProfileProps {
   initials?: string;
@@ -17,6 +18,7 @@ export function HolographicProfile({
   backgroundImage,
   systemMetrics = { neural: 85, coherence: 92, latency: 5 },
 }: HolographicProfileProps) {
+  const { t } = useLanguage();
   return (
     <div className="relative w-72 h-72 flex items-center justify-center">
       {/* Outer rotating frame */}
@@ -38,9 +40,9 @@ export function HolographicProfile({
         className="absolute inset-4 rounded-full border border-accent-purple/40"
         animate={{
           boxShadow: [
-            "0 0 20px rgba(181, 55, 242, 0.3), inset 0 0 20px rgba(0, 217, 255, 0.1)",
-            "0 0 40px rgba(181, 55, 242, 0.5), inset 0 0 30px rgba(0, 217, 255, 0.2)",
-            "0 0 20px rgba(181, 55, 242, 0.3), inset 0 0 20px rgba(0, 217, 255, 0.1)",
+            "0 0 20px rgba(var(--rgb-purple), 0.3), inset 0 0 20px rgba(var(--rgb-cyan), 0.1)",
+            "0 0 40px rgba(var(--rgb-purple), 0.5), inset 0 0 30px rgba(var(--rgb-cyan), 0.2)",
+            "0 0 20px rgba(var(--rgb-purple), 0.3), inset 0 0 20px rgba(var(--rgb-cyan), 0.1)",
           ],
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -87,14 +89,14 @@ export function HolographicProfile({
             animate={{ opacity: [0.6, 0.9, 0.6] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
           >
-            <span className="text-accent-cyan">Neural:</span> {systemMetrics.neural}%
+            <span className="text-accent-cyan">{t.about.holo.neural}</span> {systemMetrics.neural}%
           </motion.div>
           <motion.div
             className="text-xs text-accent-purple font-mono"
             animate={{ opacity: [0.6, 0.9, 0.6] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
           >
-            <span className="text-accent-green">Coherence:</span> {systemMetrics.coherence}%
+            <span className="text-accent-green">{t.about.holo.coherence}</span> {systemMetrics.coherence}%
           </motion.div>
         </div>
       </motion.div>
@@ -130,11 +132,12 @@ export function HolographicProfile({
 
       {/* Data label indicators */}
       <motion.div
-        className="absolute top-4 right-4 text-xs font-mono text-accent-green/60 pointer-events-none"
+        className="ltr-isolate absolute top-4 right-4 text-xs font-mono text-accent-green/60 pointer-events-none"
+        dir="ltr"
         animate={{ opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-        AIOS v4.2
+        {t.about.holo.version}
       </motion.div>
 
       <motion.div
@@ -142,7 +145,7 @@ export function HolographicProfile({
         animate={{ opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
       >
-        HOLO. PROFILE
+        {t.about.holo.label}
       </motion.div>
     </div>
   );

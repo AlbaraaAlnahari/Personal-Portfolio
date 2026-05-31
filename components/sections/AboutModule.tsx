@@ -9,21 +9,26 @@ import {
   containerVariants,
   itemVariants,
 } from "@/lib/motion/variants";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 /**
  * About Module
  * Premium identity and engineering profile with real portrait
  */
 export function AboutModule() {
+  const { t, displayFont } = useLanguage();
+
+  // Localized focus areas, derived from the dictionary by stable key.
   const expertise = [
-    "AI-enabled products",
-    "Full-stack development",
-    "Robotics",
-    "User research",
-    "Technical leadership",
-    "Scalable web systems",
+    t.about.expertise.aiProducts,
+    t.about.expertise.fullStack,
+    t.about.expertise.robotics,
+    t.about.expertise.userResearch,
+    t.about.expertise.leadership,
+    t.about.expertise.scalable,
   ];
 
+  // Tech/tool names stay Latin in both languages (not translated).
   const technologies = [
     "React",
     "Next.js",
@@ -63,14 +68,14 @@ export function AboutModule() {
           className="space-y-10 md:space-y-8"
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="space-y-4">
+          <motion.div variants={itemVariants} className="readability-field space-y-4">
             <div className="text-sm font-mono text-accent-cyan tracking-widest">
-              ABOUT / IDENTITY MODULE
+              {t.about.eyebrow}
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-              Turning <span className="text-accent-cyan">intelligence</span>
+            <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold ${displayFont}`}>
+              {t.about.heading.lead} <span className="text-accent-cyan">{t.about.heading.accent}</span>
               <br />
-              into systems people can use.
+              {t.about.heading.trail}
             </h2>
           </motion.div>
 
@@ -89,7 +94,7 @@ export function AboutModule() {
                     className="absolute -inset-6 pointer-events-none"
                     style={{
                       background:
-                        "radial-gradient(ellipse 55% 60% at 50% 38%, rgba(0, 217, 255, 0.22) 0%, rgba(181, 55, 242, 0.1) 38%, transparent 68%)",
+                        "radial-gradient(ellipse 55% 60% at 50% 38%, rgba(var(--rgb-cyan), 0.22) 0%, rgba(var(--rgb-purple), 0.1) 38%, transparent 68%)",
                     }}
                     aria-hidden="true"
                   />
@@ -98,7 +103,7 @@ export function AboutModule() {
                   <div className="relative w-[280px] h-[360px] md:w-[340px] md:h-[420px] flex items-end justify-center">
                     <Image
                       src="/images/albaraa-profile.svg"
-                      alt="Portrait of Albaraa Alnahari"
+                      alt={t.about.portraitAlt}
                       fill
                       sizes="(max-width: 768px) 78vw, 340px"
                       className="object-contain object-bottom"
@@ -116,19 +121,19 @@ export function AboutModule() {
                       {/* corner brackets — partial, never a full box */}
                       <span
                         className="absolute top-1 left-1 w-7 h-7 border-t border-l rounded-tl"
-                        style={{ borderColor: "rgba(0,217,255,0.38)" }}
+                        style={{ borderColor: "rgba(var(--rgb-cyan),0.38)" }}
                       />
                       <span
                         className="absolute top-1 right-1 w-7 h-7 border-t border-r rounded-tr"
-                        style={{ borderColor: "rgba(0,217,255,0.38)" }}
+                        style={{ borderColor: "rgba(var(--rgb-cyan),0.38)" }}
                       />
                       <span
                         className="absolute bottom-1 left-1 w-7 h-7 border-b border-l rounded-bl"
-                        style={{ borderColor: "rgba(0,217,255,0.26)" }}
+                        style={{ borderColor: "rgba(var(--rgb-cyan),0.26)" }}
                       />
                       <span
                         className="absolute bottom-1 right-1 w-7 h-7 border-b border-r rounded-br"
-                        style={{ borderColor: "rgba(0,217,255,0.26)" }}
+                        style={{ borderColor: "rgba(var(--rgb-cyan),0.26)" }}
                       />
 
                       {/* top calibration rule */}
@@ -149,7 +154,7 @@ export function AboutModule() {
                         </span>
                         <span
                           className="w-1 h-1 rounded-full bg-accent-cyan"
-                          style={{ boxShadow: "0 0 6px rgba(0,217,255,0.7)" }}
+                          style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.7)" }}
                         />
                       </span>
 
@@ -167,29 +172,29 @@ export function AboutModule() {
                     className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[65%] h-px pointer-events-none"
                     style={{
                       background:
-                        "linear-gradient(to right, transparent 0%, rgba(0, 217, 255, 0.5) 50%, transparent 100%)",
-                      boxShadow: "0 0 8px rgba(0, 217, 255, 0.35)",
+                        "linear-gradient(to right, transparent 0%, rgba(var(--rgb-cyan), 0.5) 50%, transparent 100%)",
+                      boxShadow: "0 0 8px rgba(var(--rgb-cyan), 0.35)",
                     }}
                     aria-hidden="true"
                   />
                 </div>
 
                 {/* Identity origin node — compact authenticated plaque */}
-                <div className="relative mt-4 w-fit min-w-[240px] px-5 py-3 rounded-xl backdrop-blur-md bg-background-primary/65 border border-accent-cyan/30 shadow-[0_4px_24px_rgba(0,217,255,0.1)]">
+                <div className="relative mt-4 w-fit min-w-[240px] px-5 py-3 rounded-xl backdrop-blur-md bg-background-primary/65 border border-accent-cyan/30 shadow-[0_4px_24px_rgba(var(--rgb-cyan),0.1)]">
                   {/* origin port dot — seats the badge as a node */}
                   <span
                     aria-hidden="true"
                     className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-accent-cyan"
-                    style={{ boxShadow: "0 0 8px rgba(0,217,255,0.8)" }}
+                    style={{ boxShadow: "0 0 8px rgba(var(--rgb-cyan),0.8)" }}
                   />
 
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <div className="text-xs font-mono text-accent-cyan/80 tracking-widest">
-                        ALBARAA ALNAHARI
+                      <div className="text-xs font-mono text-accent-cyan/80 tracking-widest ltr-isolate" dir="ltr">
+                        {t.about.identityName}
                       </div>
                       <div className="text-[11px] text-foreground-secondary/70 mt-0.5 tracking-wide">
-                        IDENTITY PROFILE
+                        {t.about.identityProfileLabel}
                       </div>
                     </div>
 
@@ -200,7 +205,7 @@ export function AboutModule() {
                         height="11"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="#00ff9f"
+                        stroke="var(--accent-green)"
                         strokeWidth="3"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -209,9 +214,9 @@ export function AboutModule() {
                         <path d="M20 6 9 17l-5-5" />
                       </svg>
                       <span className="font-mono text-[8px] leading-[1.3] tracking-[0.16em] text-accent-green/80">
-                        IDENTITY
+                        {t.about.identityVerifiedLine1}
                         <br />
-                        VERIFIED
+                        {t.about.identityVerifiedLine2}
                       </span>
                     </span>
                   </div>
@@ -225,13 +230,13 @@ export function AboutModule() {
                   >
                     <span
                       className="w-1.5 h-1.5 rounded-full bg-accent-cyan/75 -ml-[3px]"
-                      style={{ boxShadow: "0 0 6px rgba(0,217,255,0.55)" }}
+                      style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.55)" }}
                     />
                     <span
                       className="h-px w-10"
                       style={{
                         background:
-                          "linear-gradient(to right, rgba(0,217,255,0.5), rgba(0,217,255,0.06))",
+                          "linear-gradient(to right, rgba(var(--rgb-cyan),0.5), rgba(var(--rgb-cyan),0.06))",
                       }}
                     />
                     <span className="w-1 h-1 rounded-full bg-accent-cyan/45" />
@@ -248,7 +253,7 @@ export function AboutModule() {
                   className="absolute -top-8 -right-8 w-56 h-56 pointer-events-none"
                   style={{
                     background:
-                      "radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 65%)",
+                      "radial-gradient(circle, rgba(var(--rgb-cyan), 0.1) 0%, transparent 65%)",
                   }}
                   aria-hidden="true"
                 />
@@ -256,12 +261,12 @@ export function AboutModule() {
                   className="absolute -bottom-12 -left-8 w-56 h-56 pointer-events-none"
                   style={{
                     background:
-                      "radial-gradient(circle, rgba(181, 55, 242, 0.08) 0%, transparent 65%)",
+                      "radial-gradient(circle, rgba(var(--rgb-purple), 0.08) 0%, transparent 65%)",
                   }}
                   aria-hidden="true"
                 />
 
-                <div className="relative space-y-7">
+                <div className="relative space-y-7 t-readability-field">
                   {/* Module header — receiving dock + status + decorative ID */}
                   <div className="relative flex items-center justify-between gap-4">
                     {/* receiving dock — resolves the identity retrieval route
@@ -276,7 +281,7 @@ export function AboutModule() {
                         className="h-px w-5"
                         style={{
                           background:
-                            "linear-gradient(to right, rgba(0,217,255,0.06), rgba(0,217,255,0.5))",
+                            "linear-gradient(to right, rgba(var(--rgb-cyan),0.06), rgba(var(--rgb-cyan),0.5))",
                         }}
                       />
                     </motion.span>
@@ -284,14 +289,14 @@ export function AboutModule() {
                     <div className="flex items-center gap-2.5">
                       <div
                         className="w-1.5 h-1.5 rounded-full bg-accent-cyan/85"
-                        style={{ boxShadow: "0 0 8px rgba(0, 217, 255, 0.7)" }}
+                        style={{ boxShadow: "0 0 8px rgba(var(--rgb-cyan), 0.7)" }}
                       />
                       <div className="text-xs font-mono text-accent-cyan/90 tracking-[0.22em]">
-                        PROFILE SUMMARY
+                        {t.about.profileSummaryLabel}
                       </div>
                     </div>
-                    <div className="text-[10px] font-mono text-foreground-secondary/40 tracking-[0.2em]">
-                      ID / 001
+                    <div className="text-[10px] font-mono text-foreground-secondary/40 tracking-[0.2em] ltr-isolate" dir="ltr">
+                      {t.about.idCode}
                     </div>
                   </div>
 
@@ -299,10 +304,7 @@ export function AboutModule() {
                   <div className="relative pl-4">
                     <div className="absolute left-0 top-1 bottom-1 w-0.5 bg-gradient-to-b from-accent-cyan/45 via-accent-cyan/15 to-transparent" />
                     <p className="text-sm md:text-base text-foreground-primary/95 leading-[1.75] max-w-prose">
-                      Albaraa Alnahari is a Software Engineering student focused on building AI-enabled
-                      products, modern full-stack applications, robotics-driven experiences, and scalable
-                      digital systems. His work combines software engineering, product thinking, user research,
-                      and technical leadership to turn ambitious ideas into practical products.
+                      {t.about.bio}
                     </p>
                   </div>
 
@@ -311,7 +313,7 @@ export function AboutModule() {
                     <div className="h-px flex-1 bg-gradient-to-r from-transparent via-glass-light/40 to-glass-light/10" />
                     <div
                       className="w-1 h-1 rounded-full bg-accent-cyan/70"
-                      style={{ boxShadow: "0 0 6px rgba(0, 217, 255, 0.5)" }}
+                      style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan), 0.5)" }}
                     />
                     <div className="h-px flex-1 bg-gradient-to-l from-transparent via-glass-light/40 to-glass-light/10" />
                   </div>
@@ -320,10 +322,10 @@ export function AboutModule() {
                   <div>
                     <div className="flex items-center gap-2.5 mb-3.5">
                       <span className="text-[10px] font-mono text-accent-green/55 tracking-[0.2em]">
-                        01
+                        {t.about.focusAreasIndex}
                       </span>
                       <h3 className="text-[11px] font-mono text-accent-green/85 tracking-[0.22em]">
-                        FOCUS AREAS
+                        {t.about.focusAreasLabel}
                       </h3>
                       <div className="h-px flex-1 bg-gradient-to-r from-accent-green/20 to-transparent" />
                     </div>
@@ -333,7 +335,7 @@ export function AboutModule() {
                           key={area}
                           variants={itemVariants}
                           transition={{ delay: index * 0.05 }}
-                          className="px-3 py-1.5 rounded-lg bg-gradient-to-br from-accent-cyan/14 to-accent-purple/8 border border-accent-cyan/25 text-xs text-foreground-secondary/90 hover:border-accent-cyan/55 hover:text-accent-cyan hover:bg-accent-cyan/22 hover:shadow-[inset_0_0_14px_rgba(0,217,255,0.15)] transition-all duration-300"
+                          className="px-3 py-1.5 rounded-lg bg-gradient-to-br from-accent-cyan/14 to-accent-purple/8 border border-accent-cyan/25 text-xs text-foreground-secondary/90 hover:border-accent-cyan/55 hover:text-accent-cyan hover:bg-accent-cyan/22 hover:shadow-[inset_0_0_14px_rgba(var(--rgb-cyan),0.15)] transition-all duration-300"
                         >
                           {area}
                         </motion.div>
@@ -345,10 +347,10 @@ export function AboutModule() {
                   <div>
                     <div className="flex items-center gap-2.5 mb-3.5">
                       <span className="text-[10px] font-mono text-accent-purple/50 tracking-[0.2em]">
-                        02
+                        {t.about.technologiesIndex}
                       </span>
                       <h3 className="text-[11px] font-mono text-accent-purple/80 tracking-[0.22em]">
-                        TECHNOLOGIES
+                        {t.about.technologiesLabel}
                       </h3>
                       <div className="h-px flex-1 bg-gradient-to-r from-accent-purple/15 to-transparent" />
                     </div>
@@ -358,7 +360,8 @@ export function AboutModule() {
                           key={tech}
                           variants={itemVariants}
                           transition={{ delay: index * 0.03 }}
-                          className="px-2.5 py-1 rounded-md bg-gradient-to-br from-accent-purple/10 to-accent-cyan/6 border border-accent-purple/20 text-[11px] text-foreground-secondary/80 hover:border-accent-purple/50 hover:text-accent-purple hover:bg-accent-purple/18 hover:shadow-[inset_0_0_12px_rgba(181,55,242,0.12)] transition-all duration-300"
+                          dir="ltr"
+                          className="ltr-isolate px-2.5 py-1 rounded-md bg-gradient-to-br from-accent-purple/10 to-accent-cyan/6 border border-accent-purple/20 text-[11px] text-foreground-secondary/80 hover:border-accent-purple/50 hover:text-accent-purple hover:bg-accent-purple/18 hover:shadow-[inset_0_0_12px_rgba(var(--rgb-purple),0.12)] transition-all duration-300"
                         >
                           {tech}
                         </motion.div>
@@ -372,7 +375,7 @@ export function AboutModule() {
                       variant="primary"
                       size="md"
                       glow
-                      className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple text-background-primary font-semibold shadow-[0_0_20px_rgba(0,217,255,0.35)] hover:shadow-[0_0_28px_rgba(0,217,255,0.5)]"
+                      className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-accent-cyan to-accent-purple text-background-primary font-semibold shadow-[0_0_20px_rgba(var(--rgb-cyan),0.35)] hover:shadow-[0_0_28px_rgba(var(--rgb-cyan),0.5)]"
                       onClick={() => {
                         const link = document.createElement("a");
                         link.href = "/resume/Albaraa-Alnahari-Resume.pdf";
@@ -380,7 +383,7 @@ export function AboutModule() {
                         link.click();
                       }}
                     >
-                      Download Resume
+                      {t.about.downloadResume}
                     </Button>
                     <Button
                       variant="glass"
@@ -388,7 +391,7 @@ export function AboutModule() {
                       className="w-full sm:w-auto px-6 py-2.5 border border-accent-cyan/30 text-foreground-primary hover:border-accent-cyan/60 hover:text-accent-cyan"
                       onClick={() => router.push("/contact")}
                     >
-                      Get In Touch
+                      {t.about.getInTouch}
                     </Button>
                   </div>
                 </div>

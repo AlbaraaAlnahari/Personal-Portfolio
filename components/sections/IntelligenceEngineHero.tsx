@@ -10,6 +10,7 @@ import {
 } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { IntelligenceReactorFallback } from "@/components/experimental/IntelligenceReactorFallback";
 import type { ReactorState } from "@/components/experimental/IntelligenceEngineModel";
 import {
@@ -23,6 +24,7 @@ import CommandModuleCard from "@/components/experimental/CommandModuleCard";
 import ConnectorNetwork from "@/components/experimental/ConnectorNetwork";
 import ModulePreviewPanel from "@/components/experimental/ModulePreviewPanel";
 import MobileModuleGrid from "@/components/experimental/MobileModuleGrid";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const IntelligenceReactor3D = dynamic(
   () => import("@/components/experimental/IntelligenceReactor3D"),
@@ -35,12 +37,15 @@ const IntelligenceReactor3D = dynamic(
 type PointerState = { active: boolean; x: number; y: number };
 
 export function IntelligenceEngineHero() {
+  const { t, displayFont, isAr } = useLanguage();
   const [reducedMotion, setReducedMotion] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
   const [reactorState, setReactorState] = useState<ReactorState>("boot");
   const [bootComplete, setBootComplete] = useState(false);
   const [activeModule, setActiveModule] = useState<ReactorState | null>(null);
+
+  const router = useRouter();
 
   const pointerRef = useRef<PointerState>({ active: false, x: 0, y: 0 });
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -73,26 +78,25 @@ export function IntelligenceEngineHero() {
     }, 1500);
   }, []);
 
-  const smoothScrollTo = useCallback(
-    (elementId: string) => {
-      const el = document.getElementById(elementId);
-      el?.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        block: "start",
-      });
+  // Multi-page navigation: command modules and the Hero CTA route to the
+  // dedicated interior pages — the long-page section anchors no longer exist
+  // on Home. next/navigation resolves any hash (e.g. /about#skills).
+  const goToRoute = useCallback(
+    (href: string) => {
+      router.push(href);
     },
-    [reducedMotion]
+    [router]
   );
 
-  // Module → section navigation. Modules with no mapped anchor
+  // Module → route navigation. Modules with no mapped target
   // (e.g. the "coming online" TERMINAL) intentionally do nothing.
   const navigateToModule = useCallback(
     (id: string) => {
-      const sectionId = MODULE_SECTION_ANCHORS[id];
-      if (!sectionId) return;
-      smoothScrollTo(sectionId);
+      const target = MODULE_SECTION_ANCHORS[id];
+      if (!target) return;
+      goToRoute(target);
     },
-    [smoothScrollTo]
+    [goToRoute]
   );
 
   const handleModuleActivate = useCallback(
@@ -225,8 +229,7 @@ export function IntelligenceEngineHero() {
       onPointerLeave={handlePointerLeave}
       className="relative flex flex-col overflow-hidden lg:min-h-[calc(100vh_-_var(--nav-height))]"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 35%, #0f1435 0%, #080c22 55%, #040610 100%)",
+        background: "var(--hero-bg)",
       }}
     >
       {/* Atmospheric layers */}
@@ -234,7 +237,7 @@ export function IntelligenceEngineHero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 55% 30%, rgba(0,217,255,0.05) 0%, transparent 50%), " +
+            "radial-gradient(circle at 55% 30%, rgba(var(--rgb-cyan),0.05) 0%, transparent 50%), " +
             "radial-gradient(circle at 65% 55%, rgba(144,64,224,0.03) 0%, transparent 40%)",
         }}
         aria-hidden="true"
@@ -243,38 +246,43 @@ export function IntelligenceEngineHero() {
       {/* ══════════════════════════════════════════════
           DESKTOP — split layout: copy left, reactor+modules right
           ══════════════════════════════════════════════ */}
-      <div className="hidden lg:flex flex-1 items-center justify-center w-full max-w-[1280px] mx-auto px-8 gap-6">
+      <div className="hidden lg:flex flex-1 items-center justify-center w-full max-w-[1280px] mx-auto px-10 gap-10">
         {/* LEFT — Hero copy */}
         <div
           className="flex flex-col justify-center flex-shrink-0"
-          style={{ width: "340px", maxWidth: "36%" }}
+          style={{ width: "356px", maxWidth: "38%" }}
         >
-          {/* Eyebrow */}
-          <div style={reveal(0)} className="mb-5">
-            <span
-              className="text-[10px] font-mono tracking-[0.3em]"
-              style={{ color: "rgba(0,217,255,0.55)" }}
-            >
-              ALBARAA OS / INTELLIGENCE ENGINE
-            </span>
-          </div>
+          {/* Eyebrow — hidden when empty (Arabic) */}
+          {t.hero.eyebrow && (
+            <div style={reveal(0)} className="mb-6">
+              <span
+                className="t-accent-label text-[10px] font-mono tracking-[0.3em]"
+                style={{ color: "rgba(var(--rgb-cyan),0.55)" }}
+              >
+                {t.hero.eyebrow}
+              </span>
+            </div>
+          )}
 
           {/* Heading — identity-first wordmark + role */}
           <h1 style={{ ...reveal(80), margin: 0 }} className="mb-4">
             <span
+              dir={isAr ? undefined : "ltr"}
+              className={isAr ? displayFont : "ltr-isolate"}
               style={{
                 display: "block",
                 fontSize: "clamp(2.1rem, 3vw, 2.95rem)",
                 fontWeight: 700,
                 lineHeight: 1.0,
                 letterSpacing: "-0.01em",
-                color: "#f0f1f7",
-                textShadow: "0 0 26px rgba(0,217,255,0.12)",
+                color: "var(--heading)",
+                textShadow: "0 0 26px rgba(var(--rgb-cyan),0.12)",
               }}
             >
-              ALBARAA
+              {t.hero.title.main}
             </span>
             <span
+              className={displayFont}
               style={{
                 display: "block",
                 marginTop: "0.6rem",
@@ -282,12 +290,12 @@ export function IntelligenceEngineHero() {
                 fontWeight: 600,
                 lineHeight: 1.22,
                 letterSpacing: "-0.01em",
-                color: "#00d9ff",
+                color: "var(--accent)",
               }}
             >
-              {"AI Builder &"}
+              {t.hero.title.subtitle.line1}
               <br />
-              Software Engineer
+              {t.hero.title.subtitle.line2}
             </span>
           </h1>
 
@@ -296,50 +304,49 @@ export function IntelligenceEngineHero() {
             style={{
               ...reveal(160),
               fontSize: "0.84rem",
-              color: "rgba(160,165,197,0.62)",
+              color: "var(--text-muted)",
               lineHeight: 1.55,
               maxWidth: "300px",
             }}
-            className="mb-6"
+            className="mb-7"
           >
-            Software Engineering Student crafting AI-powered products and modern
-            digital experiences.
+            {t.hero.paragraph}
           </p>
 
-          {/* CTAs */}
-          <div className="flex items-center gap-3" style={reveal(280)}>
+          {/* CTAs — balanced primary / secondary, matched proportions */}
+          <div className="flex items-center gap-4" style={reveal(280)}>
             <button
-              className="px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
+              className="px-6 py-3 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(0,217,255,0.18) 0%, rgba(0,217,255,0.06) 100%)",
-                border: "1px solid rgba(0,217,255,0.3)",
-                color: "#00d9ff",
+                  "linear-gradient(135deg, rgba(var(--rgb-cyan),0.18) 0%, rgba(var(--rgb-cyan),0.06) 100%)",
+                border: "1px solid rgba(var(--rgb-cyan),0.3)",
+                color: "var(--accent)",
                 cursor: "pointer",
                 transition: "all 250ms ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(0,217,255,0.6)";
+                e.currentTarget.style.borderColor = "rgba(var(--rgb-cyan),0.6)";
                 e.currentTarget.style.boxShadow =
-                  "0 0 20px rgba(0,217,255,0.15)";
+                  "0 0 20px rgba(var(--rgb-cyan),0.15)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(0,217,255,0.3)";
+                e.currentTarget.style.borderColor = "rgba(var(--rgb-cyan),0.3)";
                 e.currentTarget.style.boxShadow = "none";
               }}
-              onClick={() => smoothScrollTo("projects")}
+              onClick={() => goToRoute("/work")}
             >
-              Explore Projects
+              {t.hero.cta.explore}
             </button>
             <a
               href="/resume/Albaraa-Alnahari-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
+              className="inline-flex items-center px-6 py-3 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(232,233,243,0.78)",
+                border: "1px solid var(--border-idle)",
+                color: "rgba(var(--rgb-body),0.78)",
                 cursor: "pointer",
                 transition: "all 250ms ease",
                 textDecoration: "none",
@@ -349,21 +356,21 @@ export function IntelligenceEngineHero() {
                 e.currentTarget.style.background = "rgba(255,255,255,0.07)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.borderColor = "var(--border-idle)";
                 e.currentTarget.style.background = "rgba(255,255,255,0.04)";
               }}
             >
-              View Resume
+              {t.hero.cta.resume}
             </a>
           </div>
 
           {/* Status */}
-          <div style={reveal(350)} className="mt-6">
+          <div style={reveal(350)} className="mt-7">
             <span
-              className="text-[9px] font-mono tracking-[0.25em]"
-              style={{ color: "rgba(0,217,255,0.35)" }}
+              className="t-accent-label text-[9px] font-mono tracking-[0.25em]"
+              style={{ color: "rgba(var(--rgb-cyan),0.35)" }}
             >
-              SYSTEM ONLINE / OPEN TO OPPORTUNITIES
+              {t.hero.status.desktop}
             </span>
           </div>
 
@@ -400,7 +407,7 @@ export function IntelligenceEngineHero() {
 
           {/* WebGL reactor */}
           <div
-            className="absolute"
+            className="absolute t-reactor-capsule"
             style={{
               top: "12%",
               left: "12%",
@@ -426,7 +433,7 @@ export function IntelligenceEngineHero() {
                   className="w-20 h-20 rounded-full"
                   style={{
                     background:
-                      "radial-gradient(circle, rgba(0,217,255,0.1) 0%, transparent 70%)",
+                      "radial-gradient(circle, rgba(var(--rgb-cyan),0.1) 0%, transparent 70%)",
                     animation: reducedMotion
                       ? "none"
                       : "iePulse 2.5s ease-in-out infinite",
@@ -480,32 +487,37 @@ export function IntelligenceEngineHero() {
       <div className="flex lg:hidden flex-col w-full px-5 pt-6 pb-10">
         {/* ── Identity — leads the mobile experience ── */}
         <div className="text-center">
-          {/* Eyebrow */}
-          <div style={textReveal(0)}>
-            <span
-              className="text-[9px] font-mono tracking-[0.28em]"
-              style={{ color: "rgba(0,217,255,0.55)" }}
-            >
-              ALBARAA OS / INTELLIGENCE ENGINE
-            </span>
-          </div>
+          {/* Eyebrow — hidden when empty (Arabic) */}
+          {t.hero.eyebrow && (
+            <div style={textReveal(0)}>
+              <span
+                className="t-accent-label text-[9px] font-mono tracking-[0.28em]"
+                style={{ color: "rgba(var(--rgb-cyan),0.55)" }}
+              >
+                {t.hero.eyebrow}
+              </span>
+            </div>
+          )}
 
           {/* Name + role */}
           <h1 className="mt-3" style={{ ...textReveal(60), margin: 0 }}>
             <span
+              dir={isAr ? undefined : "ltr"}
+              className={isAr ? displayFont : "ltr-isolate"}
               style={{
                 display: "block",
                 fontSize: "clamp(2.3rem, 12vw, 3rem)",
                 fontWeight: 700,
                 lineHeight: 1.0,
                 letterSpacing: "-0.01em",
-                color: "#f0f1f7",
-                textShadow: "0 0 28px rgba(0,217,255,0.16)",
+                color: "var(--heading)",
+                textShadow: "0 0 28px rgba(var(--rgb-cyan),0.16)",
               }}
             >
-              ALBARAA
+              {t.hero.title.main}
             </span>
             <span
+              className={displayFont}
               style={{
                 display: "block",
                 marginTop: "0.55rem",
@@ -513,12 +525,12 @@ export function IntelligenceEngineHero() {
                 fontWeight: 600,
                 lineHeight: 1.24,
                 letterSpacing: "-0.01em",
-                color: "#00d9ff",
+                color: "var(--accent)",
               }}
             >
-              {"AI Builder &"}
+              {t.hero.title.subtitle.line1}
               <br />
-              Software Engineer
+              {t.hero.title.subtitle.line2}
             </span>
           </h1>
 
@@ -528,13 +540,12 @@ export function IntelligenceEngineHero() {
             style={{
               ...textReveal(120),
               fontSize: "0.78rem",
-              color: "rgba(160,165,197,0.6)",
+              color: "rgba(var(--rgb-muted),0.6)",
               lineHeight: 1.5,
               maxWidth: "19rem",
             }}
           >
-            Software Engineering Student crafting AI-powered products and modern
-            digital experiences.
+            {t.hero.paragraph}
           </p>
 
           {/* CTAs */}
@@ -546,14 +557,14 @@ export function IntelligenceEngineHero() {
               className="px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(0,217,255,0.18), rgba(0,217,255,0.06))",
-                border: "1px solid rgba(0,217,255,0.3)",
-                color: "#00d9ff",
+                  "linear-gradient(135deg, rgba(var(--rgb-cyan),0.18), rgba(var(--rgb-cyan),0.06))",
+                border: "1px solid rgba(var(--rgb-cyan),0.3)",
+                color: "var(--accent)",
                 cursor: "pointer",
               }}
-              onClick={() => smoothScrollTo("projects")}
+              onClick={() => goToRoute("/work")}
             >
-              Explore Projects
+              {t.hero.cta.explore}
             </button>
             <a
               href="/resume/Albaraa-Alnahari-Resume.pdf"
@@ -562,23 +573,23 @@ export function IntelligenceEngineHero() {
               className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(232,233,243,0.78)",
+                border: "1px solid var(--border-idle)",
+                color: "rgba(var(--rgb-body),0.78)",
                 cursor: "pointer",
                 textDecoration: "none",
               }}
             >
-              View Resume
+              {t.hero.cta.resume}
             </a>
           </div>
 
           {/* Status */}
           <div className="mt-5" style={textReveal(240)}>
             <span
-              className="text-[9px] font-mono tracking-[0.24em]"
-              style={{ color: "rgba(0,217,255,0.4)" }}
+              className="t-accent-label text-[9px] font-mono tracking-[0.24em]"
+              style={{ color: "rgba(var(--rgb-cyan),0.4)" }}
             >
-              SYSTEM ONLINE / AVAILABLE
+              {t.hero.status.mobile}
             </span>
           </div>
         </div>
@@ -599,7 +610,7 @@ export function IntelligenceEngineHero() {
                 className="w-14 h-14 rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(0,217,255,0.1) 0%, transparent 70%)",
+                    "radial-gradient(circle, rgba(var(--rgb-cyan),0.1) 0%, transparent 70%)",
                   animation: reducedMotion
                     ? "none"
                     : "iePulse 2.5s ease-in-out infinite",
@@ -636,38 +647,43 @@ export function IntelligenceEngineHero() {
       {/* SSR fallback — identity reads immediately, before hydration */}
       {!mounted && (
         <div className="flex flex-col flex-1 items-center justify-center w-full px-6 py-8">
-          <span
-            className="text-[9px] font-mono tracking-[0.28em] mb-3"
-            style={{ color: "rgba(0,217,255,0.55)" }}
-          >
-            ALBARAA OS / INTELLIGENCE ENGINE
-          </span>
+          {t.hero.eyebrow && (
+            <span
+              className="t-accent-label text-[9px] font-mono tracking-[0.28em] mb-3"
+              style={{ color: "rgba(var(--rgb-cyan),0.55)" }}
+            >
+              {t.hero.eyebrow}
+            </span>
+          )}
           <h1 className="text-center" style={{ margin: 0 }}>
             <span
+              dir={isAr ? undefined : "ltr"}
+              className={isAr ? displayFont : "ltr-isolate"}
               style={{
                 display: "block",
                 fontSize: "clamp(2.2rem, 11vw, 2.8rem)",
                 fontWeight: 700,
                 lineHeight: 1.0,
                 letterSpacing: "-0.01em",
-                color: "#f0f1f7",
+                color: "var(--heading)",
               }}
             >
-              ALBARAA
+              {t.hero.title.main}
             </span>
             <span
+              className={displayFont}
               style={{
                 display: "block",
                 marginTop: "0.5rem",
                 fontSize: "clamp(1.05rem, 5vw, 1.35rem)",
                 fontWeight: 600,
                 lineHeight: 1.24,
-                color: "#00d9ff",
+                color: "var(--accent)",
               }}
             >
-              {"AI Builder &"}
+              {t.hero.title.subtitle.line1}
               <br />
-              Software Engineer
+              {t.hero.title.subtitle.line2}
             </span>
           </h1>
           <div className="w-full max-w-[300px] aspect-square mt-6">
@@ -685,9 +701,9 @@ export function IntelligenceEngineHero() {
       >
         <span
           className="text-[9px] font-mono tracking-[0.2em]"
-          style={{ color: "rgba(0,217,255,0.45)" }}
+          style={{ color: "rgba(var(--rgb-cyan),0.45)" }}
         >
-          EXPLORE
+          {t.hero.scroll}
         </span>
         <motion.div
           animate={
@@ -697,7 +713,7 @@ export function IntelligenceEngineHero() {
           }
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           className="text-sm"
-          style={{ color: "rgba(0,217,255,0.7)" }}
+          style={{ color: "rgba(var(--rgb-cyan),0.7)" }}
         >
           ↓
         </motion.div>

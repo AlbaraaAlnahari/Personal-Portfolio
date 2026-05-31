@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Container } from "@/components/layout/Container";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // =====================================================
 // ORGANIZATIONS & LEADERSHIP — LEADERSHIP MISSION CONTROL /
@@ -22,46 +23,27 @@ import { Container } from "@/components/layout/Container";
 // imagery later without reconstruction.
 // =====================================================
 
-const CMD = "0, 217, 255"; // command lineage (cyan): command → deployment
+const CMD = "var(--rgb-cyan)"; // command lineage (cyan): command → deployment
 
-interface Metric {
-  value: string;
-  label: string;
-}
-
+// Operations metric ids — pair stable metric keys (text from t) with the
+// verified numeric values (never translated).
+type OpsId = "prehack" | "droneclub";
 interface OpsRecord {
-  id: string;
+  id: OpsId;
   rgb: string;
-  channel: string; // COMMUNITY OPERATIONS / 0x
   coord: string; // dock-port signal coordinate
-  org: string;
-  role: string;
-  period: string;
-  metrics: Metric[];
-  narrative: string;
+  metricValues: { key: string; value: string }[];
 }
-
-// Live, user-confirmed appointment — no date, no metrics, no fabricated detail.
-const TUWAIQ = {
-  org: "TuwaiqClub_UJ",
-  role: "Co-Founder & Vice President",
-};
 
 // Largest documented deployment — the dominant quantified anchor.
+// Only non-text structural fields live here; all copy reads from t.
 const FLAGSHIP = {
   rgb: CMD,
   coord: "DEP·01",
-  channel: "FLAGSHIP DEPLOYMENT / PROJECT MANAGEMENT",
-  org: "Google Developer Groups On Campus UJ",
-  shorthand: "GDGoC UJ",
-  role: "Project Management Lead",
-  initiative: "Google × GDSC Data Science Bootcamp",
-  metrics: [
-    { value: "5,000+", label: "PARTICIPANTS" },
-    { value: "10+", label: "EVENTS ORGANIZED" },
-  ] as Metric[],
-  narrative:
-    "Managed the Google × GDSC Data Science Bootcamp at scale and led outreach and logistics across technical events.",
+  metricValues: {
+    participants: "5,000+",
+    events: "10+",
+  },
 };
 
 // Two supporting community-building operations. Metrics stay separate —
@@ -69,40 +51,30 @@ const FLAGSHIP = {
 const OPERATIONS: OpsRecord[] = [
   {
     id: "prehack",
-    rgb: "0, 255, 159",
-    channel: "COMMUNITY OPERATIONS / 01",
+    rgb: "var(--rgb-green)",
     coord: "OPS·01",
-    org: "PreHack",
-    role: "Admin & Voice Host",
-    period: "05/2024 – Present",
-    metrics: [
-      { value: "450+", label: "Hackwave Participants" },
-      { value: "200+", label: "Live Session Attendees" },
-      { value: "150+", label: "Bootcamp Trainees" },
+    metricValues: [
+      { key: "hackwave", value: "450+" },
+      { key: "sessions", value: "200+" },
+      { key: "bootcamp", value: "150+" },
     ],
-    narrative:
-      "Supported technology events, hosted live community sessions, and managed AI and cybersecurity bootcamp operations.",
   },
   {
     id: "droneclub",
-    rgb: "181, 55, 242",
-    channel: "COMMUNITY OPERATIONS / 02",
+    rgb: "var(--rgb-purple)",
     coord: "OPS·02",
-    org: "University of Jeddah",
-    role: "Vice Leader — Drone Club",
-    period: "03/2024 – Present",
-    metrics: [
-      { value: "5", label: "Committees Established" },
-      { value: "65+", label: "Active Members" },
-      { value: "3+", label: "Technical Workshops" },
+    metricValues: [
+      { key: "committees", value: "5" },
+      { key: "members", value: "65+" },
+      { key: "workshops", value: "3+" },
     ],
-    narrative:
-      "Helped revive the Drone Club through structured operations, committee formation, and community growth.",
   },
 ];
 
 export function OrganizationsLeadership() {
   const reduce = useReducedMotion();
+  const { t, displayFont } = useLanguage();
+  const L = t.impact.leadership;
 
   const rise: Variants = {
     hidden: { opacity: 0, y: reduce ? 0 : 22 },
@@ -131,27 +103,26 @@ export function OrganizationsLeadership() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="space-y-5"
+            className="readability-field space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <div className="text-sm font-mono text-accent-cyan tracking-[0.22em]">
-                LEADERSHIP COMMAND / COMMUNITY IMPACT
+                {L.eyebrow}
               </div>
               <div className="text-xs font-mono text-accent-cyan/55 tracking-[0.22em]">
-                04 / IMPACT RECORDS
+                {L.recordsLabel}
               </div>
             </div>
             <h2
               id="leadership-heading"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] max-w-4xl"
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] max-w-4xl ${displayFont}`}
             >
-              Leadership built through communities, programs, and{" "}
-              <span className="text-accent-cyan">scale</span>.
+              {L.headingBefore}{" "}
+              <span className="text-accent-cyan">{L.headingAccent}</span>
+              {L.headingAfter}
             </h2>
             <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-relaxed">
-              From founding student initiatives to managing large-scale technical
-              programs, these records capture leadership through measurable
-              participation, structured operations, and community growth.
+              {L.intro}
             </p>
           </motion.div>
 
@@ -242,11 +213,14 @@ export function OrganizationsLeadership() {
 function CurrentCommandBar() {
   const [active, setActive] = useState(false);
   const rgb = CMD;
+  const { t } = useLanguage();
+  const L = t.impact.leadership;
+  const TUWAIQ = L.tuwaiq;
 
   return (
     <article
       tabIndex={0}
-      aria-label={`Current command appointment: ${TUWAIQ.role}, ${TUWAIQ.org}`}
+      aria-label={L.currentAria(TUWAIQ.role, TUWAIQ.org)}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
@@ -302,14 +276,17 @@ function CurrentCommandBar() {
             className="font-mono text-[10px] tracking-[0.26em]"
             style={{ color: `rgba(${rgb},0.85)` }}
           >
-            CURRENT COMMAND
+            {L.currentCommand}
           </span>
         </div>
 
         {/* identity */}
         <div className="min-w-0 md:flex-1">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
+            <h3
+              dir="ltr"
+              className="ltr-isolate text-2xl md:text-3xl font-bold text-foreground leading-tight"
+            >
               {TUWAIQ.org}
             </h3>
             <span
@@ -338,7 +315,7 @@ function CurrentCommandBar() {
               boxShadow: `0 0 6px rgba(${rgb},0.7)`,
             }}
           />
-          CURRENT APPOINTMENT
+          {L.currentAppointment}
         </span>
       </div>
     </article>
@@ -350,13 +327,15 @@ function CurrentCommandBar() {
 // ─────────────────────────────────────────────────────────────────────────
 function FlagshipChamber() {
   const [active, setActive] = useState(false);
-  const { rgb, coord, channel, org, shorthand, role, initiative, metrics, narrative } =
-    FLAGSHIP;
+  const { t } = useLanguage();
+  const F = t.impact.leadership.flagship;
+  const { rgb, coord, metricValues } = FLAGSHIP;
+  const { channel, org, shorthand, role, initiative, narrative } = F;
 
   return (
     <article
       tabIndex={0}
-      aria-label={`Flagship deployment: ${role}, ${org}. ${initiative}, 5,000 plus participants, 10 plus events organized.`}
+      aria-label={F.aria(role, org, initiative)}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
@@ -404,11 +383,15 @@ function FlagshipChamber() {
         {/* organization + role (Project Management Lead is primary) */}
         <div className="mt-4 space-y-2">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-[1.12]">
+            <h3
+              dir="ltr"
+              className="ltr-isolate text-2xl md:text-3xl font-bold text-foreground leading-[1.12]"
+            >
               {org}
             </h3>
             <span
-              className="px-2 py-0.5 rounded-md border font-mono text-[10px] tracking-wide shrink-0"
+              dir="ltr"
+              className="ltr-isolate px-2 py-0.5 rounded-md border font-mono text-[10px] tracking-wide shrink-0"
               style={{
                 borderColor: `rgba(${rgb},0.35)`,
                 color: `rgba(${rgb},0.9)`,
@@ -448,8 +431,13 @@ function FlagshipChamber() {
             Side-by-side from 380px up; stacks on the narrowest phones so
             the 5,000+ anchor is never clipped. */}
         <div className="mt-5 grid grid-cols-1 min-[380px]:grid-cols-2 gap-3 md:gap-4">
-          <BigMetric rgb={rgb} value={metrics[0].value} label={metrics[0].label} emphasize />
-          <BigMetric rgb={rgb} value={metrics[1].value} label={metrics[1].label} />
+          <BigMetric
+            rgb={rgb}
+            value={metricValues.participants}
+            label={F.metrics.participants}
+            emphasize
+          />
+          <BigMetric rgb={rgb} value={metricValues.events} label={F.metrics.events} />
         </div>
 
         {/* narrative */}
@@ -466,7 +454,7 @@ function FlagshipChamber() {
             className="px-2.5 py-1 rounded text-[11px] bg-background-primary/55 border text-foreground-secondary/85"
             style={{ borderColor: `rgba(${rgb},0.18)` }}
           >
-            Led outreach and logistics
+            {F.tag}
           </span>
         </div>
       </div>
@@ -521,7 +509,10 @@ function BigMetric({
 // ─────────────────────────────────────────────────────────────────────────
 function CommunityRecord({ data }: { data: OpsRecord }) {
   const [active, setActive] = useState(false);
-  const { rgb, channel, coord, org, role, period, metrics, narrative } = data;
+  const { t } = useLanguage();
+  const O = t.impact.leadership.operations[data.id];
+  const { rgb, coord, metricValues } = data;
+  const { channel, org, role, period, narrative } = O;
 
   return (
     <article
@@ -563,7 +554,10 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
 
       {/* organization + role + period */}
       <div className="mt-3">
-        <h3 className="text-lg md:text-xl font-bold text-foreground leading-tight">
+        <h3
+          dir="ltr"
+          className="ltr-isolate text-lg md:text-xl font-bold text-foreground leading-tight"
+        >
           {org}
         </h3>
         <div className="mt-1 flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
@@ -578,9 +572,9 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
 
       {/* three separate signals — never aggregated into one total */}
       <div className="mt-3.5 grid grid-cols-3 gap-2">
-        {metrics.map((m) => (
+        {metricValues.map((m) => (
           <div
-            key={m.label}
+            key={m.key}
             className="rounded-lg border bg-background-primary/40 px-2.5 py-2"
             style={{ borderColor: `rgba(${rgb},0.15)` }}
           >
@@ -591,7 +585,7 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
               {m.value}
             </div>
             <div className="mt-1.5 text-[10px] leading-tight text-foreground-secondary/60">
-              {m.label}
+              {O.metrics[m.key as keyof typeof O.metrics]}
             </div>
           </div>
         ))}

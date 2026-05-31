@@ -79,3 +79,31 @@ coverage/
 tmp/
 temp/
 *.tmp
+
+# ── GitHub push-safety prep (additive) ────────────────────────────────
+# NOTE: .env.example is intentionally NOT ignored (placeholders only, safe to
+# track). Real secrets live in .env.local (ignored above).
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Test results / screenshots / E2E reports (all generated, never source)
+test-results/
+playwright-report/
+blob-report/
+screenshots/
+*.spec-results/
+.last-run.json
+*.webm
+*.trace.zip
+
+# Additional secret / certificate types (.env.* and *.pem already covered above)
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Logs (general)
+*.log
+pnpm-debug.log*

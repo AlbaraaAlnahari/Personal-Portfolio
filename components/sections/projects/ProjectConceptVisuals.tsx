@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+
 // =====================================================
 // PROJECT CONCEPT VISUALS — in-code interface abstractions
 // for projects without a real product screenshot. These
@@ -9,7 +11,9 @@
 // =====================================================
 
 // ── Sanadk: Accessibility Guidance Signal / Inclusive Mobility Route ──
-export function SanadkConceptVisual({ rgb = "0, 217, 255" }: { rgb?: string }) {
+export function SanadkConceptVisual({ rgb = "var(--rgb-cyan)" }: { rgb?: string }) {
+  const { t } = useLanguage();
+  const cv = t.work.conceptVisual.sanadk;
   const c = `rgb(${rgb})`;
   return (
     <div
@@ -51,14 +55,14 @@ export function SanadkConceptVisual({ rgb = "0, 217, 255" }: { rgb?: string }) {
         <circle cx="30" cy="118" r="6" fill={`rgba(${rgb},0.12)`} stroke={c} strokeWidth="1.4" />
         <circle cx="30" cy="118" r="2" fill={c} />
         <text x="30" y="140" textAnchor="middle" fontSize="6.5" fontFamily="ui-monospace, monospace" letterSpacing="1.4" fill={`rgba(${rgb},0.5)`}>
-          ORIGIN
+          {cv.origin}
         </text>
 
         {/* assisted-navigation waypoint + guidance signal arcs */}
         <circle cx="160" cy="128" r="3.4" fill={c} opacity="0.9" />
         <path d="M168 119 a12 12 0 0 1 0 18 M173 113 a19 19 0 0 1 0 30" stroke={c} strokeWidth="1.1" opacity="0.45" strokeLinecap="round" />
         <text x="150" y="152" textAnchor="middle" fontSize="6.5" fontFamily="ui-monospace, monospace" letterSpacing="1.2" fill={`rgba(${rgb},0.42)`}>
-          ASSISTED
+          {cv.assisted}
         </text>
 
         {/* destination — confirmed assisted arrival */}
@@ -66,7 +70,7 @@ export function SanadkConceptVisual({ rgb = "0, 217, 255" }: { rgb?: string }) {
         <circle cx="286" cy="106" r="9.5" fill={`rgba(${rgb},0.16)`} stroke={c} strokeWidth="1.7" />
         <path d="M281 106 l3.2 3.2 l6.4 -7" stroke={c} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
         <text x="286" y="134" textAnchor="middle" fontSize="7" fontFamily="ui-monospace, monospace" letterSpacing="1.5" fill={`rgba(${rgb},0.65)`}>
-          ARRIVED
+          {cv.arrived}
         </text>
       </svg>
     </div>
@@ -74,7 +78,9 @@ export function SanadkConceptVisual({ rgb = "0, 217, 255" }: { rgb?: string }) {
 }
 
 // ── Slide-Mind: Knowledge Distillation Engine / Flashcard Generation ──
-export function SlideMindConceptVisual({ rgb = "181, 55, 242" }: { rgb?: string }) {
+export function SlideMindConceptVisual({ rgb = "var(--rgb-purple)" }: { rgb?: string }) {
+  const { t } = useLanguage();
+  const cv = t.work.conceptVisual.slidemind;
   const c = `rgb(${rgb})`;
   return (
     <div
@@ -89,7 +95,7 @@ export function SlideMindConceptVisual({ rgb = "181, 55, 242" }: { rgb?: string 
           <rect key={y} x="28" y={y} width={i % 2 ? 34 : 50} height="3.2" rx="1.6" fill="rgba(160,170,205,0.3)" />
         ))}
         <text x="53" y="146" textAnchor="middle" fontSize="7" fontFamily="ui-monospace, monospace" letterSpacing="1.2" fill={`rgba(${rgb},0.55)`}>
-          SOURCE
+          {cv.source}
         </text>
 
         {/* distillation flow into the core */}
@@ -100,7 +106,7 @@ export function SlideMindConceptVisual({ rgb = "181, 55, 242" }: { rgb?: string 
         <path d="M160 66 l20 11.5 v23 l-20 11.5 l-20 -11.5 v-23 Z" fill={`rgba(${rgb},0.08)`} stroke={c} strokeWidth="1.4" />
         <path d="M160 81 v16 M152 89 h16 M154.5 83.5 l11 11 M165.5 83.5 l-11 11" stroke={c} strokeWidth="1.2" strokeLinecap="round" opacity="0.85" />
         <text x="160" y="128" textAnchor="middle" fontSize="7" fontFamily="ui-monospace, monospace" letterSpacing="1.2" fill={`rgba(${rgb},0.6)`}>
-          AI DISTILL
+          {cv.aiDistill}
         </text>
 
         {/* generation flow to cards */}
@@ -115,7 +121,7 @@ export function SlideMindConceptVisual({ rgb = "181, 55, 242" }: { rgb?: string 
         <rect x="240" y="92" width="40" height="3.4" rx="1.7" fill="rgba(160,170,205,0.3)" />
         <rect x="240" y="99.5" width="24" height="3.4" rx="1.7" fill="rgba(160,170,205,0.22)" />
         <text x="263" y="124" textAnchor="middle" fontSize="7" fontFamily="ui-monospace, monospace" letterSpacing="1.2" fill={`rgba(${rgb},0.6)`}>
-          FLASHCARDS
+          {cv.flashcards}
         </text>
       </svg>
     </div>

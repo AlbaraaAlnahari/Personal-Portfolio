@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" role="img" aria-labelledby="title desc">
+  <title id="title">Direct Line contact character illustration</title>
+  <desc id="desc">An editorial male character seated at a desk, speaking on a phone beside a laptop, connected through a cyan communication route.</desc>
+  <style>
+    :root{
+      --ivory:#F5F2EA;
+      --navy:#080F23;
+      --slate:#667085;
+      --slate-dark:#354057;
+      --cyan:#00C2E6;
+    }
+    .ivory-stroke{fill:none;stroke:var(--ivory);stroke-linecap:round;stroke-linejoin:round}
+    .slate-stroke{fill:none;stroke:var(--slate);stroke-linecap:round;stroke-linejoin:round}
+    .soft-stroke{fill:none;stroke:var(--slate-dark);stroke-linecap:round;stroke-linejoin:round}
+    .cyan-stroke{fill:none;stroke:var(--cyan);stroke-linecap:round;stroke-linejoin:round}
+    .route{stroke-dasharray:520;stroke-dashoffset:106;transition:stroke-dashoffset .42s cubic-bezier(.2,.7,.2,1),opacity .35s ease}
+    .signal,.endpoint{transition:opacity .35s ease,transform .35s ease;transform-origin:center}
+    .message{transition:transform .4s cubic-bezier(.2,.7,.2,1),opacity .35s ease;transform-origin:714px 152px}
+    svg:hover .route,svg:focus .route{stroke-dashoffset:0;opacity:.95}
+    svg:hover .signal,svg:focus .signal,svg:hover .endpoint,svg:focus .endpoint{opacity:1;transform:scale(1.08)}
+    svg:hover .message,svg:focus .message{transform:translateY(-2px);opacity:1}
+    @media (prefers-reduced-motion: reduce){
+      .route{stroke-dashoffset:0;transition:none}
+      .signal,.endpoint,.message{transition:none;transform:none!important}
+    }
+  </style>
+
+  <!-- Routed origin / direct line -->
+  <g aria-hidden="true">
+    <circle class="signal" cx="74" cy="420" r="11" fill="#00C2E6"/>
+    <circle cx="74" cy="420" r="20" fill="none" stroke="#00C2E6" opacity=".18"/>
+    <path class="soft-stroke" stroke-width="2" opacity=".6" d="M96 420h58l56-54h98"/>
+    <path class="cyan-stroke route" stroke-width="2.5" opacity=".64" d="M96 420h58l56-54h98l68-64h126l76-80h84"/>
+    <text x="96" y="452" fill="#667085" opacity=".72" font-size="11"
+      font-family="ui-monospace, SFMono-Regular, Menlo, monospace" letter-spacing="3">DIRECT LINE</text>
+  </g>
+
+  <!-- Communication status bubble -->
+  <g class="message" aria-hidden="true" opacity=".92">
+    <path class="ivory-stroke" stroke-width="4"
+      d="M684 93h162c22 0 39 16 39 36v48c0 20-17 36-39 36h-81l-30 24 7-24h-58c-22 0-39-16-39-36v-48c0-20 17-36 39-36z"/>
+    <circle cx="729" cy="153" r="6" fill="#00C2E6"/>
+    <circle cx="765" cy="153" r="6" fill="#00C2E6" opacity=".72"/>
+    <circle cx="801" cy="153" r="6" fill="#00C2E6" opacity=".44"/>
+  </g>
+
+  <!-- Desk and workspace -->
+  <g aria-hidden="true">
+    <path class="ivory-stroke" stroke-width="6" d="M224 414h628l44 22H184z"/>
+    <path class="ivory-stroke" stroke-width="6" d="M188 438h704v28H188z"/>
+    <path class="soft-stroke" stroke-width="5" d="M239 466v54M835 466v54"/>
+    <path class="slate-stroke" stroke-width="3" opacity=".55" d="M268 499h64M769 499h42"/>
+  </g>
+
+  <!-- Seated male editorial character -->
+  <g aria-hidden="true">
+    <!-- chair -->
+    <path class="soft-stroke" stroke-width="5" d="M306 366v-99c0-20 16-36 36-36h72c18 0 32 14 32 32v113"/>
+    <path class="slate-stroke" stroke-width="4" opacity=".58" d="M323 268h102"/>
+    <!-- hair and face -->
+    <path fill="#F5F2EA" d="M377 116c-34 2-54 28-52 59 2 33 24 54 55 54 33 0 56-23 57-55 1-34-26-60-60-58z"/>
+    <path fill="#080F23" d="M325 165c0-35 22-58 54-59 32-1 55 20 59 48-16-13-36-19-56-14-17 4-33 14-57 25z"/>
+    <path class="soft-stroke" stroke-width="4" d="M350 171h7M395 171h7M365 194c8 8 18 8 27 0"/>
+    <path fill="#080F23" d="M351 167c4 0 7 5 7 10s-3 10-7 10-7-5-7-10 3-10 7-10zm46 0c4 0 7 5 7 10s-3 10-7 10-7-5-7-10 3-10 7-10z"/>
+    <!-- neck / top -->
+    <path class="ivory-stroke" stroke-width="5" d="M365 226v18M401 226v18"/>
+    <path fill="#F5F2EA" fill-opacity=".05" stroke="#F5F2EA" stroke-width="5"
+      d="M335 251c25-14 71-15 97 0l30 97-29 41H319l-27-41z"/>
+    <path class="cyan-stroke" stroke-width="4" opacity=".72" d="M340 254c13 14 27 21 44 21 19 0 34-7 46-21"/>
+    <!-- left arm resting on desk -->
+    <path class="ivory-stroke" stroke-width="12" d="M333 283c-28 20-39 51-18 69 30 23 74 25 109 22"/>
+    <path class="ivory-stroke" stroke-width="5" d="M420 374h27l17-7"/>
+    <!-- right arm / phone -->
+    <path class="ivory-stroke" stroke-width="12" d="M427 277c19 7 31 24 37 47"/>
+    <path class="ivory-stroke" stroke-width="5" d="M463 324c15-13 20-31 16-54"/>
+    <!-- smartphone -->
+    <rect x="464" y="225" width="27" height="56" rx="7" fill="#080F23" stroke="#F5F2EA" stroke-width="4" transform="rotate(-26 477 253)"/>
+    <path class="cyan-stroke" stroke-width="3" d="M462 246c-8 0-13-5-14-13M456 257c-15-2-23-11-25-25" opacity=".72"/>
+  </g>
+
+  <!-- Laptop -->
+  <g aria-hidden="true">
+    <path fill="#080F23" stroke="#F5F2EA" stroke-width="5" stroke-linejoin="round" d="M522 299h154l-30 113H492z"/>
+    <path class="slate-stroke" stroke-width="4" opacity=".72" d="M492 412h168l24 12H473z"/>
+    <circle cx="584" cy="347" r="7" fill="#00C2E6" opacity=".52"/>
+  </g>
+
+  <!-- Minimal phone-contact cue and endpoint -->
+  <g aria-hidden="true">
+    <path class="slate-stroke" stroke-width="3" opacity=".62" d="M722 390h94M722 410h58"/>
+    <rect x="709" y="335" width="75" height="43" rx="9" fill="none" stroke="#00C2E6" stroke-width="3" opacity=".8"/>
+    <path class="cyan-stroke" stroke-width="3" opacity=".8" d="M719 345l28 21 28-21"/>
+    <circle class="endpoint" cx="815" cy="410" r="8" fill="#00C2E6" opacity=".72"/>
+    <text x="708" y="445" fill="#667085" opacity=".72" font-size="11"
+      font-family="ui-monospace, SFMono-Regular, Menlo, monospace" letter-spacing="3">CHANNEL OPEN</text>
+  </g>
+</svg>

@@ -26,7 +26,7 @@ export function useScrollState(options: UseScrollStateOptions = {}): ScrollState
 
   const lastScrollRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(Date.now());
-  const idleTimeoutRef = useRef<NodeJS.Timeout>();
+  const idleTimeoutRef = useRef<NodeJS.Timeout>(undefined);
   const velocityHistoryRef = useRef<Array<{ velocity: number; time: number }>>([]);
 
   useEffect(() => {
