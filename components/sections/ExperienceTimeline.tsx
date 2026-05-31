@@ -201,7 +201,7 @@ function MissionRecord({
         onMouseLeave={() => setActive(false)}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        className="ie-focus relative ml-[3.25rem] sm:ml-[3.75rem] md:ml-[4.5rem] rounded-2xl border bg-background-primary/40 backdrop-blur-md p-4 sm:p-5 md:p-5 transition-all duration-300 outline-none"
+        className="ie-focus relative ml-[3.25rem] sm:ml-[3.75rem] md:ml-[4.5rem] rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-4 sm:p-5 md:p-5 transition-all duration-300 outline-none"
         style={{
           borderColor: active ? `rgba(${rgb},0.42)` : `rgba(${rgb},0.2)`,
           boxShadow: active ? `0 14px 40px rgba(0,0,0,0.4), 0 0 26px rgba(${rgb},0.08)` : "none",

@@ -228,7 +228,12 @@ html[data-theme="warm"] {
   --heading: #0b1020;
   --text-body: #2e3440;
   --text-muted: #4f5663;
-  --surface: #fbf8f1;
+  /* Warm cream surface ramp — base nudged from near-white (#fbf8f1) to a true
+     warm ivory so cards/panels using --surface (or .t-surface) read as warm
+     paper, matching the approved Skills/stat-bar cream. Kept one shade lighter
+     than --surface-deep so inset/input surfaces stay subtly distinct. Navy
+     values (separate :root block) are untouched. */
+  --surface: #f1ebdd;
   --surface-deep: #f0ebdf;
   --surface-lit: #fefdfb;
   --surface-inset: #efe9dc;
@@ -294,6 +299,23 @@ html[data-theme="warm"] .t-surface-deep {
 }
 html[data-theme="warm"] .t-surface-lit {
   background: var(--surface-lit) !important;
+}
+
+/* ── Warm Cream surface unification ──────────────────────────────────────────
+   One coherent warm paper/interface system for cards & panels in WARM theme
+   only. Each rule is scoped to html[data-theme="warm"], so navy gets no rule
+   and every element keeps its own navy background untouched. Apply a class
+   ALONGSIDE a card's existing navy background class (e.g. bg-background-primary/45):
+   in warm the !important wins → cream; in navy the original class renders.
+   These override background only — borders, shadows, accent edges and active
+   states (set separately) are preserved. Reuses the approved Skills cream. */
+html[data-theme="warm"] .t-warm-surface {
+  background-color: var(--surface-deep) !important; /* #f0ebdf — premium cream card */
+}
+html[data-theme="warm"] .t-warm-surface-soft {
+  /* lighter translucent wash for inner content groups — keeps a soft hierarchy
+     and lets the blueprint grid breathe faintly behind small panels */
+  background-color: rgba(245, 242, 234, 0.6) !important;
 }
 /* Warm-only readability boost for the few pale low-alpha cyan micro-labels
    (hero status / eyebrow). Navy keeps their original low-alpha cyan. */

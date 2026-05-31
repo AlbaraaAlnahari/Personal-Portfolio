@@ -225,7 +225,7 @@ function CurrentCommandBar() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative overflow-hidden rounded-2xl border bg-background-primary/45 backdrop-blur-md px-5 py-4 md:px-6 md:py-5 outline-none transition-all duration-300"
+      className="ie-focus relative overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md px-5 py-4 md:px-6 md:py-5 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.5)` : `rgba(${rgb},0.26)`,
         boxShadow: active
@@ -340,7 +340,7 @@ function FlagshipChamber() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/45 backdrop-blur-md p-5 md:p-6 lg:p-7 outline-none transition-all duration-300"
+      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md p-5 md:p-6 lg:p-7 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.5)` : `rgba(${rgb},0.28)`,
         boxShadow: active
@@ -522,7 +522,7 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/40 backdrop-blur-md p-5 outline-none transition-all duration-300"
+      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-5 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.45)` : `rgba(${rgb},0.22)`,
         boxShadow: active

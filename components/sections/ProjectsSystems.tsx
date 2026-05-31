@@ -238,7 +238,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
       />
 
       <div
-        className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-background-primary/45 border transition-all duration-500"
+        className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-background-primary/45 t-warm-surface border transition-all duration-500"
         style={{ borderColor: `rgba(${a.rgb},0.32)` }}
       >
         {/* Top accent trace */}
@@ -553,7 +553,7 @@ function TechPathFeature() {
       />
 
       <div
-        className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-background-primary/45 border transition-all duration-500"
+        className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-background-primary/45 t-warm-surface border transition-all duration-500"
         style={{ borderColor: `rgba(${a.rgb},0.3)` }}
       >
         <div
@@ -700,7 +700,7 @@ function ConceptModule({
       />
 
       <div
-        className="relative h-full flex flex-col rounded-2xl backdrop-blur-xl bg-background-primary/45 border transition-all duration-500 p-6 md:p-7 space-y-5 overflow-hidden"
+        className="relative h-full flex flex-col rounded-2xl backdrop-blur-xl bg-background-primary/45 t-warm-surface border transition-all duration-500 p-6 md:p-7 space-y-5 overflow-hidden"
         style={{ borderColor: `rgba(${a.rgb},0.28)` }}
       >
         <div
