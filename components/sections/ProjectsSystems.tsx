@@ -5,10 +5,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { SystemPreviewFrame } from "@/components/sections/projects/SystemPreviewFrame";
 import {
+  TechPathConceptVisual,
   SanadkConceptVisual,
   SlideMindConceptVisual,
 } from "@/components/sections/projects/ProjectConceptVisuals";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { useThemeName } from "@/hooks/useThemeName";
 
 // =====================================================
 // PROJECT SYSTEMS — Deployed systems gallery
@@ -442,7 +444,14 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
 // AI Operations Pipeline — preserved exactly (DocuPilot system signature)
 // ─────────────────────────────────────────────────────────────────────────
 function WorkflowDiagram({ reduce }: { reduce: boolean }) {
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
+  const warm = useThemeName() === "warm";
+  // Node disc: a light cream-white on warm (so the colored ring + core read
+  // cleanly on the cream card) instead of the dark navy that looked muddy.
+  const nodeFill = warm ? "rgba(255,255,255,0.72)" : "rgba(10, 14, 39, 0.85)";
+  // Arabic must not be letter-spaced (breaks the cursive joining); English keeps
+  // the technical mono tracking.
+  const labelTracking = isAr ? 0 : 1.4;
   const stages = [
     { key: "documentInput", label: t.work.pipeline.stages.documentInput, color: "rgb(var(--rgb-cyan))" },
     { key: "aiExtraction", label: t.work.pipeline.stages.aiExtraction, color: "rgb(var(--rgb-purple))" },
@@ -488,21 +497,24 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
                 cx={cx}
                 cy={cy}
                 r={r}
-                fill="rgba(10, 14, 39, 0.85)"
+                fill={nodeFill}
                 stroke={stage.color}
-                strokeWidth="1.5"
-                opacity="0.75"
+                strokeWidth="1.7"
+                opacity="0.95"
               />
-              <circle cx={cx} cy={cy} r={r - 4} fill={stage.color} opacity="0.18" />
-              <circle cx={cx} cy={cy} r="2" fill={stage.color} opacity="0.9" />
+              <circle cx={cx} cy={cy} r={r - 4} fill={stage.color} opacity="0.22" />
+              <circle cx={cx} cy={cy} r="2.4" fill={stage.color} opacity="1" />
               <text
                 x={labelX}
-                y={cy + 3}
-                fontSize="9"
-                fontFamily="ui-monospace, monospace"
+                y={cy + 3.5}
+                fontSize="10.5"
+                fontFamily={isAr ? "inherit" : "ui-monospace, monospace"}
+                fontWeight={isAr ? 600 : 400}
                 fill={stage.color}
-                opacity="0.9"
-                letterSpacing="1.4"
+                opacity="1"
+                letterSpacing={labelTracking}
+                textAnchor="start"
+                direction="ltr"
               >
                 {stage.label}
               </text>
@@ -529,7 +541,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
           </circle>
         )}
       </svg>
-      <div className="mt-3 text-center text-[10px] font-mono text-foreground-secondary/55 tracking-[0.22em]">
+      <div className={`mt-3 text-center text-[11px] font-mono text-foreground-secondary/75 ${isAr ? "tracking-normal" : "tracking-[0.22em]"}`}>
         {t.work.pipeline.title}
       </div>
     </div>
@@ -540,7 +552,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
 // 2 — TechPath secondary feature: real roadmap proof + content
 // ─────────────────────────────────────────────────────────────────────────
 function TechPathFeature() {
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
   const a = accentTokens.green;
   return (
     <div className="relative group">
@@ -614,33 +626,20 @@ function TechPathFeature() {
             {/* Footer — adaptive-route accent relates this panel to the
                 generated roadmap, with the action docked at the base. */}
             <div className="mt-auto pt-5 space-y-4">
-              <div className="flex items-center gap-3" aria-hidden="true">
-                <span
-                  className="text-[9px] font-mono tracking-[0.24em]"
-                  style={{ color: `rgba(${a.rgb},0.6)` }}
+              {/* Adaptive learning roadmap — generated checkpoints with
+                  progress, resources and daily follow-up (decorative). */}
+              <div
+                aria-hidden="true"
+                className="rounded-xl border bg-background-primary/40 px-4 pt-2.5 pb-1.5"
+                style={{ borderColor: `rgba(${a.rgb},0.18)` }}
+              >
+                <div
+                  className={`text-[10px] font-mono mb-1 ${isAr ? "tracking-normal" : "tracking-[0.24em]"}`}
+                  style={{ color: `rgba(${a.rgb},0.85)` }}
                 >
                   {t.work.labels.adaptiveRoute}
-                </span>
-                <div className="relative flex-1 flex items-center">
-                  <span
-                    className="h-px w-full"
-                    style={{
-                      background: `linear-gradient(to right, rgba(${a.rgb},0.1), rgba(${a.rgb},0.4))`,
-                    }}
-                  />
-                  <span
-                    className="absolute left-0 w-1.5 h-1.5 rounded-full"
-                    style={{ background: `rgba(${a.rgb},0.45)` }}
-                  />
-                  <span
-                    className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
-                    style={{ background: `rgba(${a.rgb},0.6)` }}
-                  />
-                  <span
-                    className="absolute right-0 w-2 h-2 rounded-full"
-                    style={{ background: `rgb(${a.rgb})`, boxShadow: `0 0 8px rgba(${a.rgb},0.55)` }}
-                  />
                 </div>
+                <TechPathConceptVisual rgb={a.rgb} />
               </div>
               <ActionLink
                 href="https://github.com/AlbaraaAlnahari/TechPath"
@@ -688,6 +687,7 @@ function ConceptModule({
   /** truthful classification shown when there is no external action link */
   statusLabel?: string;
 }) {
+  const { isAr } = useLanguage();
   const a = accentTokens[accent];
   return (
     <div className="relative group h-full">
@@ -737,7 +737,7 @@ function ConceptModule({
           className="rounded-xl border bg-background-primary/40 px-4 pt-3 pb-2"
           style={{ borderColor: "rgba(150,165,205,0.14)" }}
         >
-          <div className="text-[9px] font-mono tracking-[0.22em] mb-1" style={{ color: `rgba(${a.rgb},0.6)` }}>
+          <div className={`text-[10px] font-mono mb-1 ${isAr ? "tracking-normal" : "tracking-[0.22em]"}`} style={{ color: `rgba(${a.rgb},0.82)` }}>
             {conceptLabel}
           </div>
           {visual}

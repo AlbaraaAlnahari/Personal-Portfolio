@@ -15,18 +15,18 @@ export const work = {
         eyebrow: "أنظمة منشورة / أعمال مختارة",
         index: "04 من أنظمة المشاريع",
         titleLead: "منتجات صُمّمت لتحويل",
-        titleAccent: "الذكاء",
-        titleTrail: "إلى فعل.",
+        titleAccent: "الأفكار",
+        titleTrail: "إلى واقع.",
         intro:
           "مجموعة مختارة من منتجات مدعومة بالذكاء الاصطناعي، وتجارب وصول شامل، وأنظمة برمجية بُنيت لحلّ مشكلات حقيقية.",
       },
       pipeline: {
         title: "خط عمليات الذكاء الاصطناعي",
         stages: {
-          documentInput: "إدخال المستند",
-          aiExtraction: "استخلاص بالذكاء الاصطناعي",
-          structuredWorkflow: "سير عمل منظّم",
-          approvalSystem: "نظام الاعتماد",
+          documentInput: "إدخال",
+          aiExtraction: "تحليل",
+          structuredWorkflow: "تنظيم",
+          approvalSystem: "اعتماد",
         },
       },
       preview: {
@@ -37,12 +37,12 @@ export const work = {
       labels: {
         technologyStack: "حزمة التقنيات",
         techStack: "حزمة التقنيات",
-        adaptiveRoute: "مسار متكيّف",
+        adaptiveRoute: "مسار تعلّم متكيّف",
       },
       actions: {
         opensNewTab: "(يفتح في تبويب جديد)",
-        liveSite: "الموقع المباشر",
-        viewRepository: "عرض المستودع",
+        liveSite: "افتح موقع دوكوبايلوت",
+        viewRepository: "اطّلع على ملفات المشروع",
       },
       frame: {
         live: "مباشر",
@@ -55,14 +55,14 @@ export const work = {
         tagline: "منصة عمليات أعمال بالذكاء الاصطناعي",
         recognition: "المركز الأول — معسكر ابتكار الذكاء الاصطناعي",
         description:
-          "منصة ذكاء اصطناعي كخدمة تحوّل مستندات الأعمال إلى سير عمل منظّم، واعتمادات، وأنظمة تشغيلية.",
+          "طبقة عمليات ذكية تحوّل العقود والفواتير ومخططات الأعمال وتغيّرات النطاق إلى قرارات قابلة للتنفيذ داخل الفريق.",
       },
       techpath: {
         systemLabel: "النظام 02 / مسار تعلّم متكيّف",
         category: "تعليم بالذكاء الاصطناعي / تخصيص",
         tagline: "مولّد خرائط طريق تعليمية بالذكاء الاصطناعي",
         description:
-          "مولّد خرائط طريق مدعوم بالذكاء الاصطناعي بجداول تعلّم مخصّصة وأنظمة تعليمية متكيّفة.",
+          "يساعدك TechPath على بناء رود ماب تعليمي مفصّل، مع روابط مختارة، واختبارات لقياس المستوى، ومتابعة يومية للتعلم وحدك أو مع زملائك.",
         roadmapAlt:
           "خارطة طريق التعلّم المولّدة في TechPath — التقدّم الإجمالي، وجدول زمني للتعلّم يضم مرحلة الأساسيات / تطوير الواجهة الخلفية، وجدول دراسة أسبوعي.",
         domain: "techpath / roadmap",
@@ -70,9 +70,9 @@ export const work = {
       sanadk: {
         systemLabel: "النظام 03 / تصميم شامل",
         category: "إتاحة الوصول / تصميم شامل",
-        name: "تطبيق سند للوصول الشامل",
-        tagline: "تجربة تنقّل ميسّرة للجميع",
-        description: "تجربة جوّال تضع الوصول الشامل أولاً لذوي الإعاقة البصرية ومستخدمي الكراسي المتحركة.",
+        name: "تطبيق سندك",
+        tagline: "مساعد ذكي للتسوّق والتنقّل",
+        description: "تطبيق جوّال ذكي يدعم ذوي الإعاقة عبر الرؤية الحاسوبية والملاحة الذكية، ليساعدهم على التسوق والتنقل باستقلالية وسهولة أكبر.",
         conceptLabel: "إشارة إرشاد الوصول الشامل",
         statusLabel: "حالة: إتاحة وصول / تجربة استخدام",
       },
@@ -81,21 +81,29 @@ export const work = {
         category: "أدوات تعلّم بالذكاء الاصطناعي",
         name: "مولّد البطاقات التعليمية Slide-Mind",
         tagline: "نظام دراسة بالذكاء الاصطناعي",
-        description: "نظام لتوليد البطاقات التعليمية مدعوم بالذكاء الاصطناعي ببنية معيارية.",
-        conceptLabel: "محرّك تكثيف المعرفة",
+        description: "يحلّل المحتوى التعليمي، يستخلص أهم النقاط، ويحوّلها إلى بطاقات تعليمية واختبارات قصيرة بالذكاء الاصطناعي.",
+        conceptLabel: "محرك تحويل المحتوى إلى اختبارات قصيرة",
       },
       docupilotPreviewAlt:
         "لوحة قرارات DocuPilot — المشاريع النشطة، والفواتير المعلّقة، والاعتمادات المطلوبة، والمخاطر العالية، ومؤشرات المشاريع المرتبطة داخل منصة عمليات الذكاء الاصطناعي المنشورة.",
       conceptVisual: {
+        techpath: {
+          assess: "تقييم",
+          plan: "خطة",
+          resources: "موارد",
+          followup: "متابعة",
+          progress: "تقدّم",
+        },
         sanadk: {
-          origin: "الانطلاق",
-          assisted: "بمساعدة",
-          arrived: "الوصول",
+          product: "تعرّف المنتج",
+          voice: "إرشاد صوتي",
+          route: "مسار مناسب",
+          arrived: "وصول",
         },
         slidemind: {
-          source: "المصدر",
-          aiDistill: "تكثيف بالذكاء",
-          flashcards: "بطاقات تعليمية",
+          source: "المحتوى",
+          aiDistill: "تحليل ذكي",
+          flashcards: "بطاقات واختبارات",
         },
       },
     },
@@ -178,15 +186,23 @@ export const work = {
       docupilotPreviewAlt:
         "DocuPilot Decision Dashboard — active projects, pending invoices, required approvals, high risks, and linked project indicators in the deployed AI operations platform.",
       conceptVisual: {
+        techpath: {
+          assess: "ASSESS",
+          plan: "PLAN",
+          resources: "RESOURCES",
+          followup: "FOLLOW-UP",
+          progress: "PROGRESS",
+        },
         sanadk: {
-          origin: "ORIGIN",
-          assisted: "ASSISTED",
-          arrived: "ARRIVED",
+          product: "PRODUCT",
+          voice: "VOICE",
+          route: "ROUTE",
+          arrived: "ARRIVE",
         },
         slidemind: {
-          source: "SOURCE",
-          aiDistill: "AI DISTILL",
-          flashcards: "FLASHCARDS",
+          source: "CONTENT",
+          aiDistill: "AI ANALYSIS",
+          flashcards: "CARDS & QUIZ",
         },
       },
     },
