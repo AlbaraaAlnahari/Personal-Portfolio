@@ -3,7 +3,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { OfficialResumeVault } from "@/components/sections/resume-dossier/OfficialResumeVault";
+import { ResumePreviewViewer } from "@/components/sections/resume-dossier/ResumePreviewViewer";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { useThemeName } from "@/hooks/useThemeName";
 
 /**
  * Resume Interface — VERIFIED CAREER DOSSIER
@@ -48,6 +50,7 @@ export function ResumeInterface() {
   const { t, displayFont } = useLanguage();
   const r = t.resume;
   const reduce = useReducedMotion();
+  const warm = useThemeName() === "warm";
 
   const ease = [0.4, 0, 0.2, 1] as const;
   const container = {
@@ -110,6 +113,12 @@ export function ResumeInterface() {
             </motion.div>
           </div>
 
+          {/* ── Theme-aware CV preview viewer ─────────────────────── */}
+          <motion.div variants={rise} className="space-y-5">
+            <SubHeader label={r.previewLabel} count={r.previewCount} />
+            <ResumePreviewViewer />
+          </motion.div>
+
           {/* ── Credential records ledger ─────────────────────────── */}
           <motion.div variants={rise} className="space-y-5">
             <SubHeader label={r.credentialsLabel} count={r.credentialsCount} />
@@ -143,43 +152,31 @@ export function ResumeInterface() {
               count={r.signalsCount}
               accent="green"
             />
-            {/* Single auto-flow grid fills row-by-row (01,02 / 03,04 / 05,06)
-                on desktop/tablet and stays sequential 01→06 on mobile. Two
-                absolute bus rails preserve the per-column signal-bus styling. */}
-            <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-0">
-              {/* left column bus rail */}
-              <span
-                aria-hidden="true"
-                className="absolute left-[3px] top-5 bottom-5 w-px"
-                style={{
-                  background:
-                    "linear-gradient(to bottom, transparent, rgba(var(--rgb-cyan),0.32) 22%, rgba(var(--rgb-green),0.22) 78%, transparent)",
-                }}
-              />
-              {/* right column bus rail (sm+) */}
-              <span
-                aria-hidden="true"
-                className="hidden sm:block absolute left-[calc(50%+27px)] top-5 bottom-5 w-px"
-                style={{
-                  background:
-                    "linear-gradient(to bottom, transparent, rgba(var(--rgb-cyan),0.32) 22%, rgba(var(--rgb-green),0.22) 78%, transparent)",
-                }}
-              />
+            {/* Compact signal chips — one connected set rather than two
+                scattered lists. Green-tinted to match the section accent. */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {competencies.map((comp, i) => (
                 <div
                   key={comp}
-                  className="group relative flex items-center gap-3 py-3 pl-6"
+                  className="t-surface group relative flex items-center gap-2.5 rounded-xl px-3.5 py-3 transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    background:
+                      "linear-gradient(150deg, rgba(16,20,42,0.6) 0%, rgba(10,14,39,0.78) 100%)",
+                    border: warm
+                      ? "1px solid rgba(var(--rgb-green),0.26)"
+                      : "1px solid rgba(var(--rgb-green),0.2)",
+                    boxShadow: warm ? "0 6px 16px rgba(40,30,10,0.05)" : "none",
+                  }}
                 >
-                  {/* port on the column's rail */}
                   <span
                     aria-hidden="true"
-                    className="absolute left-[3px] top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-cyan/55 group-hover:bg-accent-cyan transition-all duration-300"
-                    style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.35)" }}
+                    className="w-1.5 h-1.5 rounded-full bg-accent-green/70 group-hover:bg-accent-green transition-all duration-300 shrink-0"
+                    style={{ boxShadow: "0 0 6px rgba(var(--rgb-green),0.4)" }}
                   />
-                  <span className="font-mono text-[10px] text-accent-cyan/55 tracking-wider w-5 shrink-0">
+                  <span className="font-mono text-[10px] text-accent-green/70 tracking-wider shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-sm text-foreground-secondary/85 group-hover:text-foreground-primary transition-colors duration-300">
+                  <span className="text-[13px] md:text-sm text-foreground-secondary/90 group-hover:text-foreground-primary transition-colors duration-300 leading-snug">
                     {r.competencies[comp]}
                   </span>
                 </div>
@@ -198,6 +195,7 @@ export function ResumeInterface() {
 function IdentityDossier() {
   const { t } = useLanguage();
   const id = t.resume.identity;
+  const warm = useThemeName() === "warm";
   const languages = [id.languages.arabic, id.languages.english];
   return (
     <div
@@ -205,15 +203,20 @@ function IdentityDossier() {
       style={{
         background:
           "linear-gradient(160deg, rgba(16,20,42,0.86) 0%, rgba(10,14,39,0.93) 100%)",
-        border: "1px solid rgba(150,165,205,0.18)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)",
+        border: warm
+          ? "1px solid rgba(120,95,55,0.20)"
+          : "1px solid rgba(150,165,205,0.18)",
+        boxShadow: warm
+          ? "0 12px 30px rgba(40,30,10,0.08)"
+          : "inset 0 1px 0 rgba(255,255,255,0.04)",
       }}
     >
-      {/* corner glow */}
+      {/* corner glow — muted on warm to avoid cyan wash on cream */}
       <div
         aria-hidden="true"
         className="absolute -top-10 -left-10 w-40 h-40 pointer-events-none"
         style={{
+          opacity: warm ? 0.35 : 1,
           background:
             "radial-gradient(circle, rgba(var(--rgb-cyan),0.1) 0%, transparent 65%)",
         }}
@@ -225,19 +228,41 @@ function IdentityDossier() {
           <span className="text-[10px] font-mono tracking-[0.26em] text-accent-cyan/80">
             {id.dossierLabel}
           </span>
-          <span dir="ltr" className="ltr-isolate text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/40">
+          <span dir="ltr" className="ltr-isolate text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/45">
             {id.idTag}
           </span>
         </div>
 
-        {/* name + positioning */}
-        <div className="space-y-2">
-          <h3 className="text-2xl md:text-[1.7rem] font-bold text-foreground-primary leading-tight">
-            {id.name}
-          </h3>
-          <p className="text-sm text-accent-cyan/90 font-medium leading-relaxed">
-            {id.role}
-          </p>
+        {/* identity row: verified seal + name + positioning */}
+        <div className="flex items-start gap-4">
+          <span
+            aria-hidden="true"
+            className="grid place-items-center w-12 h-12 rounded-xl shrink-0"
+            style={{
+              background: "rgba(var(--rgb-cyan),0.1)",
+              border: "1px solid rgba(var(--rgb-cyan),0.4)",
+              boxShadow: warm ? "none" : "0 0 16px rgba(var(--rgb-cyan),0.18)",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 2l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V5z"
+                fill="rgba(var(--rgb-cyan),0.12)"
+                stroke="var(--accent)"
+                strokeWidth="1.4"
+                strokeLinejoin="round"
+              />
+              <path d="M9 12l2 2 4-4" fill="none" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <div className="min-w-0 space-y-1.5">
+            <h3 className="text-2xl md:text-[1.7rem] font-bold text-foreground-primary leading-tight">
+              {id.name}
+            </h3>
+            <p className="text-sm text-accent-cyan/90 font-semibold leading-relaxed">
+              {id.role}
+            </p>
+          </div>
         </div>
 
         {/* metadata registry — centered in the flexible middle */}
@@ -319,11 +344,11 @@ function StateChip({
   const rgb = color === "cyan" ? "var(--rgb-cyan)" : "var(--rgb-green)";
   return (
     <span
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[9px] font-mono tracking-[0.18em]"
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[9px] font-mono font-semibold tracking-[0.18em]"
       style={{
-        background: `rgba(${rgb},0.07)`,
-        border: `1px solid rgba(${rgb},0.28)`,
-        color: color === "cyan" ? "rgba(140,228,255,0.9)" : "rgba(120,255,200,0.9)",
+        background: `rgba(${rgb},0.1)`,
+        border: `1px solid rgba(${rgb},0.4)`,
+        color: hex,
       }}
     >
       <span
@@ -376,6 +401,7 @@ function CredentialModule({
   const { t } = useLanguage();
   const data = t.resume.credentials[credential.id];
   const featured = credential.featured;
+  const warm = useThemeName() === "warm";
   return (
     <article
       className="t-surface group relative h-full rounded-xl p-5 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
@@ -384,9 +410,15 @@ function CredentialModule({
           ? "linear-gradient(150deg, rgba(var(--rgb-cyan),0.06) 0%, rgba(12,16,40,0.92) 55%)"
           : "linear-gradient(150deg, rgba(16,20,42,0.78) 0%, rgba(10,14,39,0.9) 100%)",
         border: featured
-          ? "1px solid rgba(var(--rgb-cyan),0.32)"
+          ? "1px solid rgba(var(--rgb-cyan),0.42)"
+          : warm
+          ? "1px solid rgba(120,95,55,0.18)"
           : "1px solid rgba(150,165,205,0.16)",
-        boxShadow: featured
+        boxShadow: warm
+          ? featured
+            ? "0 10px 26px rgba(40,30,10,0.10)"
+            : "0 8px 20px rgba(40,30,10,0.06)"
+          : featured
           ? "0 0 24px rgba(var(--rgb-cyan),0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
           : "none",
       }}

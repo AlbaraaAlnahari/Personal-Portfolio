@@ -31,15 +31,14 @@ type OpsId = "prehack" | "droneclub";
 interface OpsRecord {
   id: OpsId;
   rgb: string;
-  coord: string; // dock-port signal coordinate
   metricValues: { key: string; value: string }[];
 }
 
 // Largest documented deployment — the dominant quantified anchor.
-// Only non-text structural fields live here; all copy reads from t.
+// Only non-text structural fields live here; all copy (incl. the dock
+// coordinate) reads from t.
 const FLAGSHIP = {
   rgb: CMD,
-  coord: "DEP·01",
   metricValues: {
     participants: "5,000+",
     events: "10+",
@@ -52,7 +51,6 @@ const OPERATIONS: OpsRecord[] = [
   {
     id: "prehack",
     rgb: "var(--rgb-green)",
-    coord: "OPS·01",
     metricValues: [
       { key: "hackwave", value: "450+" },
       { key: "sessions", value: "200+" },
@@ -62,7 +60,6 @@ const OPERATIONS: OpsRecord[] = [
   {
     id: "droneclub",
     rgb: "var(--rgb-purple)",
-    coord: "OPS·02",
     metricValues: [
       { key: "committees", value: "5" },
       { key: "members", value: "65+" },
@@ -73,8 +70,11 @@ const OPERATIONS: OpsRecord[] = [
 
 export function OrganizationsLeadership() {
   const reduce = useReducedMotion();
-  const { t, displayFont } = useLanguage();
+  const { t, isAr, displayFont } = useLanguage();
   const L = t.impact.leadership;
+  // Arabic micro-labels lose cursive joining under wide letter-spacing —
+  // drop tracking for ar, keep the mono command cadence for en.
+  const trk = (en: string) => (isAr ? "tracking-normal" : en);
 
   const rise: Variants = {
     hidden: { opacity: 0, y: reduce ? 0 : 22 },
@@ -106,10 +106,10 @@ export function OrganizationsLeadership() {
             className="readability-field space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className="text-sm font-mono text-accent-cyan tracking-[0.22em]">
+              <div className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}>
                 {L.eyebrow}
               </div>
-              <div className="text-xs font-mono text-accent-cyan/55 tracking-[0.22em]">
+              <div className={`text-xs font-mono text-accent-cyan/55 ${trk("tracking-[0.22em]")}`}>
                 {L.recordsLabel}
               </div>
             </div>
@@ -213,7 +213,8 @@ export function OrganizationsLeadership() {
 function CurrentCommandBar() {
   const [active, setActive] = useState(false);
   const rgb = CMD;
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
+  const trk = (en: string) => (isAr ? "tracking-normal" : en);
   const L = t.impact.leadership;
   const TUWAIQ = L.tuwaiq;
 
@@ -273,7 +274,7 @@ function CurrentCommandBar() {
             />
           </span>
           <span
-            className="font-mono text-[10px] tracking-[0.26em]"
+            className={`font-mono text-[10px] ${trk("tracking-[0.26em]")}`}
             style={{ color: `rgba(${rgb},0.85)` }}
           >
             {L.currentCommand}
@@ -300,7 +301,7 @@ function CurrentCommandBar() {
 
         {/* status pill — appointment only, never "verified/live since/date" */}
         <span
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border font-mono text-[10px] tracking-[0.2em] shrink-0 self-start md:self-auto"
+          className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border font-mono text-[10px] shrink-0 self-start md:self-auto ${trk("tracking-[0.2em]")}`}
           style={{
             borderColor: `rgba(${rgb},0.4)`,
             color: `rgba(${rgb},0.9)`,
@@ -327,10 +328,11 @@ function CurrentCommandBar() {
 // ─────────────────────────────────────────────────────────────────────────
 function FlagshipChamber() {
   const [active, setActive] = useState(false);
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
+  const trk = (en: string) => (isAr ? "tracking-normal" : en);
   const F = t.impact.leadership.flagship;
-  const { rgb, coord, metricValues } = FLAGSHIP;
-  const { channel, org, shorthand, role, initiative, narrative } = F;
+  const { rgb, metricValues } = FLAGSHIP;
+  const { channel, coord, org, shorthand, role, initiative, narrative, tags } = F;
 
   return (
     <article
@@ -372,7 +374,7 @@ function FlagshipChamber() {
         {/* channel + dock coordinate */}
         <div className="flex items-start justify-between gap-3">
           <span
-            className="font-mono text-[10px] md:text-[11px] tracking-[0.22em]"
+            className={`font-mono text-[10px] md:text-[11px] ${trk("tracking-[0.22em]")}`}
             style={{ color: `rgb(${rgb})` }}
           >
             {channel}
@@ -422,7 +424,7 @@ function FlagshipChamber() {
             className="w-1.5 h-1.5 rounded-full shrink-0"
             style={{ background: `rgb(${rgb})` }}
           />
-          <span className="font-mono text-[11px] tracking-[0.1em] text-foreground-secondary/85">
+          <span className={`font-mono text-[11px] text-foreground-secondary/85 ${trk("tracking-[0.1em]")}`}>
             {initiative}
           </span>
         </div>
@@ -445,17 +447,20 @@ function FlagshipChamber() {
           {narrative}
         </p>
 
-        {/* leadership tag */}
+        {/* leadership tags */}
         <div
-          className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 border-t"
+          className="mt-4 flex flex-wrap items-center gap-1.5 pt-4 border-t"
           style={{ borderColor: `rgba(${rgb},0.14)` }}
         >
-          <span
-            className="px-2.5 py-1 rounded text-[11px] bg-background-primary/55 border text-foreground-secondary/85"
-            style={{ borderColor: `rgba(${rgb},0.18)` }}
-          >
-            {F.tag}
-          </span>
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2.5 py-1 rounded text-[11px] bg-background-primary/55 border text-foreground-secondary/85"
+              style={{ borderColor: `rgba(${rgb},0.18)` }}
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </article>
@@ -473,6 +478,7 @@ function BigMetric({
   label: string;
   emphasize?: boolean;
 }) {
+  const { isAr } = useLanguage();
   return (
     <div
       className="relative rounded-xl border bg-background-primary/40 px-4 py-3.5 md:py-4 overflow-hidden"
@@ -497,7 +503,7 @@ function BigMetric({
       >
         {value}
       </div>
-      <div className="relative mt-2 font-mono text-[9px] md:text-[10px] tracking-[0.18em] text-foreground-secondary/60">
+      <div className={`relative mt-2 font-mono text-[9px] md:text-[10px] text-foreground-secondary/60 ${isAr ? "tracking-normal" : "tracking-[0.18em]"}`}>
         {label}
       </div>
     </div>
@@ -509,10 +515,11 @@ function BigMetric({
 // ─────────────────────────────────────────────────────────────────────────
 function CommunityRecord({ data }: { data: OpsRecord }) {
   const [active, setActive] = useState(false);
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
+  const trk = (en: string) => (isAr ? "tracking-normal" : en);
   const O = t.impact.leadership.operations[data.id];
-  const { rgb, coord, metricValues } = data;
-  const { channel, org, role, period, narrative } = O;
+  const { rgb, metricValues } = data;
+  const { channel, coord, org, role, period, narrative, tags } = O;
 
   return (
     <article
@@ -544,7 +551,7 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
       {/* channel + dock coordinate */}
       <div className="flex items-start justify-between gap-3">
         <span
-          className="font-mono text-[10px] tracking-[0.2em]"
+          className={`font-mono text-[10px] ${trk("tracking-[0.2em]")}`}
           style={{ color: `rgba(${rgb},0.85)` }}
         >
           {channel}
@@ -564,7 +571,7 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
           <span className="text-sm font-semibold" style={{ color: `rgb(${rgb})` }}>
             {role}
           </span>
-          <span className="font-mono text-[10px] tracking-[0.14em] text-foreground-secondary/50">
+          <span className={`font-mono text-[10px] text-foreground-secondary/50 ${trk("tracking-[0.14em]")}`}>
             {period}
           </span>
         </div>
@@ -595,6 +602,19 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
       <p className="mt-3.5 text-[13px] md:text-sm text-foreground-secondary/80 leading-relaxed">
         {narrative}
       </p>
+
+      {/* highlight tags */}
+      <div className="mt-3.5 flex flex-wrap gap-1.5">
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="px-2.5 py-1 rounded text-[11px] bg-background-primary/55 border text-foreground-secondary/85"
+            style={{ borderColor: `rgba(${rgb},0.18)` }}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
     </article>
   );
 }
@@ -610,10 +630,13 @@ function DockPort({
   coord: string;
   active: boolean;
 }) {
+  const { isAr } = useLanguage();
   return (
     <span aria-hidden="true" className="inline-flex items-center gap-1.5 shrink-0">
       <span
-        className="font-mono text-[9px] tracking-[0.18em] transition-colors duration-300"
+        className={`font-mono transition-colors duration-300 ${
+          isAr ? "text-[10px] tracking-normal" : "text-[9px] tracking-[0.18em]"
+        }`}
         style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.5)` }}
       >
         {coord}

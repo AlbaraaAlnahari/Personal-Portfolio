@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { useThemeName } from "@/hooks/useThemeName";
 
 // =====================================================
 // OFFICIAL RESUME VAULT — the signature focal object of
@@ -27,6 +28,7 @@ export function OfficialResumeVault() {
   const { t } = useLanguage();
   const v = t.resume.vault;
   const reduce = useReducedMotion();
+  const warm = useThemeName() === "warm";
   const [active, setActive] = useState(false);
 
   const engage = {
@@ -54,7 +56,7 @@ export function OfficialResumeVault() {
         aria-hidden="true"
         className="absolute -inset-3 rounded-[28px] blur-2xl pointer-events-none transition-opacity duration-500"
         style={{
-          opacity: active ? 1 : 0.85,
+          opacity: warm ? 0.3 : active ? 1 : 0.85,
           background:
             "radial-gradient(60% 60% at 32% 30%, rgba(var(--rgb-cyan),0.16) 0%, transparent 72%)",
         }}
@@ -66,7 +68,9 @@ export function OfficialResumeVault() {
           background:
             "linear-gradient(150deg, rgba(18,22,46,0.94) 0%, rgba(10,14,39,0.97) 100%)",
           border: "1px solid rgba(var(--rgb-cyan),0.32)",
-          boxShadow: active
+          boxShadow: warm
+            ? "0 14px 36px rgba(40,30,10,0.10), inset 0 1px 0 rgba(255,255,255,0.5)"
+            : active
             ? "0 0 56px rgba(var(--rgb-cyan),0.18), inset 0 1px 0 rgba(255,255,255,0.06)"
             : "0 0 44px rgba(var(--rgb-cyan),0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
         }}
@@ -116,8 +120,8 @@ export function OfficialResumeVault() {
             >
               <defs>
                 <linearGradient id="vault-page" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgba(20,26,52,0.95)" />
-                  <stop offset="100%" stopColor="rgba(12,16,40,0.95)" />
+                  <stop offset="0%" stopColor={warm ? "#fefdfb" : "rgba(20,26,52,0.95)"} />
+                  <stop offset="100%" stopColor={warm ? "#f3eede" : "rgba(12,16,40,0.95)"} />
                 </linearGradient>
               </defs>
               {/* page body with folded corner */}
@@ -152,7 +156,7 @@ export function OfficialResumeVault() {
                   width={i % 3 === 2 ? 44 : 78}
                   height="4"
                   rx="2"
-                  fill="rgba(160,170,205,0.32)"
+                  fill={warm ? "rgba(29,39,64,0.28)" : "rgba(160,170,205,0.32)"}
                 />
               ))}
               {/* PDF tag */}
@@ -249,11 +253,11 @@ export function OfficialResumeVault() {
                 <div className="flex flex-wrap items-center gap-2.5">
                   <span
                     dir="ltr"
-                    className="ltr-isolate inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-mono tracking-[0.18em]"
+                    className="ltr-isolate inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[9px] font-mono font-semibold tracking-[0.18em]"
                     style={{
-                      background: "rgba(var(--rgb-cyan),0.1)",
-                      border: "1px solid rgba(var(--rgb-cyan),0.35)",
-                      color: "rgba(120,225,255,0.95)",
+                      background: "rgba(var(--rgb-cyan),0.12)",
+                      border: "1px solid rgba(var(--rgb-cyan),0.45)",
+                      color: "var(--accent)",
                     }}
                   >
                     {v.pdfDocument}
@@ -288,8 +292,8 @@ export function OfficialResumeVault() {
                 >
                   {PDF_FILENAME}
                 </p>
-                <p className="text-sm text-foreground-secondary/70 leading-relaxed max-w-md">
-                  {v.description}
+                <p className="text-sm text-foreground-secondary/75 leading-relaxed max-w-md">
+                  {v.supportLine}
                 </p>
               </div>
 
@@ -311,10 +315,13 @@ export function OfficialResumeVault() {
                     {...engage}
                     className="ie-focus inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap no-underline transition-all duration-300 hover:-translate-y-0.5"
                     style={{
-                      background:
-                        "linear-gradient(135deg, var(--accent) 0%, #00a6cf 100%)",
-                      color: "#04121c",
-                      boxShadow: active
+                      background: warm
+                        ? "linear-gradient(135deg, #0b6b7d 0%, #0a8ba3 100%)"
+                        : "linear-gradient(135deg, var(--accent) 0%, #00a6cf 100%)",
+                      color: warm ? "#f4fbfd" : "#04121c",
+                      boxShadow: warm
+                        ? "0 8px 20px rgba(11,107,125,0.30)"
+                        : active
                         ? "0 0 34px rgba(var(--rgb-cyan),0.5)"
                         : "0 0 26px rgba(var(--rgb-cyan),0.38)",
                     }}
@@ -343,13 +350,13 @@ export function OfficialResumeVault() {
                     download={PDF_FILENAME}
                     aria-label={v.downloadAria}
                     {...engage}
-                    className="ie-focus inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl font-medium text-sm whitespace-nowrap no-underline transition-all duration-300 hover:-translate-y-0.5"
+                    className="ie-focus inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap no-underline transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       background: active
-                        ? "rgba(var(--rgb-cyan),0.1)"
-                        : "rgba(var(--rgb-cyan),0.06)",
-                      border: "1px solid rgba(var(--rgb-cyan),0.42)",
-                      color: "#bfe9f7",
+                        ? "rgba(var(--rgb-cyan),0.14)"
+                        : "rgba(var(--rgb-cyan),0.09)",
+                      border: "1px solid rgba(var(--rgb-cyan),0.55)",
+                      color: "var(--accent)",
                     }}
                   >
                     <svg

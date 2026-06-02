@@ -47,7 +47,12 @@ const MISSIONS: MissionData[] = [
     index: "02",
     rgb: "var(--rgb-purple)",
     outcomeKind: "deliverable",
-    outcomeValues: [{ key: "arm" }, { key: "chatbot" }, { key: "certification" }],
+    outcomeValues: [
+      { key: "arm" },
+      { key: "chatbot" },
+      { key: "modeling" },
+      { key: "certification" },
+    ],
   },
   {
     id: "alaqsa",
@@ -55,17 +60,20 @@ const MISSIONS: MissionData[] = [
     rgb: "var(--rgb-green)",
     outcomeKind: "metric",
     outcomeValues: [
-      { key: "students", value: "70+" },
+      { key: "students", value: "100+" },
       { key: "teachers", value: "8+" },
-      { key: "growth", value: "30%" },
+      { key: "growth", value: "50%" },
     ],
   },
 ];
 
 export function ExperienceTimeline() {
   const reduce = useReducedMotion();
-  const { t, displayFont } = useLanguage();
+  const { t, isAr, displayFont } = useLanguage();
   const E = t.impact.experience;
+  // Arabic micro-labels read faint when letter-spacing forces cursive
+  // letters apart — drop tracking for ar, keep the mono cadence for en.
+  const trk = (en: string) => (isAr ? "tracking-normal" : en);
 
   const rise: Variants = {
     hidden: { opacity: 0, y: reduce ? 0 : 22 },
@@ -97,10 +105,10 @@ export function ExperienceTimeline() {
             className="readability-field space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className="text-sm font-mono text-accent-cyan tracking-[0.22em]">
+              <div className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}>
                 {E.eyebrow}
               </div>
-              <div className="text-xs font-mono text-accent-cyan/55 tracking-[0.22em]">
+              <div className={`text-xs font-mono text-accent-cyan/55 ${trk("tracking-[0.22em]")}`}>
                 {E.recordsLabel}
               </div>
             </div>
@@ -155,7 +163,8 @@ function MissionRecord({
   rise: Variants;
 }) {
   const { index, rgb, outcomeKind, outcomeValues } = mission;
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
+  const trk = (en: string) => (isAr ? "tracking-normal" : en);
   const E = t.impact.experience;
   const M = E.missions[mission.id];
   const { role, org, period, domainSignal, summary, tags } = M;
@@ -221,17 +230,17 @@ function MissionRecord({
         {/* Header row: log id · period · status */}
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5">
           <span
-            className="font-mono text-[11px] tracking-[0.22em]"
+            className={`font-mono text-[11px] ${trk("tracking-[0.22em]")}`}
             style={{ color: `rgb(${rgb})` }}
           >
             {E.logLabel} / {index}
           </span>
           <div className="flex items-center gap-2.5">
-            <span className="font-mono text-[11px] tracking-[0.14em] text-foreground-secondary/55">
+            <span className={`font-mono text-[11px] text-foreground-secondary/55 ${trk("tracking-[0.14em]")}`}>
               {period}
             </span>
             <span
-              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border font-mono text-[9px] tracking-[0.18em]"
+              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border font-mono text-[9px] ${trk("tracking-[0.18em]")}`}
               style={{
                 borderColor: `rgba(${rgb},0.28)`,
                 color: `rgba(${rgb},0.75)`,
@@ -261,7 +270,7 @@ function MissionRecord({
             >
               {org}
             </span>
-            <span className="font-mono text-[10px] tracking-[0.18em] text-foreground-secondary/45">
+            <span className={`font-mono text-[10px] text-foreground-secondary/45 ${trk("tracking-[0.18em]")}`}>
               {domainSignal}
             </span>
           </div>
@@ -287,7 +296,7 @@ function MissionRecord({
               aria-hidden="true"
             />
             <span
-              className="font-mono text-[9px] tracking-[0.24em] transition-colors duration-300"
+              className={`font-mono text-[9px] transition-colors duration-300 ${trk("tracking-[0.24em]")}`}
               style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.6)` }}
             >
               {E.verifiedOutcome}
@@ -317,14 +326,14 @@ function MissionRecord({
                   >
                     {o.value}
                   </div>
-                  <div className="mt-1 font-mono text-[8.5px] md:text-[9px] tracking-[0.08em] text-foreground-secondary/60 leading-tight">
+                  <div className={`mt-1 font-mono text-[8.5px] md:text-[9px] text-foreground-secondary/60 leading-tight ${trk("tracking-[0.08em]")}`}>
                     {M.outcomes[o.key as keyof typeof M.outcomes]}
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-2.5">
               {outcomeValues.map((o) => (
                 <div
                   key={o.key}
