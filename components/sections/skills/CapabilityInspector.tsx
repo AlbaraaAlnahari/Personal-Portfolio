@@ -53,8 +53,10 @@ export function CapabilityInspector({
   variant?: "panel" | "inline";
   warm?: boolean;
 }) {
-  const { t } = useLanguage();
+  const { t, isAr } = useLanguage();
   const c = t.skills.console;
+  // Arabic shouldn't carry English-style mono tracking; relax it in Arabic mode.
+  const tr = (en: string) => (isAr ? "tracking-normal" : en);
   const inline = variant === "inline";
   const isStandby = view.kind === "standby";
   // Warm cream: the standby console swaps the pale steel neutral for a dark-navy
@@ -71,7 +73,10 @@ export function CapabilityInspector({
         borderColor: `rgba(${accent},${isStandby ? (warm ? 0.28 : 0.22) : 0.34})`,
         ...(warm
           ? {
-              backgroundColor: "var(--surface)",
+              // Same warm cream as the stat bar + skill cards via the shared
+              // var(--surface-deep) token (#f0ebdf) — one consistent editorial
+              // surface across the whole capability matrix (not pure white).
+              backgroundColor: "var(--surface-deep)",
               boxShadow: "0 1px 2px rgba(8,15,35,0.05), 0 10px 24px -16px rgba(8,15,35,0.18)",
             }
           : {}),
@@ -106,7 +111,7 @@ export function CapabilityInspector({
           aria-hidden="true"
         />
         <span
-          className="font-mono text-[10px] tracking-[0.24em] text-foreground-secondary/70"
+          className={`font-mono text-[10px] text-foreground-secondary/70 ${tr("tracking-[0.24em]")}`}
           style={warm ? { color: "rgba(71,77,91,0.95)" } : undefined}
         >
           {c.label}
@@ -115,14 +120,14 @@ export function CapabilityInspector({
 
       {/* ── STANDBY ── */}
       {view.kind === "standby" && (
-        <div className={inline ? "mt-3" : "mt-5"}>
+        <div className={inline ? "mt-4" : "mt-6"}>
           <div
-            className="font-mono text-[11px] tracking-[0.24em] text-foreground-secondary/50"
+            className={`font-mono text-[11px] text-foreground-secondary/50 ${tr("tracking-[0.24em]")}`}
             style={warm ? { color: "rgba(71,77,91,0.95)" } : undefined}
           >
             {c.standby.state}
           </div>
-          <svg viewBox="0 0 220 40" className="mt-5 w-full max-w-[260px] h-auto" fill="none" aria-hidden="true">
+          <svg viewBox="0 0 220 40" className="mt-6 w-full max-w-[260px] h-auto" fill="none" aria-hidden="true">
             <circle cx="16" cy="20" r="6" stroke={`rgba(${accent},0.4)`} strokeWidth="1.4" />
             <circle cx="16" cy="20" r="2" fill={`rgba(${accent},0.5)`} />
             <path d="M24 20 H150" stroke={`rgba(${accent},0.28)`} strokeWidth="1.2" strokeDasharray="3 5" />
@@ -131,13 +136,13 @@ export function CapabilityInspector({
             <path d="M196 20h6" stroke={`rgba(${accent},0.4)`} strokeWidth="1.3" strokeLinecap="round" />
           </svg>
           <p
-            className="mt-5 text-[13px] leading-relaxed text-foreground-secondary/70 max-w-xs"
+            className="mt-6 text-[13px] leading-[1.8] text-foreground-secondary/70 max-w-xs"
             style={warm ? { color: "rgba(71,77,91,0.92)" } : undefined}
           >
             {c.standby.body}
           </p>
           <div
-            className="mt-4 font-mono text-[10px] tracking-[0.16em] text-foreground-secondary/40"
+            className={`mt-4 font-mono text-[10px] text-foreground-secondary/45 ${tr("tracking-[0.16em]")}`}
             style={warm ? { color: "rgba(71,77,91,0.8)" } : undefined}
           >
             {c.standby.ready}
@@ -148,12 +153,12 @@ export function CapabilityInspector({
       {/* ── DOMAIN ── */}
       {view.kind === "domain" && (
         <>
-          <div className="mt-5 font-mono text-[10px] tracking-[0.22em]" style={{ color: `rgba(${accent},0.8)` }}>
+          <div className={`mt-5 font-mono text-[10px] ${tr("tracking-[0.22em]")}`} style={{ color: `rgba(${accent},0.8)` }}>
             {c.domainTag(view.domainNum, view.domainTitle)}
           </div>
-          <div className="mt-2">
-            <div className="text-xl md:text-2xl font-bold text-foreground leading-tight">{view.domainTitle}</div>
-            <div className="font-mono text-[9px] tracking-[0.2em] text-foreground-secondary/45">
+          <div className="mt-3 space-y-1.5">
+            <div className="text-xl md:text-2xl font-bold text-foreground leading-snug">{view.domainTitle}</div>
+            <div className={`font-mono text-[10px] text-foreground-secondary/50 ${tr("tracking-[0.2em]")}`}>
               {c.capabilitiesCount(view.capabilities.length)}
             </div>
           </div>
@@ -189,7 +194,7 @@ export function CapabilityInspector({
       {/* ── SKILL ── */}
       {view.kind === "skill" && (
         <>
-          <div className="mt-5 font-mono text-[10px] tracking-[0.22em]" style={{ color: `rgba(${accent},0.8)` }}>
+          <div className={`mt-5 font-mono text-[10px] ${tr("tracking-[0.22em]")}`} style={{ color: `rgba(${accent},0.8)` }}>
             {c.domainTag(view.domainNum, view.domainTitle)}
           </div>
           <div className={`mt-2 flex items-center ${inline ? "gap-3" : "gap-3.5"}`}>
@@ -204,7 +209,7 @@ export function CapabilityInspector({
             </span>
             <div className="min-w-0">
               <div dir="ltr" className="ltr-isolate text-xl md:text-2xl font-bold text-foreground leading-tight truncate">{view.label}</div>
-              <div className="font-mono text-[9px] tracking-[0.2em] text-foreground-secondary/45">{c.capabilityTag}</div>
+              <div className={`font-mono text-[10px] text-foreground-secondary/50 ${tr("tracking-[0.2em]")}`}>{c.capabilityTag}</div>
             </div>
           </div>
 
@@ -224,7 +229,7 @@ export function CapabilityInspector({
           ) : (
             <div className="mt-4 pt-3 border-t flex items-center gap-2" style={{ borderColor: `rgba(${accent},0.14)` }}>
               <span className="w-1 h-1 rounded-full" style={{ background: `rgba(${accent},0.6)` }} aria-hidden="true" />
-              <span className="font-mono text-[9px] tracking-[0.22em] text-foreground-secondary/50">
+              <span className={`font-mono text-[10px] text-foreground-secondary/55 ${tr("tracking-[0.22em]")}`}>
                 {c.inToolkit}
               </span>
             </div>
@@ -236,11 +241,12 @@ export function CapabilityInspector({
 }
 
 function Lane({ accent, label, children }: { accent: string; label: string; children: React.ReactNode }) {
+  const { isAr } = useLanguage();
   return (
-    <div className="mt-4 pt-4 border-t" style={{ borderColor: `rgba(${accent},0.16)` }}>
-      <div className="flex items-center gap-2 mb-2">
+    <div className="mt-5 pt-5 border-t" style={{ borderColor: `rgba(${accent},0.16)` }}>
+      <div className="flex items-center gap-2 mb-3">
         <span aria-hidden="true" className="h-px w-4" style={{ background: `rgba(${accent},0.6)` }} />
-        <span className="font-mono text-[9px] tracking-[0.24em]" style={{ color: `rgba(${accent},0.75)` }}>
+        <span className={`font-mono text-[10px] ${isAr ? "tracking-normal" : "tracking-[0.24em]"}`} style={{ color: `rgba(${accent},0.75)` }}>
           {label}
         </span>
       </div>

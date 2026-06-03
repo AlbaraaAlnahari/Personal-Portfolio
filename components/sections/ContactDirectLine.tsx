@@ -39,8 +39,12 @@ const CYAN = "var(--accent)";
 const IVORY = "var(--heading)";
 const MUTED = "var(--text-muted)";
 const BODY = "var(--text-body)";
-const ERR = "rgba(255,138,138,0.95)";
-const ERR_BORDER = "rgba(255,120,120,0.5)";
+/* Error palette resolves to theme-aware values scoped under #contact in
+ * globals.css (the previous hardcoded salmon was invisible on warm cream). */
+const ERR = "var(--c-error)";
+const ERR_STRONG = "var(--c-error-strong)";
+const ERR_BORDER = "var(--c-error-border)";
+const ERR_BG = "var(--c-error-bg)";
 
 /* Verified contact data (already present in the repo — not invented). */
 const EMAIL = "albaraa.a.alnahari@gmail.com";
@@ -106,12 +110,12 @@ function Field({
     "aria-describedby": error ? `${id}-error` : undefined,
     className:
       "ie-focus w-full rounded-xl px-4 py-3 text-[15px] leading-relaxed outline-none transition-colors duration-200 placeholder:text-[var(--placeholder)]",
-    style: { backgroundColor: SURFACE_DEEP, border: `1px solid ${error ? ERR_BORDER : BORDER_IDLE}`, color: IVORY },
+    style: { backgroundColor: SURFACE_DEEP, border: `1px solid ${error ? ERR_BORDER : "rgba(var(--rgb-body),0.22)"}`, color: IVORY },
   } as const;
   return (
     <div>
       <label htmlFor={id} className="mb-1.5 flex items-center justify-between gap-3">
-        <span className="font-mono text-[10px] tracking-[0.2em]" style={{ color: "var(--text-body)" }}>
+        <span className="font-mono text-[10px] tracking-[0.2em]" style={{ color: "var(--text-strong)" }}>
           {label}
         </span>
         {optional && (
@@ -148,14 +152,14 @@ function ChannelCard({ label, value, href, Icon }: { label: string; value: strin
       onMouseLeave={() => setLit(false)}
       onFocus={() => setLit(true)}
       onBlur={() => setLit(false)}
-      className="ie-focus group flex items-center justify-between gap-4 rounded-xl px-4 py-3.5 outline-none transition-colors duration-200"
-      style={{ border: `1px solid ${lit ? BORDER_LIT : BORDER_IDLE}`, backgroundColor: SURFACE_DEEP }}
+      className="ie-focus group flex items-center justify-between gap-4 rounded-xl px-4 py-4 outline-none transition-colors duration-200"
+      style={{ border: `1px solid ${lit ? BORDER_LIT : "rgba(var(--rgb-body),0.16)"}`, backgroundColor: SURFACE_DEEP }}
     >
       <span className="flex min-w-0 items-center gap-3.5">
         <span
           aria-hidden="true"
           className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg transition-colors"
-          style={{ border: `1px solid ${lit ? "rgba(var(--rgb-cyan),0.4)" : "var(--border-idle)"}`, color: lit ? CYAN : "var(--text-body)" }}
+          style={{ border: `1px solid ${lit ? "rgba(var(--rgb-cyan),0.4)" : "rgba(var(--rgb-body),0.2)"}`, color: lit ? CYAN : "var(--text-body)" }}
         >
           <Icon size={16} strokeWidth={1.6} />
         </span>
@@ -163,7 +167,7 @@ function ChannelCard({ label, value, href, Icon }: { label: string; value: strin
           <span className="block text-sm font-semibold" style={{ color: "var(--text-strong)" }}>
             {label}
           </span>
-          <span dir="ltr" className="ltr-isolate block truncate font-mono text-[11px] tracking-[0.02em]" style={{ color: MUTED }}>
+          <span dir="ltr" className="ltr-isolate block truncate font-mono text-[11px] tracking-[0.02em]" style={{ color: "var(--text-body)" }}>
             {value}
           </span>
         </span>
@@ -191,8 +195,8 @@ function EmailCard() {
     <div
       onMouseEnter={() => setLit(true)}
       onMouseLeave={() => setLit(false)}
-      className="flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 transition-colors duration-200"
-      style={{ border: `1px solid ${lit ? BORDER_LIT : BORDER_IDLE}`, backgroundColor: SURFACE_DEEP }}
+      className="flex items-center justify-between gap-3 rounded-xl px-4 py-4 transition-colors duration-200"
+      style={{ border: `1px solid ${lit ? BORDER_LIT : "rgba(var(--rgb-body),0.16)"}`, backgroundColor: SURFACE_DEEP }}
     >
       <a
         href={`mailto:${EMAIL}`}
@@ -204,7 +208,7 @@ function EmailCard() {
         <span
           aria-hidden="true"
           className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg"
-          style={{ border: `1px solid ${lit ? "rgba(var(--rgb-cyan),0.4)" : "var(--border-idle)"}`, color: lit ? CYAN : "var(--text-body)" }}
+          style={{ border: `1px solid ${lit ? "rgba(var(--rgb-cyan),0.4)" : "rgba(var(--rgb-body),0.2)"}`, color: lit ? CYAN : "var(--text-body)" }}
         >
           <Mail size={16} strokeWidth={1.6} />
         </span>
@@ -212,7 +216,7 @@ function EmailCard() {
           <span className="block text-sm font-semibold" style={{ color: "var(--text-strong)" }}>
             {t.contact.channels.emailLabel}
           </span>
-          <span dir="ltr" className="ltr-isolate block truncate font-mono text-[11px] tracking-[0.02em]" style={{ color: MUTED }}>
+          <span dir="ltr" className="ltr-isolate block truncate font-mono text-[11px] tracking-[0.02em]" style={{ color: "var(--text-body)" }}>
             {EMAIL}
           </span>
         </span>
@@ -223,7 +227,7 @@ function EmailCard() {
         aria-label={copied ? t.contact.channels.copiedAria : t.contact.channels.copyAria}
         className="ie-focus inline-flex flex-shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-[10px] tracking-[0.16em] outline-none transition-colors duration-200"
         style={{
-          border: `1px solid ${copied ? "rgba(var(--rgb-green),0.5)" : "rgba(255,255,255,0.14)"}`,
+          border: `1px solid ${copied ? "rgba(var(--rgb-green),0.5)" : "rgba(var(--rgb-body),0.2)"}`,
           color: copied ? "rgba(var(--rgb-green),0.95)" : "var(--text-body)",
           backgroundColor: copied ? "rgba(var(--rgb-green),0.06)" : "transparent",
         }}
@@ -324,7 +328,7 @@ export function ContactDirectLine() {
           height={944}
           unoptimized
           className="absolute hidden h-[440px] w-auto xl:block"
-          style={{ right: "-60px", bottom: "40px", opacity: 0.05 }}
+          style={{ right: "-60px", bottom: "40px", opacity: theme === "warm" ? 0.1 : 0.07 }}
         />
       </div>
 
@@ -338,15 +342,15 @@ export function ContactDirectLine() {
                   <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: CYAN, boxShadow: "0 0 8px rgba(var(--rgb-cyan),0.7)" }} />
                   {t.contact.eyebrow} <span style={{ color: MUTED }}>{t.contact.eyebrowIndex}</span>
                 </span>
-                <span dir="ltr" className="ltr-isolate font-mono text-[10px] tracking-[0.18em]" style={{ color: MUTED }}>
+                <span dir="ltr" className="ltr-isolate font-mono text-[10px] tracking-[0.18em]" style={{ color: "rgba(var(--rgb-body),0.55)" }}>
                   {t.contact.route}
                 </span>
               </div>
 
-              <h2 className={cn("mt-6 max-w-3xl text-4xl font-bold leading-[1.05] text-foreground md:text-5xl lg:text-6xl", displayFont)}>
+              <h2 className={cn("mt-6 max-w-3xl text-4xl font-bold leading-[1.15] text-foreground md:text-5xl lg:text-6xl", displayFont)}>
                 {t.contact.title.lead} <span style={{ color: CYAN, textShadow: "0 0 28px rgba(var(--rgb-cyan),0.3)" }}>{t.contact.title.accent}</span>
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+              <p className="mt-6 max-w-xl text-base leading-[1.7] md:text-lg" style={{ color: BODY }}>
                 {t.contact.intro}
               </p>
 
@@ -364,9 +368,9 @@ export function ContactDirectLine() {
               <div className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr] lg:gap-6">
                 {/* LEFT — message console */}
                 <div className="rounded-2xl p-6 md:p-7" style={{ border: `1px solid ${BORDER_IDLE}`, backgroundColor: SURFACE }}>
-                  <div className="mb-6 flex items-center justify-between gap-3">
+                  <div className="mb-7 flex items-center justify-between gap-3">
                     <h3 className="text-lg font-bold text-foreground">{t.contact.form.heading}</h3>
-                    <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em]" style={{ color: MUTED }}>
+                    <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em]" style={{ color: "rgba(var(--rgb-body),0.55)" }}>
                       <Send size={11} strokeWidth={1.8} aria-hidden="true" style={{ color: "rgba(var(--rgb-cyan),0.7)" }} />
                       {t.contact.form.consoleTag}
                     </span>
@@ -391,7 +395,7 @@ export function ContactDirectLine() {
                           <div
                             key={row.k}
                             className="flex items-center justify-between gap-3 px-3.5 py-2.5"
-                            style={i > 0 ? { borderTop: "1px solid rgba(255,255,255,0.06)" } : undefined}
+                            style={i > 0 ? { borderTop: "1px solid rgba(var(--rgb-body),0.1)" } : undefined}
                           >
                             <dt className="font-mono text-[10px] tracking-[0.18em]" style={{ color: MUTED }}>{row.k}</dt>
                             <dd className="flex items-center gap-1.5 text-[12px] font-medium" style={{ color: "rgba(var(--rgb-body),0.9)" }}>
@@ -413,7 +417,7 @@ export function ContactDirectLine() {
                       </button>
                     </div>
                   ) : (
-                    <form className="space-y-4" noValidate onSubmit={onSubmit}>
+                    <form className="space-y-5" noValidate onSubmit={onSubmit}>
                       <Field id="cf-name" label={t.contact.form.fields.name.label} value={form.name} onChange={set("name")} placeholder={t.contact.form.fields.name.placeholder} error={errors.name} autoComplete="name" />
                       <Field id="cf-email" label={t.contact.form.fields.email.label} type="email" value={form.email} onChange={set("email")} placeholder={t.contact.form.fields.email.placeholder} error={errors.email} autoComplete="email" />
 
@@ -422,7 +426,7 @@ export function ContactDirectLine() {
                         <span className="mb-2 block font-mono text-[10px] tracking-[0.2em]" style={{ color: "var(--text-body)" }}>
                           {t.contact.form.fields.topic.label}
                         </span>
-                        <div role="radiogroup" aria-label={t.contact.form.fields.topic.groupAria} className="flex flex-wrap gap-2">
+                        <div role="radiogroup" aria-label={t.contact.form.fields.topic.groupAria} className="flex flex-wrap gap-2.5">
                           {TOPIC_KEYS.map((topicKey, i) => {
                             const selected = topic === topicKey;
                             return (
@@ -439,9 +443,9 @@ export function ContactDirectLine() {
                                 onKeyDown={(e) => onTopicKey(e, i)}
                                 className="ie-focus rounded-full px-3.5 py-1.5 text-[12.5px] font-medium outline-none transition-colors duration-200"
                                 style={{
-                                  border: `1px solid ${selected ? "rgba(var(--rgb-cyan),0.55)" : "var(--border-idle)"}`,
-                                  backgroundColor: selected ? "rgba(var(--rgb-cyan),0.1)" : "transparent",
-                                  color: selected ? "var(--accent-strong)" : "var(--text-body)",
+                                  border: `1px solid ${selected ? "rgba(var(--rgb-cyan),0.6)" : "rgba(var(--rgb-body),0.2)"}`,
+                                  backgroundColor: selected ? "rgba(var(--rgb-cyan),0.14)" : "transparent",
+                                  color: selected ? "var(--accent-strong)" : "rgba(var(--rgb-body),0.9)",
                                 }}
                               >
                                 {t.contact.form.topics[topicKey]}
@@ -461,11 +465,11 @@ export function ContactDirectLine() {
                       </div>
 
                       {status === "error" && (
-                        <div role="alert" className="flex items-start gap-2.5 rounded-xl px-4 py-3" style={{ border: "1px solid rgba(255,120,120,0.4)", backgroundColor: "rgba(255,120,120,0.06)" }}>
+                        <div role="alert" className="flex items-start gap-2.5 rounded-xl px-4 py-3" style={{ border: `1px solid ${ERR_BORDER}`, backgroundColor: ERR_BG }}>
                           <AlertCircle size={16} strokeWidth={1.8} aria-hidden="true" style={{ color: ERR, marginTop: 1, flexShrink: 0 }} />
-                          <p className="text-[13px] leading-relaxed" style={{ color: "rgba(255,200,200,0.92)" }}>
+                          <p className="text-[13px] leading-relaxed" style={{ color: ERR_STRONG }}>
                             {t.contact.form.error.before}
-                            <a href={`mailto:${EMAIL}`} dir="ltr" className="ie-focus ltr-isolate rounded font-medium underline outline-none" style={{ color: "rgba(255,220,220,0.95)" }}>
+                            <a href={`mailto:${EMAIL}`} dir="ltr" className="ie-focus ltr-isolate rounded font-medium underline outline-none" style={{ color: ERR_STRONG }}>
                               {EMAIL}
                             </a>
                             {t.contact.form.error.after}
@@ -495,7 +499,7 @@ export function ContactDirectLine() {
                         )}
                       </button>
 
-                      <p className="pt-1 text-center font-mono text-[10px] leading-relaxed tracking-[0.06em]" style={{ color: MUTED }}>
+                      <p className="pt-1 text-center font-mono text-[10px] leading-relaxed tracking-[0.06em]" style={{ color: "rgba(var(--rgb-body),0.7)" }}>
                         {t.contact.form.deliveryNote}
                       </p>
                     </form>
@@ -507,15 +511,15 @@ export function ContactDirectLine() {
                   <div className="rounded-2xl p-6 md:p-7" style={{ border: `1px solid ${BORDER_IDLE}`, backgroundColor: SURFACE }}>
                     <div className="flex items-center justify-between gap-3">
                       <h3 className="text-lg font-bold text-foreground">{t.contact.channels.heading}</h3>
-                      <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em]" style={{ color: MUTED }}>
+                      <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em]" style={{ color: "rgba(var(--rgb-body),0.55)" }}>
                         <span aria-hidden="true" className="h-1 w-1 rounded-full" style={{ backgroundColor: CYAN, boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.6)" }} />
                         {t.contact.channels.verifiedRoutes}
                       </span>
                     </div>
-                    <p className="mt-1.5 text-sm leading-relaxed" style={{ color: BODY }}>
+                    <p className="mt-3 text-sm leading-relaxed" style={{ color: BODY }}>
                       {t.contact.channels.description}
                     </p>
-                    <div className="mt-5 space-y-2.5">
+                    <div className="mt-5 space-y-3">
                       <EmailCard />
                       {CHANNELS.map((c) => (
                         <ChannelCard key={c.key} label={c.label} value={c.value} href={c.href} Icon={c.Icon} />
@@ -525,16 +529,16 @@ export function ContactDirectLine() {
 
                   {/* ── Section 4 — availability / signal ── */}
                   <div className="rounded-2xl p-6 md:p-7" style={{ border: `1px solid ${BORDER_IDLE}`, backgroundColor: SURFACE }}>
-                    <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.22em]" style={{ color: MUTED }}>
+                    <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.22em]" style={{ color: "rgba(var(--rgb-body),0.6)" }}>
                       <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--accent-green)", boxShadow: "0 0 7px rgba(var(--rgb-green),0.55)" }} />
                       {t.contact.availability.statusTag}
                     </span>
-                    <p className="mt-3 text-sm font-semibold" style={{ color: "rgba(var(--rgb-body),0.9)" }}>
+                    <p className="mt-4 text-sm font-semibold" style={{ color: "rgba(var(--rgb-body),0.9)" }}>
                       {t.contact.availability.availableFor}
                     </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
+                    <div className="mt-4 flex flex-wrap gap-3">
                       {AVAILABILITY_KEYS.map((a) => (
-                        <span key={a} className="rounded-full px-3 py-1 font-mono text-[10px] tracking-[0.12em]" style={{ border: "1px solid rgba(var(--rgb-cyan),0.28)", color: "rgba(189,243,255,0.85)", backgroundColor: "rgba(var(--rgb-cyan),0.05)" }}>
+                        <span key={a} className="rounded-full px-3 py-1.5 font-mono text-[10px] tracking-[0.12em]" style={{ border: "1px solid rgba(var(--rgb-cyan),0.4)", color: "rgba(var(--rgb-cyan),0.95)", backgroundColor: "rgba(var(--rgb-cyan),0.08)" }}>
                           {t.contact.availability.items[a]}
                         </span>
                       ))}

@@ -157,10 +157,17 @@ function buildView(s: SkillsDict, active: Active | null): InspectorView {
 }
 
 export function SkillsMatrix() {
-  const { t, displayFont } = useLanguage();
+  const { t, displayFont, isAr } = useLanguage();
   const s = t.skills;
+  // Arabic should not be letter-spaced like English mono labels; relax tracking
+  // in Arabic mode while keeping the technical mono treatment for English.
+  const tr = (en: string) => (isAr ? "tracking-normal" : en);
   const reduce = useReducedMotion();
   const warm = useThemeName() === "warm";
+  // Approved architectural stat-bar divider — strong deep-navy on warm cream,
+  // subtle light line on navy (preserves each theme's look). Applied as a
+  // logical inline border so RTL/LTR both separate the same logical sections.
+  const dividerColor = warm ? "rgba(8, 15, 35, 0.42)" : "rgba(255, 255, 255, 0.1)";
   // Two-tier selection model so touch taps persist reliably:
   //   committed = click / tap / Enter-Space (sticky, toggles)
   //   preview   = mouse-hover / keyboard-focus (transient)
@@ -204,22 +211,22 @@ export function SkillsMatrix() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="readability-field space-y-5"
+            className="readability-field space-y-6"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className="text-sm font-mono text-accent-cyan tracking-[0.22em]">
+              <div className={`text-sm font-mono text-accent-cyan ${tr("tracking-[0.22em]")}`}>
                 {s.eyebrow}
               </div>
-              <div className="text-xs font-mono text-accent-cyan/55 tracking-[0.22em]">
+              <div className={`text-xs font-mono text-accent-cyan/55 ${tr("tracking-[0.22em]")}`}>
                 {s.systemTag}
               </div>
             </div>
-            <h2 id="skills-heading" className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] ${displayFont}`}>
+            <h2 id="skills-heading" className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] ${displayFont}`}>
               {s.title.lead}
               <br />
               <span className="text-accent-cyan">{s.title.emphasis}</span>
             </h2>
-            <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-relaxed">
+            <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-[1.72]">
               {s.intro}
             </p>
 
@@ -228,31 +235,38 @@ export function SkillsMatrix() {
               className="t-surface-deep inline-flex w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-glass-light/12 sm:flex-row sm:items-stretch"
               style={{ background: "rgba(9, 13, 28, 0.6)" }}
             >
-              {/* Leading label cell */}
+              {/* Leading label cell — divider faces the metrics (logical
+                  inline-end on desktop, block-end when stacked). */}
               <div
-                className="flex items-center gap-2 px-4 py-2.5 border-b border-glass-light/12 sm:border-b-0 sm:border-r"
-                style={{ background: "rgba(255,255,255,0.018)" }}
+                className="flex items-center gap-2 px-4 py-2.5 border-b sm:border-b-0 sm:border-e"
+                style={{ background: "rgba(255,255,255,0.018)", borderColor: dividerColor }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-accent-cyan/70 shrink-0"
                   style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.5)" }}
                   aria-hidden="true"
                 />
-                <span className="font-mono text-[9px] tracking-[0.26em] text-foreground-secondary/55 whitespace-nowrap">
+                <span className={`font-mono text-[10px] text-foreground-secondary/60 whitespace-nowrap ${tr("tracking-[0.26em]")}`}>
                   {s.telemetryLabel}
                 </span>
               </div>
-              {/* Metric cells */}
+              {/* Metric cells — number over label, both centered in the cell;
+                  a consistent logical divider seats between every stat. */}
               <div className="grid grid-cols-3 flex-1">
                 {SUMMARY.map((metric, i) => (
                   <div
                     key={metric.labelKey}
-                    className={`flex flex-col justify-center px-3.5 py-2.5 ${i > 0 ? "border-l border-glass-light/10" : ""}`}
+                    className="flex flex-col items-center justify-center text-center px-3 py-2.5"
+                    style={
+                      i > 0
+                        ? { borderInlineStartWidth: "1px", borderInlineStartStyle: "solid", borderInlineStartColor: dividerColor }
+                        : undefined
+                    }
                   >
                     <span className="text-xl md:text-2xl font-bold text-accent-cyan leading-none tabular-nums">
                       {metric.value}
                     </span>
-                    <span className="mt-1 font-mono text-[8px] md:text-[9px] leading-tight tracking-[0.12em] text-foreground-secondary/55">
+                    <span className={`mt-2 font-mono text-[11px] font-medium leading-snug text-foreground-secondary/70 ${tr("tracking-[0.12em]")}`}>
                       {s.summary[metric.labelKey]}
                     </span>
                   </div>
@@ -265,7 +279,7 @@ export function SkillsMatrix() {
           {!active && (
             <div className="lg:hidden flex items-center gap-2.5 rounded-xl border border-glass-light/20 bg-background-primary/30 px-3.5 py-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-foreground-secondary/40" aria-hidden="true" />
-              <span className="font-mono text-[10px] tracking-[0.16em] text-foreground-secondary/55">
+              <span className={`font-mono text-[11px] text-foreground-secondary/60 ${tr("tracking-[0.16em]")}`}>
                 {s.mobilePrompt}
               </span>
             </div>
@@ -374,12 +388,17 @@ function DomainModule({
   return (
     <motion.div
       variants={rise}
-      className="relative rounded-2xl border bg-background-primary/35 backdrop-blur-md p-4 transition-colors duration-300"
+      className="relative rounded-2xl border bg-background-primary/35 backdrop-blur-md p-5 transition-colors duration-300"
       style={{
         borderColor: inDomain ? `rgba(${a},0.42)` : `rgba(${a},${warm ? 0.34 : 0.16})`,
         ...(warm
           ? {
-              backgroundColor: "var(--surface)",
+              // Match the approved telemetry stat-bar cream exactly: the bar
+              // resolves `t-surface-deep` → var(--surface-deep) (#f0ebdf), so the
+              // cards reuse that same warm token and read as editorial paper, not
+              // pure white. The solid surface keeps the blueprint grid softened
+              // behind the card rather than cutting through its body.
+              backgroundColor: "var(--surface-deep)",
               boxShadow: "0 1px 2px rgba(8,15,35,0.05), 0 8px 20px -14px rgba(8,15,35,0.18)",
             }
           : {}),
@@ -428,7 +447,7 @@ function DomainModule({
       </h3>
 
       {/* Skill nodes — all visible without interaction */}
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-2.5">
         {domain.skills.map((skill) => {
           const codes = (SKILL_PROOF[skill] ?? []).map((c) => PROJECTS[c].code);
           const mapped = codes.length > 0;

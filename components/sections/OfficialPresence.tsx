@@ -214,7 +214,7 @@ function PresenterCard() {
         </div>
 
         {/* title + org */}
-        <div className="mt-4 space-y-1.5">
+        <div className="mt-5 space-y-2">
           <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-[1.12]">
             {P.title}
           </h3>
@@ -224,9 +224,9 @@ function PresenterCard() {
         </div>
 
         {/* quantified readout */}
-        <div className="mt-5">
+        <div className="mt-6">
           <div
-            className="relative inline-flex flex-col rounded-xl border bg-background-primary/40 px-4 py-3.5 overflow-hidden"
+            className="relative inline-flex flex-col rounded-xl border bg-background-primary/40 px-5 py-4 overflow-hidden"
             style={{ borderColor: `rgba(${rgb},0.3)` }}
           >
             <span

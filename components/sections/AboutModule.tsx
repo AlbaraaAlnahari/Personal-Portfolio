@@ -16,7 +16,7 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
  * Premium identity and engineering profile with real portrait
  */
 export function AboutModule() {
-  const { t, displayFont } = useLanguage();
+  const { t, displayFont, isAr } = useLanguage();
 
   // Localized focus areas, derived from the dictionary by stable key.
   const expertise = [
@@ -68,7 +68,7 @@ export function AboutModule() {
           className="space-y-10 md:space-y-8"
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="readability-field space-y-4">
+          <motion.div variants={itemVariants} className="readability-field space-y-5">
             <div className="text-sm font-mono text-accent-cyan tracking-widest">
               {t.about.eyebrow}
             </div>
@@ -89,12 +89,13 @@ export function AboutModule() {
               <div className="relative flex flex-col items-center">
                 {/* Portrait stage with ambient halo */}
                 <div className="relative">
-                  {/* Soft holographic halo behind portrait */}
+                  {/* Soft holographic halo behind portrait — cyan-only, theme-safe
+                      (no purple tint; reads clean on both Navy and Warm). */}
                   <div
                     className="absolute -inset-6 pointer-events-none"
                     style={{
                       background:
-                        "radial-gradient(ellipse 55% 60% at 50% 38%, rgba(var(--rgb-cyan), 0.22) 0%, rgba(var(--rgb-purple), 0.1) 38%, transparent 68%)",
+                        "radial-gradient(ellipse 55% 60% at 50% 38%, rgba(var(--rgb-cyan), 0.2) 0%, rgba(var(--rgb-cyan), 0.05) 42%, transparent 70%)",
                     }}
                     aria-hidden="true"
                   />
@@ -188,37 +189,23 @@ export function AboutModule() {
                     style={{ boxShadow: "0 0 8px rgba(var(--rgb-cyan),0.8)" }}
                   />
 
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <div className="text-xs font-mono text-accent-cyan/80 tracking-widest ltr-isolate" dir="ltr">
+                  {/* Two balanced, centered identity lines — Latin wordmark over
+                      the Arabic/EN profile label (verification micro-status removed). */}
+                  <div className="text-center">
+                    {isAr ? (
+                      // Arabic name — Thmanyah display, bold and dominant (no LTR/mono/tracking).
+                      <div className={`text-lg font-bold leading-tight text-accent-cyan/90 ${displayFont}`}>
                         {t.about.identityName}
                       </div>
-                      <div className="text-[11px] text-foreground-secondary/70 mt-0.5 tracking-wide">
-                        {t.about.identityProfileLabel}
+                    ) : (
+                      // English wordmark — LTR mono, uppercase, lightly tracked.
+                      <div className="text-sm font-mono text-accent-cyan/90 tracking-[0.15em] ltr-isolate" dir="ltr">
+                        {t.about.identityName}
                       </div>
+                    )}
+                    <div className="mt-1 text-sm text-foreground-secondary/85">
+                      {t.about.identityProfileLabel}
                     </div>
-
-                    {/* compact verification status */}
-                    <span className="flex items-center gap-1.5 shrink-0">
-                      <svg
-                        width="11"
-                        height="11"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="var(--accent-green)"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d="M20 6 9 17l-5-5" />
-                      </svg>
-                      <span className="font-mono text-[8px] leading-[1.3] tracking-[0.16em] text-accent-green/80">
-                        {t.about.identityVerifiedLine1}
-                        <br />
-                        {t.about.identityVerifiedLine2}
-                      </span>
-                    </span>
                   </div>
 
                   {/* Identity retrieval route — emits toward the Profile Summary
@@ -320,11 +307,11 @@ export function AboutModule() {
 
                   {/* Focus Areas submodule */}
                   <div>
-                    <div className="flex items-center gap-2.5 mb-3.5">
+                    <div className="flex items-center gap-2.5 mb-4">
                       <span className="text-[10px] font-mono text-accent-green/55 tracking-[0.2em]">
                         {t.about.focusAreasIndex}
                       </span>
-                      <h3 className="text-[11px] font-mono text-accent-green/85 tracking-[0.22em]">
+                      <h3 className={`font-mono text-accent-green/85 ${isAr ? "text-xs tracking-normal" : "text-[11px] tracking-[0.22em]"}`}>
                         {t.about.focusAreasLabel}
                       </h3>
                       <div className="h-px flex-1 bg-gradient-to-r from-accent-green/20 to-transparent" />
@@ -345,11 +332,11 @@ export function AboutModule() {
 
                   {/* Technologies submodule */}
                   <div>
-                    <div className="flex items-center gap-2.5 mb-3.5">
+                    <div className="flex items-center gap-2.5 mb-4">
                       <span className="text-[10px] font-mono text-accent-purple/50 tracking-[0.2em]">
                         {t.about.technologiesIndex}
                       </span>
-                      <h3 className="text-[11px] font-mono text-accent-purple/80 tracking-[0.22em]">
+                      <h3 className={`font-mono text-accent-purple/80 ${isAr ? "text-xs tracking-normal" : "text-[11px] tracking-[0.22em]"}`}>
                         {t.about.technologiesLabel}
                       </h3>
                       <div className="h-px flex-1 bg-gradient-to-r from-accent-purple/15 to-transparent" />
@@ -370,7 +357,7 @@ export function AboutModule() {
                   </div>
 
                   {/* CTA action bar — both buttons visibly rendered */}
-                  <div className="pt-3 flex gap-3 flex-col sm:flex-row sm:items-center">
+                  <div className="pt-5 flex gap-3 flex-col sm:flex-row sm:items-center">
                     <Button
                       variant="primary"
                       size="md"

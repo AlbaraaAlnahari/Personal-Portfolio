@@ -258,11 +258,11 @@ function MissionRecord({
         </div>
 
         {/* Role + organization (primary hierarchy) */}
-        <div className="mt-3 space-y-1">
+        <div className="mt-4 space-y-2">
           <h3 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
             {role}
           </h3>
-          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
             <span
               dir="ltr"
               className="ltr-isolate text-sm md:text-base font-semibold"
@@ -277,7 +277,7 @@ function MissionRecord({
         </div>
 
         {/* Mission summary */}
-        <p className="mt-3 text-sm md:text-[15px] text-foreground-secondary/80 leading-relaxed">
+        <p className="mt-4 text-sm md:text-[15px] text-foreground-secondary/80 leading-relaxed">
           {summary}
         </p>
 
@@ -313,11 +313,11 @@ function MissionRecord({
           </div>
 
           {outcomeKind === "metric" ? (
-            <div className="grid grid-cols-3 gap-2 md:gap-2.5">
+            <div className="grid grid-cols-3 gap-3 md:gap-3.5">
               {outcomeValues.map((o) => (
                 <div
                   key={o.key}
-                  className="rounded-lg border bg-background-primary/40 px-2.5 py-2"
+                  className="rounded-lg border bg-background-primary/40 px-3 py-2.5"
                   style={{ borderColor: `rgba(${rgb},0.15)` }}
                 >
                   <div
@@ -326,18 +326,18 @@ function MissionRecord({
                   >
                     {o.value}
                   </div>
-                  <div className={`mt-1 font-mono text-[8.5px] md:text-[9px] text-foreground-secondary/60 leading-tight ${trk("tracking-[0.08em]")}`}>
+                  <div className={`mt-2 font-mono text-[8.5px] md:text-[9px] text-foreground-secondary/60 leading-tight ${trk("tracking-[0.08em]")}`}>
                     {M.outcomes[o.key as keyof typeof M.outcomes]}
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-3.5">
               {outcomeValues.map((o) => (
                 <div
                   key={o.key}
-                  className="flex items-center gap-2 rounded-lg border bg-background-primary/40 px-2.5 py-2"
+                  className="flex items-center gap-2.5 rounded-lg border bg-background-primary/40 px-3 py-2.5"
                   style={{ borderColor: `rgba(${rgb},0.15)` }}
                 >
                   <span
@@ -345,7 +345,7 @@ function MissionRecord({
                     style={{ background: `rgb(${rgb})` }}
                     aria-hidden="true"
                   />
-                  <span className="text-[11px] md:text-xs font-medium text-foreground-secondary/85 leading-tight">
+                  <span className="text-[11px] md:text-xs font-medium text-foreground-secondary/85 leading-relaxed">
                     {M.outcomes[o.key as keyof typeof M.outcomes]}
                   </span>
                 </div>

@@ -265,7 +265,7 @@ export function IntelligenceEngineHero() {
           )}
 
           {/* Heading — identity-first wordmark + role */}
-          <h1 style={{ ...reveal(80), margin: 0 }} className="mb-4">
+          <h1 style={{ ...reveal(80), margin: 0 }} className="mb-6">
             <span
               dir={isAr ? undefined : "ltr"}
               className={isAr ? displayFont : "ltr-isolate"}
@@ -273,7 +273,7 @@ export function IntelligenceEngineHero() {
                 display: "block",
                 fontSize: "clamp(2.1rem, 3vw, 2.95rem)",
                 fontWeight: 700,
-                lineHeight: 1.0,
+                lineHeight: 1.12,
                 letterSpacing: "-0.01em",
                 color: "var(--heading)",
                 textShadow: "0 0 26px rgba(var(--rgb-cyan),0.12)",
@@ -285,10 +285,10 @@ export function IntelligenceEngineHero() {
               className={displayFont}
               style={{
                 display: "block",
-                marginTop: "0.6rem",
+                marginTop: "0.85rem",
                 fontSize: "clamp(1.2rem, 1.75vw, 1.55rem)",
                 fontWeight: 600,
-                lineHeight: 1.22,
+                lineHeight: 1.34,
                 letterSpacing: "-0.01em",
                 color: "var(--accent)",
               }}
@@ -303,12 +303,12 @@ export function IntelligenceEngineHero() {
           <p
             style={{
               ...reveal(160),
-              fontSize: "0.84rem",
-              color: "var(--text-muted)",
-              lineHeight: 1.55,
-              maxWidth: "300px",
+              fontSize: "0.9rem",
+              color: "rgba(var(--rgb-body),0.74)",
+              lineHeight: 1.8,
+              maxWidth: "330px",
             }}
-            className="mb-7"
+            className="mb-8"
           >
             {t.hero.paragraph}
           </p>
@@ -339,14 +339,16 @@ export function IntelligenceEngineHero() {
               {t.hero.cta.explore}
             </button>
             <a
-              href="/resume/Albaraa-Alnahari-Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/resume#resume"
+              onClick={(e) => {
+                e.preventDefault();
+                goToRoute("/resume#resume");
+              }}
               className="inline-flex items-center px-6 py-3 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid var(--border-idle)",
-                color: "rgba(var(--rgb-body),0.78)",
+                color: "rgba(var(--rgb-body),0.82)",
                 cursor: "pointer",
                 transition: "all 250ms ease",
                 textDecoration: "none",
@@ -508,7 +510,7 @@ export function IntelligenceEngineHero() {
                 display: "block",
                 fontSize: "clamp(2.3rem, 12vw, 3rem)",
                 fontWeight: 700,
-                lineHeight: 1.0,
+                lineHeight: 1.1,
                 letterSpacing: "-0.01em",
                 color: "var(--heading)",
                 textShadow: "0 0 28px rgba(var(--rgb-cyan),0.16)",
@@ -520,10 +522,10 @@ export function IntelligenceEngineHero() {
               className={displayFont}
               style={{
                 display: "block",
-                marginTop: "0.55rem",
+                marginTop: "0.7rem",
                 fontSize: "clamp(1.05rem, 5.2vw, 1.35rem)",
                 fontWeight: 600,
-                lineHeight: 1.24,
+                lineHeight: 1.36,
                 letterSpacing: "-0.01em",
                 color: "var(--accent)",
               }}
@@ -536,13 +538,13 @@ export function IntelligenceEngineHero() {
 
           {/* Supporting paragraph */}
           <p
-            className="mt-3 mb-5 mx-auto"
+            className="mt-4 mb-6 mx-auto"
             style={{
               ...textReveal(120),
-              fontSize: "0.78rem",
-              color: "rgba(var(--rgb-muted),0.6)",
-              lineHeight: 1.5,
-              maxWidth: "19rem",
+              fontSize: "0.82rem",
+              color: "rgba(var(--rgb-body),0.74)",
+              lineHeight: 1.72,
+              maxWidth: "20rem",
             }}
           >
             {t.hero.paragraph}
@@ -567,14 +569,16 @@ export function IntelligenceEngineHero() {
               {t.hero.cta.explore}
             </button>
             <a
-              href="/resume/Albaraa-Alnahari-Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/resume#resume"
+              onClick={(e) => {
+                e.preventDefault();
+                goToRoute("/resume#resume");
+              }}
               className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-sm outline-none ie-focus"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid var(--border-idle)",
-                color: "rgba(var(--rgb-body),0.78)",
+                color: "rgba(var(--rgb-body),0.82)",
                 cursor: "pointer",
                 textDecoration: "none",
               }}
@@ -663,7 +667,7 @@ export function IntelligenceEngineHero() {
                 display: "block",
                 fontSize: "clamp(2.2rem, 11vw, 2.8rem)",
                 fontWeight: 700,
-                lineHeight: 1.0,
+                lineHeight: 1.1,
                 letterSpacing: "-0.01em",
                 color: "var(--heading)",
               }}
@@ -674,10 +678,10 @@ export function IntelligenceEngineHero() {
               className={displayFont}
               style={{
                 display: "block",
-                marginTop: "0.5rem",
+                marginTop: "0.62rem",
                 fontSize: "clamp(1.05rem, 5vw, 1.35rem)",
                 fontWeight: 600,
-                lineHeight: 1.24,
+                lineHeight: 1.34,
                 color: "var(--accent)",
               }}
             >

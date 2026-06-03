@@ -11,12 +11,12 @@ export const about = {
     about: {
       eyebrow: "عن البراء / وحدة الهوية",
       heading: {
-        lead: "نحوّل",
-        accent: "الذكاء",
-        trail: "إلى أنظمة في متناول الناس.",
+        lead: "أصنع من",
+        accent: "الأفكار",
+        trail: "منتجاتٍ في متناول الناس.",
       },
       portraitAlt: "صورة البراء النهاري",
-      identityName: "ALBARAA ALNAHARI",
+      identityName: "البراء النهاري",
       identityProfileLabel: "الملف التعريفي",
       identityVerifiedLine1: "الهوية",
       identityVerifiedLine2: "موثّقة",

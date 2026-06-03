@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import "@/styles/globals.css";
 import { Navigation } from "@/components/layout/Navigation";
 import { RouteAwareAISystemStatus } from "@/components/environment/RouteAwareAISystemStatus";
+import { RouteTransition } from "@/components/layout/RouteTransition";
 import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 import { LANG_STORAGE_KEY, dirFor, normalizeLang } from "@/lib/i18n/config";
 
@@ -133,8 +134,11 @@ export default async function RootLayout({
               <div className="absolute inset-0 backdrop-blur-[100px] opacity-50" />
             </div>
 
-            {/* Content */}
-            <div className="relative z-10">{children}</div>
+            {/* Content — wrapped in the route-transition layer (premium page
+                handoff: cyan scan veil + keyed opacity fade). */}
+            <div className="relative z-10">
+              <RouteTransition>{children}</RouteTransition>
+            </div>
           </div>
         </LanguageProvider>
       </body>

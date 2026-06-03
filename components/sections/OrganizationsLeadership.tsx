@@ -383,8 +383,8 @@ function FlagshipChamber() {
         </div>
 
         {/* organization + role (Project Management Lead is primary) */}
-        <div className="mt-4 space-y-2">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <div className="mt-5 space-y-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <h3
               dir="ltr"
               className="ltr-isolate text-2xl md:text-3xl font-bold text-foreground leading-[1.12]"
@@ -393,7 +393,7 @@ function FlagshipChamber() {
             </h3>
             <span
               dir="ltr"
-              className="ltr-isolate px-2 py-0.5 rounded-md border font-mono text-[10px] tracking-wide shrink-0"
+              className="ltr-isolate px-2.5 py-1 rounded-md border font-mono text-[10px] tracking-wide shrink-0"
               style={{
                 borderColor: `rgba(${rgb},0.35)`,
                 color: `rgba(${rgb},0.9)`,
@@ -413,7 +413,7 @@ function FlagshipChamber() {
 
         {/* initiative strip */}
         <div
-          className="mt-4 flex items-center gap-2.5 rounded-xl border px-3.5 py-2.5"
+          className="mt-5 flex items-center gap-2.5 rounded-xl border px-4 py-3"
           style={{
             borderColor: `rgba(${rgb},0.2)`,
             background: `rgba(${rgb},0.05)`,
@@ -560,14 +560,14 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
       </div>
 
       {/* organization + role + period */}
-      <div className="mt-3">
+      <div className="mt-4">
         <h3
           dir="ltr"
           className="ltr-isolate text-lg md:text-xl font-bold text-foreground leading-tight"
         >
           {org}
         </h3>
-        <div className="mt-1 flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+        <div className="mt-2 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
           <span className="text-sm font-semibold" style={{ color: `rgb(${rgb})` }}>
             {role}
           </span>
@@ -578,11 +578,11 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
       </div>
 
       {/* three separate signals — never aggregated into one total */}
-      <div className="mt-3.5 grid grid-cols-3 gap-2">
+      <div className="mt-4 grid grid-cols-3 gap-3">
         {metricValues.map((m) => (
           <div
             key={m.key}
-            className="rounded-lg border bg-background-primary/40 px-2.5 py-2"
+            className="rounded-lg border bg-background-primary/40 px-3 py-2.5"
             style={{ borderColor: `rgba(${rgb},0.15)` }}
           >
             <div
@@ -591,7 +591,7 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
             >
               {m.value}
             </div>
-            <div className="mt-1.5 text-[10px] leading-tight text-foreground-secondary/60">
+            <div className="mt-2 text-[10px] leading-relaxed text-foreground-secondary/60">
               {O.metrics[m.key as keyof typeof O.metrics]}
             </div>
           </div>

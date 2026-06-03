@@ -79,7 +79,7 @@ export function ResumeInterface() {
           className="space-y-9 md:space-y-11"
         >
           {/* ── Section header / system declaration ───────────────── */}
-          <motion.header variants={rise} className="readability-field space-y-4 max-w-3xl">
+          <motion.header variants={rise} className="readability-field space-y-5 max-w-3xl">
             <div className="flex items-center gap-2.5">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
@@ -91,7 +91,7 @@ export function ResumeInterface() {
             </div>
             <h2
               id="resume-heading"
-              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] ${displayFont}`}
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] ${displayFont}`}
             >
               {r.heading.lead} <span className="text-accent-cyan">{r.heading.accent}</span> {r.heading.trail}
             </h2>
@@ -114,7 +114,9 @@ export function ResumeInterface() {
           </div>
 
           {/* ── Theme-aware CV preview viewer ─────────────────────── */}
-          <motion.div variants={rise} className="space-y-5">
+          {/* Extra bottom spacing so the tall viewer reads as its own block
+              and does not crowd the credential ledger that follows. */}
+          <motion.div variants={rise} className="space-y-5 pb-4 md:pb-8">
             <SubHeader label={r.previewLabel} count={r.previewCount} />
             <ResumePreviewViewer />
           </motion.div>
@@ -176,7 +178,7 @@ export function ResumeInterface() {
                   <span className="font-mono text-[10px] text-accent-green/70 tracking-wider shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[13px] md:text-sm text-foreground-secondary/90 group-hover:text-foreground-primary transition-colors duration-300 leading-snug">
+                  <span className="text-[13px] md:text-sm text-foreground-secondary/90 group-hover:text-foreground-primary transition-colors duration-300 leading-[1.5]">
                     {r.competencies[comp]}
                   </span>
                 </div>
@@ -255,7 +257,7 @@ function IdentityDossier() {
               <path d="M9 12l2 2 4-4" fill="none" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
-          <div className="min-w-0 space-y-1.5">
+          <div className="min-w-0 space-y-2.5">
             <h3 className="text-2xl md:text-[1.7rem] font-bold text-foreground-primary leading-tight">
               {id.name}
             </h3>
@@ -458,7 +460,7 @@ function CredentialModule({
         />
       </div>
 
-      <div className="relative space-y-3">
+      <div className="relative space-y-3.5">
         <div className="flex items-center justify-between gap-2">
           <span dir="ltr" className="ltr-isolate text-[9px] font-mono tracking-[0.22em] text-foreground-secondary/45">
             {t.resume.credPrefix} / {credential.index}
@@ -482,7 +484,7 @@ function CredentialModule({
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 text-[10px] font-mono tracking-[0.22em] text-accent-cyan/55">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono tracking-[0.22em] text-accent-cyan/65">
           {featured && (
             <svg
               width="10"

@@ -81,51 +81,15 @@ export const resume = {
         downloadAria: "تنزيل السيرة الذاتية الرسمية بصيغة PDF",
       },
 
+      // Viewer chrome only — the CV document body lives in (and exactly
+      // mirrors the official PDF inside) ResumePreviewViewer.tsx. The PDF is an
+      // English document, so the rendered sheet is English in both languages;
+      // only these action/labels stay localized so the page reads coherently.
       preview: {
         window: "Albaraa-Alnahari-Resume.pdf",
-        documentTag: "السيرة الذاتية · PDF",
-        open: "فتح",
+        documentTag: "السيرة · PDF",
+        open: "فتح السيرة",
         download: "تنزيل السيرة",
-        roleLine:
-          "طالب هندسة برمجيات · مهتم بمنتجات الذكاء الاصطناعي · أجمع بين البرمجة وإدارة المنتجات",
-        contact: { email: "البريد", github: "GitHub", linkedin: "LinkedIn" },
-        summaryTitle: "الملخص المهني",
-        summaryBody:
-          "طالب هندسة برمجيات يجمع بين بناء المنتجات، البرمجة، وإدارة التجارب المدعومة بالذكاء الاصطناعي، مع اهتمام بتحويل الأفكار إلى حلول عملية قابلة للاستخدام.",
-        skillsTitle: "المهارات",
-        skills: [
-          "TypeScript", "React", "Next.js", "Tailwind CSS", "Python",
-          "Java", "SQL", "Supabase", "AI APIs", "Product Research",
-        ],
-        projectsTitle: "مشاريع مختارة",
-        projects: [
-          { name: "DocuPilot", desc: "منصة عمليات أعمال بالذكاء الاصطناعي" },
-          { name: "TechPath", desc: "مولّد خرائط طريق تعليمية بالذكاء الاصطناعي" },
-          { name: "Sanadk", desc: "مساعد ذكي للتسوّق والتنقّل" },
-          { name: "Slide-Mind", desc: "تحويل المحتوى التعليمي إلى بطاقات واختبارات قصيرة" },
-        ],
-        experienceTitle: "الخبرات",
-        experience: [
-          {
-            role: "متدرّب في إدارة المنتجات — Soum",
-            detail: "بحث المستخدم مع أكثر من 100 مستخدم، وحالات استخدام، ومقارنات سوقية لدعم قرارات المنتج.",
-          },
-          {
-            role: "متدرّب في هندسة الروبوتات — Smart Method",
-            detail: "بناء ذراع روبوتية مدعومة بالذكاء الاصطناعي ونموذج أولي لروبوت محادثة.",
-          },
-          {
-            role: "قائد إدارة المشاريع — GDGoC UJ",
-            detail: "تنظيم معسكر علم البيانات Google × GDSC ومبادرات تقنية واسعة النطاق.",
-          },
-        ],
-        educationTitle: "التعليم والاعتمادات",
-        education: [
-          "بكالوريوس هندسة البرمجيات — University of Jeddah — متوقّع 2027",
-          "شهادة مهندس روبوتات — Smart Method — 2025",
-          "المركز الأول — معسكر ابتكار الذكاء الاصطناعي — DocuPilot — 2026",
-        ],
-        updated: "آخر تحديث · 2026",
       },
     },
   },
@@ -201,51 +165,13 @@ export const resume = {
         downloadAria: "Download the official résumé PDF",
       },
 
+      // Viewer chrome only — the CV document body lives in (and exactly
+      // mirrors the official PDF inside) ResumePreviewViewer.tsx.
       preview: {
         window: "Albaraa-Alnahari-Resume.pdf",
         documentTag: "RÉSUMÉ · PDF",
-        open: "Open",
+        open: "Open CV",
         download: "Download CV",
-        roleLine:
-          "Software Engineering Student · AI Product Builder · Product-minded Developer",
-        contact: { email: "Email", github: "GitHub", linkedin: "LinkedIn" },
-        summaryTitle: "Professional Summary",
-        summaryBody:
-          "Software engineering student blending product building, programming, and AI-powered experiences — focused on turning ideas into practical, usable solutions.",
-        skillsTitle: "Skills",
-        skills: [
-          "TypeScript", "React", "Next.js", "Tailwind CSS", "Python",
-          "Java", "SQL", "Supabase", "AI APIs", "Product Research",
-        ],
-        projectsTitle: "Selected Projects",
-        projects: [
-          { name: "DocuPilot", desc: "AI business operations platform" },
-          { name: "TechPath", desc: "AI learning roadmap generator" },
-          { name: "Sanadk", desc: "Smart shopping & mobility assistant" },
-          { name: "Slide-Mind", desc: "Turns study content into flashcards & quizzes" },
-        ],
-        experienceTitle: "Experience",
-        experience: [
-          {
-            role: "Product Management Intern — Soum",
-            detail: "User research with 100+ users, use cases, and market benchmarks to support product decisions.",
-          },
-          {
-            role: "Robotics Engineering Intern — Smart Method",
-            detail: "Built an AI-powered robotic arm and an AI chatbot prototype.",
-          },
-          {
-            role: "Project Management Lead — GDGoC UJ",
-            detail: "Organized the Google × GDSC Data Science Bootcamp and large-scale technical initiatives.",
-          },
-        ],
-        educationTitle: "Education & Credentials",
-        education: [
-          "Bachelor of Software Engineering — University of Jeddah — Expected 2027",
-          "Robotics Engineer Certification — Smart Method — 2025",
-          "1st Place — AI Innovation Bootcamp — DocuPilot — 2026",
-        ],
-        updated: "Last updated · 2026",
       },
     },
   },

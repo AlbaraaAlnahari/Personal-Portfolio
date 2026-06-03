@@ -45,7 +45,7 @@ export const core = {
       },
     },
     footer: {
-      brandSentence: "باني منتجات ذكاء اصطناعي، ومهندس برمجيات، وصانع بعقلية المنتج.",
+      brandSentence: "أبني منتجات ذكاء اصطناعي وتجارب برمجية بعقلية المنتج.",
       navigateLabel: "تنقّل",
       directLineLabel: "خط مباشر",
       availabilityCopy: "متاح للفرص، والتعاون، والأحاديث الجادّة حول بناء المنتجات.",

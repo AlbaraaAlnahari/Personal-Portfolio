@@ -285,7 +285,7 @@ export function AskAlbaraaClient() {
                 m.role === "user" ? (
                   <motion.div key={m.id} {...msgAnim} className="flex justify-end">
                     <div
-                      className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-sm px-4 py-2.5 text-sm leading-relaxed"
+                      className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-sm px-4 py-3.5 text-sm leading-relaxed"
                       style={{ backgroundColor: "rgba(var(--rgb-cyan),0.08)", border: "1px solid rgba(var(--rgb-cyan),0.22)", color: "var(--text-strong)" }}
                     >
                       {m.text}
@@ -305,13 +305,13 @@ export function AskAlbaraaClient() {
                         <span dir="ltr" className="ltr-isolate font-mono text-[9px] tracking-[0.16em]" style={{ color: MUTED }}>{t.ask.console.assistantBrand}</span>
                       </div>
                       <div
-                        className="mt-1.5 rounded-2xl rounded-tl-sm px-4 py-3"
+                        className="mt-1.5 rounded-2xl rounded-tl-sm px-4 py-4"
                         style={{ backgroundColor: SURFACE_DEEP, border: `1px solid ${BORDER_IDLE}` }}
                       >
                         <p className="text-[13px] font-semibold" style={{ color: IVORY }}>{m.answer.title}</p>
-                        <p className="mt-1.5 text-sm leading-relaxed" style={{ color: BODY }}>{m.answer.lead}</p>
+                        <p className="mt-2.5 text-sm leading-relaxed" style={{ color: BODY }}>{m.answer.lead}</p>
                         {m.answer.bullets?.length ? (
-                          <ul className="mt-2.5 space-y-1.5">
+                          <ul className="mt-3 space-y-1.5">
                             {m.answer.bullets.map((b, i) => (
                               <li key={i} className="flex gap-2 text-sm leading-relaxed" style={{ color: BODY }}>
                                 <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full" style={{ backgroundColor: "rgba(var(--rgb-cyan),0.6)" }} />
@@ -371,9 +371,9 @@ export function AskAlbaraaClient() {
             </div>
 
             {/* Input row */}
-            <div className="border-t px-3 py-3 md:px-4" style={{ borderColor: BORDER_IDLE }}>
+            <div className="border-t px-3 py-4 md:px-4 md:py-5" style={{ borderColor: BORDER_IDLE }}>
               <div
-                className="flex items-end gap-2 rounded-xl border px-3 py-2"
+                className="flex items-end gap-2 rounded-xl border px-3 py-3"
                 style={{ backgroundColor: "var(--surface-inset)", borderColor: BORDER_IDLE }}
               >
                 <label htmlFor="ask-input" className="sr-only">{t.ask.input.srLabel}</label>
@@ -434,13 +434,13 @@ function SuggestedPanel({ onPick, disabled }: { onPick: (q: string) => void; dis
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="rounded-2xl border p-4 md:p-5"
+      className="rounded-2xl border p-5 md:p-6"
       style={{ backgroundColor: SURFACE, borderColor: BORDER_IDLE, backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}
     >
       <motion.div variants={itemVariants}>
         <MonoLabel>{t.ask.suggested.label}</MonoLabel>
       </motion.div>
-      <div className="mt-3 flex flex-col gap-2">
+      <div className="mt-4 flex flex-col gap-3">
         {PRESET_QUESTIONS.map((q, i) => {
           const key = PRESET_KEYS[i];
           return (
@@ -452,7 +452,7 @@ function SuggestedPanel({ onPick, disabled }: { onPick: (q: string) => void; dis
               // only the visible label is localized.
               onClick={() => onPick(q)}
               disabled={disabled}
-              className="ie-focus group flex items-center justify-between gap-2 rounded-xl border px-3.5 py-2.5 text-left text-sm outline-none transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50"
+              className="ie-focus group flex items-center justify-between gap-2 rounded-xl border px-3.5 py-3 text-left text-sm leading-snug outline-none transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50"
               style={{ borderColor: BORDER_IDLE, backgroundColor: "var(--surface-inset)", color: BODY }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(var(--rgb-cyan),0.4)"; e.currentTarget.style.color = IVORY; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = BORDER_IDLE; e.currentTarget.style.color = BODY; }}
@@ -478,19 +478,19 @@ function ProfileSnapshot() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="rounded-2xl border p-4 md:p-5"
+      className="rounded-2xl border p-5 md:p-6"
       style={{ backgroundColor: SURFACE, borderColor: BORDER_IDLE, backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}
     >
       <motion.div variants={itemVariants}>
         <MonoLabel>{t.ask.profile.label}</MonoLabel>
       </motion.div>
-      <motion.div variants={itemVariants} className="mt-3 flex flex-wrap gap-1.5">
+      <motion.div variants={itemVariants} className="mt-4 flex flex-wrap gap-2">
         {PROFILE_ROLES.map((_r, i) => {
           const key = ROLE_KEYS[i];
           return (
             <span
               key={key}
-              className="rounded-full border px-2.5 py-1 text-[11px]"
+              className="rounded-full border px-3 py-1.5 text-[11px]"
               style={{ borderColor: BORDER_IDLE, color: BODY, backgroundColor: "var(--surface-inset)" }}
             >
               {t.ask.profile.roles[key]}
@@ -527,7 +527,7 @@ function SourceStatusPanel() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="rounded-2xl border p-4 md:p-5"
+      className="rounded-2xl border p-5 md:p-6"
       style={{ backgroundColor: SURFACE, borderColor: BORDER_IDLE, backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}
     >
       <motion.div variants={itemVariants} className="flex items-center gap-2">

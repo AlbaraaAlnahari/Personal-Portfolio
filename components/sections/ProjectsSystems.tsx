@@ -63,7 +63,7 @@ export function ProjectsSystems() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={rise}
-            className="readability-field space-y-5"
+            className="readability-field space-y-6"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <div className="text-sm font-mono text-accent-green tracking-[0.22em]">
@@ -82,7 +82,7 @@ export function ProjectsSystems() {
               <span className="text-accent-cyan">{t.work.header.titleAccent}</span>{" "}
               {t.work.header.titleTrail}
             </h2>
-            <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-relaxed">
+            <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-[1.7]">
               {t.work.header.intro}
             </p>
           </motion.div>
@@ -274,7 +274,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent-cyan">
                 {DOCUPILOT.name}
               </h3>
-              <p className="text-lg md:text-xl text-foreground-secondary/85">
+              <p className="text-lg md:text-xl text-foreground-secondary/85 leading-[1.35]">
                 {t.work.docupilot.tagline}
               </p>
             </div>
@@ -296,7 +296,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               </span>
             </div>
 
-            <p className="text-foreground-secondary/90 leading-relaxed">
+            <p className="text-foreground-secondary/90 leading-[1.8]">
               {t.work.docupilot.description}
             </p>
 
@@ -609,11 +609,11 @@ function TechPathFeature() {
               <h3 className="text-2xl md:text-3xl font-bold" style={{ color: `rgb(${a.rgb})` }}>
                 TechPath
               </h3>
-              <p className="text-base md:text-lg text-foreground-secondary/85">
+              <p className="text-base md:text-lg text-foreground-secondary/85 leading-[1.38]">
                 {t.work.techpath.tagline}
               </p>
             </div>
-            <p className="text-sm md:text-base text-foreground-secondary/85 leading-relaxed">
+            <p className="text-sm md:text-base text-foreground-secondary/85 leading-[1.75]">
               {t.work.techpath.description}
             </p>
             <div>
@@ -725,11 +725,11 @@ function ConceptModule({
           {category}
         </div>
 
-        <div className="space-y-1.5">
+        <div className="space-y-2.5">
           <h3 className="text-xl md:text-2xl font-bold" style={{ color: `rgb(${a.rgb})` }}>
             {name}
           </h3>
-          <p className="text-sm text-foreground-secondary/80">{tagline}</p>
+          <p className="text-sm text-foreground-secondary/80 leading-[1.4]">{tagline}</p>
         </div>
 
         {/* Concept visualization — labeled interface abstraction */}
@@ -743,7 +743,7 @@ function ConceptModule({
           {visual}
         </div>
 
-        <p className="text-sm text-foreground-secondary/75 leading-relaxed flex-grow">
+        <p className="text-sm text-foreground-secondary/75 leading-[1.75] grow">
           {description}
         </p>
 
