@@ -131,7 +131,7 @@ function ProfileCard({ reduce }: { reduce: boolean | null }) {
   const g = t.gallery;
   return (
     <Link href="/about" aria-label={g.profile.cardAria} {...bind} className={CARD} style={surfaceStyle(lit, reduce, true)}>
-      <div className="relative min-h-[240px] flex-1 overflow-hidden">
+      <div className="relative min-h-[180px] md:min-h-[240px] flex-1 overflow-hidden">
         <div className="absolute inset-0 transition-transform duration-500" style={{ transform: lit && !reduce ? "scale(1.03)" : "none" }}>
           {/* Real editorial photo (NOT a cutout) — object-cover fills the card,
               object-position keeps the face/headwear safe; a non-destructive
@@ -260,7 +260,7 @@ function ImpactCard({ reduce }: { reduce: boolean | null }) {
   const im = t.gallery.impact;
   return (
     <Link href="/impact" aria-label={im.cardAria} {...bind} className={CARD} style={surfaceStyle(lit, reduce, true)}>
-      <div className="relative min-h-[300px] flex-1 overflow-hidden">
+      <div className="relative min-h-[180px] md:min-h-[300px] flex-1 overflow-hidden">
         <div className="absolute inset-0 transition-transform duration-500" style={{ transform: lit && !reduce ? "scale(1.03)" : "none" }}>
           <Image
             src="/images/home/archive/impact-first-place-2026.jpg"
@@ -320,8 +320,8 @@ function ResumeCard({ reduce }: { reduce: boolean | null }) {
       {/* Approved CV / dossier illustration (/images/resume.svg) — transparent
           line-art, so it sits directly on the card surface, contained and
           centred. No plate background needed. */}
-      <div className="my-4 flex flex-1 items-center justify-center" aria-hidden="true">
-        <div className="relative w-full" style={{ aspectRatio: "1376 / 768" }}>
+      <div className="my-3 md:my-4 flex flex-1 items-center justify-center" aria-hidden="true">
+        <div className="relative w-full mx-auto max-w-[250px] md:max-w-none" style={{ aspectRatio: "1376 / 768" }}>
           <Image
             src={theme === "warm" ? "/images/3r3.svg" : "/images/resume.svg"}
             alt=""
@@ -369,8 +369,8 @@ function ContactCard({ reduce }: { reduce: boolean | null }) {
       {/* Approved desk / phone communication illustration (/images/contact.svg)
           — transparent line-art, contained and centred directly on the navy
           card. No plate background or filter applied. */}
-      <div className="my-4 flex flex-1 items-center justify-center" aria-hidden="true">
-        <div className="relative w-full" style={{ aspectRatio: "1376 / 768" }}>
+      <div className="my-3 md:my-4 flex flex-1 items-center justify-center" aria-hidden="true">
+        <div className="relative w-full mx-auto max-w-[250px] md:max-w-none" style={{ aspectRatio: "1376 / 768" }}>
           <Image
             src={theme === "warm" ? "/images/Untitled%20design.svg" : "/images/contact.svg"}
             alt=""
@@ -402,7 +402,7 @@ export function DestinationGallery() {
   };
 
   return (
-    <section className="relative overflow-hidden pb-12 pt-24 md:pb-14 md:pt-28">
+    <section className="relative overflow-hidden pb-10 pt-16 md:pb-14 md:pt-28">
       {/* Background signature characters — soft ALBARAA "signatures" anchoring
           the archive: kevcek (the Voice / leadership) softened into the far
           left gutter near the Impact region, 232 (the Professional) on the
@@ -459,7 +459,7 @@ export function DestinationGallery() {
 
         {/* One curated archive board — a coordinate rail + open registration
             brackets tie the five destinations together over the fixed grid. */}
-        <div className="relative mt-7 md:mt-8">
+        <div className="relative mt-5 md:mt-8">
           <GalleryFrameBrackets />
 
           {/* coordinate rail — the top edge of the board */}
@@ -478,7 +478,7 @@ export function DestinationGallery() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={container}
-            className="grid gap-4 lg:grid-cols-[0.86fr_1.55fr] lg:gap-5"
+            className="grid gap-3 md:gap-4 lg:grid-cols-[0.86fr_1.55fr] lg:gap-5"
           >
             <motion.div variants={item} className="h-full">
               <ProfileCard reduce={reduce} />
@@ -494,12 +494,12 @@ export function DestinationGallery() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={container}
-            className="mt-4 grid items-stretch gap-4 lg:mt-5 lg:grid-cols-[1.25fr_0.95fr] lg:gap-5"
+            className="mt-3 md:mt-4 grid items-stretch gap-3 md:gap-4 lg:mt-5 lg:grid-cols-[1.25fr_0.95fr] lg:gap-5"
           >
             <motion.div variants={item} className="h-full">
               <ImpactCard reduce={reduce} />
             </motion.div>
-            <motion.div variants={item} className="grid gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-1 lg:grid-rows-2 lg:gap-5">
+            <motion.div variants={item} className="grid gap-3 md:gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-1 lg:grid-rows-2 lg:gap-5">
               <ResumeCard reduce={reduce} />
               <ContactCard reduce={reduce} />
             </motion.div>

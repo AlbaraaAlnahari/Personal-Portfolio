@@ -437,6 +437,137 @@ html[lang="ar"] [class*="tracking-"] {
   background-color: rgba(var(--rgb-body), 0.05) !important;
 }
 
+/* ── Contact section — viewport-aware responsive tokens (scoped to #contact) ──
+   The contact composition responds to BOTH width and height so tuning one
+   display never breaks another: a true tall 32" stays premium-spacious, a
+   wide-but-short 27" / laptop gets a compact fit (no cards clipped under the
+   fixed navbar), and mobile stays calm and low-scroll. Every token is scoped to
+   #contact and consumed via the .contact-* hooks below — no global tokens, no
+   whole-section transform:scale. Defaults target normal desktop (~1024–1799px
+   wide, comfortable height). */
+#contact {
+  --contact-shell-max: 72rem;
+  --contact-section-pt: 104px;
+  --contact-section-pb: 92px;
+  --contact-intro-gap: 2.5rem;
+  --contact-grid-gap: 1.5rem;
+  --contact-card-gap: 1.5rem;
+  --contact-card-pad: 1.75rem;
+  --contact-field-h: 2.875rem;
+  --contact-textarea-h: 138px;
+  --contact-title-size: clamp(2.25rem, 3vw, 3.5rem);
+  --contact-body-size: 1.0625rem;
+  --contact-radius: 1rem;
+  --contact-art-h: 460px;
+  --contact-art-opacity: 0.08; /* navy default */
+  --contact-fallback-mt: 2rem;
+}
+[data-theme="warm"] #contact {
+  --contact-art-opacity: 0.12;
+}
+
+/* token consumption */
+#contact.contact-section {
+  padding-top: var(--contact-section-pt);
+  padding-bottom: var(--contact-section-pb);
+}
+#contact .contact-gridwrap { margin-top: var(--contact-intro-gap); }
+#contact .contact-grid { gap: var(--contact-grid-gap); }
+#contact .contact-rightcol { gap: var(--contact-card-gap); }
+#contact .contact-card {
+  padding: var(--contact-card-pad);
+  border-radius: var(--contact-radius);
+}
+#contact .contact-field { min-height: var(--contact-field-h); }
+#contact .contact-textarea { height: var(--contact-textarea-h); }
+#contact .contact-title {
+  font-size: var(--contact-title-size);
+  line-height: 1.15;
+}
+#contact .contact-body { font-size: var(--contact-body-size); }
+#contact .contact-art {
+  height: var(--contact-art-h);
+  opacity: var(--contact-art-opacity);
+}
+#contact .contact-fallback { margin-top: var(--contact-fallback-mt); }
+
+/* A — mobile / tablet (single column): calm, compact, low-scroll */
+@media (max-width: 1023.98px) {
+  #contact {
+    --contact-section-pt: 88px;
+    --contact-section-pb: 56px;
+    --contact-intro-gap: 1.75rem;
+    --contact-grid-gap: 1rem;
+    --contact-card-gap: 1rem;
+    --contact-card-pad: 1.25rem;
+    --contact-field-h: 2.875rem;
+    --contact-textarea-h: 124px;
+    --contact-title-size: clamp(1.9rem, 7.5vw, 2.4rem);
+    --contact-body-size: 1rem;
+    --contact-radius: 0.9rem;
+    --contact-fallback-mt: 1.5rem;
+  }
+}
+
+/* B — short desktop / laptop / scaled-27" (≥2 cols but limited height):
+   compact vertically so the whole grid fits without clipping under the navbar.
+   Catches 1280x800, 1440x900, 1536x864, 1728x1117, 1920x1080. */
+@media (min-width: 1024px) and (max-height: 1130px) {
+  #contact {
+    --contact-shell-max: 68rem;
+    --contact-section-pt: 84px;
+    --contact-section-pb: 60px;
+    --contact-intro-gap: 1.5rem;
+    --contact-grid-gap: 1.25rem;
+    --contact-card-gap: 1.25rem;
+    --contact-card-pad: 1.5rem;
+    --contact-field-h: 2.75rem;
+    --contact-textarea-h: 112px;
+    --contact-title-size: clamp(2rem, 2.6vw, 2.6rem);
+    --contact-art-h: 360px;
+    --contact-art-opacity: 0.05;
+    --contact-fallback-mt: 1.5rem;
+  }
+  [data-theme="warm"] #contact { --contact-art-opacity: 0.08; }
+}
+
+/* C — 27" wide-but-not-tall (≥1800w, 1131–1500h): moderate compaction, wider
+   shell to carry presence on the wide canvas. Catches 1920x1200, 2560x1440. */
+@media (min-width: 1800px) and (min-height: 1131px) and (max-height: 1500px) {
+  #contact {
+    --contact-shell-max: 78rem;
+    --contact-section-pt: 96px;
+    --contact-section-pb: 76px;
+    --contact-intro-gap: 2rem;
+    --contact-card-pad: 1.75rem;
+    --contact-textarea-h: 130px;
+    --contact-title-size: clamp(2.5rem, 2.6vw, 3.25rem);
+    --contact-art-h: 420px;
+    --contact-art-opacity: 0.07;
+    --contact-fallback-mt: 1.75rem;
+  }
+  [data-theme="warm"] #contact { --contact-art-opacity: 0.1; }
+}
+
+/* D — true 32" large + tall (≥2200w, ≥1501h): premium spacious */
+@media (min-width: 2200px) and (min-height: 1501px) {
+  #contact {
+    --contact-shell-max: 86rem;
+    --contact-section-pt: 120px;
+    --contact-section-pb: 112px;
+    --contact-intro-gap: 3rem;
+    --contact-grid-gap: 2rem;
+    --contact-card-gap: 1.75rem;
+    --contact-card-pad: 2rem;
+    --contact-textarea-h: 150px;
+    --contact-title-size: clamp(3rem, 2.4vw, 4rem);
+    --contact-art-h: 520px;
+    --contact-art-opacity: 0.09;
+    --contact-fallback-mt: 2.25rem;
+  }
+  [data-theme="warm"] #contact { --contact-art-opacity: 0.13; }
+}
+
 /* ============================================
    RESET & BASE STYLES
    ============================================ */
@@ -447,6 +578,9 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  /* Anchor navigation lands below the fixed header (the page scroller is
+     <body>, so both carry the offset). +10px breathing room. */
+  scroll-padding-top: calc(var(--nav-height) + 10px);
   overflow-x: hidden;
 }
 

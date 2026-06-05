@@ -41,7 +41,7 @@ export default function MobileModuleGrid({
       </div>
 
       {/* 2 × 3 grid — reading order matches command priority */}
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-2 gap-2">
         {COMMAND_MODULES.map((mod) => {
           const isActive = activeModule === mod.id;
           const isSoon = !!mod.comingSoon;
@@ -60,9 +60,9 @@ export default function MobileModuleGrid({
               }
               aria-disabled={isSoon || undefined}
               whileTap={reducedMotion ? undefined : { scale: 0.97 }}
-              className="group relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-left outline-none ie-focus"
+              className="group relative flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left outline-none ie-focus"
               style={{
-                minHeight: "62px",
+                minHeight: "50px",
                 background: isActive
                   ? `linear-gradient(135deg, rgba(${rgb},0.16) 0%, rgba(16,18,38,0.92) 100%)`
                   : "rgba(18,20,40,0.82)",
@@ -75,7 +75,7 @@ export default function MobileModuleGrid({
                 }`,
                 boxShadow: isActive
                   ? `0 0 22px ${mod.accentGlow}, inset 0 1px 0 rgba(255,255,255,0.07)`
-                  : "inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 10px rgba(0,0,0,0.35)",
+                  : "inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 6px rgba(0,0,0,0.26)",
                 backdropFilter: "blur(10px)",
                 WebkitBackdropFilter: "blur(10px)",
                 opacity: isSoon && !isActive ? 0.88 : 1,
@@ -98,7 +98,7 @@ export default function MobileModuleGrid({
 
               {/* Icon chip */}
               <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{
                   background: isActive
                     ? `rgba(${rgb},0.16)`

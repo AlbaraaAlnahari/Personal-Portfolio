@@ -90,7 +90,7 @@ function LanguageToggle() {
       onMouseLeave={() => setHover(false)}
       onFocus={() => setHover(true)}
       onBlur={() => setHover(false)}
-      className="ie-focus inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-[13px] px-2.5 outline-none transition-colors duration-200"
+      className="ie-focus inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-[13px] px-2 sm:px-2.5 outline-none transition-colors duration-200"
       style={{
         border: `1px solid ${hover ? "rgba(var(--nav-chrome),0.82)" : "rgba(var(--nav-chrome),0.62)"}`,
         backgroundColor: hover ? "rgba(var(--nav-chrome),0.06)" : "transparent",
@@ -219,7 +219,7 @@ function ContactPill({ active }: { active: boolean }) {
       onMouseLeave={() => setHover(false)}
       onFocus={() => setHover(true)}
       onBlur={() => setHover(false)}
-      className="ie-focus inline-flex h-10 items-center rounded-full px-6 text-[13px] font-semibold outline-none transition-colors duration-200"
+      className="ie-focus inline-flex h-10 items-center rounded-full px-4 sm:px-6 text-[13px] font-semibold outline-none transition-colors duration-200"
       style={{
         backgroundColor: hover ? "var(--contact-pill-bg-hover)" : "var(--contact-pill-bg)",
         color: "var(--contact-pill-text)",
@@ -338,7 +338,7 @@ export function Navigation() {
           "background-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
       }}
     >
-      <div className="relative w-full max-w-[68rem] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-3">
+      <div className="relative w-full max-w-[68rem] mx-auto px-3 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-2 sm:gap-3">
         {/* Left: brand / home link — approved البراء / ALBARAA lockup (dark-navy
             artwork). Decorative image (alt=""); the link carries the accessible
             name. Cyan focus ring on :focus-visible only; subtle hover opacity,
@@ -379,7 +379,7 @@ export function Navigation() {
             human/AI action pills (Ask Albaraa AI / Contact) · portfolio
             utilities (INDEX / View PDF). One clean branded system, vertically
             centred, with intentional rhythm between each group. */}
-        <motion.div variants={itemVariants} className="flex flex-shrink-0 items-center gap-4 lg:gap-8">
+        <motion.div variants={itemVariants} className="flex flex-shrink-0 items-center gap-2.5 sm:gap-4 lg:gap-8">
           {/* Editorial route rail — Home / About (lg+); tablet/mobile use INDEX */}
           <div className="hidden items-center gap-7 lg:flex">
             {NAV_HREFS.map((link) => (
@@ -397,7 +397,7 @@ export function Navigation() {
           {/* Human / AI action pills — Ask Albaraa AI (xl/1280+ only, so the
               1024 band stays uncrowded) · Contact (the primary CTA, kept from
               the smallest header up). */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <AskAlbaraa active={isActive("/ask")} />
             <ContactPill active={isActive("/contact")} />
           </div>
@@ -405,12 +405,17 @@ export function Navigation() {
           {/* Portfolio utilities — INDEX route deck · View PDF, after a quiet rule.
               View PDF is hidden on the narrowest mobile so the chosen mobile
               priority reads logo · Contact · INDEX; it returns from sm+. */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span aria-hidden="true" className="hidden h-5 w-px sm:block" style={{ backgroundColor: "rgba(var(--nav-chrome),0.14)" }} />
             {/* Below lg the preferences group is hidden, so surface the language
-                switch here too — language is switchable at every breakpoint. */}
+                switch AND the theme switch here too — both are switchable at every
+                breakpoint. The theme toggle reuses the same theme state / handler
+                as the desktop control (no duplicate theme logic). */}
             <span className="inline-flex lg:hidden">
               <LanguageToggle />
+            </span>
+            <span className="inline-flex lg:hidden">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
             </span>
             <RouteCommandDeck onOpenChange={setDeckOpen} />
             {/* Official résumé PDF — subtle cyan-accented secondary utility, kept

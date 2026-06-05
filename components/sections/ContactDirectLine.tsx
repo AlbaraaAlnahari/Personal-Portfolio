@@ -59,7 +59,7 @@ const CHANNELS = [
 const TOPIC_KEYS = ["opportunity", "collaboration", "aiProduct", "speaking", "general"] as const;
 type Topic = (typeof TOPIC_KEYS)[number];
 
-const AVAILABILITY_KEYS = ["aiProducts", "softwareEngineering", "collaborations", "speaking"] as const;
+const AVAILABILITY_KEYS = ["aiProducts", "softwareEngineering", "collaborations", "speaking", "initiatives", "photography"] as const;
 
 /* ── decorative open registration brackets (neutral silver, never cyan) ── */
 function FrameBrackets() {
@@ -109,7 +109,7 @@ function Field({
     "aria-invalid": error ? true : undefined,
     "aria-describedby": error ? `${id}-error` : undefined,
     className:
-      "ie-focus w-full rounded-xl px-4 py-3 text-[15px] leading-relaxed outline-none transition-colors duration-200 placeholder:text-[var(--placeholder)]",
+      "contact-field ie-focus w-full rounded-xl px-4 py-3 text-[15px] leading-relaxed outline-none transition-colors duration-200 placeholder:text-[var(--placeholder)]",
     style: { backgroundColor: SURFACE_DEEP, border: `1px solid ${error ? ERR_BORDER : "rgba(var(--rgb-body),0.22)"}`, color: IVORY },
   } as const;
   return (
@@ -125,7 +125,7 @@ function Field({
         )}
       </label>
       {as === "textarea" ? (
-        <textarea {...shared} rows={5} className={cn(shared.className, "resize-none")} />
+        <textarea {...shared} rows={5} className={cn(shared.className, "resize-none contact-textarea")} />
       ) : (
         <input type={type} {...shared} />
       )}
@@ -310,13 +310,21 @@ export function ContactDirectLine() {
     visible: { opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.5, ease: [0.4, 0, 0.2, 1] } },
   };
   const theme = useThemeName();
+  const warm = theme === "warm";
+  // Card presence — a slightly stronger edge + soft, theme-aware lift so the
+  // form, channels, and availability panels read as confident, equal blocks on
+  // large screens (warm keeps a faint cream lift; navy gets quiet depth).
+  const CARD_BORDER = "1px solid rgba(var(--rgb-body),0.16)";
+  const CARD_SHADOW = warm
+    ? "0 14px 34px rgba(40,30,10,0.07), inset 0 1px 0 rgba(255,255,255,0.45)"
+    : "0 18px 44px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05)";
   const group: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: reduce ? 0 : 0.08, delayChildren: reduce ? 0 : 0.04 } },
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden pt-[92px] pb-16 md:pt-[104px] md:pb-24">
+    <section id="contact" className="contact-section relative overflow-hidden">
       {/* Character watermark — decorative, behind all content, desktop only,
           never blocks input. The blueprint grid is now the shared fixed
           InteriorBlueprintField layer (mounted by the page shell). */}
@@ -327,13 +335,16 @@ export function ContactDirectLine() {
           width={1005}
           height={944}
           unoptimized
-          className="absolute hidden h-[440px] w-auto xl:block"
-          style={{ right: "-60px", bottom: "40px", opacity: theme === "warm" ? 0.1 : 0.07 }}
+          className="contact-art absolute hidden w-auto xl:block"
+          style={{ right: "-30px", bottom: "32px" }}
         />
       </div>
 
       <div className="relative z-10">
-        <Container>
+        {/* Shell width is token-driven (viewport-aware): wider on true large/
+            tall screens, tighter on short ones. The intro's own max-widths and
+            md/lg behaviour stay unchanged. */}
+        <Container style={{ maxWidth: "var(--contact-shell-max)" }}>
           <motion.div initial="hidden" animate="visible" variants={group}>
             {/* ── Section 1 — intro band ── */}
             <motion.div variants={fade} className="readability-field">
@@ -347,10 +358,10 @@ export function ContactDirectLine() {
                 </span>
               </div>
 
-              <h2 className={cn("mt-6 max-w-3xl text-4xl font-bold leading-[1.15] text-foreground md:text-5xl lg:text-6xl", displayFont)}>
+              <h2 className={cn("contact-title mt-6 max-w-3xl font-bold text-foreground", displayFont)}>
                 {t.contact.title.lead} <span style={{ color: CYAN, textShadow: "0 0 28px rgba(var(--rgb-cyan),0.3)" }}>{t.contact.title.accent}</span>
               </h2>
-              <p className="mt-6 max-w-xl text-base leading-[1.7] md:text-lg" style={{ color: BODY }}>
+              <p className="contact-body mt-6 max-w-xl leading-[1.7]" style={{ color: BODY }}>
                 {t.contact.intro}
               </p>
 
@@ -363,11 +374,11 @@ export function ContactDirectLine() {
             </motion.div>
 
             {/* ── Sections 2 + 3 — two-column console ── */}
-            <motion.div variants={fade} className="relative mt-6 md:mt-8">
+            <motion.div variants={fade} className="contact-gridwrap relative">
               <FrameBrackets />
-              <div className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr] lg:gap-6">
+              <div className="contact-grid grid lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
                 {/* LEFT — message console */}
-                <div className="rounded-2xl p-6 md:p-7" style={{ border: `1px solid ${BORDER_IDLE}`, backgroundColor: SURFACE }}>
+                <div className="contact-card min-w-0" style={{ border: CARD_BORDER, backgroundColor: SURFACE, boxShadow: CARD_SHADOW }}>
                   <div className="mb-7 flex items-center justify-between gap-3">
                     <h3 className="text-lg font-bold text-foreground">{t.contact.form.heading}</h3>
                     <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em]" style={{ color: "rgba(var(--rgb-body),0.55)" }}>
@@ -507,8 +518,8 @@ export function ContactDirectLine() {
                 </div>
 
                 {/* RIGHT — channels + availability */}
-                <div className="flex flex-col gap-5">
-                  <div className="rounded-2xl p-6 md:p-7" style={{ border: `1px solid ${BORDER_IDLE}`, backgroundColor: SURFACE }}>
+                <div className="contact-rightcol flex flex-col min-w-0">
+                  <div className="contact-card min-w-0" style={{ border: CARD_BORDER, backgroundColor: SURFACE, boxShadow: CARD_SHADOW }}>
                     <div className="flex items-center justify-between gap-3">
                       <h3 className="text-lg font-bold text-foreground">{t.contact.channels.heading}</h3>
                       <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em]" style={{ color: "rgba(var(--rgb-body),0.55)" }}>
@@ -528,7 +539,7 @@ export function ContactDirectLine() {
                   </div>
 
                   {/* ── Section 4 — availability / signal ── */}
-                  <div className="rounded-2xl p-6 md:p-7" style={{ border: `1px solid ${BORDER_IDLE}`, backgroundColor: SURFACE }}>
+                  <div className="contact-card min-w-0" style={{ border: CARD_BORDER, backgroundColor: SURFACE, boxShadow: CARD_SHADOW }}>
                     <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.22em]" style={{ color: "rgba(var(--rgb-body),0.6)" }}>
                       <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--accent-green)", boxShadow: "0 0 7px rgba(var(--rgb-green),0.55)" }} />
                       {t.contact.availability.statusTag}
@@ -549,7 +560,7 @@ export function ContactDirectLine() {
             </motion.div>
 
             {/* ── Section 5 — closing note ── */}
-            <motion.p variants={fade} className="mt-10 text-center text-sm" style={{ color: MUTED }}>
+            <motion.p variants={fade} className="contact-fallback text-center text-sm" style={{ color: MUTED }}>
               {t.contact.closing.before}
               <a href={`mailto:${EMAIL}`} dir="ltr" className="ie-focus ltr-isolate rounded font-medium outline-none" style={{ color: "rgba(var(--rgb-cyan),0.9)" }}>
                 {EMAIL}

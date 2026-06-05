@@ -15,7 +15,7 @@ export const contact = {
       route: "/contact",
       title: {
         lead: "خلّنا",
-        accent: "نبدأ الحديث.",
+        accent: "نتواصل.",
       },
       intro:
         "فرص، تعاون، منتجات ذكاء اصطناعي، أدوار هندسية، وأحاديث جادّة حول بناء المنتجات — أرسل رسالتك وسأردّ في أقرب وقت ممكن.",
@@ -42,7 +42,7 @@ export const contact = {
           opportunity: "فرصة",
           collaboration: "تعاون",
           aiProduct: "منتج ذكاء اصطناعي",
-          speaking: "محاضرات / مجتمع",
+          speaking: "التعليق الصوتي / التقديم الرسمي",
           general: "عام",
         },
         honeypotLabel: "الشركة",
@@ -74,7 +74,7 @@ export const contact = {
       },
 
       channels: {
-        heading: "القنوات المفتوحة",
+        heading: "قنوات التواصل",
         verifiedRoutes: "مسارات موثّقة",
         description: "تفضّل طريقًا مباشرًا؟ تواصل معي عبر أيٍّ من هذه القنوات.",
         emailLabel: "البريد الإلكتروني",
@@ -93,7 +93,9 @@ export const contact = {
           aiProducts: "منتجات ذكاء اصطناعي",
           softwareEngineering: "هندسة البرمجيات",
           collaborations: "تعاونات",
-          speaking: "محاضرات / مجتمع",
+          speaking: "التعليق الصوتي / التقديم الرسمي",
+          initiatives: "المبادرات / التطوع",
+          photography: "التصوير الاحترافي",
         },
       },
 
@@ -189,6 +191,8 @@ export const contact = {
           softwareEngineering: "Software Engineering",
           collaborations: "Collaborations",
           speaking: "Speaking / Community",
+          initiatives: "Initiatives / Volunteering",
+          photography: "Professional Photography",
         },
       },
 

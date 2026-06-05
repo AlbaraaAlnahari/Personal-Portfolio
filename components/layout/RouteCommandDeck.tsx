@@ -203,7 +203,8 @@ export function RouteCommandDeck({
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls="route-command-deck"
-        className="ie-focus inline-flex items-center gap-2 rounded-lg px-3 py-1.5 outline-none transition-colors duration-300"
+        aria-label={t.deck.trigger}
+        className="ie-focus inline-flex items-center gap-2 rounded-lg px-2.5 py-2 sm:px-3 sm:py-1.5 outline-none transition-colors duration-300"
         style={{
           border: `1px solid ${triggerLit ? "rgba(var(--rgb-cyan),0.4)" : "var(--border-idle)"}`,
           backgroundColor: "rgba(255,255,255,0.02)",
@@ -223,7 +224,7 @@ export function RouteCommandDeck({
           <line x1="6" y1="3.5" x2="12.5" y2="3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
           <line x1="6" y1="10.5" x2="12.5" y2="10.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
-        <span className="font-mono text-xs tracking-[0.2em]">{t.deck.trigger}</span>
+        <span className="hidden font-mono text-xs tracking-[0.2em] sm:inline">{t.deck.trigger}</span>
       </button>
 
       {mounted &&

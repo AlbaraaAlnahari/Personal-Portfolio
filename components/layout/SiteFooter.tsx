@@ -85,7 +85,7 @@ function SocialLink({ href, label, Icon }: { href: string; label: string; Icon: 
       onMouseLeave={() => setLit(false)}
       onFocus={() => setLit(true)}
       onBlur={() => setLit(false)}
-      className="ie-focus grid h-9 w-9 place-items-center rounded-lg outline-none transition-colors duration-200"
+      className="ie-focus grid h-10 w-10 place-items-center rounded-lg outline-none transition-colors duration-200"
       style={{
         border: `1px solid ${lit ? "rgba(var(--nav-active-rgb),0.5)" : "var(--border-idle)"}`,
         color: lit ? "var(--nav-active)" : "var(--text-body)",
@@ -101,17 +101,17 @@ export function SiteFooter() {
   const { t } = useLanguage();
   const [emailLit, setEmailLit] = useState(false);
   return (
-    <footer className="site-footer-dark relative mt-20 border-t" style={{ borderColor: BORDER }}>
+    <footer className="site-footer-dark relative mt-14 md:mt-20 border-t" style={{ borderColor: BORDER }}>
       <Container>
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="py-12 md:py-14"
+          className="py-9 md:py-14"
         >
           {/* three calm zones */}
-          <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1.25fr] md:gap-8">
+          <div className="grid gap-8 md:grid-cols-[1.5fr_1fr_1.25fr] md:gap-8">
             {/* Brand */}
             <motion.div variants={itemVariants}>
               <Link href="/" aria-label={t.footer.brandLogoAria} className="nav-logo-link inline-flex items-center px-2 -mx-2">
@@ -168,7 +168,7 @@ export function SiteFooter() {
           {/* bottom bar */}
           <motion.div
             variants={itemVariants}
-            className="mt-10 flex flex-col items-start justify-between gap-3 border-t pt-6 sm:flex-row sm:items-center"
+            className="mt-8 md:mt-10 flex flex-col items-start justify-between gap-2.5 sm:gap-3 border-t pt-5 md:pt-6 sm:flex-row sm:items-center"
             style={{ borderColor: BORDER }}
           >
             <p className="text-[13px]" style={{ color: MUTED }}>

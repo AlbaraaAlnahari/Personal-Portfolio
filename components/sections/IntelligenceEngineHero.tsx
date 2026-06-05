@@ -246,7 +246,7 @@ export function IntelligenceEngineHero() {
       {/* ══════════════════════════════════════════════
           DESKTOP — split layout: copy left, reactor+modules right
           ══════════════════════════════════════════════ */}
-      <div className="hidden lg:flex flex-1 items-center justify-center w-full max-w-[1280px] mx-auto px-10 gap-10">
+      <div className="hidden lg:flex flex-1 items-center justify-center w-full max-w-[1280px] min-[1800px]:max-w-[1480px] min-[2400px]:max-w-[1680px] mx-auto px-10 gap-10 min-[1800px]:gap-14">
         {/* LEFT — Hero copy */}
         <div
           className="flex flex-col justify-center flex-shrink-0"
@@ -394,9 +394,9 @@ export function IntelligenceEngineHero() {
         {/* RIGHT — Reactor + Modules */}
         <div
           ref={reactorContainerRef}
-          className="relative flex-1"
+          className="relative flex-1 min-w-0"
           style={{
-            maxWidth: "620px",
+            maxWidth: "clamp(620px, 40vw, 780px)",
             aspectRatio: "1 / 1",
             minHeight: "480px",
           }}
@@ -486,7 +486,7 @@ export function IntelligenceEngineHero() {
       {/* ══════════════════════════════════════════════
           MOBILE / TABLET — vertical cinematic composition
           ══════════════════════════════════════════════ */}
-      <div className="flex lg:hidden flex-col w-full px-5 pt-6 pb-10">
+      <div className="flex lg:hidden flex-col w-full px-5 pt-5 pb-8">
         {/* ── Identity — leads the mobile experience ── */}
         <div className="text-center">
           {/* Eyebrow — hidden when empty (Arabic) */}
@@ -508,6 +508,7 @@ export function IntelligenceEngineHero() {
               className={isAr ? displayFont : "ltr-isolate"}
               style={{
                 display: "block",
+                textAlign: "center",
                 fontSize: "clamp(2.3rem, 12vw, 3rem)",
                 fontWeight: 700,
                 lineHeight: 1.1,
@@ -522,10 +523,11 @@ export function IntelligenceEngineHero() {
               className={displayFont}
               style={{
                 display: "block",
-                marginTop: "0.7rem",
-                fontSize: "clamp(1.05rem, 5.2vw, 1.35rem)",
+                textAlign: "center",
+                marginTop: "0.62rem",
+                fontSize: "clamp(1rem, 4.6vw, 1.2rem)",
                 fontWeight: 600,
-                lineHeight: 1.36,
+                lineHeight: 1.5,
                 letterSpacing: "-0.01em",
                 color: "var(--accent)",
               }}
@@ -538,13 +540,14 @@ export function IntelligenceEngineHero() {
 
           {/* Supporting paragraph */}
           <p
-            className="mt-4 mb-6 mx-auto"
+            className="mt-3 mb-5 mx-auto"
             style={{
               ...textReveal(120),
               fontSize: "0.82rem",
               color: "rgba(var(--rgb-body),0.74)",
               lineHeight: 1.72,
               maxWidth: "20rem",
+              marginInline: "auto",
             }}
           >
             {t.hero.paragraph}
@@ -588,7 +591,7 @@ export function IntelligenceEngineHero() {
           </div>
 
           {/* Status */}
-          <div className="mt-5" style={textReveal(240)}>
+          <div className="mt-4" style={textReveal(240)}>
             <span
               className="t-accent-label text-[9px] font-mono tracking-[0.24em]"
               style={{ color: "rgba(var(--rgb-cyan),0.4)" }}
@@ -603,9 +606,9 @@ export function IntelligenceEngineHero() {
           className="relative mx-auto w-full"
           style={{
             ...textReveal(320),
-            maxWidth: "min(360px, 86vw)",
+            maxWidth: "min(304px, 80vw)",
             aspectRatio: "1 / 1",
-            marginTop: "1.6rem",
+            marginTop: "0.9rem",
           }}
         >
           {!modelLoaded && mounted && (
@@ -639,7 +642,7 @@ export function IntelligenceEngineHero() {
         </div>
 
         {/* ── Neural module console (2 × 3) — full, readable navigation ── */}
-        <div className="mt-5" style={textReveal(400)}>
+        <div className="mt-3" style={textReveal(400)}>
           <MobileModuleGrid
             activeModule={activeModule}
             onSelect={handleMobileSelect}
@@ -665,6 +668,7 @@ export function IntelligenceEngineHero() {
               className={isAr ? displayFont : "ltr-isolate"}
               style={{
                 display: "block",
+                textAlign: "center",
                 fontSize: "clamp(2.2rem, 11vw, 2.8rem)",
                 fontWeight: 700,
                 lineHeight: 1.1,
@@ -678,6 +682,7 @@ export function IntelligenceEngineHero() {
               className={displayFont}
               style={{
                 display: "block",
+                textAlign: "center",
                 marginTop: "0.62rem",
                 fontSize: "clamp(1.05rem, 5vw, 1.35rem)",
                 fontWeight: 600,
