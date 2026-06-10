@@ -3,6 +3,9 @@ node_modules
 .pnp
 .pnp.js
 
+# Local Claude Code tooling config (machine-specific paths; never commit)
+.claude/
+
 # Testing
 coverage
 
@@ -107,3 +110,24 @@ screenshots/
 # Logs (general)
 *.log
 pnpm-debug.log*
+
+# ── Final pre-commit additions (additive; verified to match no real source) ──
+# Extra secret / env filename variants
+secrets.*
+local.env
+
+# Local tooling / editors
+.cursor/
+
+# QA / performance evidence (generated, never source)
+qa-screenshots/
+lighthouse/
+lighthouse-results/
+traces/
+*.har
+
+# Local exports / scratch / backups
+exports/
+local-exports/
+debug/
+*.bak

@@ -1,7 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { SkillMark } from "@/components/sections/skills/SkillMark";
 import {
@@ -115,10 +120,14 @@ const SUMMARY = [
   { value: "04", labelKey: "appliedSystems" },
 ] as const;
 
-type Active = { type: "domain"; domainId: string } | { type: "skill"; domainId: string; skill: string };
+type Active =
+  | { type: "domain"; domainId: string }
+  | { type: "skill"; domainId: string; skill: string };
 
 function proofRefs(skills: SkillsDict, codes: string[]): ProjectRef[] {
-  return PROJECT_ORDER.filter((c) => codes.includes(c)).map((c) => resolveProject(skills, c));
+  return PROJECT_ORDER.filter((c) => codes.includes(c)).map((c) =>
+    resolveProject(skills, c)
+  );
 }
 
 function sameActive(a: Active | null, b: Active | null): boolean {
@@ -144,7 +153,9 @@ function buildView(s: SkillsDict, active: Active | null): InspectorView {
       projects: proofRefs(s, SKILL_PROOF[active.skill] ?? []),
     };
   }
-  const codes = Array.from(new Set(domain.skills.flatMap((sk) => SKILL_PROOF[sk] ?? [])));
+  const codes = Array.from(
+    new Set(domain.skills.flatMap((sk) => SKILL_PROOF[sk] ?? []))
+  );
   return {
     kind: "domain",
     domainNum: domain.num,
@@ -187,7 +198,11 @@ export function SkillsMatrix() {
 
   const rise: Variants = {
     hidden: { opacity: 0, y: reduce ? 0 : 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.5, ease: [0.4, 0, 0.2, 1] } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduce ? 0 : 0.5, ease: [0.4, 0, 0.2, 1] },
+    },
   };
   const grid: Variants = {
     hidden: {},
@@ -200,33 +215,35 @@ export function SkillsMatrix() {
   return (
     <section
       id="skills"
-      className="py-16 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
+      className="py-12 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
       aria-labelledby="skills-heading"
     >
       <Container>
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-6 md:space-y-10">
           {/* Intro */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="readability-field space-y-6"
+            className="readability-field space-y-5 md:space-y-6"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className={`text-sm font-mono text-accent-cyan ${tr("tracking-[0.22em]")}`}>
+              <div
+                className={`text-sm font-mono text-accent-cyan ${tr("tracking-[0.22em]")}`}
+              >
                 {s.eyebrow}
               </div>
-              <div className={`text-xs font-mono text-accent-cyan/55 ${tr("tracking-[0.22em]")}`}>
-                {s.systemTag}
-              </div>
             </div>
-            <h2 id="skills-heading" className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] ${displayFont}`}>
+            <h2
+              id="skills-heading"
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] ${displayFont}`}
+            >
               {s.title.lead}
               <br />
               <span className="text-accent-cyan">{s.title.emphasis}</span>
             </h2>
-            <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-[1.72]">
+            <p className="text-foreground-secondary/80 text-base md:text-lg max-w-2xl leading-[1.85] md:leading-[1.72]">
               {s.intro}
             </p>
 
@@ -239,14 +256,19 @@ export function SkillsMatrix() {
                   inline-end on desktop, block-end when stacked). */}
               <div
                 className="flex items-center gap-2 px-4 py-2.5 border-b sm:border-b-0 sm:border-e"
-                style={{ background: "rgba(255,255,255,0.018)", borderColor: dividerColor }}
+                style={{
+                  background: "rgba(255,255,255,0.018)",
+                  borderColor: dividerColor,
+                }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-accent-cyan/70 shrink-0"
                   style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.5)" }}
                   aria-hidden="true"
                 />
-                <span className={`font-mono text-[10px] text-foreground-secondary/60 whitespace-nowrap ${tr("tracking-[0.26em]")}`}>
+                <span
+                  className={`font-mono text-[10px] text-foreground-secondary/60 whitespace-nowrap ${tr("tracking-[0.26em]")}`}
+                >
                   {s.telemetryLabel}
                 </span>
               </div>
@@ -259,14 +281,20 @@ export function SkillsMatrix() {
                     className="flex flex-col items-center justify-center text-center px-3 py-2.5"
                     style={
                       i > 0
-                        ? { borderInlineStartWidth: "1px", borderInlineStartStyle: "solid", borderInlineStartColor: dividerColor }
+                        ? {
+                            borderInlineStartWidth: "1px",
+                            borderInlineStartStyle: "solid",
+                            borderInlineStartColor: dividerColor,
+                          }
                         : undefined
                     }
                   >
                     <span className="text-xl md:text-2xl font-bold text-accent-cyan leading-none tabular-nums">
                       {metric.value}
                     </span>
-                    <span className={`mt-2 font-mono text-[11px] font-medium leading-snug text-foreground-secondary/70 ${tr("tracking-[0.12em]")}`}>
+                    <span
+                      className={`mt-2 font-mono text-[11px] font-medium leading-snug text-foreground-secondary/70 ${tr("tracking-[0.12em]")}`}
+                    >
                       {s.summary[metric.labelKey]}
                     </span>
                   </div>
@@ -278,21 +306,26 @@ export function SkillsMatrix() {
           {/* Mobile/stacked standby prompt (no selection yet) */}
           {!active && (
             <div className="lg:hidden flex items-center gap-2.5 rounded-xl border border-glass-light/20 bg-background-primary/30 px-3.5 py-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-foreground-secondary/40" aria-hidden="true" />
-              <span className={`font-mono text-[11px] text-foreground-secondary/60 ${tr("tracking-[0.16em]")}`}>
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-foreground-secondary/40"
+                aria-hidden="true"
+              />
+              <span
+                className={`font-mono text-[11px] text-foreground-secondary/60 ${tr("tracking-[0.16em]")}`}
+              >
                 {s.mobilePrompt}
               </span>
             </div>
           )}
 
           {/* Capability Atlas: matrix · routed bus · console */}
-          <div className="grid lg:grid-cols-[minmax(0,1.55fr)_46px_minmax(0,1fr)] gap-y-5">
+          <div className="grid lg:grid-cols-[minmax(0,1.55fr)_46px_minmax(0,1fr)] gap-y-4 lg:gap-y-5">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.08 }}
               variants={grid}
-              className="grid sm:grid-cols-2 gap-4 content-start"
+              className="grid sm:grid-cols-2 gap-3 sm:gap-4 content-start"
             >
               {DOMAINS.map((d) => (
                 <DomainModule
@@ -300,8 +333,10 @@ export function SkillsMatrix() {
                   domain={d}
                   s={s}
                   active={active}
+                  committed={committed}
                   view={view}
                   rise={rise}
+                  reduce={!!reduce}
                   warm={warm}
                   onPreview={previewOn}
                   onPreviewOff={previewOff}
@@ -322,11 +357,19 @@ export function SkillsMatrix() {
               />
               <span
                 className="absolute left-0 top-1/2 w-1/2 h-px -translate-y-1/2 transition-all duration-300"
-                style={{ background: active ? `rgba(${activeAccent},0.5)` : `rgba(${STEEL},0.18)` }}
+                style={{
+                  background: active
+                    ? `rgba(${activeAccent},0.5)`
+                    : `rgba(${STEEL},0.18)`,
+                }}
               />
               <span
                 className="absolute right-0 top-1/2 w-1/2 h-px -translate-y-1/2 transition-all duration-300"
-                style={{ background: active ? `rgba(${activeAccent},0.5)` : `rgba(${STEEL},0.18)` }}
+                style={{
+                  background: active
+                    ? `rgba(${activeAccent},0.5)`
+                    : `rgba(${STEEL},0.18)`,
+                }}
               />
               <span
                 className="absolute left-1/2 top-1/2 w-2.5 h-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] border transition-all duration-300"
@@ -362,8 +405,10 @@ function DomainModule({
   domain,
   s,
   active,
+  committed,
   view,
   rise,
+  reduce,
   warm,
   onPreview,
   onPreviewOff,
@@ -372,8 +417,10 @@ function DomainModule({
   domain: Domain;
   s: SkillsDict;
   active: Active | null;
+  committed: Active | null;
   view: InspectorView;
   rise: Variants;
+  reduce: boolean;
   warm: boolean;
   onPreview: (a: Active) => void;
   onPreviewOff: () => void;
@@ -384,50 +431,74 @@ function DomainModule({
   const domainHeaderActive = inDomain && active?.type === "domain";
   const domainActive: Active = { type: "domain", domainId: domain.id };
   const domainTitle = s.domains[domain.id].title;
+  const domainCommitted =
+    committed?.type === "domain" && committed.domainId === domain.id;
+  const consoleId = `cap-console-${domain.id}`;
 
   return (
     <motion.div
       variants={rise}
-      className="relative rounded-2xl border bg-background-primary/35 backdrop-blur-md p-5 transition-colors duration-300"
+      className="t-navy-card relative rounded-2xl border bg-background-primary/35 backdrop-blur-md p-4 sm:p-5 transition-all duration-300"
       style={{
-        borderColor: inDomain ? `rgba(${a},0.42)` : `rgba(${a},${warm ? 0.34 : 0.16})`,
+        borderColor: inDomain
+          ? `rgba(${a},${warm ? 0.5 : 0.45})`
+          : `rgba(${a},${warm ? 0.34 : 0.16})`,
         ...(warm
           ? {
-              // Match the approved telemetry stat-bar cream exactly: the bar
-              // resolves `t-surface-deep` → var(--surface-deep) (#f0ebdf), so the
-              // cards reuse that same warm token and read as editorial paper, not
-              // pure white. The solid surface keeps the blueprint grid softened
-              // behind the card rather than cutting through its body.
+              // Calm selected node: the active card keeps the same editorial cream
+              // surface (var(--surface-deep)) — no colored wash. The active state
+              // reads through a stronger accent border + a thin accent inset
+              // hairline + the lit output port. No glow.
               backgroundColor: "var(--surface-deep)",
-              boxShadow: "0 1px 2px rgba(8,15,35,0.05), 0 8px 20px -14px rgba(8,15,35,0.18)",
+              boxShadow: inDomain
+                ? `0 1px 2px rgba(8,15,35,0.05), 0 8px 20px -14px rgba(8,15,35,0.2), inset 0 0 0 1px rgba(${a},0.16)`
+                : "0 1px 2px rgba(8,15,35,0.05), 0 8px 20px -14px rgba(8,15,35,0.18)",
             }
-          : {}),
+          : {
+              // Navy: stronger border + a thin accent inset hairline + neutral
+              // depth mark the active card; idle cards keep the plain surface.
+              boxShadow: inDomain
+                ? `inset 0 0 0 1px rgba(${a},0.18), 0 10px 26px -18px rgba(0,0,0,0.5)`
+                : undefined,
+            }),
       }}
     >
       {/* Domain header (activates the domain) */}
       <h3>
         <button
           type="button"
-          onPointerEnter={(e) => { if (e.pointerType === "mouse") onPreview(domainActive); }}
-          onPointerLeave={(e) => { if (e.pointerType === "mouse") onPreviewOff(); }}
+          onPointerEnter={(e) => {
+            if (e.pointerType === "mouse") onPreview(domainActive);
+          }}
+          onPointerLeave={(e) => {
+            if (e.pointerType === "mouse") onPreviewOff();
+          }}
           onFocus={() => onPreview(domainActive)}
           onBlur={onPreviewOff}
           onClick={() => onCommit(domainActive)}
           aria-label={s.aria.domain(domainTitle, domain.skills.length)}
+          aria-expanded={domainCommitted}
+          aria-controls={domainCommitted ? consoleId : undefined}
           className="ie-focus w-full flex items-center justify-between gap-2 rounded-lg outline-none"
         >
           <span className="flex items-center gap-2.5 min-w-0">
             <span
               className="grid place-items-center w-6 h-6 rounded-md border font-mono text-[10px] font-bold shrink-0 transition-colors duration-300"
               style={{
-                borderColor: inDomain ? `rgba(${a},0.6)` : `rgba(${a},${warm ? 0.45 : 0.3})`,
-                background: inDomain ? `rgba(${a},0.14)` : `rgba(${a},${warm ? 0.12 : 0.06})`,
+                borderColor: inDomain
+                  ? `rgba(${a},0.6)`
+                  : `rgba(${a},${warm ? 0.45 : 0.3})`,
+                background: inDomain
+                  ? `rgba(${a},0.14)`
+                  : `rgba(${a},${warm ? 0.12 : 0.06})`,
                 color: `rgba(${a},0.95)`,
               }}
             >
               {domain.num}
             </span>
-            <span className="text-sm md:text-[15px] font-semibold text-foreground truncate">{domainTitle}</span>
+            <span className="text-sm md:text-[15px] font-semibold text-foreground truncate">
+              {domainTitle}
+            </span>
           </span>
           {/* output terminal port */}
           <span
@@ -435,7 +506,7 @@ function DomainModule({
             className="shrink-0 grid place-items-center w-4 h-4 rounded-full border transition-all duration-300"
             style={{
               borderColor: domainHeaderActive ? `rgb(${a})` : `rgba(${a},0.4)`,
-              boxShadow: domainHeaderActive ? `0 0 9px rgba(${a},0.6)` : "none",
+              boxShadow: "none",
             }}
           >
             <span
@@ -447,18 +518,29 @@ function DomainModule({
       </h3>
 
       {/* Skill nodes — all visible without interaction */}
-      <div className="mt-4 flex flex-wrap gap-2.5">
+      <div className="mt-3 md:mt-4 flex flex-wrap gap-2 md:gap-2.5">
         {domain.skills.map((skill) => {
           const codes = (SKILL_PROOF[skill] ?? []).map((c) => PROJECTS[c].code);
           const mapped = codes.length > 0;
-          const isActive = active?.type === "skill" && active.skill === skill && active.domainId === domain.id;
+          const isActive =
+            active?.type === "skill" &&
+            active.skill === skill &&
+            active.domainId === domain.id;
+          const isCommittedSkill =
+            committed?.type === "skill" &&
+            committed.skill === skill &&
+            committed.domainId === domain.id;
           const skillActive: Active = { type: "skill", domainId: domain.id, skill };
           return (
             <button
               key={skill}
               type="button"
-              onPointerEnter={(e) => { if (e.pointerType === "mouse") onPreview(skillActive); }}
-              onPointerLeave={(e) => { if (e.pointerType === "mouse") onPreviewOff(); }}
+              onPointerEnter={(e) => {
+                if (e.pointerType === "mouse") onPreview(skillActive);
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === "mouse") onPreviewOff();
+              }}
               onFocus={() => onPreview(skillActive)}
               onBlur={onPreviewOff}
               onClick={() => onCommit(skillActive)}
@@ -467,23 +549,30 @@ function DomainModule({
                   ? s.aria.skillApplied(skill, domainTitle, codes.join(", "))
                   : s.aria.skill(skill, domainTitle)
               }
-              className="ie-focus group/node inline-flex items-center gap-2 rounded-lg border pl-1.5 pr-2.5 py-1.5 outline-none transition-all duration-200"
+              aria-pressed={isCommittedSkill}
+              className="ie-focus group/node inline-flex items-center gap-2 rounded-lg border pl-1.5 pr-2.5 py-1.5 min-h-[40px] sm:min-h-0 outline-none transition-all duration-200"
               style={{
-                borderColor: isActive ? `rgba(${a},0.65)` : `rgba(${a},${warm ? 0.38 : 0.2})`,
+                borderColor: isActive
+                  ? `rgba(${a},0.65)`
+                  : `rgba(${a},${warm ? 0.38 : 0.2})`,
                 background: isActive
-                  ? `rgba(${a},${warm ? 0.14 : 0.1})`
+                  ? `rgba(${a},${warm ? 0.11 : 0.08})`
                   : warm
                     ? "var(--surface-lit)"
                     : "rgba(255,255,255,0.015)",
-                boxShadow: isActive ? `inset 0 0 14px rgba(${a},0.18)` : "none",
+                boxShadow: "none",
               }}
             >
               {/* mark container — local SVG mark, restrained at idle, vivid when active */}
               <span
                 className="grid place-items-center w-6 h-6 rounded-md border shrink-0 transition-all duration-200"
                 style={{
-                  borderColor: isActive ? `rgba(${a},0.55)` : `rgba(${a},${warm ? 0.4 : 0.22})`,
-                  background: isActive ? `rgba(${a},0.16)` : `rgba(${a},${warm ? 0.12 : 0.06})`,
+                  borderColor: isActive
+                    ? `rgba(${a},0.55)`
+                    : `rgba(${a},${warm ? 0.4 : 0.22})`,
+                  background: isActive
+                    ? `rgba(${a},0.12)`
+                    : `rgba(${a},${warm ? 0.12 : 0.06})`,
                 }}
               >
                 <SkillMark name={skill} size={16} vivid={isActive} warm={warm} />
@@ -491,7 +580,13 @@ function DomainModule({
               <span
                 dir="ltr"
                 className="ltr-isolate text-xs font-medium transition-colors duration-200"
-                style={{ color: warm ? "#222a33" : isActive ? `rgb(${a})` : "rgba(200,210,230,0.85)" }}
+                style={{
+                  color: warm
+                    ? "#222a33"
+                    : isActive
+                      ? "rgba(236,245,255,0.95)"
+                      : "rgba(200,210,230,0.85)",
+                }}
               >
                 {skill}
               </span>
@@ -501,8 +596,10 @@ function DomainModule({
                   aria-hidden="true"
                   className="w-1 h-1 rounded-full shrink-0 transition-all duration-200"
                   style={{
-                    background: isActive ? `rgb(${a})` : `rgba(${a},${warm ? 0.75 : 0.5})`,
-                    boxShadow: isActive ? `0 0 6px rgba(${a},0.7)` : "none",
+                    background: isActive
+                      ? `rgb(${a})`
+                      : `rgba(${a},${warm ? 0.75 : 0.5})`,
+                    boxShadow: "none",
                   }}
                 />
               )}
@@ -511,15 +608,35 @@ function DomainModule({
         })}
       </div>
 
-      {/* Inline console (stacked layouts only) — docked under the active domain */}
-      {inDomain && (
-        <div className="lg:hidden mt-3">
-          <div className="flex justify-end pr-2" aria-hidden="true">
-            <span className="h-3 w-px" style={{ background: `linear-gradient(to bottom, rgb(${a}), rgba(${a},0.2))` }} />
-          </div>
-          <CapabilityInspector view={view} variant="inline" warm={warm} />
-        </div>
-      )}
+      {/* Inline console (stacked layouts only) — docked under the active domain.
+          Reveals with a reduced-motion-aware height/opacity expansion so the
+          opened detail reads as an expansion, not a pop. */}
+      <AnimatePresence initial={false}>
+        {inDomain && (
+          <motion.div
+            key="inline-console"
+            className="lg:hidden overflow-hidden"
+            initial={
+              reduce ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }
+            }
+            animate={{ opacity: 1, height: "auto" }}
+            exit={reduce ? { opacity: 1, height: 0 } : { opacity: 0, height: 0 }}
+            transition={{ duration: reduce ? 0 : 0.32, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <div id={consoleId} className="mt-3">
+              <div className="flex justify-end pr-2" aria-hidden="true">
+                <span
+                  className="h-3 w-px"
+                  style={{
+                    background: `linear-gradient(to bottom, rgb(${a}), rgba(${a},0.2))`,
+                  }}
+                />
+              </div>
+              <CapabilityInspector view={view} variant="inline" warm={warm} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

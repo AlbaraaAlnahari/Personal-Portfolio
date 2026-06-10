@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { CountUpNumber } from "@/components/sections/impact/CountUpNumber";
 
 // =====================================================
 // OFFICIAL PRESENCE & TALENT — RECOGNITION RECORDS
@@ -25,7 +26,7 @@ const VOLUNTEER = "var(--rgb-green)"; // service / community
 
 // Verified numeric values stay in the component (never translated).
 const PRESENTER_EVENTS = "6+";
-const VOLUNTEER_HOURS = "119+";
+const VOLUNTEER_HOURS = "193+";
 
 export function OfficialPresence() {
   const reduce = useReducedMotion();
@@ -49,25 +50,24 @@ export function OfficialPresence() {
   return (
     <section
       id="recognition"
-      className="py-16 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
+      className="pt-12 pb-8 md:pt-24 md:pb-24 relative scroll-mt-14 md:scroll-mt-16"
       aria-labelledby="recognition-heading"
     >
       <Container>
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-6 md:space-y-10">
           {/* Section header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="readability-field space-y-5"
+            className="readability-field space-y-4 md:space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}>
+              <div
+                className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}
+              >
                 {R.eyebrow}
-              </div>
-              <div className={`text-xs font-mono text-accent-cyan/55 ${trk("tracking-[0.22em]")}`}>
-                {R.recordsLabel}
               </div>
             </div>
             <h2
@@ -109,18 +109,28 @@ export function OfficialPresence() {
 
 // Shared dock-port glyph: an indexed signal coordinate + diamond port,
 // language-aware so Arabic coordinates keep their cursive joining.
-function DockPort({ rgb, coord, active }: { rgb: string; coord: string; active: boolean }) {
+function DockPort({
+  rgb,
+  coord,
+  active,
+}: {
+  rgb: string;
+  coord: string;
+  active: boolean;
+}) {
   const { isAr } = useLanguage();
   return (
     <span aria-hidden="true" className="inline-flex items-center gap-1.5 shrink-0">
-      <span
-        className={`font-mono transition-colors duration-300 ${
-          isAr ? "text-[10px] tracking-normal" : "text-[9px] tracking-[0.18em]"
-        }`}
-        style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.5)` }}
-      >
-        {coord}
-      </span>
+      {coord && (
+        <span
+          className={`font-mono transition-colors duration-300 ${
+            isAr ? "text-[10px] tracking-normal" : "text-[9px] tracking-[0.18em]"
+          }`}
+          style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.5)` }}
+        >
+          {coord}
+        </span>
+      )}
       <span
         className="w-2.5 h-2.5 rotate-45 border transition-all duration-300"
         style={{
@@ -182,7 +192,7 @@ function PresenterCard() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md p-5 md:p-6 lg:p-7 outline-none transition-all duration-300"
+      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md p-4 md:p-6 lg:p-7 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.5)` : `rgba(${rgb},0.28)`,
         boxShadow: active
@@ -218,7 +228,10 @@ function PresenterCard() {
           <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-[1.12]">
             {P.title}
           </h3>
-          <div className="text-base md:text-lg font-semibold" style={{ color: `rgb(${rgb})` }}>
+          <div
+            className="text-base md:text-lg font-semibold"
+            style={{ color: `rgb(${rgb})` }}
+          >
             {P.org}
           </div>
         </div>
@@ -232,15 +245,19 @@ function PresenterCard() {
             <span
               aria-hidden="true"
               className="pointer-events-none absolute -bottom-10 -left-6 w-28 h-28 rounded-full blur-2xl"
-              style={{ background: `radial-gradient(circle, rgba(${rgb},0.14), transparent 70%)` }}
+              style={{
+                background: `radial-gradient(circle, rgba(${rgb},0.14), transparent 70%)`,
+              }}
             />
             <span
               className="relative font-bold leading-none tracking-tight tabular-nums text-3xl sm:text-4xl md:text-5xl"
               style={{ color: `rgb(${rgb})` }}
             >
-              {PRESENTER_EVENTS}
+              <CountUpNumber value={PRESENTER_EVENTS} />
             </span>
-            <span className={`relative mt-2 font-mono text-[9px] md:text-[10px] text-foreground-secondary/60 ${trk("tracking-[0.18em]")}`}>
+            <span
+              className={`relative mt-2 font-mono text-[9px] md:text-[10px] text-foreground-secondary/60 ${trk("tracking-[0.18em]")}`}
+            >
               {P.metricLabel}
             </span>
           </div>
@@ -256,7 +273,10 @@ function PresenterCard() {
           className="mt-4 rounded-xl border bg-background-primary/30 px-3.5 py-3"
           style={{ borderColor: `rgba(${rgb},0.16)` }}
         >
-          <div className={`font-mono text-[9px] mb-2 ${trk("tracking-[0.2em]")}`} style={{ color: `rgba(${rgb},0.7)` }}>
+          <div
+            className={`font-mono text-[9px] mb-2 ${trk("tracking-[0.2em]")}`}
+            style={{ color: `rgba(${rgb},0.7)` }}
+          >
             {P.eventsLabel}
           </div>
           <ul className="space-y-1.5">
@@ -298,7 +318,7 @@ function TalentCard() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-5 md:p-6 outline-none transition-all duration-300"
+      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-4 md:p-6 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.48)` : `rgba(${rgb},0.26)`,
         boxShadow: active
@@ -342,7 +362,10 @@ function TalentCard() {
           <h3 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
             {T.title}
           </h3>
-          <div className="text-sm md:text-base font-semibold" style={{ color: `rgb(${rgb})` }}>
+          <div
+            className="text-sm md:text-base font-semibold"
+            style={{ color: `rgb(${rgb})` }}
+          >
             {T.org}
           </div>
         </div>
@@ -359,7 +382,7 @@ function TalentCard() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-// C · VOLUNTEER HOURS — full-width compact metric banner (119+ hours)
+// C · VOLUNTEER HOURS — full-width compact metric banner (193+ hours)
 // ─────────────────────────────────────────────────────────────────────────
 function VolunteerBanner() {
   const [active, setActive] = useState(false);
@@ -376,7 +399,7 @@ function VolunteerBanner() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-5 md:p-6 outline-none transition-all duration-300"
+      className="ie-focus relative overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-4 md:p-6 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.48)` : `rgba(${rgb},0.24)`,
         boxShadow: active
@@ -401,9 +424,11 @@ function VolunteerBanner() {
             className="font-bold leading-none tracking-tight tabular-nums text-5xl md:text-6xl lg:text-7xl"
             style={{ color: `rgb(${rgb})` }}
           >
-            {VOLUNTEER_HOURS}
+            <CountUpNumber value={VOLUNTEER_HOURS} />
           </span>
-          <span className={`mb-1.5 font-mono text-[10px] md:text-[11px] text-foreground-secondary/65 ${trk("tracking-[0.18em]")}`}>
+          <span
+            className={`mb-1.5 font-mono text-[10px] md:text-[11px] text-foreground-secondary/65 ${trk("tracking-[0.18em]")}`}
+          >
             {V.metricLabel}
           </span>
         </div>
@@ -412,7 +437,9 @@ function VolunteerBanner() {
         <span
           aria-hidden="true"
           className="hidden md:block w-px self-stretch"
-          style={{ background: `linear-gradient(to bottom, transparent, rgba(${rgb},0.3), transparent)` }}
+          style={{
+            background: `linear-gradient(to bottom, transparent, rgba(${rgb},0.3), transparent)`,
+          }}
         />
 
         {/* identity + copy */}

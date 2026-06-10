@@ -61,6 +61,7 @@ Mobile-first approach:
 ### Color System
 
 #### Backgrounds (Depth Layers)
+
 ```
 Primary:   #0a0e27  (darkest, canvas)
 Secondary: #0f1229  (slightly lighter)
@@ -68,6 +69,7 @@ Tertiary:  #151a3a  (accent backgrounds)
 ```
 
 #### Text Hierarchy
+
 ```
 Primary:   #e8e9f3  (main text, high contrast)
 Secondary: #a0a5c5  (supporting text)
@@ -75,6 +77,7 @@ Tertiary:  #7a80a0  (subtle text)
 ```
 
 #### Accent Colors (Holographic)
+
 ```
 Cyan:   #00d9ff  (primary accent, eyes drawn here)
 Green:  #00ff9f  (success, positive)
@@ -83,6 +86,7 @@ Purple: #b537f2  (premium, AI)
 ```
 
 #### Glass Elements
+
 ```
 Light:   rgba(255, 255, 255, 0.1)
 Lighter: rgba(255, 255, 255, 0.15)
@@ -120,6 +124,7 @@ Based on 4px base unit:
 ```
 
 Used for:
+
 - Margins and padding
 - Gaps in layouts
 - Border radius sizes
@@ -167,6 +172,7 @@ Level 4: Full Pages
 ```
 
 **Features**:
+
 - Automatic backdrop blur
 - Border with glass color
 - Shadow with neon glow
@@ -177,17 +183,13 @@ Level 4: Full Pages
 #### 2. Buttons
 
 ```tsx
-<Button 
-  variant="primary" 
-  size="lg" 
-  glow 
-  loading={isLoading}
->
+<Button variant="primary" size="lg" glow loading={isLoading}>
   Click me
 </Button>
 ```
 
 **Variants**:
+
 - `primary`: Gradient with glow
 - `secondary`: Glass with border
 - `ghost`: Transparent with hover
@@ -202,6 +204,7 @@ Level 4: Full Pages
 ```
 
 **Sizes**:
+
 - `sm`: max-w-2xl
 - `md`: max-w-4xl
 - `lg`: max-w-6xl (default)
@@ -220,6 +223,7 @@ Level 4: Full Pages
 ### Motion Primitives
 
 #### Timing Presets
+
 ```typescript
 fast:    150ms
 base:    300ms
@@ -229,6 +233,7 @@ slowest: 1200ms
 ```
 
 #### Easing Functions
+
 ```typescript
 linear:     linear
 in:         cubic-bezier(0.4, 0, 1, 1)
@@ -240,6 +245,7 @@ smooth:     cubic-bezier(0.25, 0.46, 0.45, 0.94)
 ### Reusable Animation Variants
 
 #### Entry Animations
+
 - `fadeInVariants`: Fade in
 - `fadeInUpVariants`: Fade + slide up
 - `fadeInDownVariants`: Fade + slide down
@@ -248,6 +254,7 @@ smooth:     cubic-bezier(0.25, 0.46, 0.45, 0.94)
 - `slideInRightVariants`: Slide from right
 
 #### Attention Animations
+
 - `glowVariants`: Neon glow pulse
 - `floatVariants`: Subtle floating motion
 - `pulseVariants`: Opacity pulse
@@ -255,21 +262,25 @@ smooth:     cubic-bezier(0.25, 0.46, 0.45, 0.94)
 - `rotateVariants`: Rotation animation
 
 #### Interaction Patterns
+
 - `glowVariants`: Hover glow effect
 - `scaleInCenterVariants`: Pop-in effect
 - `menuVariants`: Dropdown animation
 
 #### Page Transitions
+
 - `pageTransitionVariants`: Smooth page enter/exit
 - `containerVariants` + `itemVariants`: Staggered lists
 
 ### Animation Performance
 
 **GPU-Accelerated Properties** (use these):
+
 - `transform`: translate, scale, rotate
 - `opacity`: visibility fading
 
 **Avoid** (janky animations):
+
 - `width`, `height`
 - `top`, `left`, `right`, `bottom`
 - `margin`, `padding`
@@ -316,6 +327,7 @@ The loading screen shows an "Albaraa OS boot" sequence:
 ```
 
 **Components**:
+
 1. Terminal-style text
 2. Progress indicator with gradient
 3. Pulsing animations
@@ -323,6 +335,7 @@ The loading screen shows an "Albaraa OS boot" sequence:
 5. Floating background particles
 
 **Timeline**:
+
 - 0.2s: First text appears
 - 0.4s: System checks appear
 - 0.6s: Loading bar starts
@@ -338,16 +351,16 @@ The **AICoreSphere** represents the intelligent heart of the portfolio:
 Outer rings:
   • Pulsing cyan border (authentication/connection)
   • Rotating purple ring (processing)
-  
+
 Core sphere:
   • Radial gradient (cyan → purple → pink)
   • Neon glow effect
   • Dynamic sizing
-  
+
 Inner point:
   • Bright cyan core
   • Pulsing intensity
-  
+
 Floating particles:
   • 6 particles orbiting
   • Alternating cyan/green
@@ -369,7 +382,7 @@ Floating particles:
 og:title, og:description, og:image
 og:type: website
 og:locale: en_US
-og:url: https://albaraa.dev
+og:url: https://albaraa.sa
 ```
 
 ### Twitter Card
@@ -383,6 +396,7 @@ twitter:title, twitter:description, twitter:image
 ### Structured Data
 
 Future: Add JSON-LD schema.org markup for:
+
 - Person
 - CreativeWork (projects)
 - ContactPoint
@@ -487,6 +501,7 @@ components/
 ```
 
 **Benefits**:
+
 - Easy to find related code
 - Clear responsibility boundaries
 - Scales well as project grows
@@ -531,15 +546,16 @@ Types:       index.ts
 ### Built-In Hooks
 
 ```typescript
-useAnimationState()      // Scroll-based animation
-useScrollAnimation()     // Get scroll Y value
-usePrefersReducedMotion()// Accessibility
-useMountAnimation()      // Delayed mount
+useAnimationState(); // Scroll-based animation
+useScrollAnimation(); // Get scroll Y value
+usePrefersReducedMotion(); // Accessibility
+useMountAnimation(); // Delayed mount
 ```
 
 ### Variant System
 
 All components support variants for:
+
 - Size (`sm`, `md`, `lg`)
 - Style (`primary`, `secondary`, `ghost`)
 - Behavior (`interactive`, `disabled`, `loading`)
@@ -547,6 +563,7 @@ All components support variants for:
 ### Theme System
 
 Ready for custom theme support:
+
 ```typescript
 // Future: Extend colors in tailwind.config.ts
 // Future: Add theme context provider

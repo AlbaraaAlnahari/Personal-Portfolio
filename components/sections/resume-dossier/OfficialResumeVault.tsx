@@ -71,8 +71,8 @@ export function OfficialResumeVault() {
           boxShadow: warm
             ? "0 14px 36px rgba(40,30,10,0.10), inset 0 1px 0 rgba(255,255,255,0.5)"
             : active
-            ? "0 0 56px rgba(var(--rgb-cyan),0.18), inset 0 1px 0 rgba(255,255,255,0.06)"
-            : "0 0 44px rgba(var(--rgb-cyan),0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
+              ? "0 0 56px rgba(var(--rgb-cyan),0.18), inset 0 1px 0 rgba(255,255,255,0.06)"
+              : "0 0 44px rgba(var(--rgb-cyan),0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
         }}
       >
         {/* Top edge trace */}
@@ -86,7 +86,7 @@ export function OfficialResumeVault() {
         />
 
         {/* Header strip */}
-        <div className="flex items-center justify-between px-6 md:px-8 pt-6">
+        <div className="flex items-center justify-between px-5 md:px-8 pt-5">
           <div className="flex items-center gap-2.5">
             <span
               className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
@@ -96,12 +96,9 @@ export function OfficialResumeVault() {
               {v.label}
             </span>
           </div>
-          <span dir="ltr" className="ltr-isolate text-[9px] font-mono tracking-[0.26em] text-foreground-secondary/40">
-            {v.tag}
-          </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-[132px_1fr] gap-6 md:gap-8 p-6 md:p-8 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-[132px_1fr] gap-5 md:gap-8 p-5 md:p-8 items-center">
           {/* Document silhouette */}
           <div className="relative mx-auto sm:mx-0 w-[122px] h-[154px]">
             {/* page glow — localized, lifts when the route is engaged */}
@@ -120,8 +117,14 @@ export function OfficialResumeVault() {
             >
               <defs>
                 <linearGradient id="vault-page" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={warm ? "#fefdfb" : "rgba(20,26,52,0.95)"} />
-                  <stop offset="100%" stopColor={warm ? "#f3eede" : "rgba(12,16,40,0.95)"} />
+                  <stop
+                    offset="0%"
+                    stopColor={warm ? "#fefdfb" : "rgba(20,26,52,0.95)"}
+                  />
+                  <stop
+                    offset="100%"
+                    stopColor={warm ? "#f3eede" : "rgba(12,16,40,0.95)"}
+                  />
                 </linearGradient>
               </defs>
               {/* page body with folded corner */}
@@ -217,18 +220,6 @@ export function OfficialResumeVault() {
               className="absolute left-[5px] top-7 bottom-7 w-px transition-all duration-500"
               style={{ background: spineBg }}
             />
-            {/* route micro-label */}
-            <span
-              aria-hidden="true"
-              className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[7px] font-mono tracking-[0.3em] transition-colors duration-500"
-              style={{
-                writingMode: "vertical-rl",
-                color: active ? "rgba(var(--rgb-cyan),0.6)" : "rgba(var(--rgb-cyan),0.28)",
-              }}
-            >
-              {v.authRoute}
-            </span>
-
             <div className="space-y-5 pl-8">
               {/* Badge node — verification state */}
               <div className="relative">
@@ -322,8 +313,8 @@ export function OfficialResumeVault() {
                       boxShadow: warm
                         ? "0 8px 20px rgba(11,107,125,0.30)"
                         : active
-                        ? "0 0 34px rgba(var(--rgb-cyan),0.5)"
-                        : "0 0 26px rgba(var(--rgb-cyan),0.38)",
+                          ? "0 0 34px rgba(var(--rgb-cyan),0.5)"
+                          : "0 0 26px rgba(var(--rgb-cyan),0.38)",
                     }}
                   >
                     <svg

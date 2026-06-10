@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { CountUpNumber } from "@/components/sections/impact/CountUpNumber";
 
 // =====================================================
 // EXPERIENCE — MISSION DEPLOYMENT LOG / APPLIED OPERATIONS RECORD
@@ -91,25 +92,24 @@ export function ExperienceTimeline() {
   return (
     <section
       id="experience"
-      className="py-16 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
+      className="py-12 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
       aria-labelledby="experience-heading"
     >
       <Container>
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-6 md:space-y-10">
           {/* Section header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="readability-field space-y-5"
+            className="readability-field space-y-4 md:space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}>
+              <div
+                className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}
+              >
                 {E.eyebrow}
-              </div>
-              <div className={`text-xs font-mono text-accent-cyan/55 ${trk("tracking-[0.22em]")}`}>
-                {E.recordsLabel}
               </div>
             </div>
             <h2
@@ -173,13 +173,16 @@ function MissionRecord({
   const [active, setActive] = useState(false);
 
   return (
-    <motion.li variants={rise} className="group relative list-none pb-7 md:pb-9 last:pb-0">
+    <motion.li
+      variants={rise}
+      className="group relative list-none pb-5 md:pb-9 last:pb-0"
+    >
       {/* Rail segment — runs from this node's center into the next node.
           Hidden on the final record. Brightens with the active record. */}
       {!isLast && (
         <span
           aria-hidden="true"
-          className="absolute left-5 top-6 w-px h-full transition-all duration-300"
+          className="absolute left-[18px] sm:left-5 top-6 w-px h-full transition-all duration-300"
           style={{
             background: active
               ? `linear-gradient(to bottom, rgba(${rgb},0.85), rgba(${rgb},0.25))`
@@ -191,7 +194,7 @@ function MissionRecord({
       {/* Mission anchor node — framed index ("terminal port") on the spine */}
       <span
         aria-hidden="true"
-        className="absolute left-0 top-1 z-10 grid place-items-center w-10 h-10 rounded-xl border font-mono text-sm font-bold transition-all duration-300"
+        className="absolute left-0 top-1 z-10 grid place-items-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border font-mono text-sm font-bold transition-all duration-300"
         style={{
           borderColor: active ? `rgba(${rgb},0.85)` : `rgba(${rgb},0.4)`,
           background: active ? `rgba(${rgb},0.16)` : `rgba(${rgb},0.08)`,
@@ -210,10 +213,12 @@ function MissionRecord({
         onMouseLeave={() => setActive(false)}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        className="ie-focus relative ml-[3.25rem] sm:ml-[3.75rem] md:ml-[4.5rem] rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-4 sm:p-5 md:p-5 transition-all duration-300 outline-none"
+        className="ie-focus relative ml-[2.75rem] sm:ml-[3.75rem] md:ml-[4.5rem] rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-3 sm:p-5 md:p-5 transition-all duration-300 outline-none"
         style={{
           borderColor: active ? `rgba(${rgb},0.42)` : `rgba(${rgb},0.2)`,
-          boxShadow: active ? `0 14px 40px rgba(0,0,0,0.4), 0 0 26px rgba(${rgb},0.08)` : "none",
+          boxShadow: active
+            ? `0 14px 40px rgba(0,0,0,0.4), 0 0 26px rgba(${rgb},0.08)`
+            : "none",
         }}
       >
         {/* Domain edge accent */}
@@ -233,10 +238,12 @@ function MissionRecord({
             className={`font-mono text-[11px] ${trk("tracking-[0.22em]")}`}
             style={{ color: `rgb(${rgb})` }}
           >
-            {E.logLabel} / {index}
+            {index}
           </span>
           <div className="flex items-center gap-2.5">
-            <span className={`font-mono text-[11px] text-foreground-secondary/55 ${trk("tracking-[0.14em]")}`}>
+            <span
+              className={`font-mono text-[11px] text-foreground-secondary/55 ${trk("tracking-[0.14em]")}`}
+            >
               {period}
             </span>
             <span
@@ -270,7 +277,9 @@ function MissionRecord({
             >
               {org}
             </span>
-            <span className={`font-mono text-[10px] text-foreground-secondary/45 ${trk("tracking-[0.18em]")}`}>
+            <span
+              className={`font-mono text-[10px] text-foreground-secondary/45 ${trk("tracking-[0.18em]")}`}
+            >
               {domainSignal}
             </span>
           </div>
@@ -284,7 +293,9 @@ function MissionRecord({
         {/* VERIFIED OUTCOME evidence lane */}
         <div
           className="mt-3.5 rounded-xl border bg-background-primary/30 p-3 md:p-3.5 transition-all duration-300"
-          style={{ borderColor: active ? `rgba(${rgb},0.3)` : `rgba(150,165,205,0.12)` }}
+          style={{
+            borderColor: active ? `rgba(${rgb},0.3)` : `rgba(150,165,205,0.12)`,
+          }}
         >
           <div className="flex items-center gap-2 mb-3">
             <span
@@ -321,12 +332,14 @@ function MissionRecord({
                   style={{ borderColor: `rgba(${rgb},0.15)` }}
                 >
                   <div
-                    className="text-lg md:text-xl font-bold leading-none"
+                    className="text-lg md:text-xl font-bold leading-none tabular-nums"
                     style={{ color: `rgb(${rgb})` }}
                   >
-                    {o.value}
+                    <CountUpNumber value={o.value ?? ""} />
                   </div>
-                  <div className={`mt-2 font-mono text-[8.5px] md:text-[9px] text-foreground-secondary/60 leading-tight ${trk("tracking-[0.08em]")}`}>
+                  <div
+                    className={`mt-2 font-mono text-[8.5px] md:text-[9px] text-foreground-secondary/60 leading-tight ${trk("tracking-[0.08em]")}`}
+                  >
                     {M.outcomes[o.key as keyof typeof M.outcomes]}
                   </div>
                 </div>

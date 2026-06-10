@@ -48,7 +48,10 @@ export function EditorialBlueprintField() {
   // Mobile keeps the field visible but quieter (the wrapper opacity scales both
   // line layers down a touch below md); md+ shows the full editorial weight.
   return (
-    <div aria-hidden="true" className="blueprint-field pointer-events-none fixed inset-0 z-[1] overflow-hidden opacity-[0.82] md:opacity-100">
+    <div
+      aria-hidden="true"
+      className="blueprint-field pointer-events-none fixed inset-0 z-[1] overflow-hidden opacity-[0.82] md:opacity-100"
+    >
       {/* minor coordinate lines — disciplined 46px rhythm, cool ivory */}
       <div
         className="absolute inset-0"
@@ -68,6 +71,58 @@ export function EditorialBlueprintField() {
           backgroundSize: "230px 230px",
           ...maskProps,
         }}
+      />
+      {/* Ambient calibration nodes — sparse soft pulses (CSS-animated .bp-node;
+          positions favour the open margins/corners so they read as blueprint
+          calibration points, not noise behind the hero). The first five sit in
+          mobile-safe open areas; the rest are hidden below md. */}
+      <span
+        className="bp-node"
+        style={{ left: "7%", top: "14%", animationDelay: "0s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "92%", top: "11%", animationDelay: "1.7s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "50%", top: "8%", animationDelay: "3.2s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "9%", top: "88%", animationDelay: "5.1s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "90%", top: "90%", animationDelay: "2.4s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "5%", top: "48%", animationDelay: "4.3s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "95%", top: "42%", animationDelay: "0.9s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "6%", top: "70%", animationDelay: "6s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "94%", top: "24%", animationDelay: "3.8s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "30%", top: "92%", animationDelay: "1.2s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "71%", top: "86%", animationDelay: "4.8s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "12%", top: "30%", animationDelay: "2s" }}
       />
     </div>
   );

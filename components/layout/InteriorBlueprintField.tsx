@@ -30,7 +30,7 @@ export function InteriorBlueprintField() {
   return (
     <div
       aria-hidden="true"
-      className="blueprint-field pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-80 md:opacity-100"
+      className="blueprint-field bp-quiet pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-80 md:opacity-100"
     >
       {/* minor coordinate lines — 46px rhythm, cool ivory (clearer than the
           previous faint interior grid, still refined) */}
@@ -52,6 +52,33 @@ export function InteriorBlueprintField() {
           backgroundSize: "230px 230px",
           ...maskProps,
         }}
+      />
+      {/* Ambient calibration nodes — quieter on interior routes (the wrapper's
+          .bp-quiet softens intensity); positioned in the open gutters/edges so
+          they stay clear of cards and copy. Below md only the first five show. */}
+      <span
+        className="bp-node"
+        style={{ left: "6%", top: "18%", animationDelay: "0s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "94%", top: "26%", animationDelay: "2.1s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "8%", top: "66%", animationDelay: "4s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "92%", top: "74%", animationDelay: "1.3s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "40%", top: "7%", animationDelay: "3.5s" }}
+      />
+      <span
+        className="bp-node"
+        style={{ left: "64%", top: "93%", animationDelay: "5.2s" }}
       />
     </div>
   );

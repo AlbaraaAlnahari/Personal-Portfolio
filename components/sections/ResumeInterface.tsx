@@ -67,7 +67,7 @@ export function ResumeInterface() {
   return (
     <section
       id="resume"
-      className="pt-8 md:pt-12 pb-20 md:pb-28 relative scroll-mt-20"
+      className="pt-8 md:pt-12 pb-14 md:pb-28 relative scroll-mt-20"
       aria-labelledby="resume-heading"
     >
       <Container>
@@ -76,10 +76,13 @@ export function ResumeInterface() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.12 }}
-          className="space-y-9 md:space-y-11"
+          className="space-y-7 md:space-y-11"
         >
           {/* ── Section header / system declaration ───────────────── */}
-          <motion.header variants={rise} className="readability-field space-y-5 max-w-3xl">
+          <motion.header
+            variants={rise}
+            className="readability-field space-y-4 md:space-y-5 max-w-3xl"
+          >
             <div className="flex items-center gap-2.5">
               <span
                 className="w-1.5 h-1.5 rounded-full bg-accent-cyan"
@@ -93,7 +96,9 @@ export function ResumeInterface() {
               id="resume-heading"
               className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] ${displayFont}`}
             >
-              {r.heading.lead} <span className="text-accent-cyan">{r.heading.accent}</span> {r.heading.trail}
+              {r.heading.lead}{" "}
+              <span className="text-accent-cyan">{r.heading.accent}</span>{" "}
+              {r.heading.trail}
             </h2>
             <p className="text-foreground-secondary/80 text-base md:text-lg leading-relaxed">
               {r.intro}
@@ -101,7 +106,7 @@ export function ResumeInterface() {
           </motion.header>
 
           {/* ── Primary composition: identity + Official Resume Vault ─ */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-stretch">
             {/* Identity dossier — supporting panel */}
             <motion.div variants={rise} className="lg:col-span-5">
               <IdentityDossier />
@@ -117,7 +122,7 @@ export function ResumeInterface() {
           {/* Extra bottom spacing so the tall viewer reads as its own block
               and does not crowd the credential ledger that follows. */}
           <motion.div variants={rise} className="space-y-5 pb-4 md:pb-8">
-            <SubHeader label={r.previewLabel} count={r.previewCount} />
+            <SubHeader label={r.previewLabel} />
             <ResumePreviewViewer />
           </motion.div>
 
@@ -149,11 +154,7 @@ export function ResumeInterface() {
 
           {/* ── Capability signal bus ─────────────────────────────── */}
           <motion.div variants={rise} className="space-y-5">
-            <SubHeader
-              label={r.signalsLabel}
-              count={r.signalsCount}
-              accent="green"
-            />
+            <SubHeader label={r.signalsLabel} count={r.signalsCount} accent="green" />
             {/* Compact signal chips — one connected set rather than two
                 scattered lists. Green-tinted to match the section accent. */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -201,7 +202,7 @@ function IdentityDossier() {
   const languages = [id.languages.arabic, id.languages.english];
   return (
     <div
-      className="t-surface relative h-full rounded-2xl p-6 md:p-7 overflow-hidden flex flex-col"
+      className="t-surface relative h-full rounded-2xl p-5 md:p-7 overflow-hidden flex flex-col"
       style={{
         background:
           "linear-gradient(160deg, rgba(16,20,42,0.86) 0%, rgba(10,14,39,0.93) 100%)",
@@ -230,9 +231,6 @@ function IdentityDossier() {
           <span className="text-[10px] font-mono tracking-[0.26em] text-accent-cyan/80">
             {id.dossierLabel}
           </span>
-          <span dir="ltr" className="ltr-isolate text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/45">
-            {id.idTag}
-          </span>
         </div>
 
         {/* identity row: verified seal + name + positioning */}
@@ -246,7 +244,13 @@ function IdentityDossier() {
               boxShadow: warm ? "none" : "0 0 16px rgba(var(--rgb-cyan),0.18)",
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
               <path
                 d="M12 2l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V5z"
                 fill="rgba(var(--rgb-cyan),0.12)"
@@ -254,7 +258,14 @@ function IdentityDossier() {
                 strokeWidth="1.4"
                 strokeLinejoin="round"
               />
-              <path d="M9 12l2 2 4-4" fill="none" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M9 12l2 2 4-4"
+                fill="none"
+                stroke="var(--accent)"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </span>
           <div className="min-w-0 space-y-2.5">
@@ -272,18 +283,14 @@ function IdentityDossier() {
           <RoutedDivider />
           <dl className="space-y-3.5">
             <MetaRow label={id.locationLabel}>
-              <span className="text-sm text-foreground-primary/90">
-                {id.location}
-              </span>
+              <span className="text-sm text-foreground-primary/90">{id.location}</span>
             </MetaRow>
             <MetaRow label={id.languagesLabel}>
               <span className="text-sm text-foreground-primary/90">
                 {languages.map((l, i) => (
                   <span key={l}>
                     {i > 0 && (
-                      <span className="text-foreground-secondary/40 px-1.5">
-                        ·
-                      </span>
+                      <span className="text-foreground-secondary/40 px-1.5">·</span>
                     )}
                     {l}
                   </span>
@@ -296,7 +303,6 @@ function IdentityDossier() {
 
         {/* state markers — anchored at the base */}
         <div className="flex flex-wrap gap-2">
-          <StateChip color="cyan" label={id.chipVerified} />
           <StateChip color="green" label={id.chipOnline} />
         </div>
       </div>
@@ -304,20 +310,11 @@ function IdentityDossier() {
   );
 }
 
-function MetaRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function MetaRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-4">
       <dt className="flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/50">
-        <span
-          aria-hidden="true"
-          className="w-1 h-1 rounded-full bg-accent-cyan/50"
-        />
+        <span aria-hidden="true" className="w-1 h-1 rounded-full bg-accent-cyan/50" />
         {label}
       </dt>
       <dd className="text-right">{children}</dd>
@@ -335,13 +332,7 @@ function RoutedDivider() {
   );
 }
 
-function StateChip({
-  color,
-  label,
-}: {
-  color: "cyan" | "green";
-  label: string;
-}) {
+function StateChip({ color, label }: { color: "cyan" | "green"; label: string }) {
   const hex = color === "cyan" ? "var(--accent)" : "var(--accent-green)";
   const rgb = color === "cyan" ? "var(--rgb-cyan)" : "var(--rgb-green)";
   return (
@@ -371,19 +362,20 @@ function SubHeader({
   accent = "cyan",
 }: {
   label: string;
-  count: string;
+  count?: string;
   accent?: "cyan" | "green";
 }) {
   const c = accent === "cyan" ? "text-accent-cyan/80" : "text-accent-green/80";
-  const line =
-    accent === "cyan" ? "from-accent-cyan/35" : "from-accent-green/35";
+  const line = accent === "cyan" ? "from-accent-cyan/35" : "from-accent-green/35";
   return (
     <div className="flex items-center gap-4">
       <span className={`text-xs font-mono tracking-[0.24em] ${c}`}>{label}</span>
       <div className={`h-px flex-1 bg-gradient-to-r ${line} to-transparent`} />
-      <span className="text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/40">
-        {count}
-      </span>
+      {count && (
+        <span className="text-[10px] font-mono tracking-[0.2em] text-foreground-secondary/40">
+          {count}
+        </span>
+      )}
     </div>
   );
 }
@@ -406,7 +398,7 @@ function CredentialModule({
   const warm = useThemeName() === "warm";
   return (
     <article
-      className="t-surface group relative h-full rounded-xl p-5 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
+      className="t-surface group relative h-full rounded-xl p-4 md:p-5 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
       style={{
         background: featured
           ? "linear-gradient(150deg, rgba(var(--rgb-cyan),0.06) 0%, rgba(12,16,40,0.92) 55%)"
@@ -414,15 +406,15 @@ function CredentialModule({
         border: featured
           ? "1px solid rgba(var(--rgb-cyan),0.42)"
           : warm
-          ? "1px solid rgba(120,95,55,0.18)"
-          : "1px solid rgba(150,165,205,0.16)",
+            ? "1px solid rgba(120,95,55,0.18)"
+            : "1px solid rgba(150,165,205,0.16)",
         boxShadow: warm
           ? featured
             ? "0 10px 26px rgba(40,30,10,0.10)"
             : "0 8px 20px rgba(40,30,10,0.06)"
           : featured
-          ? "0 0 24px rgba(var(--rgb-cyan),0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
-          : "none",
+            ? "0 0 24px rgba(var(--rgb-cyan),0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
+            : "none",
       }}
     >
       {/* hover illumination */}
@@ -462,8 +454,11 @@ function CredentialModule({
 
       <div className="relative space-y-3.5">
         <div className="flex items-center justify-between gap-2">
-          <span dir="ltr" className="ltr-isolate text-[9px] font-mono tracking-[0.22em] text-foreground-secondary/45">
-            {t.resume.credPrefix} / {credential.index}
+          <span
+            dir="ltr"
+            className="ltr-isolate text-[9px] font-mono tracking-[0.22em] text-foreground-secondary/45"
+          >
+            {credential.index}
           </span>
           {/* compact verification indicator (icon only — reduces repetition) */}
           <span className="inline-flex items-center">

@@ -2,16 +2,12 @@
 export const home = {
   ar: {
     gallery: {
-      enterArchive: "ادخل الأرشيف",
-      personalArchive: "الأرشيف الشخصي",
-      destinationGallery: "معرض الوجهات",
+      personalArchive: "أعمال مختارة",
       title: "لمحة من عالم البراء.",
-      subtitle: "أعمال مختارة، أثر ملموس، وسيرة مهنية تجمع بين الفكرة، التنفيذ و الطموح.",
-      archiveField: "حقل الأرشيف",
-      destinationsCount: "05 وجهات",
+      subtitle:
+        "أعمال مختارة، أثر ملموس، وسيرة مهنية تجمع بين الفكرة، التنفيذ و الطموح.",
       profile: {
         section: "الملف الشخصي",
-        idTag: "ID · 001",
         cardAria: "افتح الملف الشخصي — عن البراء النهاري",
         photoAlt: "صورة البراء النهاري",
         name: "البراء النهاري",
@@ -25,14 +21,14 @@ export const home = {
         name: "DocuPilot",
         award: "المركز الأول — معسكر الابتكار في الذكاء الاصطناعي",
         platform: "منصّة عمليات أعمال بالذكاء الاصطناعي",
-        deployedInterfaceLabel: "الواجهة المنشورة",
         deployedInterfaceDomain: "docupilot.site",
         liveSite: "الموقع المباشر",
         liveSiteAria: "زيارة موقع DocuPilot المباشر (يُفتح في تبويب جديد)",
         live: "مباشر",
         screenshotAlt:
           "لوحة قرارات DocuPilot — المشاريع النشطة والفواتير المعلّقة والموافقات المطلوبة ومؤشرات المخاطر في منصّة عمليات الذكاء الاصطناعي المنشورة.",
-        description: "تحويل مستندات الأعمال إلى مسارات عمل منظّمة وموافقات وأنظمة تشغيلية.",
+        description:
+          "تحويل مستندات الأعمال إلى مسارات عمل منظّمة وموافقات وأنظمة تشغيلية.",
         cta: "جولة في عالم المشاريع",
       },
       impact: {
@@ -49,7 +45,7 @@ export const home = {
         cta: "استعرض مقياس الأثر",
       },
       resume: {
-        section: "السجل الرسمي",
+        section: "السيرة",
         name: "قسم السيرة المهنية",
         description: "ملف المسيرة المهنية ووثيقة السيرة الذاتية الرسمية.",
         cta: "انتقل للسيرة الذاتية",
@@ -58,7 +54,7 @@ export const home = {
         downloadAria: "تنزيل السيرة الذاتية PDF (يُفتح في تبويب جديد)",
       },
       contact: {
-        section: "الخط المباشر",
+        section: "تواصل",
         name: "تواصل معي",
         description: "للفرص والتعاونات وتبادل المعرفة، أتشرّف بكم.",
         cta: "راسلني",
@@ -83,7 +79,8 @@ export const home = {
         name: "DocuPilot",
         award: "المركز الأول — معسكر الابتكار في الذكاء الاصطناعي",
         platform: "منصّة عمليات أعمال بالذكاء الاصطناعي",
-        description: "تحويل مستندات الأعمال إلى مسارات عمل منظّمة وموافقات وأنظمة تشغيلية.",
+        description:
+          "تحويل مستندات الأعمال إلى مسارات عمل منظّمة وموافقات وأنظمة تشغيلية.",
         portalCta: "افتح مجموعة الأعمال",
         portalDescriptor: "أربعة أنظمة منشورة ومفاهيمية.",
         deployedInterfaceLabel: "الواجهة المنشورة",
@@ -105,7 +102,8 @@ export const home = {
         eventsMetric: "10+",
         eventsLabel: "فعالية مُنظّمة",
         narrativeStrong: "Google Developer Groups On Campus UJ",
-        narrativeRest: " · قائد إدارة المشاريع — أدار معسكر علوم البيانات Google × GDSC على نطاق واسع.",
+        narrativeRest:
+          " · قائد إدارة المشاريع — أدار معسكر علوم البيانات Google × GDSC على نطاق واسع.",
         deploymentScope: "نطاق النشر",
         scope: {
           projectManagement: "إدارة المشاريع",
@@ -139,20 +137,16 @@ export const home = {
   },
   en: {
     gallery: {
-      enterArchive: "ENTER ARCHIVE",
-      personalArchive: "PERSONAL ARCHIVE",
-      destinationGallery: "DESTINATION GALLERY",
-      title: "Enter the archive behind the system.",
-      subtitle: "Selected work, identity, leadership impact, official records, and direct contact.",
-      archiveField: "ARCHIVE FIELD",
-      destinationsCount: "05 DESTINATIONS",
+      personalArchive: "SELECTED WORK",
+      title: "A glimpse into the world of Albaraa.",
+      subtitle:
+        "Selected work, tangible impact, and a career that brings together idea, execution, and ambition.",
       profile: {
         section: "PROFILE",
-        idTag: "ID · 001",
         cardAria: "Open Profile — about Albaraa Alnahari",
         photoAlt: "Portrait of Albaraa Alnahari",
         name: "Albaraa Alnahari",
-        role: "Software Engineering Student · AI Builder · Full-Stack Developer",
+        role: "Software Engineering Student · Drawn to AI Products · Bridging Programming with Product & Project Management",
         description: "Identity, capabilities, and technology practice.",
         cta: "OPEN PROFILE",
       },
@@ -162,7 +156,6 @@ export const home = {
         name: "DocuPilot",
         award: "1st PLACE — AI INNOVATION BOOTCAMP",
         platform: "AI Business Operations Platform",
-        deployedInterfaceLabel: "DEPLOYED INTERFACE",
         deployedInterfaceDomain: "docupilot.site",
         liveSite: "LIVE SITE",
         liveSiteAria: "Visit the DocuPilot live site (opens in a new tab)",
@@ -171,7 +164,7 @@ export const home = {
           "DocuPilot decision dashboard — active projects, pending invoices, required approvals, and risk indicators in the deployed AI operations platform.",
         description:
           "Transforming business documents into structured workflows, approvals, and operational systems.",
-        cta: "OPEN SELECTED WORK",
+        cta: "TOUR THE PROJECTS",
       },
       impact: {
         section: "IMPACT",
@@ -184,23 +177,24 @@ export const home = {
         roleStrong: "Project Management Lead",
         roleRest:
           " · Google Developer Groups On Campus UJ. Led outreach and logistics for the Google × GDSC Data Science Bootcamp.",
-        cta: "OPEN IMPACT RECORD",
+        cta: "REVIEW THE IMPACT",
       },
       resume: {
-        section: "OFFICIAL RECORD",
-        name: "Official Resume",
+        section: "RÉSUMÉ",
+        name: "Career Résumé Section",
         description: "Career dossier and official résumé document.",
-        cta: "OPEN DOSSIER",
+        cta: "GO TO RÉSUMÉ",
         ctaAria: "Open résumé dossier",
         download: "DOWNLOAD PDF",
         downloadAria: "Download résumé PDF (opens in a new tab)",
       },
       contact: {
-        section: "DIRECT LINE",
+        section: "CONTACT",
         name: "Get In Touch",
-        description: "Opportunities, collaboration, and product conversations.",
-        cta: "START CONVERSATION",
-        cardAria: "Open Contact — start a conversation",
+        description:
+          "For opportunities, collaborations, and sharing knowledge — it would be my honor.",
+        cta: "MESSAGE ME",
+        cardAria: "Open Contact — message me",
       },
     },
     scene: {
@@ -208,7 +202,7 @@ export const home = {
       identity: {
         eyebrow: "PROFILE",
         name: "Albaraa Alnahari",
-        role: "Software Engineering Student · AI Builder · Full-Stack Developer",
+        role: "Software Engineering Student · AI Product Builder · Full-Stack Developer",
         description:
           "He builds intelligent products and practical digital systems — AI-enabled platforms, modern full-stack applications, and robotics-driven experiences.",
         portalCta: "OPEN PROFILE",
@@ -244,7 +238,8 @@ export const home = {
         eventsMetric: "10+",
         eventsLabel: "EVENTS ORGANIZED",
         narrativeStrong: "Google Developer Groups On Campus UJ",
-        narrativeRest: " · Project Management Lead — managed the Google × GDSC Data Science Bootcamp at scale.",
+        narrativeRest:
+          " · Project Management Lead — managed the Google × GDSC Data Science Bootcamp at scale.",
         deploymentScope: "DEPLOYMENT SCOPE",
         scope: {
           projectManagement: "PROJECT MANAGEMENT",
@@ -261,7 +256,7 @@ export const home = {
         titleAccent: "Start a conversation.",
         resume: {
           meta: "FORMAL RECORD / 04",
-          name: "Official Resume",
+          name: "Official Résumé",
           descriptor: "The formal career dossier and official résumé document.",
           cta: "OPEN OFFICIAL DOSSIER",
           downloadLabel: "DOWNLOAD PDF ↗",
@@ -269,8 +264,9 @@ export const home = {
         contact: {
           meta: "DIRECT LINE / 05",
           name: "Get In Touch",
-          descriptor: "Connect for opportunities, collaboration, or product conversations.",
-          cta: "START CONVERSATION",
+          descriptor:
+            "Connect for opportunities, collaboration, or product conversations.",
+          cta: "MESSAGE ME",
         },
         secondaryAriaSuffix: "(opens in a new tab)",
       },

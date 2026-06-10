@@ -11,7 +11,6 @@ export const contact = {
   ar: {
     contact: {
       eyebrow: "خط مباشر",
-      eyebrowIndex: "/ 05",
       route: "/contact",
       title: {
         lead: "خلّنا",
@@ -19,11 +18,10 @@ export const contact = {
       },
       intro:
         "فرص، تعاون، منتجات ذكاء اصطناعي، أدوار هندسية، وأحاديث جادّة حول بناء المنتجات — أرسل رسالتك وسأردّ في أقرب وقت ممكن.",
-      availabilityBanner: "النظام متّصل / متاح للفرص",
+      availabilityBanner: "متاح للفرص",
 
       form: {
         heading: "أرسل رسالة",
-        consoleTag: "وحدة الرسائل",
         optional: "اختياري",
         fields: {
           name: { label: "الاسم", placeholder: "اسمك" },
@@ -41,7 +39,8 @@ export const contact = {
         topics: {
           opportunity: "فرصة",
           collaboration: "تعاون",
-          aiProduct: "منتج ذكاء اصطناعي",
+          aiProduct: "برمجة / منتجات ذكاء اصطناعي",
+          projectManagement: "إدارة مشاريع / منتجات",
           speaking: "التعليق الصوتي / التقديم الرسمي",
           general: "عام",
         },
@@ -54,20 +53,16 @@ export const contact = {
         },
         send: "أرسل الرسالة",
         sending: "جارٍ الإرسال…",
-        deliveryNote: "قناة التسليم في انتظار تفعيل Resend.",
         error: {
-          before: "تعذّر إرسال الإشارة. حاول مرة أخرى أو راسلني مباشرة على ",
+          before: "تعذّر إرسال رسالتك. حاول مرة أخرى أو راسلني مباشرة على ",
           after: ".",
         },
       },
 
       success: {
-        heading: "تم إرسال الإشارة.",
-        body:
-          "سأعود إليك قريبًا. وحتى ذلك الحين، يمكنك الوصول إليّ مباشرة عبر القنوات على اليسار.",
+        heading: "تم إرسال رسالتك",
+        body: "سأعود إليك قريبًا. وحتى ذلك الحين، يمكنك التواصل معي مباشرة عبر قنوات التواصل.",
         rows: {
-          route: { k: "المسار", v: "صندوق التواصل" },
-          status: { k: "الحالة", v: "في قائمة المراجعة" },
           response: { k: "الردّ", v: "في أقرب وقت ممكن" },
         },
         reset: "اكتب رسالة أخرى",
@@ -75,7 +70,7 @@ export const contact = {
 
       channels: {
         heading: "قنوات التواصل",
-        verifiedRoutes: "مسارات موثّقة",
+        verifiedRoutes: "روابط موثّقة",
         description: "تفضّل طريقًا مباشرًا؟ تواصل معي عبر أيٍّ من هذه القنوات.",
         emailLabel: "البريد الإلكتروني",
         emailAria: { before: "راسل البراء على ", after: "" },
@@ -87,11 +82,11 @@ export const contact = {
       },
 
       availability: {
-        statusTag: "الحالة · متاح للفرص",
-        availableFor: "متاح لـ",
+        statusTag: "متاح للفرص",
+        availableFor: "متاح للتعاون",
         items: {
-          aiProducts: "منتجات ذكاء اصطناعي",
-          softwareEngineering: "هندسة البرمجيات",
+          aiProducts: "برمجة / منتجات ذكاء اصطناعي",
+          projectManagement: "إدارة مشاريع / منتجات",
           collaborations: "تعاونات",
           speaking: "التعليق الصوتي / التقديم الرسمي",
           initiatives: "المبادرات / التطوع",
@@ -100,7 +95,7 @@ export const contact = {
       },
 
       closing: {
-        before: "تفضّل البريد؟ اكتب مباشرة إلى ",
+        before: "تفضّل البريد؟ اكتب لي مباشرة على ",
         after: " — أقرأ كل رسالة.",
       },
     },
@@ -108,19 +103,17 @@ export const contact = {
   en: {
     contact: {
       eyebrow: "DIRECT LINE",
-      eyebrowIndex: "/ 05",
       route: "/contact",
       title: {
-        lead: "Start the",
-        accent: "conversation.",
+        lead: "Let’s",
+        accent: "connect.",
       },
       intro:
-        "Opportunities, collaboration, AI products, engineering roles, and thoughtful product conversations — send a message and I’ll respond as soon as possible.",
-      availabilityBanner: "SYSTEM ONLINE / OPEN TO OPPORTUNITIES",
+        "Opportunities, collaboration, AI products, engineering roles, and serious conversations about building products — send your message and I’ll respond as soon as possible.",
+      availabilityBanner: "OPEN TO OPPORTUNITIES",
 
       form: {
         heading: "Send a message",
-        consoleTag: "MESSAGE CONSOLE",
         optional: "OPTIONAL",
         fields: {
           name: { label: "NAME", placeholder: "Your name" },
@@ -128,7 +121,8 @@ export const contact = {
           topic: { label: "TOPIC", groupAria: "Topic" },
           message: {
             label: "MESSAGE",
-            placeholder: "Tell me what you’re building, what you need, or how we can work together.",
+            placeholder:
+              "Tell me what you’re building, what you need, or how we can work together.",
           },
           link: {
             label: "LINK",
@@ -138,8 +132,9 @@ export const contact = {
         topics: {
           opportunity: "Opportunity",
           collaboration: "Collaboration",
-          aiProduct: "AI Product",
-          speaking: "Speaking / Community",
+          aiProduct: "Programming / AI Products",
+          projectManagement: "Project / Product Management",
+          speaking: "Voiceover / Formal Presenting",
           general: "General",
         },
         honeypotLabel: "Company",
@@ -151,28 +146,25 @@ export const contact = {
         },
         send: "Send Message",
         sending: "Sending…",
-        deliveryNote: "Delivery channel pending Resend activation.",
         error: {
-          before: "Couldn’t send the signal. Please try again or email me directly at ",
+          before:
+            "Couldn’t send your message. Please try again or email me directly at ",
           after: ".",
         },
       },
 
       success: {
-        heading: "Signal sent.",
-        body:
-          "I’ll get back to you soon. In the meantime, you can reach me directly through the channels on the right.",
+        heading: "Message sent.",
+        body: "I’ll get back to you soon. In the meantime, you can reach me directly through the contact channels.",
         rows: {
-          route: { k: "ROUTE", v: "Contact inbox" },
-          status: { k: "STATUS", v: "Queued for review" },
           response: { k: "RESPONSE", v: "As soon as possible" },
         },
         reset: "Write another message",
       },
 
       channels: {
-        heading: "Open Channels",
-        verifiedRoutes: "VERIFIED ROUTES",
+        heading: "Contact Channels",
+        verifiedRoutes: "VERIFIED LINKS",
         description: "Prefer a direct route? Reach me through any of these channels.",
         emailLabel: "Email",
         emailAria: { before: "Email Albaraa at ", after: "" },
@@ -184,13 +176,13 @@ export const contact = {
       },
 
       availability: {
-        statusTag: "STATUS · OPEN TO OPPORTUNITIES",
+        statusTag: "OPEN TO OPPORTUNITIES",
         availableFor: "Available for",
         items: {
-          aiProducts: "AI Products",
-          softwareEngineering: "Software Engineering",
+          aiProducts: "Programming / AI Products",
+          projectManagement: "Project / Product Management",
           collaborations: "Collaborations",
-          speaking: "Speaking / Community",
+          speaking: "Voiceover / Formal Presenting",
           initiatives: "Initiatives / Volunteering",
           photography: "Professional Photography",
         },

@@ -52,11 +52,11 @@ export function ProjectsSystems() {
   return (
     <section
       id="projects"
-      className="py-14 md:py-20 relative scroll-mt-14 md:scroll-mt-16"
+      className="pt-12 pb-8 md:pt-16 md:pb-16 relative scroll-mt-12 md:scroll-mt-16"
       aria-labelledby="projects-heading"
     >
       <Container>
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-7 md:space-y-9">
           {/* Section header */}
           <motion.div
             initial="hidden"
@@ -68,9 +68,6 @@ export function ProjectsSystems() {
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <div className="text-sm font-mono text-accent-green tracking-[0.22em]">
                 {t.work.header.eyebrow}
-              </div>
-              <div className="text-xs font-mono text-accent-cyan/60 tracking-[0.22em]">
-                {t.work.header.index}
               </div>
             </div>
             <h2
@@ -108,7 +105,7 @@ export function ProjectsSystems() {
           </motion.div>
 
           {/* 3 + 4 — concept modules */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -255,7 +252,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
         {/* Upper: identity + pipeline */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
           {/* Left: content */}
-          <div className="md:col-span-3 p-7 md:p-9 space-y-5">
+          <div className="md:col-span-3 p-5 md:p-9 space-y-3 md:space-y-5">
             <div className="flex items-center justify-between gap-3">
               <div className="text-xs font-mono text-accent-cyan/70 tracking-[0.22em]">
                 {t.work.docupilot.systemLabel}
@@ -274,7 +271,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent-cyan">
                 {DOCUPILOT.name}
               </h3>
-              <p className="text-lg md:text-xl text-foreground-secondary/85 leading-[1.35]">
+              <p className="text-base md:text-xl text-foreground-secondary/85 leading-[1.35]">
                 {t.work.docupilot.tagline}
               </p>
             </div>
@@ -296,7 +293,7 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               </span>
             </div>
 
-            <p className="text-foreground-secondary/90 leading-[1.8]">
+            <p className="text-foreground-secondary/90 leading-[1.6] md:leading-[1.8]">
               {t.work.docupilot.description}
             </p>
 
@@ -304,11 +301,12 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em] mb-3">
                 {t.work.labels.technologyStack}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {DOCUPILOT.tech.map((t) => (
                   <span
                     key={t}
-                    className="px-3 py-1.5 rounded-md bg-background-primary/55 border border-glass-light/30 text-xs text-foreground-secondary/90"
+                    className="px-3 py-1.5 rounded-md bg-background-primary/55 border text-xs text-foreground-secondary/90"
+                    style={{ borderColor: "var(--border-idle)" }}
                   >
                     {t}
                   </span>
@@ -327,13 +325,19 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
           </div>
 
           {/* Right: AI Operations Pipeline — PRESERVED system signature */}
-          <div className="md:col-span-2 p-7 md:p-9 flex flex-col items-center justify-center bg-gradient-to-br from-accent-cyan/[0.04] via-accent-purple/[0.03] to-transparent border-t md:border-t-0 md:border-l border-glass-light/15">
+          <div
+            className="md:col-span-2 p-5 md:p-9 flex flex-col items-center justify-center bg-gradient-to-br from-accent-cyan/[0.04] via-accent-purple/[0.03] to-transparent border-t md:border-t-0 md:border-l"
+            style={{ borderColor: "var(--border-idle)" }}
+          >
             <WorkflowDiagram reduce={reduce} />
 
             {/* Pipeline output dock → routes down to the deployed interface.
                 Visible at idle, illuminates with the preview's receiving port
                 when the Live Site action/preview is hovered or focused. */}
-            <div className="mt-3 flex flex-col items-center gap-1.5" aria-hidden="true">
+            <div
+              className="hidden md:flex mt-3 flex-col items-center gap-1.5"
+              aria-hidden="true"
+            >
               <span
                 className="h-5 w-px transition-all duration-500"
                 style={{
@@ -346,18 +350,14 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
                 <span
                   className="w-1.5 h-1.5 rounded-full transition-all duration-500"
                   style={{
-                    backgroundColor: outputActive ? "rgba(var(--rgb-cyan),1)" : "rgba(var(--rgb-cyan),0.75)",
+                    backgroundColor: outputActive
+                      ? "rgba(var(--rgb-cyan),1)"
+                      : "rgba(var(--rgb-cyan),0.75)",
                     boxShadow: outputActive
                       ? "0 0 10px rgba(var(--rgb-cyan),0.85)"
                       : "0 0 6px rgba(var(--rgb-cyan),0.45)",
                   }}
                 />
-                <span
-                  className="font-mono text-[8px] tracking-[0.24em] transition-colors duration-500"
-                  style={{ color: outputActive ? "rgba(var(--rgb-cyan),0.95)" : "rgba(var(--rgb-cyan),0.65)" }}
-                >
-                  {t.work.preview.systemOutput}
-                </span>
               </span>
               {/* downward route cue — output continues into the preview below */}
               <svg
@@ -381,7 +381,10 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
         </div>
 
         {/* Lower: LIVE SYSTEM PREVIEW — real Decision Dashboard proof */}
-        <div className="border-t border-glass-light/15 p-6 md:p-8 space-y-4">
+        <div
+          className="border-t p-5 md:p-8 space-y-4"
+          style={{ borderColor: "var(--border-idle)" }}
+        >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <span
@@ -398,7 +401,9 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
               <span
                 className="w-1.5 h-1.5 rounded-full transition-all duration-500"
                 style={{
-                  backgroundColor: outputActive ? "rgba(var(--rgb-cyan),1)" : "rgba(var(--rgb-cyan),0.7)",
+                  backgroundColor: outputActive
+                    ? "rgba(var(--rgb-cyan),1)"
+                    : "rgba(var(--rgb-cyan),0.7)",
                   boxShadow: outputActive
                     ? "0 0 9px rgba(var(--rgb-cyan),0.8)"
                     : "0 0 5px rgba(var(--rgb-cyan),0.4)",
@@ -414,12 +419,6 @@ function FlagshipCard({ reduce }: { reduce: boolean }) {
                 }}
                 aria-hidden="true"
               />
-              <span
-                className="text-[10px] font-mono tracking-[0.2em] transition-colors duration-500"
-                style={{ color: outputActive ? "rgba(120,225,255,0.95)" : "rgba(110,190,225,0.62)" }}
-              >
-                {t.work.preview.outputInterface}
-              </span>
             </div>
           </div>
 
@@ -453,10 +452,26 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
   // the technical mono tracking.
   const labelTracking = isAr ? 0 : 1.4;
   const stages = [
-    { key: "documentInput", label: t.work.pipeline.stages.documentInput, color: "rgb(var(--rgb-cyan))" },
-    { key: "aiExtraction", label: t.work.pipeline.stages.aiExtraction, color: "rgb(var(--rgb-purple))" },
-    { key: "structuredWorkflow", label: t.work.pipeline.stages.structuredWorkflow, color: "rgb(var(--rgb-green))" },
-    { key: "approvalSystem", label: t.work.pipeline.stages.approvalSystem, color: "rgb(var(--rgb-cyan))" },
+    {
+      key: "documentInput",
+      label: t.work.pipeline.stages.documentInput,
+      color: "rgb(var(--rgb-cyan))",
+    },
+    {
+      key: "aiExtraction",
+      label: t.work.pipeline.stages.aiExtraction,
+      color: "rgb(var(--rgb-purple))",
+    },
+    {
+      key: "structuredWorkflow",
+      label: t.work.pipeline.stages.structuredWorkflow,
+      color: "rgb(var(--rgb-green))",
+    },
+    {
+      key: "approvalSystem",
+      label: t.work.pipeline.stages.approvalSystem,
+      color: "rgb(var(--rgb-cyan))",
+    },
   ];
 
   const cx = 28;
@@ -541,7 +556,9 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
           </circle>
         )}
       </svg>
-      <div className={`mt-3 text-center text-[11px] font-mono text-foreground-secondary/75 ${isAr ? "tracking-normal" : "tracking-[0.22em]"}`}>
+      <div
+        className={`mt-2 md:mt-3 text-center text-[11px] font-mono text-foreground-secondary/75 ${isAr ? "tracking-normal" : "tracking-[0.22em]"}`}
+      >
         {t.work.pipeline.title}
       </div>
     </div>
@@ -552,7 +569,7 @@ function WorkflowDiagram({ reduce }: { reduce: boolean }) {
 // 2 — TechPath secondary feature: real roadmap proof + content
 // ─────────────────────────────────────────────────────────────────────────
 function TechPathFeature() {
-  const { t, isAr } = useLanguage();
+  const { t } = useLanguage();
   const a = accentTokens.green;
   return (
     <div className="relative group">
@@ -578,14 +595,23 @@ function TechPathFeature() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Left: real generated-roadmap proof */}
-          <div className="p-6 md:p-8 lg:border-r border-glass-light/15 flex flex-col">
+          <div
+            className="p-5 md:p-8 lg:border-r flex flex-col"
+            style={{ borderColor: "var(--border-idle)" }}
+          >
             <div className="flex items-center justify-between gap-3 mb-4">
-              <div className="text-xs font-mono tracking-[0.22em]" style={{ color: `rgba(${a.rgb},0.85)` }}>
+              <div
+                className="text-xs font-mono tracking-[0.22em]"
+                style={{ color: `rgba(${a.rgb},0.85)` }}
+              >
                 {t.work.techpath.systemLabel}
               </div>
               <div
                 className="w-1.5 h-1.5 rounded-full"
-                style={{ background: `rgb(${a.rgb})`, boxShadow: `0 0 8px rgba(${a.rgb},0.6)` }}
+                style={{
+                  background: `rgb(${a.rgb})`,
+                  boxShadow: `0 0 8px rgba(${a.rgb},0.6)`,
+                }}
               />
             </div>
             <SystemPreviewFrame
@@ -601,26 +627,32 @@ function TechPathFeature() {
           </div>
 
           {/* Right: content */}
-          <div className="p-6 md:p-8 flex flex-col space-y-5">
+          <div className="p-5 md:p-8 flex flex-col space-y-3.5 md:space-y-5">
             <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em]">
               {t.work.techpath.category}
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl md:text-3xl font-bold" style={{ color: `rgb(${a.rgb})` }}>
+              <h3
+                className="text-2xl md:text-3xl font-bold"
+                style={{ color: `rgb(${a.rgb})` }}
+              >
                 TechPath
               </h3>
               <p className="text-base md:text-lg text-foreground-secondary/85 leading-[1.38]">
                 {t.work.techpath.tagline}
               </p>
             </div>
-            <p className="text-sm md:text-base text-foreground-secondary/85 leading-[1.75]">
+            <p className="text-sm md:text-base text-foreground-secondary/85 leading-[1.6] md:leading-[1.75]">
               {t.work.techpath.description}
             </p>
             <div>
               <div className="text-[10px] font-mono text-accent-purple/55 tracking-[0.22em] mb-2.5">
                 {t.work.labels.techStack}
               </div>
-              <TechChips tech={["React.js", "Tailwind CSS", "Claude API"]} rgb={a.rgb} />
+              <TechChips
+                tech={["React.js", "Tailwind CSS", "Claude API"]}
+                rgb={a.rgb}
+              />
             </div>
 
             {/* Footer — adaptive-route accent relates this panel to the
@@ -630,15 +662,9 @@ function TechPathFeature() {
                   progress, resources and daily follow-up (decorative). */}
               <div
                 aria-hidden="true"
-                className="rounded-xl border bg-background-primary/40 px-4 pt-2.5 pb-1.5"
+                className="rounded-xl border bg-background-primary/40 px-3 pt-2 pb-1.5 md:px-4 md:pt-2.5"
                 style={{ borderColor: `rgba(${a.rgb},0.18)` }}
               >
-                <div
-                  className={`text-[10px] font-mono mb-1 ${isAr ? "tracking-normal" : "tracking-[0.24em]"}`}
-                  style={{ color: `rgba(${a.rgb},0.85)` }}
-                >
-                  {t.work.labels.adaptiveRoute}
-                </div>
                 <TechPathConceptVisual rgb={a.rgb} />
               </div>
               <ActionLink
@@ -700,7 +726,7 @@ function ConceptModule({
       />
 
       <div
-        className="relative h-full flex flex-col rounded-2xl backdrop-blur-xl bg-background-primary/45 t-warm-surface border transition-all duration-500 p-6 md:p-7 space-y-5 overflow-hidden"
+        className="relative h-full flex flex-col rounded-2xl backdrop-blur-xl bg-background-primary/45 t-warm-surface border transition-all duration-500 p-5 md:p-7 space-y-3.5 md:space-y-5 overflow-hidden"
         style={{ borderColor: `rgba(${a.rgb},0.28)` }}
       >
         <div
@@ -712,12 +738,18 @@ function ConceptModule({
         />
 
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: `rgba(${a.rgb},0.7)` }}>
+          <span
+            className="text-[10px] font-mono tracking-[0.2em]"
+            style={{ color: `rgba(${a.rgb},0.7)` }}
+          >
             {systemLabel}
           </span>
           <div
             className="w-1 h-1 rounded-full"
-            style={{ background: `rgb(${a.rgb})`, boxShadow: `0 0 6px rgba(${a.rgb},0.5)` }}
+            style={{
+              background: `rgb(${a.rgb})`,
+              boxShadow: `0 0 6px rgba(${a.rgb},0.5)`,
+            }}
           />
         </div>
 
@@ -725,29 +757,40 @@ function ConceptModule({
           {category}
         </div>
 
-        <div className="space-y-2.5">
-          <h3 className="text-xl md:text-2xl font-bold" style={{ color: `rgb(${a.rgb})` }}>
+        <div className="space-y-2 md:space-y-2.5">
+          <h3
+            className="text-xl md:text-2xl font-bold"
+            style={{ color: `rgb(${a.rgb})` }}
+          >
             {name}
           </h3>
-          <p className="text-sm text-foreground-secondary/80 leading-[1.4]">{tagline}</p>
+          <p className="text-sm text-foreground-secondary/80 leading-[1.4]">
+            {tagline}
+          </p>
         </div>
 
         {/* Concept visualization — labeled interface abstraction */}
         <div
-          className="rounded-xl border bg-background-primary/40 px-4 pt-3 pb-2"
+          className="rounded-xl border bg-background-primary/40 px-3.5 pt-2.5 pb-1.5 md:px-4 md:pt-3 md:pb-2"
           style={{ borderColor: "rgba(150,165,205,0.14)" }}
         >
-          <div className={`text-[10px] font-mono mb-1 ${isAr ? "tracking-normal" : "tracking-[0.22em]"}`} style={{ color: `rgba(${a.rgb},0.82)` }}>
+          <div
+            className={`text-[10px] font-mono mb-1 ${isAr ? "tracking-normal" : "tracking-[0.22em]"}`}
+            style={{ color: `rgba(${a.rgb},0.82)` }}
+          >
             {conceptLabel}
           </div>
-          {visual}
+          <div className="mx-auto max-w-[90%] sm:max-w-none">{visual}</div>
         </div>
 
         <p className="text-sm text-foreground-secondary/75 leading-[1.75] grow">
           {description}
         </p>
 
-        <div className="border-t border-glass-light/15 pt-4 space-y-4">
+        <div
+          className="border-t pt-3 space-y-3 md:pt-4 md:space-y-4"
+          style={{ borderColor: "var(--border-idle)" }}
+        >
           <TechChips tech={tech} rgb={a.rgb} />
           {link && linkLabel ? (
             <ActionLink href={link} label={linkLabel} name={name} rgb={a.rgb} />

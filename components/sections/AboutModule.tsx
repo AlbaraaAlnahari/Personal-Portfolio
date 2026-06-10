@@ -5,10 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
-import {
-  containerVariants,
-  itemVariants,
-} from "@/lib/motion/variants";
+import { containerVariants, itemVariants } from "@/lib/motion/variants";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 /**
@@ -53,19 +50,23 @@ export function AboutModule() {
     hidden: { opacity: reduce ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: { duration: reduce ? 0 : 0.7, ease: "easeOut", delay: reduce ? 0 : 0.2 },
+      transition: {
+        duration: reduce ? 0 : 0.7,
+        ease: "easeOut",
+        delay: reduce ? 0 : 0.2,
+      },
     },
   };
 
   return (
-    <section id="about" className="py-12 md:py-10 relative scroll-mt-14 md:scroll-mt-10">
+    <section id="about" className="py-9 md:py-10 relative scroll-mt-14 md:scroll-mt-10">
       <Container>
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="space-y-10 md:space-y-8"
+          className="space-y-7 md:space-y-8"
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="readability-field space-y-5">
@@ -73,7 +74,8 @@ export function AboutModule() {
               {t.about.eyebrow}
             </div>
             <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold ${displayFont}`}>
-              {t.about.heading.lead} <span className="text-accent-cyan">{t.about.heading.accent}</span>
+              {t.about.heading.lead}{" "}
+              <span className="text-accent-cyan">{t.about.heading.accent}</span>
               <br />
               {t.about.heading.trail}
             </h2>
@@ -82,17 +84,20 @@ export function AboutModule() {
           {/* Main Content Grid */}
           <motion.div
             variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16"
           >
             {/* Left: Free-standing holographic identity portrait */}
-            <motion.div variants={itemVariants} className="flex flex-col items-center md:items-start">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col items-center md:items-start"
+            >
               <div className="relative flex flex-col items-center">
                 {/* Portrait stage with ambient halo */}
                 <div className="relative">
                   {/* Soft holographic halo behind portrait — cyan-only, theme-safe
                       (no purple tint; reads clean on both Navy and Warm). */}
                   <div
-                    className="absolute -inset-6 pointer-events-none"
+                    className="absolute -inset-4 sm:-inset-6 pointer-events-none"
                     style={{
                       background:
                         "radial-gradient(ellipse 55% 60% at 50% 38%, rgba(var(--rgb-cyan), 0.2) 0%, rgba(var(--rgb-cyan), 0.05) 42%, transparent 70%)",
@@ -101,12 +106,12 @@ export function AboutModule() {
                   />
 
                   {/* Free-standing portrait — transparent cutout, no border */}
-                  <div className="relative w-[280px] h-[360px] md:w-[340px] md:h-[420px] flex items-end justify-center">
+                  <div className="relative w-[230px] h-[296px] sm:w-[280px] sm:h-[360px] md:w-[340px] md:h-[420px] flex items-end justify-center">
                     <Image
                       src="/images/albaraa-profile.svg"
                       alt={t.about.portraitAlt}
                       fill
-                      sizes="(max-width: 768px) 78vw, 340px"
+                      sizes="(max-width: 640px) 64vw, (max-width: 768px) 78vw, 340px"
                       className="object-contain object-bottom"
                       priority
                     />
@@ -148,11 +153,8 @@ export function AboutModule() {
                         ))}
                       </span>
 
-                      {/* terminal node + faint coordinate label (top-right) */}
+                      {/* terminal node (top-right) — decorative dot */}
                       <span className="absolute top-[10px] right-9 flex items-center gap-1.5">
-                        <span className="font-mono text-[8px] tracking-[0.25em] text-accent-cyan/45">
-                          ID·001
-                        </span>
                         <span
                           className="w-1 h-1 rounded-full bg-accent-cyan"
                           style={{ boxShadow: "0 0 6px rgba(var(--rgb-cyan),0.7)" }}
@@ -181,7 +183,7 @@ export function AboutModule() {
                 </div>
 
                 {/* Identity origin node — compact authenticated plaque */}
-                <div className="relative mt-4 w-fit min-w-[240px] px-5 py-3 rounded-xl backdrop-blur-md bg-background-primary/65 border border-accent-cyan/30 shadow-[0_4px_24px_rgba(var(--rgb-cyan),0.1)]">
+                <div className="relative mt-3 w-fit min-w-[210px] max-w-full px-4 py-2.5 sm:mt-4 sm:min-w-[240px] sm:px-5 sm:py-3 rounded-xl backdrop-blur-md bg-background-primary/65 border border-accent-cyan/30 shadow-[0_4px_24px_rgba(var(--rgb-cyan),0.1)]">
                   {/* origin port dot — seats the badge as a node */}
                   <span
                     aria-hidden="true"
@@ -194,12 +196,17 @@ export function AboutModule() {
                   <div className="text-center">
                     {isAr ? (
                       // Arabic name — Thmanyah display, bold and dominant (no LTR/mono/tracking).
-                      <div className={`text-lg font-bold leading-tight text-accent-cyan/90 ${displayFont}`}>
+                      <div
+                        className={`text-lg font-bold leading-tight text-accent-cyan/90 ${displayFont}`}
+                      >
                         {t.about.identityName}
                       </div>
                     ) : (
                       // English wordmark — LTR mono, uppercase, lightly tracked.
-                      <div className="text-sm font-mono text-accent-cyan/90 tracking-[0.15em] ltr-isolate" dir="ltr">
+                      <div
+                        className="text-sm font-mono text-accent-cyan/90 tracking-[0.15em] ltr-isolate"
+                        dir="ltr"
+                      >
                         {t.about.identityName}
                       </div>
                     )}
@@ -253,9 +260,9 @@ export function AboutModule() {
                   aria-hidden="true"
                 />
 
-                <div className="relative space-y-7 t-readability-field">
-                  {/* Module header — receiving dock + status + decorative ID */}
-                  <div className="relative flex items-center justify-between gap-4">
+                <div className="relative space-y-5 md:space-y-7 t-readability-field">
+                  {/* Module header — receiving dock + status */}
+                  <div className="relative flex items-center gap-4">
                     {/* receiving dock — resolves the identity retrieval route
                         (desktop only; aligns the route to this entry point) */}
                     <motion.span
@@ -282,15 +289,12 @@ export function AboutModule() {
                         {t.about.profileSummaryLabel}
                       </div>
                     </div>
-                    <div className="text-[10px] font-mono text-foreground-secondary/40 tracking-[0.2em] ltr-isolate" dir="ltr">
-                      {t.about.idCode}
-                    </div>
                   </div>
 
                   {/* Biography with subtle accent rail */}
                   <div className="relative pl-4">
                     <div className="absolute left-0 top-1 bottom-1 w-0.5 bg-gradient-to-b from-accent-cyan/45 via-accent-cyan/15 to-transparent" />
-                    <p className="text-sm md:text-base text-foreground-primary/95 leading-[1.75] max-w-prose">
+                    <p className="text-[17px] leading-[1.85] md:text-base md:leading-[1.85] text-foreground-primary/95 max-w-prose">
                       {t.about.bio}
                     </p>
                   </div>
@@ -307,11 +311,10 @@ export function AboutModule() {
 
                   {/* Focus Areas submodule */}
                   <div>
-                    <div className="flex items-center gap-2.5 mb-4">
-                      <span className="text-[10px] font-mono text-accent-green/55 tracking-[0.2em]">
-                        {t.about.focusAreasIndex}
-                      </span>
-                      <h3 className={`font-mono text-accent-green/85 ${isAr ? "text-xs tracking-normal" : "text-[11px] tracking-[0.22em]"}`}>
+                    <div className="flex items-center gap-2.5 mb-3 md:mb-4">
+                      <h3
+                        className={`font-mono text-accent-green/85 ${isAr ? "text-xs tracking-normal" : "text-[11px] tracking-[0.22em]"}`}
+                      >
                         {t.about.focusAreasLabel}
                       </h3>
                       <div className="h-px flex-1 bg-gradient-to-r from-accent-green/20 to-transparent" />
@@ -332,11 +335,10 @@ export function AboutModule() {
 
                   {/* Technologies submodule */}
                   <div>
-                    <div className="flex items-center gap-2.5 mb-4">
-                      <span className="text-[10px] font-mono text-accent-purple/50 tracking-[0.2em]">
-                        {t.about.technologiesIndex}
-                      </span>
-                      <h3 className={`font-mono text-accent-purple/80 ${isAr ? "text-xs tracking-normal" : "text-[11px] tracking-[0.22em]"}`}>
+                    <div className="flex items-center gap-2.5 mb-3 md:mb-4">
+                      <h3
+                        className={`font-mono text-accent-purple/80 ${isAr ? "text-xs tracking-normal" : "text-[11px] tracking-[0.22em]"}`}
+                      >
                         {t.about.technologiesLabel}
                       </h3>
                       <div className="h-px flex-1 bg-gradient-to-r from-accent-purple/15 to-transparent" />
@@ -357,7 +359,7 @@ export function AboutModule() {
                   </div>
 
                   {/* CTA action bar — both buttons visibly rendered */}
-                  <div className="pt-5 flex gap-3 flex-col sm:flex-row sm:items-center">
+                  <div className="pt-3 md:pt-5 flex gap-3 flex-col sm:flex-row sm:items-center">
                     <Button
                       variant="primary"
                       size="md"

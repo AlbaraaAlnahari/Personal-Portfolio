@@ -1,15 +1,13 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/i18n/serverMeta";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { OrganizationsLeadership } from "@/components/sections/OrganizationsLeadership";
 import { OfficialPresence } from "@/components/sections/OfficialPresence";
 import { InteriorBlueprintField } from "@/components/layout/InteriorBlueprintField";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
-export const metadata: Metadata = {
-  title: "Impact — Experience & Leadership | ALBARAA OS",
-  description:
-    "Applied professional experience and community leadership impact — product, robotics, and education roles, large-scale program and student-community leadership, plus official presenting, talent recognition, and volunteering.",
-};
+export function generateMetadata() {
+  return buildPageMetadata("/impact");
+}
 
 export default function ImpactPage() {
   return (

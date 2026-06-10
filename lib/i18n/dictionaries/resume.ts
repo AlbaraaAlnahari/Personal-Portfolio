@@ -11,32 +11,29 @@
 export const resume = {
   ar: {
     resume: {
-      eyebrow: "ملف النظام / سجلّات موثّقة",
+      eyebrow: "السيرة الذاتية",
       heading: { lead: "ملف", accent: "المسيرة", trail: "الموثّق" },
-      intro: "سيرة رسمية جاهزة للعرض والتنزيل، تجمع المسيرة والإنجازات الأساسية في ملف واحد.",
+      intro:
+        "سيرة رسمية جاهزة للعرض والتنزيل، تجمع المسيرة والإنجازات الأساسية في ملف واحد.",
 
       previewLabel: "معاينة السيرة",
-      previewCount: "لقطة حيّة",
-      credentialsLabel: "سجلّات موثّقة",
-      credentialsCount: "03 سجلّات",
-      signalsLabel: "إشارات مهنية",
-      signalsCount: "06 إشارات نشطة",
+      credentialsLabel: "التعليم والشهادات",
+      credentialsCount: "03",
+      signalsLabel: "القدرات التقنية",
+      signalsCount: "06",
 
       identity: {
-        dossierLabel: "ملف الهوية",
-        idTag: "ID / 001",
+        dossierLabel: "نبذة عن البراء",
         name: "البراء النهاري",
         role: "طالب هندسة برمجيات · مهتم بمنتجات الذكاء الاصطناعي · مطوّر يجمع بين البرمجة وإدارة المنتجات",
         locationLabel: "الموقع",
         location: "المملكة العربية السعودية",
         languagesLabel: "اللغات",
         languages: { arabic: "العربية", english: "الإنجليزية" },
-        chipVerified: "هوية موثّقة",
-        chipOnline: "السجلّ متصل",
+        chipOnline: "متاح للفرص",
       },
 
       verified: "موثّق",
-      credPrefix: "CRED",
 
       credentials: {
         education: {
@@ -70,11 +67,11 @@ export const resume = {
 
       vault: {
         label: "السيرة الرسمية",
-        tag: "VAULT / 00",
-        authRoute: "AUTH ROUTE",
-        pdfDocument: "PDF DOCUMENT",
-        verifiedRecord: "سجلّ موثّق",
-        supportLine: "السيرة الرسمية ضمن السجلّ — استعرضها في تبويب جديد أو نزّل النسخة الكاملة.",
+        tag: "",
+        authRoute: "",
+        pdfDocument: "PDF",
+        verifiedRecord: "موثّق",
+        supportLine: "استعرض السيرة الرسمية في تبويب جديد أو نزّل النسخة الكاملة.",
         viewPdf: "عرض الـ PDF",
         download: "تنزيل السيرة الذاتية",
         viewAria: "استعراض السيرة الذاتية الرسمية بصيغة PDF في تبويب جديد",
@@ -95,32 +92,29 @@ export const resume = {
   },
   en: {
     resume: {
-      eyebrow: "SYSTEM DOSSIER / VERIFIED CREDENTIALS",
+      eyebrow: "RÉSUMÉ",
       heading: { lead: "Verified", accent: "Career", trail: "Dossier" },
-      intro: "Verified professional record and official résumé access.",
+      intro:
+        "An official résumé ready to view and download, bringing my career and key achievements together in one file.",
 
       previewLabel: "RESUME PREVIEW",
-      previewCount: "LIVE SNAPSHOT",
-      credentialsLabel: "VERIFIED CREDENTIALS",
-      credentialsCount: "03 RECORDS",
-      signalsLabel: "CAPABILITY SIGNALS",
-      signalsCount: "06 SIGNALS ONLINE",
+      credentialsLabel: "EDUCATION & CREDENTIALS",
+      credentialsCount: "03",
+      signalsLabel: "TECHNICAL CAPABILITIES",
+      signalsCount: "06",
 
       identity: {
-        dossierLabel: "IDENTITY DOSSIER",
-        idTag: "ID / 001",
+        dossierLabel: "ABOUT ALBARAA",
         name: "Albaraa Alnahari",
-        role: "Software Engineering Student · AI Builder · Full-Stack Developer",
+        role: "Software Engineering Student · Interested in AI Products · Developer Bridging Programming and Product Management",
         locationLabel: "LOCATION",
         location: "Saudi Arabia",
         languagesLabel: "LANGUAGES",
         languages: { arabic: "Arabic", english: "English" },
-        chipVerified: "IDENTITY VERIFIED",
-        chipOnline: "RECORD ONLINE",
+        chipOnline: "OPEN TO OPPORTUNITIES",
       },
 
       verified: "Verified",
-      credPrefix: "CRED",
 
       credentials: {
         education: {
@@ -153,14 +147,15 @@ export const resume = {
       },
 
       vault: {
-        label: "OFFICIAL RESUME",
-        tag: "VAULT / 00",
-        authRoute: "AUTH ROUTE",
-        pdfDocument: "PDF DOCUMENT",
-        verifiedRecord: "VERIFIED RECORD",
-        supportLine: "Official résumé on record — view it in a new tab or download the full version.",
+        label: "OFFICIAL RÉSUMÉ",
+        tag: "",
+        authRoute: "",
+        pdfDocument: "PDF",
+        verifiedRecord: "VERIFIED",
+        supportLine:
+          "View the official résumé in a new tab or download the full version.",
         viewPdf: "View PDF",
-        download: "Download Resume",
+        download: "Download Résumé",
         viewAria: "View the official résumé PDF in a new tab",
         downloadAria: "Download the official résumé PDF",
       },
@@ -170,8 +165,8 @@ export const resume = {
       preview: {
         window: "Albaraa-Alnahari-Resume.pdf",
         documentTag: "RÉSUMÉ · PDF",
-        open: "Open CV",
-        download: "Download CV",
+        open: "Open Résumé",
+        download: "Download Résumé",
       },
     },
   },

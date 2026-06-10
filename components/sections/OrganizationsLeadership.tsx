@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { CountUpNumber } from "@/components/sections/impact/CountUpNumber";
 
 // =====================================================
 // ORGANIZATIONS & LEADERSHIP — LEADERSHIP MISSION CONTROL /
@@ -92,25 +93,24 @@ export function OrganizationsLeadership() {
   return (
     <section
       id="leadership"
-      className="py-16 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
+      className="py-12 md:py-24 relative scroll-mt-14 md:scroll-mt-16"
       aria-labelledby="leadership-heading"
     >
       <Container>
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-6 md:space-y-10">
           {/* Section header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={rise}
-            className="readability-field space-y-5"
+            className="readability-field space-y-4 md:space-y-5"
           >
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <div className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}>
+              <div
+                className={`text-sm font-mono text-accent-cyan ${trk("tracking-[0.22em]")}`}
+              >
                 {L.eyebrow}
-              </div>
-              <div className={`text-xs font-mono text-accent-cyan/55 ${trk("tracking-[0.22em]")}`}>
-                {L.recordsLabel}
               </div>
             </div>
             <h2
@@ -143,8 +143,7 @@ export function OrganizationsLeadership() {
                   "radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px)",
                 backgroundSize: "22px 22px",
                 opacity: 0.5,
-                maskImage:
-                  "radial-gradient(ellipse at 28% 0%, black, transparent 72%)",
+                maskImage: "radial-gradient(ellipse at 28% 0%, black, transparent 72%)",
                 WebkitMaskImage:
                   "radial-gradient(ellipse at 28% 0%, black, transparent 72%)",
               }}
@@ -186,7 +185,7 @@ export function OrganizationsLeadership() {
             {/* B + C · deployment plane */}
             <motion.div
               variants={rise}
-              className="relative mt-5 lg:mt-1 grid grid-cols-1 lg:grid-cols-12 gap-5"
+              className="relative mt-5 lg:mt-1 grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-5"
             >
               {/* B · FLAGSHIP DEPLOYMENT — dominant anchor */}
               <div className="lg:col-span-7">
@@ -194,7 +193,7 @@ export function OrganizationsLeadership() {
               </div>
 
               {/* C · COMMUNITY OPERATIONS — two branching signals */}
-              <div className="lg:col-span-5 flex flex-col gap-5">
+              <div className="lg:col-span-5 flex flex-col gap-3 md:gap-5">
                 {OPERATIONS.map((op) => (
                   <CommunityRecord key={op.id} data={op} />
                 ))}
@@ -226,7 +225,7 @@ function CurrentCommandBar() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md px-5 py-4 md:px-6 md:py-5 outline-none transition-all duration-300"
+      className="ie-focus relative overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md px-4 py-3 md:px-6 md:py-5 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.5)` : `rgba(${rgb},0.26)`,
         boxShadow: active
@@ -298,26 +297,6 @@ function CurrentCommandBar() {
             </span>
           </div>
         </div>
-
-        {/* status pill — appointment only, never "verified/live since/date" */}
-        <span
-          className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border font-mono text-[10px] shrink-0 self-start md:self-auto ${trk("tracking-[0.2em]")}`}
-          style={{
-            borderColor: `rgba(${rgb},0.4)`,
-            color: `rgba(${rgb},0.9)`,
-            background: `rgba(${rgb},0.08)`,
-          }}
-        >
-          <span
-            aria-hidden="true"
-            className="w-1.5 h-1.5 rounded-full"
-            style={{
-              background: `rgb(${rgb})`,
-              boxShadow: `0 0 6px rgba(${rgb},0.7)`,
-            }}
-          />
-          {L.currentAppointment}
-        </span>
       </div>
     </article>
   );
@@ -342,7 +321,7 @@ function FlagshipChamber() {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md p-5 md:p-6 lg:p-7 outline-none transition-all duration-300"
+      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/45 t-warm-surface backdrop-blur-md p-4 md:p-6 lg:p-7 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.5)` : `rgba(${rgb},0.28)`,
         boxShadow: active
@@ -413,7 +392,7 @@ function FlagshipChamber() {
 
         {/* initiative strip */}
         <div
-          className="mt-5 flex items-center gap-2.5 rounded-xl border px-4 py-3"
+          className="mt-5 flex items-center gap-2.5 rounded-xl border px-3 py-2"
           style={{
             borderColor: `rgba(${rgb},0.2)`,
             background: `rgba(${rgb},0.05)`,
@@ -424,7 +403,9 @@ function FlagshipChamber() {
             className="w-1.5 h-1.5 rounded-full shrink-0"
             style={{ background: `rgb(${rgb})` }}
           />
-          <span className={`font-mono text-[11px] text-foreground-secondary/85 ${trk("tracking-[0.1em]")}`}>
+          <span
+            className={`font-mono text-[11px] text-foreground-secondary/85 ${trk("tracking-[0.1em]")}`}
+          >
             {initiative}
           </span>
         </div>
@@ -481,7 +462,7 @@ function BigMetric({
   const { isAr } = useLanguage();
   return (
     <div
-      className="relative rounded-xl border bg-background-primary/40 px-4 py-3.5 md:py-4 overflow-hidden"
+      className="relative rounded-xl border bg-background-primary/40 px-3 py-2.5 md:py-4 overflow-hidden"
       style={{ borderColor: `rgba(${rgb},${emphasize ? 0.3 : 0.18})` }}
     >
       {emphasize && (
@@ -501,9 +482,11 @@ function BigMetric({
         }`}
         style={{ color: `rgb(${rgb})` }}
       >
-        {value}
+        <CountUpNumber value={value} />
       </div>
-      <div className={`relative mt-2 font-mono text-[9px] md:text-[10px] text-foreground-secondary/60 ${isAr ? "tracking-normal" : "tracking-[0.18em]"}`}>
+      <div
+        className={`relative mt-2 font-mono text-[9px] md:text-[10px] text-foreground-secondary/60 ${isAr ? "tracking-normal" : "tracking-[0.18em]"}`}
+      >
         {label}
       </div>
     </div>
@@ -529,7 +512,7 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-5 outline-none transition-all duration-300"
+      className="ie-focus relative h-full overflow-hidden rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-4 md:p-5 outline-none transition-all duration-300"
       style={{
         borderColor: active ? `rgba(${rgb},0.45)` : `rgba(${rgb},0.22)`,
         boxShadow: active
@@ -571,7 +554,9 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
           <span className="text-sm font-semibold" style={{ color: `rgb(${rgb})` }}>
             {role}
           </span>
-          <span className={`font-mono text-[10px] text-foreground-secondary/50 ${trk("tracking-[0.14em]")}`}>
+          <span
+            className={`font-mono text-[10px] text-foreground-secondary/50 ${trk("tracking-[0.14em]")}`}
+          >
             {period}
           </span>
         </div>
@@ -582,14 +567,14 @@ function CommunityRecord({ data }: { data: OpsRecord }) {
         {metricValues.map((m) => (
           <div
             key={m.key}
-            className="rounded-lg border bg-background-primary/40 px-3 py-2.5"
+            className="rounded-lg border bg-background-primary/40 px-2.5 py-2 md:px-3 md:py-2.5"
             style={{ borderColor: `rgba(${rgb},0.15)` }}
           >
             <div
               className="text-lg md:text-xl font-bold leading-none tabular-nums"
               style={{ color: `rgb(${rgb})` }}
             >
-              {m.value}
+              <CountUpNumber value={m.value} />
             </div>
             <div className="mt-2 text-[10px] leading-relaxed text-foreground-secondary/60">
               {O.metrics[m.key as keyof typeof O.metrics]}
@@ -633,14 +618,16 @@ function DockPort({
   const { isAr } = useLanguage();
   return (
     <span aria-hidden="true" className="inline-flex items-center gap-1.5 shrink-0">
-      <span
-        className={`font-mono transition-colors duration-300 ${
-          isAr ? "text-[10px] tracking-normal" : "text-[9px] tracking-[0.18em]"
-        }`}
-        style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.5)` }}
-      >
-        {coord}
-      </span>
+      {coord && (
+        <span
+          className={`font-mono transition-colors duration-300 ${
+            isAr ? "text-[10px] tracking-normal" : "text-[9px] tracking-[0.18em]"
+          }`}
+          style={{ color: active ? `rgba(${rgb},0.9)` : `rgba(${rgb},0.5)` }}
+        >
+          {coord}
+        </span>
+      )}
       <span
         className="w-2.5 h-2.5 rotate-45 border transition-all duration-300"
         style={{

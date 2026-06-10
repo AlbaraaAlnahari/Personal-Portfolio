@@ -6,58 +6,47 @@ import { RouteAwareAISystemStatus } from "@/components/environment/RouteAwareAIS
 import { RouteTransition } from "@/components/layout/RouteTransition";
 import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 import { LANG_STORAGE_KEY, dirFor, normalizeLang } from "@/lib/i18n/config";
+import {
+  buildPageMetadata,
+  SITE_URL,
+  SITE_NAME,
+  PROFILE_IMAGE,
+} from "@/lib/i18n/serverMeta";
+import { FaviconThemeSync } from "@/components/environment/FaviconThemeSync";
+import { DocumentTitleSync } from "@/components/environment/DocumentTitleSync";
 
-export const metadata: Metadata = {
-  title: "Albaraa OS — AI Software Lab",
-  description:
-    "Albaraa OS is a futuristic AI software lab portfolio. Premium, cinematic, and powered by intelligent design.",
-  keywords: [
-    "portfolio",
-    "AI",
-    "software engineering",
-    "full-stack",
-    "React",
-    "Next.js",
-  ],
-  authors: [{ name: "Albaraa Alnahari", url: "https://albaraa.dev" }],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://albaraa.dev",
-    title: "Albaraa OS — AI Software Lab",
-    description:
-      "A futuristic AI software lab portfolio experience",
-    siteName: "Albaraa OS",
-    images: [
-      {
-        url: "https://albaraa.dev/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Albaraa OS",
-        type: "image/png",
-      },
+// Default/home metadata = the hybrid Arabic/English brand identity, localized
+// from the `albaraa-language` cookie (Arabic when absent). Home is a client
+// component (can't export metadata), so this layout default IS the Home result;
+// interior routes provide their own localized title/description/OG via
+// buildPageMetadata. Title, description, Open Graph, and Twitter all come from
+// the shared localized source; the layout only adds site-wide fields.
+export async function generateMetadata(): Promise<Metadata> {
+  const base = await buildPageMetadata("/");
+  return {
+    metadataBase: new URL(SITE_URL),
+    applicationName: SITE_NAME,
+    ...base,
+    keywords: [
+      "Albaraa Alnahari",
+      "البراء النهاري",
+      "software engineering",
+      "AI products",
+      "product thinking",
+      "robotics",
+      "portfolio",
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Albaraa OS — AI Software Lab",
-    description:
-      "A futuristic AI software lab portfolio experience",
-    creator: "@albaraa",
-    images: ["https://albaraa.dev/og-image.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    "max-image-preview": "large",
-    "max-snippet": -1,
-    "max-video-preview": -1,
-  },
-  verification: {
-    google: "",
-    yandex: "",
-  },
-};
+    authors: [{ name: "Albaraa Alnahari", url: SITE_URL }],
+    creator: "Albaraa Alnahari",
+    robots: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -74,25 +63,75 @@ export const viewport: Viewport = {
  * Root Layout Component
  * Wraps entire application with global styles and structure
  */
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Arabic-first: seed the document language/direction from the persisted
   // `albaraa-language` cookie (Arabic when absent) so the first server paint and
   // the first client render agree — no language flash, no hydration mismatch.
   const cookieStore = await cookies();
   const lang = normalizeLang(cookieStore.get(LANG_STORAGE_KEY)?.value);
   const dir = dirFor(lang);
+
+  // Structured data (JSON-LD): Person + WebSite. Absolute URLs use SITE_URL
+  // (the canonical origin, albaraa.sa). Helps search engines understand the
+  // brand identity and improves rich-result eligibility.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: "Albaraa Alnahari",
+        alternateName: [
+          "البراء النهاري",
+          "Albaraa Alnahari Space",
+          "مساحة البراء النهاري",
+        ],
+        jobTitle: "Software Engineering Student",
+        description:
+          "Software engineering student building AI products and digital experiences shaped by product thinking and technical leadership.",
+        image: `${SITE_URL}${PROFILE_IMAGE}`,
+        url: SITE_URL,
+        sameAs: [
+          "https://www.linkedin.com/in/albaraa-alnahari",
+          "https://github.com/AlbaraaAlnahari",
+          "https://x.com/x_ff",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: SITE_NAME,
+        alternateName: ["مساحة البراء النهاري", "Albaraa Alnahari", "البراء النهاري"],
+        url: SITE_URL,
+        inLanguage: ["ar", "en"],
+        publisher: { "@id": `${SITE_URL}/#person` },
+      },
+    ],
+  };
+
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        {/* Theme-aware favicon. Rendered manually (not via the app/icon.svg
+            convention) so it is the single icon link we fully control — the
+            bootstrap below and FaviconThemeSync swap its href between the navy
+            and warm variants. Navy is the SSR default (theme lives in
+            localStorage, unknown server-side). apple-touch-icon and the web
+            manifest still come from app/apple-icon.tsx and app/manifest.ts. */}
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="/favicon-navy.svg"
+          suppressHydrationWarning
+        />
+
+        {/* Structured data — Person + WebSite (brand identity for search). */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
 
         {/* Preconnect to external resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -106,19 +145,26 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.vercel.com" />
       </head>
       <body className="bg-background-primary text-foreground-primary antialiased">
-        {/* No-flash theme bootstrap — applies the saved appearance
-            (localStorage 'albaraa-theme') to <html data-theme> before first
-            paint; defaults to navy. */}
+        {/* No-flash bootstrap — before first paint, applies the saved theme
+            (localStorage 'albaraa-theme') to <html data-theme> AND points the
+            favicon at the matching variant (/favicon-navy.svg | /favicon-warm.svg)
+            so the tab icon is correct immediately, even before JS hydrates.
+            Defaults to navy. FaviconThemeSync re-asserts this on theme toggle. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('albaraa-theme');document.documentElement.dataset.theme=(t==='warm'||t==='navy')?t:'navy';}catch(e){document.documentElement.dataset.theme='navy';}})();",
+              "(function(){try{var t=localStorage.getItem('albaraa-theme');t=(t==='warm'||t==='navy')?t:'navy';document.documentElement.dataset.theme=t;var ls=document.querySelectorAll('link[rel=icon]');for(var i=0;i<ls.length;i++){ls[i].setAttribute('type','image/svg+xml');ls[i].setAttribute('href','/favicon-'+t+'.svg');}}catch(e){document.documentElement.dataset.theme='navy';}})();",
           }}
         />
         {/* Language system — Arabic ⇄ English. The provider's initial language
             matches the server-rendered <html lang/dir> (seeded from the cookie
             above), so there is no flash or hydration mismatch. */}
         <LanguageProvider initialLang={lang}>
+          {/* Tab favicon follows the active theme; tab title follows the active
+              language. Both are headless (render null) and touch no visible UI. */}
+          <FaviconThemeSync />
+          <DocumentTitleSync />
+
           {/* Navigation */}
           <Navigation />
 

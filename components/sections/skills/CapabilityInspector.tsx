@@ -59,6 +59,7 @@ export function CapabilityInspector({
   const tr = (en: string) => (isAr ? "tracking-normal" : en);
   const inline = variant === "inline";
   const isStandby = view.kind === "standby";
+  const isActive = !isStandby;
   // Warm cream: the standby console swaps the pale steel neutral for a dark-navy
   // one so its border, bus port, signal line, and header dot read clearly on the
   // light surface. Non-standby (selected) keeps its domain accent unchanged.
@@ -66,48 +67,48 @@ export function CapabilityInspector({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border bg-background-primary/45 backdrop-blur-md transition-colors duration-300 ${
+      className={`t-navy-card relative overflow-hidden rounded-2xl border bg-background-primary/45 backdrop-blur-md transition-colors duration-300 ${
         inline ? "p-4" : "p-5 md:p-6 h-full"
       }`}
       style={{
-        borderColor: `rgba(${accent},${isStandby ? (warm ? 0.28 : 0.22) : 0.34})`,
+        borderColor: `rgba(${accent},${isStandby ? (warm ? 0.28 : 0.22) : warm ? 0.4 : 0.42})`,
         ...(warm
           ? {
-              // Same warm cream as the stat bar + skill cards via the shared
-              // var(--surface-deep) token (#f0ebdf) — one consistent editorial
-              // surface across the whole capability matrix (not pure white).
-              backgroundColor: "var(--surface-deep)",
-              boxShadow: "0 1px 2px rgba(8,15,35,0.05), 0 10px 24px -16px rgba(8,15,35,0.18)",
+              // Calm inspector: the active panel lifts to the cleaner/brighter
+              // cream (--surface-lit) against the deep-cream cards, framed by a
+              // clear accent border + a thin neutral-accent inset hairline. No
+              // colored wash or bloom — rail + border + badge carry the state.
+              backgroundColor: isActive ? "var(--surface-lit)" : "var(--surface-deep)",
+              boxShadow: isActive
+                ? `0 1px 2px rgba(8,15,35,0.05), 0 14px 32px -20px rgba(8,15,35,0.2), inset 0 0 0 1px rgba(${accent},0.12)`
+                : "0 1px 2px rgba(8,15,35,0.05), 0 10px 24px -16px rgba(8,15,35,0.18)",
             }
-          : {}),
+          : {
+              // Navy: active keeps the translucent surface (the blueprint grid
+              // still reads through) with a neutral depth shadow + a thin accent
+              // inset hairline. No wash, no bloom.
+              boxShadow: isActive
+                ? `0 16px 34px -22px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(${accent},0.14)`
+                : undefined,
+            }),
       }}
     >
       {/* docked bus input port (decorative) */}
       <span
         aria-hidden="true"
-        className="absolute left-0 top-7 bottom-7 w-[2px] rounded-full transition-all duration-300"
+        className={`absolute left-0 top-6 bottom-6 rounded-full transition-all duration-300 ${isStandby ? "w-[2px]" : "w-[3px]"}`}
         style={{
-          background: isStandby
-            ? `linear-gradient(to bottom, rgba(${accent},0.3), rgba(${accent},0.05))`
-            : `linear-gradient(to bottom, rgba(${accent},0.75), rgba(${accent},0.12))`,
+          background: isStandby ? `rgba(${accent},0.28)` : `rgba(${accent},0.7)`,
+          boxShadow: "none",
         }}
       />
-      {!isStandby && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-16 -right-16 w-44 h-44 rounded-full blur-2xl"
-          style={{ background: `radial-gradient(circle, rgba(${accent},0.12), transparent 70%)` }}
-        />
-      )}
+      {/* active state is carried by the rail + border + badge — no colored bloom */}
 
       {/* header */}
       <div className="flex items-center gap-2.5">
         <span
-          className="w-1.5 h-1.5 rounded-full transition-all duration-300"
-          style={{
-            background: isStandby ? `rgba(${accent},0.6)` : `rgb(${accent})`,
-            boxShadow: isStandby ? "none" : `0 0 8px rgba(${accent},0.7)`,
-          }}
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ background: isStandby ? `rgba(${accent},0.55)` : `rgb(${accent})` }}
           aria-hidden="true"
         />
         <span
@@ -116,6 +117,21 @@ export function CapabilityInspector({
         >
           {c.label}
         </span>
+        {isActive && (
+          <span
+            className="ms-auto inline-flex items-center gap-1.5 rounded-md border px-2 py-[3px]"
+            style={{
+              borderColor: `rgba(${accent},0.4)`,
+              background: warm ? `rgba(${accent},0.08)` : `rgba(${accent},0.12)`,
+            }}
+          >
+            <span
+              className="w-1 h-1 rounded-full"
+              style={{ background: `rgb(${accent})` }}
+              aria-hidden="true"
+            />
+          </span>
+        )}
       </div>
 
       {/* ── STANDBY ── */}
@@ -127,13 +143,42 @@ export function CapabilityInspector({
           >
             {c.standby.state}
           </div>
-          <svg viewBox="0 0 220 40" className="mt-6 w-full max-w-[260px] h-auto" fill="none" aria-hidden="true">
-            <circle cx="16" cy="20" r="6" stroke={`rgba(${accent},0.4)`} strokeWidth="1.4" />
+          <svg
+            viewBox="0 0 220 40"
+            className="mt-6 w-full max-w-[260px] h-auto"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle
+              cx="16"
+              cy="20"
+              r="6"
+              stroke={`rgba(${accent},0.4)`}
+              strokeWidth="1.4"
+            />
             <circle cx="16" cy="20" r="2" fill={`rgba(${accent},0.5)`} />
-            <path d="M24 20 H150" stroke={`rgba(${accent},0.28)`} strokeWidth="1.2" strokeDasharray="3 5" />
+            <path
+              d="M24 20 H150"
+              stroke={`rgba(${accent},0.28)`}
+              strokeWidth="1.2"
+              strokeDasharray="3 5"
+            />
             <path d="M150 20 h40" stroke={`rgba(${accent},0.18)`} strokeWidth="1.2" />
-            <rect x="190" y="11" width="18" height="18" rx="4" stroke={`rgba(${accent},0.35)`} strokeWidth="1.4" />
-            <path d="M196 20h6" stroke={`rgba(${accent},0.4)`} strokeWidth="1.3" strokeLinecap="round" />
+            <rect
+              x="190"
+              y="11"
+              width="18"
+              height="18"
+              rx="4"
+              stroke={`rgba(${accent},0.35)`}
+              strokeWidth="1.4"
+            />
+            <path
+              d="M196 20h6"
+              stroke={`rgba(${accent},0.4)`}
+              strokeWidth="1.3"
+              strokeLinecap="round"
+            />
           </svg>
           <p
             className="mt-6 text-[13px] leading-[1.8] text-foreground-secondary/70 max-w-xs"
@@ -141,30 +186,33 @@ export function CapabilityInspector({
           >
             {c.standby.body}
           </p>
-          <div
-            className={`mt-4 font-mono text-[10px] text-foreground-secondary/45 ${tr("tracking-[0.16em]")}`}
-            style={warm ? { color: "rgba(71,77,91,0.8)" } : undefined}
-          >
-            {c.standby.ready}
-          </div>
         </div>
       )}
 
       {/* ── DOMAIN ── */}
       {view.kind === "domain" && (
         <>
-          <div className={`mt-5 font-mono text-[10px] ${tr("tracking-[0.22em]")}`} style={{ color: `rgba(${accent},0.8)` }}>
+          <div
+            className={`mt-5 font-mono text-[10px] ${tr("tracking-[0.22em]")}`}
+            style={{ color: `rgba(var(--rgb-body),0.6)` }}
+          >
             {c.domainTag(view.domainNum, view.domainTitle)}
           </div>
           <div className="mt-3 space-y-1.5">
-            <div className="text-xl md:text-2xl font-bold text-foreground leading-snug">{view.domainTitle}</div>
-            <div className={`font-mono text-[10px] text-foreground-secondary/50 ${tr("tracking-[0.2em]")}`}>
+            <div className="text-xl md:text-2xl font-bold text-foreground leading-snug">
+              {view.domainTitle}
+            </div>
+            <div
+              className={`font-mono text-[10px] text-foreground-secondary/50 ${tr("tracking-[0.2em]")}`}
+            >
               {c.capabilitiesCount(view.capabilities.length)}
             </div>
           </div>
 
           <Lane accent={accent} label={c.lanes.domainPurpose}>
-            <p className="text-[13px] leading-relaxed text-foreground-secondary/85">{view.purpose}</p>
+            <p className="text-[13px] leading-relaxed text-foreground-secondary/85">
+              {view.purpose}
+            </p>
           </Lane>
 
           <div className="mt-3 flex flex-wrap gap-1.5">
@@ -183,9 +231,6 @@ export function CapabilityInspector({
           {view.projects.length > 0 && (
             <Lane accent={accent} label={c.lanes.relatedSystems}>
               <ProjectChips accent={accent} projects={view.projects} />
-              <p className="mt-2 text-[13px] leading-relaxed text-foreground-secondary/85">
-                {c.domainConnected}
-              </p>
             </Lane>
           )}
         </>
@@ -194,7 +239,10 @@ export function CapabilityInspector({
       {/* ── SKILL ── */}
       {view.kind === "skill" && (
         <>
-          <div className={`mt-5 font-mono text-[10px] ${tr("tracking-[0.22em]")}`} style={{ color: `rgba(${accent},0.8)` }}>
+          <div
+            className={`mt-5 font-mono text-[10px] ${tr("tracking-[0.22em]")}`}
+            style={{ color: `rgba(var(--rgb-body),0.6)` }}
+          >
             {c.domainTag(view.domainNum, view.domainTitle)}
           </div>
           <div className={`mt-2 flex items-center ${inline ? "gap-3" : "gap-3.5"}`}>
@@ -205,16 +253,27 @@ export function CapabilityInspector({
                 background: `rgba(${accent},0.1)`,
               }}
             >
-              <SkillMark name={view.markName} size={inline ? 28 : 34} vivid warm={warm} />
+              <SkillMark
+                name={view.markName}
+                size={inline ? 28 : 34}
+                vivid
+                warm={warm}
+              />
             </span>
             <div className="min-w-0">
-              <div dir="ltr" className="ltr-isolate text-xl md:text-2xl font-bold text-foreground leading-tight truncate">{view.label}</div>
-              <div className={`font-mono text-[10px] text-foreground-secondary/50 ${tr("tracking-[0.2em]")}`}>{c.capabilityTag}</div>
+              <div
+                dir="ltr"
+                className="ltr-isolate text-xl md:text-2xl font-bold text-foreground leading-tight break-words"
+              >
+                {view.label}
+              </div>
             </div>
           </div>
 
           <Lane accent={accent} label={c.lanes.whatEnables}>
-            <p className="text-[13px] leading-relaxed text-foreground-secondary/85">{view.enables}</p>
+            <p className="text-[13px] leading-relaxed text-foreground-secondary/85">
+              {view.enables}
+            </p>
           </Lane>
 
           {view.projects.length > 0 ? (
@@ -227,9 +286,18 @@ export function CapabilityInspector({
               </p>
             </Lane>
           ) : (
-            <div className="mt-4 pt-3 border-t flex items-center gap-2" style={{ borderColor: `rgba(${accent},0.14)` }}>
-              <span className="w-1 h-1 rounded-full" style={{ background: `rgba(${accent},0.6)` }} aria-hidden="true" />
-              <span className={`font-mono text-[10px] text-foreground-secondary/55 ${tr("tracking-[0.22em]")}`}>
+            <div
+              className="mt-4 pt-3 border-t flex items-center gap-2"
+              style={{ borderColor: `rgba(${accent},0.14)` }}
+            >
+              <span
+                className="w-1 h-1 rounded-full"
+                style={{ background: `rgba(${accent},0.6)` }}
+                aria-hidden="true"
+              />
+              <span
+                className={`font-mono text-[10px] text-foreground-secondary/55 ${tr("tracking-[0.22em]")}`}
+              >
                 {c.inToolkit}
               </span>
             </div>
@@ -240,13 +308,31 @@ export function CapabilityInspector({
   );
 }
 
-function Lane({ accent, label, children }: { accent: string; label: string; children: React.ReactNode }) {
+function Lane({
+  accent,
+  label,
+  children,
+}: {
+  accent: string;
+  label: string;
+  children: React.ReactNode;
+}) {
   const { isAr } = useLanguage();
   return (
-    <div className="mt-5 pt-5 border-t" style={{ borderColor: `rgba(${accent},0.16)` }}>
+    <div
+      className="mt-5 pt-5 border-t"
+      style={{ borderColor: `rgba(var(--rgb-body),0.12)` }}
+    >
       <div className="flex items-center gap-2 mb-3">
-        <span aria-hidden="true" className="h-px w-4" style={{ background: `rgba(${accent},0.6)` }} />
-        <span className={`font-mono text-[10px] ${isAr ? "tracking-normal" : "tracking-[0.24em]"}`} style={{ color: `rgba(${accent},0.75)` }}>
+        <span
+          aria-hidden="true"
+          className="h-px w-4"
+          style={{ background: `rgba(${accent},0.55)` }}
+        />
+        <span
+          className={`font-mono text-[10px] ${isAr ? "tracking-normal" : "tracking-[0.24em]"}`}
+          style={{ color: `rgba(var(--rgb-body),0.62)` }}
+        >
           {label}
         </span>
       </div>
@@ -255,7 +341,13 @@ function Lane({ accent, label, children }: { accent: string; label: string; chil
   );
 }
 
-function ProjectChips({ accent, projects }: { accent: string; projects: ProjectRef[] }) {
+function ProjectChips({
+  accent,
+  projects,
+}: {
+  accent: string;
+  projects: ProjectRef[];
+}) {
   return (
     <div className="flex flex-wrap gap-1.5">
       {projects.map((p) => (
@@ -263,9 +355,17 @@ function ProjectChips({ accent, projects }: { accent: string; projects: ProjectR
           key={p.code}
           dir="ltr"
           className="ltr-isolate inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border font-mono text-[10px] tracking-wide"
-          style={{ borderColor: `rgba(${accent},0.35)`, background: `rgba(${accent},0.08)`, color: `rgb(${accent})` }}
+          style={{
+            borderColor: `rgba(${accent},0.35)`,
+            background: `rgba(${accent},0.08)`,
+            color: `rgb(${accent})`,
+          }}
         >
-          <span className="w-1 h-1 rounded-full" style={{ background: `rgb(${accent})` }} aria-hidden="true" />
+          <span
+            className="w-1 h-1 rounded-full"
+            style={{ background: `rgb(${accent})` }}
+            aria-hidden="true"
+          />
           {p.code}
         </span>
       ))}

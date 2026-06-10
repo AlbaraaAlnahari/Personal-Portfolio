@@ -83,16 +83,15 @@ export const COMMAND_MODULES: CommandModule[] = [
   },
   {
     id: "terminal",
-    label: "TERMINAL",
-    subtitle: "COMMAND",
+    label: "ASK ALBARAA AI",
+    subtitle: "ASSISTANT",
     icon: "M4 17l6-5-6-5M12 19h8",
     accentColor: "#E7F7FF",
     accentGlow: "rgba(231,247,255,0.35)",
-    previewTitle: "Terminal",
+    previewTitle: "Ask Albaraa AI",
     previewDescription:
-      "Interactive command layer for exploring the portfolio. Calibrating — online soon.",
-    previewAction: "Coming online",
-    comingSoon: true,
+      "A personal archive assistant that answers from Albaraa's verified projects, skills, and experience.",
+    previewAction: "Open Ask Albaraa AI",
   },
 ];
 
@@ -100,16 +99,13 @@ export const COMMAND_MODULES: CommandModule[] = [
 // DESKTOP MODULE POSITIONS — artful arrangement around reactor
 // Positions are percentages relative to the reactor container
 // =====================================================
-export const DESKTOP_MODULE_POSITIONS: Record<
-  string,
-  { top: string; left: string }
-> = {
-  terminal: { top: "3%", left: "46%" },      // top center
-  about: { top: "14%", left: "5%" },          // upper-left
-  projects: { top: "12%", left: "84%" },      // upper-right
-  experience: { top: "70%", left: "86%" },    // lower-right
-  skills: { top: "73%", left: "3%" },         // lower-left
-  contact: { top: "90%", left: "52%" },       // bottom center
+export const DESKTOP_MODULE_POSITIONS: Record<string, { top: string; left: string }> = {
+  terminal: { top: "3%", left: "46%" }, // top center
+  about: { top: "14%", left: "5%" }, // upper-left
+  projects: { top: "12%", left: "84%" }, // upper-right
+  experience: { top: "70%", left: "86%" }, // lower-right
+  skills: { top: "73%", left: "3%" }, // lower-left
+  contact: { top: "90%", left: "52%" }, // bottom center
 };
 
 // =====================================================
@@ -123,8 +119,8 @@ export const MODULE_SECTION_ANCHORS: Record<string, string> = {
   experience: "/impact",
   skills: "/about#skills",
   contact: "/contact",
-  // terminal: intentionally unmapped — it is a "coming online" placeholder
-  // (no real command experience exists yet), so it must not navigate anywhere.
+  // terminal = the "Ask Albaraa AI" module → the dedicated /ask assistant page.
+  terminal: "/ask",
 };
 
 // =====================================================

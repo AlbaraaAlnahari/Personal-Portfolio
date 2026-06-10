@@ -5,7 +5,6 @@ import { IntelligenceEngineHero } from "@/components/sections/IntelligenceEngine
 import { DestinationGallery } from "@/components/home/DestinationGallery";
 import { EditorialBlueprintField } from "@/components/home/EditorialBlueprintField";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { pageTransitionVariants } from "@/lib/motion/variants";
 
 /**
  * Home — ALBARAA OS entry.
@@ -25,9 +24,16 @@ import { pageTransitionVariants } from "@/lib/motion/variants";
 export default function Home() {
   return (
     <motion.main
-      initial="hidden"
-      animate="visible"
-      variants={pageTransitionVariants}
+      // OPACITY-ONLY entrance. A transform here (e.g. translateY) would make
+      // this <main> the containing block for the `position: fixed`
+      // EditorialBlueprintField below, dragging the grid as the page animates
+      // in — a large layout shift (CLS) on first paint. Opacity creates no
+      // containing block, so the fixed grid stays pinned to the viewport. The
+      // hero + per-section reveals supply the "assembled" motion. (Mirrors the
+      // same decision documented in RouteTransition.)
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative min-h-screen"
     >
       {/* Home-wide Dark Blueprint Coordinate Field — fixed, continuous, behind

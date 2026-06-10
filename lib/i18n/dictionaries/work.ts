@@ -12,8 +12,7 @@ export const work = {
   ar: {
     work: {
       header: {
-        eyebrow: "أنظمة منشورة / أعمال مختارة",
-        index: "04 من أنظمة المشاريع",
+        eyebrow: "أعمال مختارة",
         titleLead: "منتجات صُمّمت لتحويل",
         titleAccent: "الأفكار",
         titleTrail: "إلى واقع.",
@@ -30,14 +29,11 @@ export const work = {
         },
       },
       preview: {
-        livePreview: "معاينة النظام الحيّ",
-        systemOutput: "مخرجات النظام",
-        outputInterface: "المخرجات / الواجهة المنشورة",
+        livePreview: "معاينة مباشرة",
       },
       labels: {
         technologyStack: "حزمة التقنيات",
         techStack: "حزمة التقنيات",
-        adaptiveRoute: "مسار تعلّم متكيّف",
       },
       actions: {
         opensNewTab: "(يفتح في تبويب جديد)",
@@ -46,11 +42,11 @@ export const work = {
       },
       frame: {
         live: "مباشر",
-        deployedInterface: "الواجهة المنشورة",
+        deployedInterface: "موقع مباشر",
         generatedRoadmap: "خارطة طريق مُولّدة",
       },
       docupilot: {
-        systemLabel: "النظام 01 / الوحدة الرائدة",
+        systemLabel: "المشروع الرئيسي",
         category: "ذكاء اصطناعي كخدمة / عمليات الأعمال",
         tagline: "منصة عمليات أعمال بالذكاء الاصطناعي",
         recognition: "المركز الأول — معسكر ابتكار الذكاء الاصطناعي",
@@ -58,7 +54,7 @@ export const work = {
           "طبقة عمليات ذكية تحوّل العقود والفواتير ومخططات الأعمال وتغيّرات النطاق إلى قرارات قابلة للتنفيذ داخل الفريق.",
       },
       techpath: {
-        systemLabel: "النظام 02 / مسار تعلّم متكيّف",
+        systemLabel: "مسار تعلّم متكيّف",
         category: "تعليم بالذكاء الاصطناعي / تخصيص",
         tagline: "مولّد خرائط طريق تعليمية بالذكاء الاصطناعي",
         description:
@@ -68,21 +64,23 @@ export const work = {
         domain: "techpath / roadmap",
       },
       sanadk: {
-        systemLabel: "النظام 03 / تصميم شامل",
+        systemLabel: "تصميم شامل",
         category: "إتاحة الوصول / تصميم شامل",
         name: "تطبيق سندك",
         tagline: "مساعد ذكي للتسوّق والتنقّل",
-        description: "تطبيق جوّال ذكي يدعم ذوي الإعاقة عبر الرؤية الحاسوبية والملاحة الذكية، ليساعدهم على التسوق والتنقل باستقلالية وسهولة أكبر.",
-        conceptLabel: "إشارة إرشاد الوصول الشامل",
-        statusLabel: "حالة: إتاحة وصول / تجربة استخدام",
+        description:
+          "تطبيق جوّال ذكي يدعم ذوي الإعاقة عبر الرؤية الحاسوبية والملاحة الذكية، ليساعدهم على التسوق والتنقل باستقلالية وسهولة أكبر.",
+        conceptLabel: "تجربة إرشاد الوصول",
+        statusLabel: "دراسة حالة: إتاحة الوصول وتجربة الاستخدام",
       },
       slidemind: {
-        systemLabel: "النظام 04 / أتمتة الدراسة",
+        systemLabel: "أتمتة الدراسة",
         category: "أدوات تعلّم بالذكاء الاصطناعي",
         name: "مولّد البطاقات التعليمية Slide-Mind",
         tagline: "نظام دراسة بالذكاء الاصطناعي",
-        description: "يحلّل المحتوى التعليمي، يستخلص أهم النقاط، ويحوّلها إلى بطاقات تعليمية واختبارات قصيرة بالذكاء الاصطناعي.",
-        conceptLabel: "محرك تحويل المحتوى إلى اختبارات قصيرة",
+        description:
+          "يحلّل المحتوى التعليمي، يستخلص أهم النقاط، ويحوّلها إلى بطاقات تعليمية واختبارات قصيرة بالذكاء الاصطناعي.",
+        conceptLabel: "تحويل المحتوى إلى بطاقات",
       },
       docupilotPreviewAlt:
         "لوحة قرارات DocuPilot — المشاريع النشطة، والفواتير المعلّقة، والاعتمادات المطلوبة، والمخاطر العالية، ومؤشرات المشاريع المرتبطة داخل منصة عمليات الذكاء الاصطناعي المنشورة.",
@@ -111,77 +109,75 @@ export const work = {
   en: {
     work: {
       header: {
-        eyebrow: "DEPLOYED SYSTEMS / FEATURED WORK",
-        index: "04 PROJECT SYSTEMS",
+        eyebrow: "Selected Work",
         titleLead: "Products designed to turn",
-        titleAccent: "intelligence",
-        titleTrail: "into action.",
+        titleAccent: "ideas",
+        titleTrail: "into reality.",
         intro:
-          "A selection of AI-enabled products, accessibility experiences, and software systems built to solve real problems.",
+          "A selection of AI-powered products, inclusive-access experiences, and software systems built to solve real problems.",
       },
       pipeline: {
         title: "AI OPERATIONS PIPELINE",
         stages: {
-          documentInput: "DOCUMENT INPUT",
-          aiExtraction: "AI EXTRACTION",
-          structuredWorkflow: "STRUCTURED WORKFLOW",
-          approvalSystem: "APPROVAL SYSTEM",
+          documentInput: "INPUT",
+          aiExtraction: "ANALYSIS",
+          structuredWorkflow: "STRUCTURE",
+          approvalSystem: "APPROVAL",
         },
       },
       preview: {
-        livePreview: "LIVE SYSTEM PREVIEW",
-        systemOutput: "SYSTEM OUTPUT",
-        outputInterface: "OUTPUT / DEPLOYED INTERFACE",
+        livePreview: "Live Preview",
       },
       labels: {
         technologyStack: "TECHNOLOGY STACK",
         techStack: "TECH STACK",
-        adaptiveRoute: "ADAPTIVE ROUTE",
       },
       actions: {
         opensNewTab: "(opens in a new tab)",
-        liveSite: "Live Site",
-        viewRepository: "View Repository",
+        liveSite: "Open DocuPilot Site",
+        viewRepository: "View Project Files",
       },
       frame: {
         live: "LIVE",
-        deployedInterface: "DEPLOYED INTERFACE",
+        deployedInterface: "LIVE SITE",
         generatedRoadmap: "GENERATED ROADMAP",
       },
       docupilot: {
-        systemLabel: "SYSTEM 01 / FLAGSHIP MODULE",
+        systemLabel: "Flagship Project",
         category: "AI SAAS / BUSINESS OPERATIONS",
         tagline: "AI Business Operations Platform",
         recognition: "1st Place — AI Innovation Bootcamp",
         description:
-          "AI SaaS platform transforming business documents into structured workflows, approvals, and operational systems.",
+          "An intelligent operations layer that turns contracts, invoices, business plans, and scope changes into actionable decisions for the team.",
       },
       techpath: {
-        systemLabel: "SYSTEM 02 / ADAPTIVE LEARNING ROUTE",
+        systemLabel: "Adaptive Learning Route",
         category: "AI EDUCATION / PERSONALIZATION",
         tagline: "AI Learning Roadmap Generator",
         description:
-          "AI-powered roadmap generator with personalized learning timelines and adaptive educational systems.",
+          "TechPath helps you build a detailed learning roadmap with curated links, level-assessment quizzes, and daily progress tracking — solo or alongside your peers.",
         roadmapAlt:
           "TechPath generated learning roadmap — overall progress, learning timeline with a Foundation / Backend Development phase, and a weekly study schedule.",
         domain: "techpath / roadmap",
       },
       sanadk: {
-        systemLabel: "SYSTEM 03 / INCLUSIVE DESIGN",
+        systemLabel: "Inclusive Design",
         category: "ACCESSIBILITY / INCLUSIVE DESIGN",
-        name: "Sanadk Accessibility App",
-        tagline: "Accessible Mobility Experience",
-        description: "Accessibility-first mobile experience for visually impaired and wheelchair users.",
-        conceptLabel: "ACCESSIBILITY GUIDANCE SIGNAL",
-        statusLabel: "ACCESSIBILITY / UX CASE",
+        name: "Sanadk App",
+        tagline: "Smart Shopping & Mobility Assistant",
+        description:
+          "A smart mobile app that supports people with disabilities through computer vision and intelligent navigation, helping them shop and get around with greater independence and ease.",
+        conceptLabel: "ACCESSIBILITY GUIDANCE",
+        statusLabel: "ACCESSIBILITY / UX CASE STUDY",
       },
       slidemind: {
-        systemLabel: "SYSTEM 04 / STUDY AUTOMATION",
+        systemLabel: "Study Automation",
         category: "AI LEARNING TOOLS",
         name: "Slide-Mind Flashcard Generator",
         tagline: "AI Study System",
-        description: "AI-powered flashcard generation system with modular architecture.",
-        conceptLabel: "KNOWLEDGE DISTILLATION ENGINE",
+        description:
+          "Analyzes learning content, distills the key points, and turns them into AI-generated flashcards and short quizzes.",
+        conceptLabel: "CONTENT TO FLASHCARDS",
       },
       docupilotPreviewAlt:
         "DocuPilot Decision Dashboard — active projects, pending invoices, required approvals, high risks, and linked project indicators in the deployed AI operations platform.",

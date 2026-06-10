@@ -51,28 +51,49 @@ export function SystemPreviewFrame({
       {/* Chrome bar */}
       <div
         className="flex items-center gap-3 px-3.5 py-2.5 border-b"
-        style={{ borderColor: `rgba(${rgb},0.16)`, background: "rgba(10,14,39,0.8)" }}
+        style={{ borderColor: `rgba(${rgb},0.16)`, background: "rgba(22,28,48,0.88)" }}
       >
         {/* window dots */}
         <div className="flex items-center gap-1.5" aria-hidden="true">
-          <span className="w-2 h-2 rounded-full" style={{ background: `rgba(${rgb},0.55)` }} />
-          <span className="w-2 h-2 rounded-full" style={{ background: "rgba(150,165,205,0.35)" }} />
-          <span className="w-2 h-2 rounded-full" style={{ background: "rgba(150,165,205,0.22)" }} />
+          <span
+            className="w-2 h-2 rounded-full"
+            style={{ background: `rgba(${rgb},0.55)` }}
+          />
+          <span
+            className="w-2 h-2 rounded-full"
+            style={{ background: "rgba(150,165,205,0.35)" }}
+          />
+          <span
+            className="w-2 h-2 rounded-full"
+            style={{ background: "rgba(150,165,205,0.22)" }}
+          />
         </div>
 
         {/* address / context pill */}
         {domain && (
           <div
             className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-md min-w-0"
-            style={{ background: "rgba(150,165,205,0.06)", border: "1px solid rgba(150,165,205,0.14)" }}
+            style={{
+              background: "rgba(150,165,205,0.06)",
+              border: "1px solid rgba(150,165,205,0.14)",
+            }}
           >
-            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke={`rgb(${rgb})`} strokeWidth="2.4" aria-hidden="true">
+            <svg
+              width="9"
+              height="9"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={`rgb(${rgb})`}
+              strokeWidth="2.4"
+              aria-hidden="true"
+            >
               <circle cx="12" cy="12" r="9" />
               <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
             </svg>
             <span
               dir="ltr"
-              className="ltr-isolate font-mono text-[10px] tracking-wide text-foreground-secondary/70 truncate"
+              className="ltr-isolate font-mono text-[10px] tracking-wide truncate"
+              style={{ color: "rgba(216, 225, 244, 0.88)" }}
             >
               {domain}
             </span>
@@ -86,14 +107,14 @@ export function SystemPreviewFrame({
                 className="w-1.5 h-1.5 rounded-full bg-accent-green"
                 style={{ boxShadow: "0 0 7px rgba(var(--rgb-green),0.8)" }}
               />
-              <span className="font-mono text-[9px] tracking-[0.2em] text-accent-green/85">
+              <span className="font-mono text-[9px] tracking-[0.2em] text-accent-green">
                 {t.work.frame.live}
               </span>
             </span>
           )}
           <span
             className="font-mono text-[9px] tracking-[0.22em]"
-            style={{ color: `rgba(${rgb},0.75)` }}
+            style={{ color: `rgba(${rgb},0.92)` }}
           >
             {label}
           </span>

@@ -12,25 +12,23 @@
 export const skills = {
   ar: {
     skills: {
-      eyebrow: "مصفوفة القدرات / منظومة الهندسة التطبيقية",
-      systemTag: "06 / منظومة القدرات",
+      eyebrow: "القدرات التقنية",
       title: {
         lead: "منظومة تقنية لبناء",
         emphasis: "منتجات ذكية.",
       },
       intro:
         "قدرات طُبّقت في منتجات حقيقية، وتجارب ذكاء اصطناعي، وأعمال روبوتية، وتصميم يضع الإنسان في قلب التجربة. اختر أي قدرة لتعرف أين تظهر في الأعمال المختارة.",
-      telemetryLabel: "قياسات المنظومة",
+      telemetryLabel: "نظرة سريعة",
       summary: {
-        capabilities: "قدرة موثّقة",
-        domains: "مجالات القدرات",
-        appliedSystems: "أنظمة تطبيقية",
+        capabilities: "مهارة",
+        domains: "مجالات",
+        appliedSystems: "مشاريع تطبيقية",
       },
       mobilePrompt: "اختر قدرة · شاهد ما تُتيحه وأين تظهر",
       // aria-label builders for the domain/skill nodes
       aria: {
-        domain: (title: string, count: number) =>
-          `مجال ${title}، ${count} قدرة`,
+        domain: (title: string, count: number) => `مجال ${title}، ${count} قدرة`,
         skill: (skill: string, domainTitle: string) =>
           `${skill}، قدرة ضمن مجال ${domainTitle}`,
         skillApplied: (skill: string, domainTitle: string, codes: string) =>
@@ -60,13 +58,11 @@ export const skills = {
         },
         tools: {
           title: "الأدوات",
-          purpose:
-            "منصّات وبيئات تدعم التصميم والتطوير والبيانات والتعاون.",
+          purpose: "منصّات وبيئات تدعم التصميم والتطوير والبيانات والتعاون.",
         },
         professional: {
           title: "القدرات المهنية",
-          purpose:
-            "قدرات إنسانية توجّه البحث والتواصل والتنفيذ عبر العمل التقني.",
+          purpose: "قدرات إنسانية توجّه البحث والتواصل والتنفيذ عبر العمل التقني.",
         },
       },
       // Plain-language "what this enables", keyed by exact capability name
@@ -74,8 +70,7 @@ export const skills = {
         React: "يبني واجهات تفاعلية تتحدّث بسلاسة مع كل خطوة يخطوها المستخدم.",
         "Next.js":
           "إطار عمل لبناء تطبيقات ويب سريعة بصفحات منظّمة، وميزات على الخادم، وتسليم جاهز للإنتاج.",
-        "Tailwind CSS":
-          "حزمة تنسيق تُستخدم لصياغة واجهات متّسقة ومتجاوبة بكفاءة.",
+        "Tailwind CSS": "حزمة تنسيق تُستخدم لصياغة واجهات متّسقة ومتجاوبة بكفاءة.",
         Flutter: "إطار عمل لبناء واجهات تطبيقات الموبايل من قاعدة شيفرة واحدة.",
         Pandas:
           "ينظّم البيانات الجدولية ويحلّلها لتسهيل استخلاص الأنماط واتخاذ القرار.",
@@ -112,8 +107,7 @@ export const skills = {
           "يُفكّك المسائل المعقّدة إلى قرارات مبنية على الأدلة وخطوات عملية تالية.",
         Communication:
           "يترجم الأفكار والنتائج وقرارات المنتج بوضوح بين المستخدمين والفِرَق.",
-        Leadership:
-          "ينسّق الناس والاتجاه لينقل العمل من الفكرة إلى نتيجة ذات معنى.",
+        Leadership: "ينسّق الناس والاتجاه لينقل العمل من الفكرة إلى نتيجة ذات معنى.",
       },
       // Applied-project evidence, keyed by stable project key (matches PROJECTS)
       projects: {
@@ -129,51 +123,53 @@ export const skills = {
         },
         slidemind: {
           title: "مولّد بطاقات تعليمية معياري",
-          relation: "طُبّقت في تطبيق توليد بطاقات تعليمية معياري باستخدام تكامل واجهات البرمجة.",
+          relation:
+            "طُبّقت في تطبيق توليد بطاقات تعليمية معياري باستخدام تكامل واجهات البرمجة.",
         },
         sanadk: {
           title: "دراسة تجربة استخدام لإمكانية الوصول",
-          relation: "طُبّقت في بحث يركّز على إمكانية الوصول وتصميم نموذج أوّلي للموبايل.",
+          relation:
+            "طُبّقت في بحث يركّز على إمكانية الوصول وتصميم نموذج أوّلي للموبايل.",
         },
       },
       // Applied Signal Console (CapabilityInspector)
       console: {
-        label: "وحدة الإشارة التطبيقية",
+        label: "تفاصيل القدرة",
         standby: {
-          state: "وضع الاستعداد / اختر قدرة",
+          state: "اختر قدرة",
           body: "استكشف قدرة لترى ما الذي تُتيحه وأين تظهر ضمن أعمال مختارة.",
-          ready: "27 قدرة جاهزة للفحص",
+          ready: "",
         },
-        domainTag: (num: string, title: string) => `المجال ${num} / ${title}`,
+        domainTag: (_num: string, title: string) => `${title}`,
         capabilitiesCount: (count: number) => `${count} قدرة`,
-        capabilityTag: "قدرة",
+        capabilityTag: "",
         lanes: {
-          domainPurpose: "غاية المجال",
-          relatedSystems: "أنظمة مختارة ذات صلة",
+          domainPurpose: "نبذة عن المجال",
+          relatedSystems: "مشاريع ذات صلة",
           whatEnables: "ما الذي تُتيحه",
-          appliedIn: "مُطبَّقة في نظام مختار",
+          appliedIn: "مُطبَّقة في",
         },
-        domainConnected: "مرتبطة عبر القدرات المُطبَّقة في هذا المجال.",
-        appliedAcross: "مُطبَّقة عبر أنظمة مختارة بُنيت بهذه القدرة.",
-        inToolkit: "قدرة ضمن العُدّة",
+        domainConnected: "",
+        appliedAcross: "مُطبَّقة في هذه المشاريع المختارة.",
+        inToolkit: "ضمن مهاراتي",
+        activeTag: "",
       },
     },
   },
   en: {
     skills: {
-      eyebrow: "CAPABILITY MATRIX / APPLIED ENGINEERING STACK",
-      systemTag: "06 / CAPABILITY SYSTEM",
+      eyebrow: "TECHNICAL CAPABILITIES",
       title: {
-        lead: "A technical stack built for",
+        lead: "A technical stack for building",
         emphasis: "intelligent products.",
       },
       intro:
-        "Capabilities applied across shipped systems, AI workflows, robotics work, and user-centered product design. Explore any capability to see what it enables.",
-      telemetryLabel: "STACK TELEMETRY",
+        "Capabilities applied across real products, AI experiences, robotics work, and design that keeps people at the center. Select any capability to see where it appears in selected work.",
+      telemetryLabel: "AT A GLANCE",
       summary: {
-        capabilities: "DOCUMENTED CAPABILITIES",
-        domains: "CAPABILITY DOMAINS",
-        appliedSystems: "APPLIED PROJECT SYSTEMS",
+        capabilities: "SKILLS",
+        domains: "DOMAINS",
+        appliedSystems: "APPLIED PROJECTS",
       },
       mobilePrompt: "SELECT A CAPABILITY · See what it enables and where it appears",
       aria: {
@@ -211,40 +207,60 @@ export const skills = {
             "Platforms and environments that support design, development, data, and collaboration.",
         },
         professional: {
-          title: "Professional Systems",
+          title: "Professional Skills",
           purpose:
             "Human capabilities that guide research, communication, and execution across technical work.",
         },
       },
       enables: {
-        React: "Builds interactive interfaces that update smoothly as people use a product.",
+        React:
+          "Builds interactive interfaces that update smoothly as people use a product.",
         "Next.js":
           "A framework for building fast web applications with structured pages, server features, and production-ready delivery.",
-        "Tailwind CSS": "A styling toolkit used to craft consistent, responsive interfaces efficiently.",
-        Flutter: "A framework for building mobile application interfaces from a shared codebase.",
-        Pandas: "Organizes and analyzes tabular data so patterns and decisions become easier to extract.",
-        NumPy: "Handles numerical data and calculations efficiently for technical and analytical workflows.",
-        "Data Analysis": "Turns collected information into usable findings that support better product decisions.",
-        OpenCV: "Processes visual input such as images or camera frames for computer-vision experiences.",
-        "AI APIs": "Connects products to AI capabilities such as generation, classification, or intelligent assistance.",
-        Python: "A versatile language widely used for AI, automation, data work, and backend logic.",
+        "Tailwind CSS":
+          "A styling toolkit used to craft consistent, responsive interfaces efficiently.",
+        Flutter:
+          "A framework for building mobile application interfaces from a shared codebase.",
+        Pandas:
+          "Organizes and analyzes tabular data so patterns and decisions become easier to extract.",
+        NumPy:
+          "Handles numerical data and calculations efficiently for technical and analytical workflows.",
+        "Data Analysis":
+          "Turns collected information into usable findings that support better product decisions.",
+        OpenCV:
+          "Processes visual input such as images or camera frames for computer-vision experiences.",
+        "AI APIs":
+          "Connects products to AI capabilities such as generation, classification, or intelligent assistance.",
+        Python:
+          "A versatile language widely used for AI, automation, data work, and backend logic.",
         SQL: "Retrieves and organizes structured information stored in databases.",
         MySQL: "A database system used to store and manage application data reliably.",
         Java: "A strongly structured language used to build modular applications and logic-driven systems.",
-        "C++": "A performance-oriented language often used where efficient control and technical computing matter.",
+        "C++":
+          "A performance-oriented language often used where efficient control and technical computing matter.",
         HTML: "Defines the structure and meaningful content of a web page.",
         CSS: "Controls visual styling, layout, spacing, and responsive presentation on the web.",
-        TypeScript: "Adds safer structure to JavaScript projects, helping larger applications stay reliable and maintainable.",
-        JavaScript: "Powers interactive behavior in web experiences, from user actions to dynamic interface updates.",
+        TypeScript:
+          "Adds safer structure to JavaScript projects, helping larger applications stay reliable and maintainable.",
+        JavaScript:
+          "Powers interactive behavior in web experiences, from user actions to dynamic interface updates.",
         Git: "Tracks changes in code so development work can evolve safely and be reviewed over time.",
-        GitHub: "Hosts code repositories and supports collaboration, review, and project delivery.",
-        "VS Code": "A development environment used to write, inspect, and organize software projects.",
-        PyCharm: "A development environment specialized for building and managing Python-based projects.",
-        Supabase: "Provides backend services such as databases and application data access for modern products.",
-        Figma: "Supports interface design, prototyping, and collaborative product thinking before implementation.",
-        "Analytical Thinking": "Breaks complex problems into evidence-based decisions and practical next steps.",
-        Communication: "Translates ideas, findings, and product decisions clearly across users and teams.",
-        Leadership: "Coordinates people and direction to move work from idea toward meaningful outcome.",
+        GitHub:
+          "Hosts code repositories and supports collaboration, review, and project delivery.",
+        "VS Code":
+          "A development environment used to write, inspect, and organize software projects.",
+        PyCharm:
+          "A development environment specialized for building and managing Python-based projects.",
+        Supabase:
+          "Provides backend services such as databases and application data access for modern products.",
+        Figma:
+          "Supports interface design, prototyping, and collaborative product thinking before implementation.",
+        "Analytical Thinking":
+          "Breaks complex problems into evidence-based decisions and practical next steps.",
+        Communication:
+          "Translates ideas, findings, and product decisions clearly across users and teams.",
+        Leadership:
+          "Coordinates people and direction to move work from idea toward meaningful outcome.",
       },
       projects: {
         docupilot: {
@@ -259,32 +275,35 @@ export const skills = {
         },
         slidemind: {
           title: "Modular Flashcard Generator",
-          relation: "Applied in a modular flashcard-generation application using API integration.",
+          relation:
+            "Applied in a modular flashcard-generation application using API integration.",
         },
         sanadk: {
           title: "Accessibility UX Case",
-          relation: "Applied in accessibility-focused research and mobile prototype design.",
+          relation:
+            "Applied in accessibility-focused research and mobile prototype design.",
         },
       },
       console: {
-        label: "APPLIED SIGNAL CONSOLE",
+        label: "CAPABILITY DETAILS",
         standby: {
-          state: "STANDBY / SELECT A CAPABILITY",
-          body: "Explore a capability to see what it enables and where it appears in featured work.",
-          ready: "27 capabilities ready for inspection",
+          state: "SELECT A CAPABILITY",
+          body: "Explore a capability to see what it enables and where it appears in selected work.",
+          ready: "",
         },
-        domainTag: (num: string, title: string) => `DOMAIN ${num} / ${title.toUpperCase()}`,
+        domainTag: (_num: string, title: string) => `${title.toUpperCase()}`,
         capabilitiesCount: (count: number) => `${count} CAPABILITIES`,
-        capabilityTag: "CAPABILITY",
+        capabilityTag: "",
         lanes: {
-          domainPurpose: "DOMAIN PURPOSE",
-          relatedSystems: "RELATED FEATURED SYSTEMS",
+          domainPurpose: "ABOUT THIS DOMAIN",
+          relatedSystems: "RELATED PROJECTS",
           whatEnables: "WHAT THIS ENABLES",
-          appliedIn: "APPLIED IN FEATURED SYSTEM",
+          appliedIn: "APPLIED IN",
         },
-        domainConnected: "Connected through applied capabilities in this domain.",
-        appliedAcross: "Applied across featured systems built with this capability.",
-        inToolkit: "CAPABILITY IN TOOLKIT",
+        domainConnected: "",
+        appliedAcross: "Applied across these selected projects.",
+        inToolkit: "PART OF MY TOOLKIT",
+        activeTag: "",
       },
     },
   },

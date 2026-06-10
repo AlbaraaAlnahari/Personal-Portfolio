@@ -79,22 +79,41 @@
   --heading: #f5f2ea;
   --text-body: rgba(231, 247, 255, 0.7);
   --text-muted: rgba(160, 165, 197, 0.62);
-  --surface: rgba(10, 14, 28, 0.72);
-  --surface-deep: rgba(8, 11, 22, 0.62);
-  --surface-lit: rgba(13, 19, 38, 0.78);
-  --surface-inset: rgba(8, 11, 22, 0.5);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-idle: rgba(255, 255, 255, 0.1);
+  /* Navy card surfaces — blue-steel tints, more opaque so cards read as distinct
+     premium surfaces above the (now stronger) blueprint grid instead of blending
+     into the page navy. Ordered lit > surface > deep > inset for card hierarchy.
+     Warm overrides all four below, so these strengthen NAVY only. */
+  --surface: rgba(20, 30, 52, 0.82);
+  --surface-deep: rgba(15, 23, 41, 0.85);
+  --surface-lit: rgba(27, 39, 66, 0.86);
+  --surface-inset: rgba(12, 18, 33, 0.55);
+  /* Navy borders — a calm blue-steel hairline (clearer than the old near-white
+     low-alpha) so card edges and dividers read crisply. Warm overrides below. */
+  --border: rgba(150, 188, 214, 0.12);
+  --border-idle: rgba(150, 188, 214, 0.16);
   --accent: #00d9ff;
   --accent-strong: #bdf3ff;
   --accent-glow: rgba(0, 217, 255, 0.6);
   --accent-green: #00ff9f;
   --on-accent: #080f23;
-  --grid-line: 232, 237, 244;
-  --grid-minor-alpha: 0.085;
-  --grid-major-alpha: 0.17;
-  --grid-minor-alpha-i: 0.07;
-  --grid-major-alpha-i: 0.14;
+  /* Navy blueprint grid — a blue-steel line colour at stronger alphas so the
+     coordinate field reads as a clear premium blueprint behind the content (was
+     a near-white line at very low alpha that barely registered). Warm overrides
+     --grid-line + all four alphas below, so this strengthens NAVY only. */
+  --grid-line: 170, 205, 230;
+  --grid-minor-alpha: 0.17;
+  --grid-major-alpha: 0.27;
+  --grid-minor-alpha-i: 0.17;
+  --grid-major-alpha-i: 0.27;
+  /* Ambient grid motion (navy) — a visible cyan blueprint scan + node pulses.
+     Warm overrides below keep it barely perceptible. Consumed by the ambient
+     layer on .blueprint-field; opacities stay low and are further scaled by the
+     per-field --grid-motion multiplier. */
+  --grid-scan-rgb: 53, 213, 232;
+  --grid-scan-alpha: 0.13;
+  --grid-node-rgb: 53, 213, 232;
+  --grid-node-base: 0.12;
+  --grid-node-peak: 0.36;
   --readability-wash: 8, 15, 35;
   --text-strong: rgba(231, 247, 255, 0.92);
   --placeholder: rgba(231, 247, 255, 0.32);
@@ -143,10 +162,12 @@
   --radius-xl: 2rem;
 
   /* Typography */
-  --font-family-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "SF Pro Display", "Helvetica Neue", "Segoe UI", Arial, sans-serif;
-  --font-family-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo,
-    Monaco, Consolas, "Liberation Mono", monospace;
+  --font-family-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+  --font-family-mono:
+    ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
   /* Bind Tailwind's font theme tokens to the Apple-compatible stacks above so
      the font-sans / font-mono utilities and --default-font-family inherit the
      same system typography (English font-family only — no other change). */
@@ -254,10 +275,17 @@ html[data-theme="warm"] {
      and geometry (46px minor / 230px major / 1px lines) is unchanged. The
      readability fields below calm this stronger grid behind copy so content
      still dominates. Navy grid (above) is untouched. */
-  --grid-minor-alpha: 0.14;
-  --grid-major-alpha: 0.28;
+  --grid-minor-alpha: 0.13;
+  --grid-major-alpha: 0.24;
   --grid-minor-alpha-i: 0.12;
-  --grid-major-alpha-i: 0.25;
+  --grid-major-alpha-i: 0.22;
+  /* Ambient grid motion (warm) — a faint teal archival calibration, far softer
+     than navy (no cyan glow). Same tokens, much lower alphas. */
+  --grid-scan-rgb: 42, 111, 127;
+  --grid-scan-alpha: 0.07;
+  --grid-node-rgb: 42, 111, 127;
+  --grid-node-base: 0.08;
+  --grid-node-peak: 0.22;
   /* Readability-field wash colour — a slightly cleaner/lighter warm ivory than
      the page cream, so a backed content zone reads as gently lifted paper. */
   --readability-wash: 251, 248, 241;
@@ -316,6 +344,25 @@ html[data-theme="warm"] .t-warm-surface-soft {
   /* lighter translucent wash for inner content groups — keeps a soft hierarchy
      and lets the blueprint grid breathe faintly behind small panels */
   background-color: rgba(245, 242, 234, 0.6) !important;
+}
+
+/* ── Navy card lift (NAVY only) ───────────────────────────────────────────────
+   The Work/Impact section cards carry .t-warm-surface (its warm rule flips them
+   to cream). In navy they previously fell back to bg-background-primary/45 — too
+   close to the page navy, so cards blended into the background. This gives navy
+   a single premium blue-steel card surface (the strengthened --surface token)
+   plus a calm neutral drop shadow and a 1px inset top highlight for dimension —
+   no glow, no neon. `.t-navy-card` is the navy-only hook for cards whose WARM
+   background is set by their own inline conditional (Skills domain cards /
+   capability inspector) and therefore must NOT carry the !important warm class.
+   Scoped to html[data-theme="navy"], so WARM is completely untouched. The rule
+   is unlayered, so it wins over the layered bg-background-primary/* Tailwind
+   utility without !important; per-card inline accent borders are preserved. */
+html[data-theme="navy"] :is(.t-warm-surface, .t-navy-card) {
+  background-color: var(--surface);
+  box-shadow:
+    0 18px 50px -30px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 /* Warm-only readability boost for the few pale low-alpha cyan micro-labels
    (hero status / eyebrow). Navy keeps their original low-alpha cyan. */
@@ -380,14 +427,26 @@ html[data-theme="warm"] .site-footer-dark {
    Arabic's cursive joining, and Arabic body copy gets a more open line-height.
    ============================================ */
 html[lang="ar"] {
-  --font-family-sans: "Thmanyah Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-family-mono: "Thmanyah Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-family-sans:
+    "Thmanyah Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    Arial, sans-serif;
+  --font-family-mono:
+    "Thmanyah Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    Arial, sans-serif;
   --font-sans: var(--font-family-sans);
   --font-mono: var(--font-family-mono);
 }
-/* Heroic Arabic display titles — serif display, only where the class is applied. */
+/* Heroic Arabic display titles — serif display, only where the class is applied.
+   Arabic display type also needs more leading than the Latin scale it shares:
+   the component leading utilities (and Tailwind's text-5xl/6xl built-in
+   line-height: 1) are tuned for Latin and let Arabic diacritics (hamza, tanwin,
+   shadda) and tall letters collide between stacked lines. This hook only ever
+   renders in Arabic (displayFont is "" in English), and being unlayered it wins
+   over the layered leading-* / text-size utilities — so Arabic display headings
+   breathe while English keeps its tight premium leading untouched. */
 .font-ar-display {
   font-family: var(--font-family-display-ar);
+  line-height: 1.3;
 }
 /* Arabic body copy reads better with a more open line-height. */
 html[lang="ar"] p,
@@ -471,41 +530,59 @@ html[lang="ar"] [class*="tracking-"] {
   padding-top: var(--contact-section-pt);
   padding-bottom: var(--contact-section-pb);
 }
-#contact .contact-gridwrap { margin-top: var(--contact-intro-gap); }
-#contact .contact-grid { gap: var(--contact-grid-gap); }
-#contact .contact-rightcol { gap: var(--contact-card-gap); }
+#contact .contact-gridwrap {
+  margin-top: var(--contact-intro-gap);
+}
+#contact .contact-grid {
+  gap: var(--contact-grid-gap);
+}
+#contact .contact-rightcol {
+  gap: var(--contact-card-gap);
+}
 #contact .contact-card {
   padding: var(--contact-card-pad);
   border-radius: var(--contact-radius);
 }
-#contact .contact-field { min-height: var(--contact-field-h); }
-#contact .contact-textarea { height: var(--contact-textarea-h); }
+#contact .contact-field {
+  min-height: var(--contact-field-h);
+}
+#contact .contact-textarea {
+  height: var(--contact-textarea-h);
+}
 #contact .contact-title {
   font-size: var(--contact-title-size);
   line-height: 1.15;
 }
-#contact .contact-body { font-size: var(--contact-body-size); }
+#contact .contact-body {
+  font-size: var(--contact-body-size);
+}
 #contact .contact-art {
   height: var(--contact-art-h);
   opacity: var(--contact-art-opacity);
 }
-#contact .contact-fallback { margin-top: var(--contact-fallback-mt); }
+#contact .contact-fallback {
+  margin-top: var(--contact-fallback-mt);
+}
 
-/* A — mobile / tablet (single column): calm, compact, low-scroll */
+/* A — mobile / tablet (single column): calm, compact, low-scroll.
+   Premium lockdown pass — tightened the vertical rhythm (intro→cards gap, card
+   padding/gaps, textarea height, pre-footer space, fallback strip margin) to
+   cut ~10–18% of mobile scroll without cramping. Touch-critical tokens
+   (field height, title/body size) are intentionally left comfortable. */
 @media (max-width: 1023.98px) {
   #contact {
-    --contact-section-pt: 88px;
-    --contact-section-pb: 56px;
-    --contact-intro-gap: 1.75rem;
-    --contact-grid-gap: 1rem;
-    --contact-card-gap: 1rem;
-    --contact-card-pad: 1.25rem;
+    --contact-section-pt: 80px;
+    --contact-section-pb: 48px;
+    --contact-intro-gap: 1.25rem;
+    --contact-grid-gap: 0.875rem;
+    --contact-card-gap: 0.875rem;
+    --contact-card-pad: 0.95rem;
     --contact-field-h: 2.875rem;
-    --contact-textarea-h: 124px;
+    --contact-textarea-h: 98px;
     --contact-title-size: clamp(1.9rem, 7.5vw, 2.4rem);
     --contact-body-size: 1rem;
     --contact-radius: 0.9rem;
-    --contact-fallback-mt: 1.5rem;
+    --contact-fallback-mt: 1.125rem;
   }
 }
 
@@ -528,7 +605,9 @@ html[lang="ar"] [class*="tracking-"] {
     --contact-art-opacity: 0.05;
     --contact-fallback-mt: 1.5rem;
   }
-  [data-theme="warm"] #contact { --contact-art-opacity: 0.08; }
+  [data-theme="warm"] #contact {
+    --contact-art-opacity: 0.08;
+  }
 }
 
 /* C — 27" wide-but-not-tall (≥1800w, 1131–1500h): moderate compaction, wider
@@ -546,7 +625,9 @@ html[lang="ar"] [class*="tracking-"] {
     --contact-art-opacity: 0.07;
     --contact-fallback-mt: 1.75rem;
   }
-  [data-theme="warm"] #contact { --contact-art-opacity: 0.1; }
+  [data-theme="warm"] #contact {
+    --contact-art-opacity: 0.1;
+  }
 }
 
 /* D — true 32" large + tall (≥2200w, ≥1501h): premium spacious */
@@ -565,7 +646,9 @@ html[lang="ar"] [class*="tracking-"] {
     --contact-art-opacity: 0.09;
     --contact-fallback-mt: 2.25rem;
   }
-  [data-theme="warm"] #contact { --contact-art-opacity: 0.13; }
+  [data-theme="warm"] #contact {
+    --contact-art-opacity: 0.13;
+  }
 }
 
 /* ============================================
@@ -609,7 +692,9 @@ html {
    rectangle). Scoped to this class only — site-wide focus rings are unchanged. */
 .nav-logo-link {
   border-radius: 12px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 /* Navy: subtle light hover surface on the dark bar. */
 .nav-logo-link:hover {
@@ -663,40 +748,105 @@ body {
    TYPOGRAPHY
    ============================================ */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+/* Heading base scale lives in Tailwind's `base` cascade layer so that
+   component-level Tailwind size utilities (text-4xl, md:text-5xl, …) actually
+   win — utilities sit in a later layer than `base`. A bare heading with no
+   size utility still gets the brand default below. The two scoped responsive
+   overrides further down (#experience/#leadership/#recognition h2/h3 and
+   #resume article h4) stay UNLAYERED, so they keep winning over utilities on
+   mobile by being outside any layer. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 3.75rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+
+  h3 {
+    font-size: 1.875rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
 }
 
-h1 {
-  font-size: 3.75rem;
+/* Impact page — the global h2/h3 element sizes (36px / 30px) read oversized on
+   phones and over-wrap the long Arabic section titles and card titles, inflating
+   mobile scroll. Scope a tighter, still-strong mobile scale to the three Impact
+   sections only (ids exist only on /impact); tablet/desktop keep the archive
+   sizes. Higher specificity (id + element) wins over the bare h2/h3 rules. */
+@media (max-width: 767px) {
+  :is(#experience, #leadership, #recognition) h2 {
+    font-size: 1.75rem;
+    line-height: 1.18;
+  }
+  :is(#experience, #leadership, #recognition) h3 {
+    font-size: 1.375rem;
+    line-height: 1.25;
+  }
 }
 
-h2 {
-  font-size: 2.25rem;
+/* Arabic interior section titles need more leading than the Latin mobile scale
+   above. Keep the tighter mobile font-size, but open the line-height so stacked
+   Arabic lines and their diacritics don't collide. Scoped to Arabic + these ids
+   so it outranks the rule above (and the .font-ar-display default) on mobile,
+   while English mobile keeps its tighter values. */
+@media (max-width: 767px) {
+  html[lang="ar"] :is(#experience, #leadership, #recognition) h2 {
+    line-height: 1.32;
+  }
+  html[lang="ar"] :is(#experience, #leadership, #recognition) h3 {
+    line-height: 1.4;
+  }
 }
 
-h3 {
-  font-size: 1.875rem;
+/* Resume page — the credential record titles are <h4>, so the global h4 size
+   (1.5rem) applies and reads oversized for a card title on phones — the long
+   Arabic achievement title ("المركز الأول — معسكر ابتكار الذكاء الاصطناعي")
+   wraps heavily. Scope only those credential <h4>s on /resume to a calmer,
+   readable card-title size on mobile; tablet/desktop keep the global size. */
+@media (max-width: 767px) {
+  #resume article h4 {
+    font-size: 1.0625rem;
+    line-height: 1.4;
+  }
 }
 
-h4 {
-  font-size: 1.5rem;
+/* Skills intro composition (Arabic only): the open Arabic display leading makes
+   the heading taller, so the supporting line — set by the container's uniform
+   space-y — can read as detached. Pull it a touch closer so the two form one
+   composed unit, while keeping clear breathing room. English keeps its original
+   spacing untouched. The id selector outranks the space-y utility (no !important). */
+html[lang="ar"] #skills-heading + p {
+  margin-top: 0.625rem;
 }
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1rem;
+@media (min-width: 768px) {
+  html[lang="ar"] #skills-heading + p {
+    margin-top: 0.75rem;
+  }
 }
 
 p {
@@ -772,6 +922,30 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--color-accent-cyan);
   outline-offset: 2px;
+}
+
+/* Touch / tap polish — the accent focus-visible ring is a KEYBOARD affordance.
+   On touch (coarse-pointer) devices, some mobile browsers (notably iOS Safari)
+   flag a finger tap as :focus-visible, leaving a distracting blue/teal ring on
+   nav buttons (theme/language toggle, INDEX, Contact, logo) after a normal tap.
+   Here we keep the ring for keyboard users on fine-pointer (desktop) devices and
+   suppress it ONLY on coarse-pointer devices, so a tap leaves the control clean.
+   Placed after the rules above so it wins on equal specificity (source order).
+   Desktop keyboard accessibility is unchanged. We also drop the default mobile
+   tap-flash highlight site-wide. */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: none) and (pointer: coarse) {
+  .ie-focus:focus-visible,
+  .nav-logo-link:focus-visible,
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: none !important;
+  }
 }
 
 /* ============================================
@@ -852,6 +1026,133 @@ html[data-theme="warm"] .t-readability-field::before {
 @media (max-width: 767px) {
   html[data-theme="warm"] .blueprint-field {
     opacity: 0.95;
+  }
+}
+
+/* ============================================
+   AMBIENT GRID MOTION — Blueprint Scan + Soft Node Pulses
+   A calm "living blueprint" layer on the existing fixed grid field. Pure CSS:
+   one soft, slightly-diagonal scan band (::before) drifting slowly across, plus
+   a few sparse calibration dots (.bp-node) that pulse asynchronously. Animates
+   transform/opacity only — no layout, no canvas/JS. Sits fully behind content
+   (the field is pointer-events-none at z-0/z-[1]; these inherit that). Navy reads
+   as a technical blueprint scanner; warm is a barely-perceptible archival
+   calibration (token alphas above). Interior fields carry .bp-quiet to soften
+   intensity via the --grid-motion multiplier. Reduced-motion freezes both.
+   ============================================ */
+.blueprint-field {
+  --grid-motion: 1;
+}
+.blueprint-field.bp-quiet {
+  --grid-motion: 0.66;
+}
+
+/* Blueprint scan line — soft band, heavy blur, very low opacity; fades in/out
+   at the ends so it reads as a light pass, never a spotlight or loading bar. */
+.blueprint-field::before {
+  content: "";
+  position: absolute;
+  top: -12%;
+  left: 0;
+  width: 24%;
+  height: 124%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--grid-scan-rgb), calc(var(--grid-scan-alpha) * var(--grid-motion) * 0.4))
+      40%,
+    rgba(var(--grid-scan-rgb), calc(var(--grid-scan-alpha) * var(--grid-motion))) 50%,
+    rgba(var(--grid-scan-rgb), calc(var(--grid-scan-alpha) * var(--grid-motion) * 0.4))
+      60%,
+    transparent 100%
+  );
+  filter: blur(28px);
+  opacity: 0;
+  transform: translateX(-130%) rotate(7deg);
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: bp-scan 22s linear infinite;
+}
+@keyframes bp-scan {
+  0% {
+    transform: translateX(-130%) rotate(7deg);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(540%) rotate(7deg);
+    opacity: 0;
+  }
+}
+
+/* Soft node pulses — sparse calibration dots that slowly brighten and fade.
+   Per-node animation-delay is set inline (async); durations varied below. */
+.bp-node {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgb(var(--grid-node-rgb));
+  box-shadow: 0 0 12px 1px
+    rgba(var(--grid-node-rgb), calc(var(--grid-node-peak) * var(--grid-motion) * 0.55));
+  opacity: calc(var(--grid-node-base) * var(--grid-motion));
+  pointer-events: none;
+  animation: bp-node-pulse 6s ease-in-out infinite;
+}
+/* ── Warm cream: ambient MOTION disabled ─────────────────────────────────────
+   On the bright cream surface the animated ambient layers could not render
+   cleanly: the blurred, tinted scan band read as a dirty vertical stain/smudge,
+   and even soft node glows added faint speckle. The cream theme prioritises a
+   clean, still, premium archival surface, so the animated scan band AND the node
+   dots are disabled in warm — only the refined STATIC cream grid remains. Navy
+   is untouched and keeps the full scan + node animation. Scoped to
+   data-theme="warm"; the .blueprint-field grid line divs are separate elements
+   and still render. */
+html[data-theme="warm"] .blueprint-field::before {
+  display: none;
+}
+html[data-theme="warm"] .bp-node {
+  display: none;
+}
+.bp-node:nth-of-type(3n) {
+  animation-duration: 7.5s;
+}
+.bp-node:nth-of-type(3n + 1) {
+  animation-duration: 5.5s;
+}
+@keyframes bp-node-pulse {
+  0%,
+  100% {
+    opacity: calc(var(--grid-node-base) * var(--grid-motion));
+  }
+  50% {
+    opacity: calc(var(--grid-node-peak) * var(--grid-motion));
+  }
+}
+
+/* Mobile: keep only the first few nodes (placed in safe open areas). */
+@media (max-width: 767px) {
+  .bp-node:nth-of-type(n + 6) {
+    display: none;
+  }
+}
+
+/* Reduced motion: freeze everything — hide the scan, hold nodes static at their
+   base opacity (no pulsing). The global motion-reduce rule also neutralises
+   these; this is the explicit, readable guarantee. */
+@media (prefers-reduced-motion: reduce) {
+  .blueprint-field::before {
+    animation: none;
+    opacity: 0;
+  }
+  .bp-node {
+    animation: none;
   }
 }
 

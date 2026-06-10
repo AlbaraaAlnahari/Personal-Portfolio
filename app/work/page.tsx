@@ -1,13 +1,11 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/i18n/serverMeta";
 import { ProjectsSystems } from "@/components/sections/ProjectsSystems";
 import { InteriorBlueprintField } from "@/components/layout/InteriorBlueprintField";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
-export const metadata: Metadata = {
-  title: "Work — Selected Systems | ALBARAA OS",
-  description:
-    "Selected product work by Albaraa Alnahari — DocuPilot, TechPath, Sanadk, and Slide-Mind: AI-enabled and accessibility-focused software systems.",
-};
+export function generateMetadata() {
+  return buildPageMetadata("/work");
+}
 
 export default function WorkPage() {
   return (

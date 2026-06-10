@@ -58,8 +58,7 @@ export function IntelligenceEngineHero() {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(motionQuery.matches);
 
-    const onMotionChange = (e: MediaQueryListEvent) =>
-      setReducedMotion(e.matches);
+    const onMotionChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
 
     motionQuery.addEventListener("change", onMotionChange);
 
@@ -165,35 +164,23 @@ export function IntelligenceEngineHero() {
 
   const useWebGL = mounted;
 
-  const handlePointerMove = useCallback(
-    (e: ReactPointerEvent<HTMLElement>) => {
-      if (!sectionRef.current) return;
-      if (e.pointerType === "touch") return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      pointerRef.current.x =
-        ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      pointerRef.current.y = -(
-        ((e.clientY - rect.top) / rect.height) * 2 - 1
-      );
-    },
-    []
-  );
+  const handlePointerMove = useCallback((e: ReactPointerEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    if (e.pointerType === "touch") return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    pointerRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    pointerRef.current.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+  }, []);
 
-  const handlePointerEnter = useCallback(
-    (e: ReactPointerEvent<HTMLElement>) => {
-      if (e.pointerType === "touch") return;
-      pointerRef.current.active = true;
-    },
-    []
-  );
+  const handlePointerEnter = useCallback((e: ReactPointerEvent<HTMLElement>) => {
+    if (e.pointerType === "touch") return;
+    pointerRef.current.active = true;
+  }, []);
 
-  const handlePointerLeave = useCallback(
-    (e: ReactPointerEvent<HTMLElement>) => {
-      if (e.pointerType === "touch") return;
-      pointerRef.current.active = false;
-    },
-    []
-  );
+  const handlePointerLeave = useCallback((e: ReactPointerEvent<HTMLElement>) => {
+    if (e.pointerType === "touch") return;
+    pointerRef.current.active = false;
+  }, []);
 
   const reveal = (delay: number) => ({
     opacity: bootComplete ? 1 : 0,
@@ -214,12 +201,10 @@ export function IntelligenceEngineHero() {
   });
 
   const activeModuleData = activeModule
-    ? COMMAND_MODULES.find((m) => m.id === activeModule) ?? null
+    ? (COMMAND_MODULES.find((m) => m.id === activeModule) ?? null)
     : null;
 
-  const activeAccentColor = activeModule
-    ? getModuleAccentColor(activeModule)
-    : null;
+  const activeAccentColor = activeModule ? getModuleAccentColor(activeModule) : null;
 
   return (
     <section
@@ -288,7 +273,7 @@ export function IntelligenceEngineHero() {
                 marginTop: "0.85rem",
                 fontSize: "clamp(1.2rem, 1.75vw, 1.55rem)",
                 fontWeight: 600,
-                lineHeight: 1.34,
+                lineHeight: 1.55,
                 letterSpacing: "-0.01em",
                 color: "var(--accent)",
               }}
@@ -327,8 +312,7 @@ export function IntelligenceEngineHero() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "rgba(var(--rgb-cyan),0.6)";
-                e.currentTarget.style.boxShadow =
-                  "0 0 20px rgba(var(--rgb-cyan),0.15)";
+                e.currentTarget.style.boxShadow = "0 0 20px rgba(var(--rgb-cyan),0.15)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "rgba(var(--rgb-cyan),0.3)";
@@ -443,9 +427,7 @@ export function IntelligenceEngineHero() {
                 />
               </div>
             )}
-            <Suspense
-              fallback={<IntelligenceReactorFallback animated={false} />}
-            >
+            <Suspense fallback={<IntelligenceReactorFallback animated={false} />}>
               {useWebGL ? (
                 <IntelligenceReactor3D
                   reducedMotion={reducedMotion}
@@ -527,7 +509,7 @@ export function IntelligenceEngineHero() {
                 marginTop: "0.62rem",
                 fontSize: "clamp(1rem, 4.6vw, 1.2rem)",
                 fontWeight: 600,
-                lineHeight: 1.5,
+                lineHeight: 1.6,
                 letterSpacing: "-0.01em",
                 color: "var(--accent)",
               }}
@@ -686,7 +668,7 @@ export function IntelligenceEngineHero() {
                 marginTop: "0.62rem",
                 fontSize: "clamp(1.05rem, 5vw, 1.35rem)",
                 fontWeight: 600,
-                lineHeight: 1.34,
+                lineHeight: 1.55,
                 color: "var(--accent)",
               }}
             >
@@ -715,11 +697,7 @@ export function IntelligenceEngineHero() {
           {t.hero.scroll}
         </span>
         <motion.div
-          animate={
-            reducedMotion
-              ? {}
-              : { y: [0, 6, 0], opacity: [0.4, 1, 0.4] }
-          }
+          animate={reducedMotion ? {} : { y: [0, 6, 0], opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           className="text-sm"
           style={{ color: "rgba(var(--rgb-cyan),0.7)" }}

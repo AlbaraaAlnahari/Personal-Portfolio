@@ -1,13 +1,11 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/i18n/serverMeta";
 import { ContactDirectLine } from "@/components/sections/ContactDirectLine";
 import { InteriorBlueprintField } from "@/components/layout/InteriorBlueprintField";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
-export const metadata: Metadata = {
-  title: "Contact — Albaraa Alnahari | ALBARAA OS",
-  description:
-    "Get in touch with Albaraa Alnahari — email, LinkedIn, GitHub, and X. Open to opportunities and collaboration.",
-};
+export function generateMetadata() {
+  return buildPageMetadata("/contact");
+}
 
 export default function ContactPage() {
   return (

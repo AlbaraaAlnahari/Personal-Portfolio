@@ -1,28 +1,40 @@
 /**
- * albaraa-knowledge.ts — Local verified knowledge base for "Ask Albaraa AI".
+ * albaraa-knowledge.ts — Local verified knowledge ROUTER for "Ask Albaraa AI".
  *
- * SOURCE OF TRUTH: Albaraa Alnahari's résumé/CV + the existing portfolio
- * contact data. Every fact here is drawn from those sources — nothing is
- * invented. There is NO external AI/LLM here: the assistant is a deterministic,
- * local, rule-based matcher over this structured archive. Contact email and
- * social URLs mirror the values used by the Contact console and SiteFooter.
+ * SOURCE OF TRUTH: Albaraa Alnahari's résumé/CV + the existing portfolio contact
+ * data. Every fact is drawn from those sources — nothing is invented. There is
+ * NO external AI/LLM and NO network call: a deterministic, local, BILINGUAL
+ * keyword matcher maps a free-text question (Arabic OR English) to a stable
+ * ANSWER KEY.
  *
- * If a question can't be matched to a category, the matcher returns a graceful
- * fallback that points to the Contact page rather than guessing.
+ * The localized answer COPY lives in the i18n dictionary
+ * (lib/i18n/dictionaries/ask.ts → t.ask.answers[key]); this module returns ONLY
+ * the key plus provenance metadata (sources + contact CTA), so every reply
+ * renders in the ACTIVE locale — Arabic answers in Arabic mode, English answers
+ * in English mode — and re-localizes instantly if the language is switched. The
+ * matcher itself never holds display prose. Contact email/URLs mirror the
+ * Contact console + SiteFooter.
  */
 
-export type SourceChip = "Résumé" | "Portfolio" | "Contact";
+export type SourceKey = "resume" | "portfolio" | "contact";
 
-export type KnowledgeAnswer = {
-  /** Short headline shown in bold above the answer body. */
-  title: string;
-  /** Lead sentence(s) — concise prose. */
-  lead: string;
-  /** Optional bullet points (kept tight, no walls of text). */
-  bullets?: string[];
-  /** Provenance chips rendered under the answer. */
-  sources: SourceChip[];
-  /** When true, the UI may surface an "Open Contact" CTA after the answer. */
+export type AnswerKey =
+  | "profile"
+  | "distinctive"
+  | "docupilot"
+  | "projects"
+  | "skills"
+  | "experience"
+  | "leadership"
+  | "availability"
+  | "contact"
+  | "unknown"
+  | "private";
+
+/** A resolved match: which answer to render + its provenance / CTA metadata. */
+export type KnowledgeResult = {
+  key: AnswerKey;
+  sources: SourceKey[];
   contactCta?: boolean;
 };
 
@@ -41,85 +53,89 @@ export const CONTACT = {
 } as const;
 
 /* ------------------------------------------------------------------ *
- * Profile snapshot — facts + stat chips (résumé-verified only)
+ * Profile snapshot — stable, locale-independent data.
+ * The component maps these by index to localized labels (ROLE_KEYS /
+ * STAT_KEYS). Role entries only drive the count/index; stat VALUES render
+ * verbatim (Latin numerals, isolated LTR in the UI).
  * ------------------------------------------------------------------ */
 
 export const PROFILE_ROLES = [
-  "Software Engineering Student",
-  "AI Builder",
-  "Full-stack Developer",
-  "Product-minded",
-  "Leadership & Community",
+  "student",
+  "aiBuilder",
+  "fullStack",
+  "productMinded",
+  "leadership",
 ] as const;
 
 export const PROFILE_STATS = [
-  { value: "100+", label: "users researched" },
-  { value: "5,000+", label: "bootcamp participants" },
-  { value: "450+", label: "event participants" },
-  { value: "65+", label: "club members" },
-  { value: "1st", label: "place AI bootcamp" },
+  { value: "100+" },
+  { value: "5,000+" },
+  { value: "450+" },
+  { value: "65+" },
+  { value: "1st" },
 ] as const;
 
-/* ------------------------------------------------------------------ *
- * Initial assistant greeting
- * ------------------------------------------------------------------ */
-
-export const GREETING: KnowledgeAnswer = {
-  title: "Ask Albaraa AI",
-  lead:
-    "Hi, I'm Ask Albaraa AI — a portfolio assistant built from Albaraa's verified résumé and project archive. Ask me about his projects, skills, experience, leadership, or how to collaborate.",
-  sources: ["Portfolio"],
-};
+/** Greeting provenance — the greeting COPY is localized in the dictionary. */
+export const GREETING_SOURCES: SourceKey[] = ["portfolio"];
 
 /* ------------------------------------------------------------------ *
- * Graceful fallbacks
+ * Provenance + CTA per answer key (locale-independent metadata)
  * ------------------------------------------------------------------ */
 
-export const UNKNOWN_FALLBACK: KnowledgeAnswer = {
-  title: "I can help with the portfolio archive",
-  lead:
-    "I can answer questions about Albaraa's projects, skills, experience, leadership, résumé, and contact channels. For anything else, use the Contact page and Albaraa can respond directly.",
-  sources: ["Portfolio"],
-  contactCta: true,
+export const ANSWER_META: Record<
+  AnswerKey,
+  { sources: SourceKey[]; contactCta?: boolean }
+> = {
+  profile: { sources: ["resume", "portfolio"] },
+  distinctive: { sources: ["resume", "portfolio"] },
+  docupilot: { sources: ["resume"] },
+  projects: { sources: ["resume"] },
+  skills: { sources: ["resume"] },
+  experience: { sources: ["resume"] },
+  leadership: { sources: ["resume"] },
+  availability: { sources: ["resume", "contact"], contactCta: true },
+  contact: { sources: ["contact"], contactCta: true },
+  unknown: { sources: ["portfolio"], contactCta: true },
+  private: { sources: ["contact"], contactCta: true },
 };
 
-/** For private / unsupported asks (salary, personal data, etc.). */
-export const PRIVATE_FALLBACK: KnowledgeAnswer = {
-  title: "Not in the public archive",
-  lead:
-    "I don't have that information in the public portfolio archive. You can contact Albaraa directly through the Contact page.",
-  sources: ["Contact"],
-  contactCta: true,
-};
+/** Build a full result from a key — used by both preset buttons and the matcher. */
+export function resultForKey(key: AnswerKey): KnowledgeResult {
+  return { key, ...ANSWER_META[key] };
+}
 
 /* ------------------------------------------------------------------ *
- * Six preset questions (drive the suggested-prompt panel)
+ * Seven preset questions (drive the suggested-prompt panel).
+ * Order mirrors t.ask.suggested.items. Clicking a preset routes by KEY (no
+ * re-matching), so the reply is exact and the user bubble shows the localized
+ * label rather than a canonical English string.
  * ------------------------------------------------------------------ */
 
-export const PRESET_QUESTIONS = [
-  "Who is Albaraa?",
-  "What is DocuPilot?",
-  "What are Albaraa's strongest skills?",
-  "What leadership impact has Albaraa made?",
-  "What experience does Albaraa have?",
-  "How can I contact or collaborate with Albaraa?",
+export const PRESET_KEYS = [
+  "profile",
+  "distinctive",
+  "docupilot",
+  "skills",
+  "leadership",
+  "experience",
+  "contact",
 ] as const;
 
+/** The subset of answer keys exposed as suggested prompts (has dictionary labels). */
+export type PresetKey = (typeof PRESET_KEYS)[number];
+
 /* ------------------------------------------------------------------ *
- * Knowledge entries — each with matcher keywords + a structured answer
+ * Bilingual keyword router. Keywords are lowercased; English entries route
+ * English questions, Arabic entries route custom Arabic questions (Arabic text
+ * is unaffected by toLowerCase). Arabic keywords are kept >= 4 chars and
+ * distinctive to avoid spurious substring matches.
  * ------------------------------------------------------------------ */
 
-type KnowledgeEntry = {
-  id: string;
-  /** Lowercased keywords/phrases that route a question to this answer. */
-  keywords: string[];
-  answer: KnowledgeAnswer;
-};
+type Entry = { key: AnswerKey; keywords: string[] };
 
-const ENTRIES: KnowledgeEntry[] = [
-  /* ---- Profile / who is Albaraa ---- */
+const ENTRIES: Entry[] = [
   {
-    id: "profile",
+    key: "profile",
     keywords: [
       "who is",
       "who's albaraa",
@@ -138,141 +154,231 @@ const ENTRIES: KnowledgeEntry[] = [
       "located",
       "where is",
       "from",
+      "من هو",
+      "من البراء",
+      "عن البراء",
+      "نبذة",
+      "باختصار",
+      "تعريف",
+      "يدرس",
+      "طالب",
+      "جامعة",
     ],
-    answer: {
-      title: "Who is Albaraa?",
-      lead:
-        "Albaraa Alnahari is a Software Engineering student at the University of Jeddah, focused on full-stack development, AI-powered products, and product management. He builds user-centric software and has experience across product research, web development, robotics, accessibility design, and community leadership.",
-      bullets: [
-        "Software Engineering student — University of Jeddah (expected graduation 2027).",
-        "Based in Saudi Arabia; Arabic native/bilingual, English proficient.",
-        "Focus: full-stack development, AI-powered products, and product management.",
-      ],
-      sources: ["Résumé", "Portfolio"],
-    },
   },
-
-  /* ---- DocuPilot (specific project) ---- */
   {
-    id: "docupilot",
-    keywords: ["docupilot", "docu pilot", "business operations", "1st place", "first place", "innovation bootcamp", "docupilot.site"],
-    answer: {
-      title: "What is DocuPilot?",
-      lead:
-        "DocuPilot is Albaraa's AI Business Operations Platform and a 1st Place AI Innovation Bootcamp project. It transforms business documents and client requests into structured workflows, risks, approvals, and project decisions.",
-      bullets: [
-        "Built with Next.js, TypeScript, Tailwind CSS, Supabase, Gemini API, Qwen API, and Zod.",
-        "Features: feasibility analysis, blueprint generation, contract extraction, invoice approval, scope-change detection, and document-based Q&A.",
-        "Includes an operations dashboard for project health, payment milestones, and decision alerts.",
-        "Live at docupilot.site.",
-      ],
-      sources: ["Résumé"],
-    },
+    key: "distinctive",
+    keywords: [
+      "distinctive",
+      "stand out",
+      "stands out",
+      "what makes",
+      "different",
+      "unique",
+      "special",
+      "why albaraa",
+      "why hire",
+      "يميز",
+      "ما يميز",
+      "ما الذي يميز",
+      "تميز",
+      "يتميز",
+      "الفرق",
+      "لماذا البراء",
+      "نقاط القوة",
+      "ما الذي يجعل",
+    ],
   },
-
-  /* ---- Projects (general) ---- */
   {
-    id: "projects",
-    keywords: ["project", "projects", "built", "build", "portfolio", "what have you made", "what did you build", "apps", "techpath", "slide-mind", "slidemind", "slide mind", "sanadk", "flashcard"],
-    answer: {
-      title: "Selected projects",
-      lead: "A few projects from Albaraa's archive — each shipped or prototyped end-to-end:",
-      bullets: [
-        "DocuPilot — AI Business Operations Platform (1st Place, AI Innovation Bootcamp). Next.js, TypeScript, Supabase, Gemini & Qwen APIs, Zod. Live at docupilot.site.",
-        "TechPath — Full-stack web app generating personalized learning roadmaps with the Anthropic Claude API. React.js, JavaScript, Tailwind CSS.",
-        "Sanadk — Accessibility app (UX/UI design). User research with 77 survey responses; low- and high-fidelity prototypes for visually impaired and wheelchair users.",
-        "Slide-Mind — Java flashcard generator using AI and API integration, with an extensible architecture and file I/O.",
-      ],
-      sources: ["Résumé"],
-    },
+    key: "docupilot",
+    keywords: [
+      "docupilot",
+      "docu pilot",
+      "business operations",
+      "1st place",
+      "first place",
+      "innovation bootcamp",
+      "docupilot.site",
+      "دوكوبايلوت",
+      "دوكو بايلوت",
+    ],
   },
-
-  /* ---- Skills ---- */
   {
-    id: "skills",
-    keywords: ["skill", "skills", "tech stack", "technolog", "languages", "programming", "framework", "tools", "what can you do", "stack", "strongest", "good at", "expert", "proficient", "react", "next", "python", "java", "figma"],
-    answer: {
-      title: "Strongest skills",
-      lead: "Albaraa works across full-stack development, AI/data, and product, with a leadership and collaboration backbone:",
-      bullets: [
-        "Programming: Python, SQL, MySQL, Java, C++.",
-        "Web & frameworks: HTML, CSS, JavaScript, React, Next.js, Tailwind CSS, Flutter.",
-        "Data & AI: Pandas, NumPy, Data Analysis, OpenCV.",
-        "Tools: Git, GitHub, VS Code, PyCharm, Figma.",
-        "Soft skills: problem solving, analytical thinking, team collaboration, adaptability, communication, leadership.",
-      ],
-      sources: ["Résumé"],
-    },
+    key: "projects",
+    keywords: [
+      "project",
+      "projects",
+      "built",
+      "build",
+      "portfolio",
+      "what have you made",
+      "what did you build",
+      "apps",
+      "techpath",
+      "slide-mind",
+      "slidemind",
+      "slide mind",
+      "sanadk",
+      "flashcard",
+      "مشاريع",
+      "مشروع",
+      "أعمال",
+      "تطبيقات",
+      "بناه",
+      "نفّذ",
+    ],
   },
-
-  /* ---- Experience ---- */
   {
-    id: "experience",
-    keywords: ["experience", "work history", "job", "jobs", "intern", "internship", "career", "employ", "soum", "smart method", "robotic", "al-aqsa", "alaqsa", "summer program", "professional"],
-    answer: {
-      title: "Professional experience",
-      lead: "Albaraa has experience across product management, robotics engineering, and program leadership:",
-      bullets: [
-        "Product Management Intern — Soum Company. Conducted user research with 100+ users, wrote user stories and 3+ use cases, ran competitor analysis with 4+ benchmarks, and supported a product feature across design and execution.",
-        "Robotics Engineering Intern — Smart Method Company. Built an AI-powered robotic arm, designed 3D robotic models, and built an AI chatbot prototype (Full Robotics Engineer Certification).",
-        "Summer Program Director & Supervisor — Al-Aqsa Private Schools Institute. Led 8+ teachers and 70+ students across 5 levels; improved parent satisfaction to 40% and increased enrollment by 30%.",
-      ],
-      sources: ["Résumé"],
-    },
+    key: "skills",
+    keywords: [
+      "skill",
+      "skills",
+      "tech stack",
+      "technolog",
+      "languages",
+      "programming",
+      "framework",
+      "tools",
+      "what can you do",
+      "stack",
+      "strongest",
+      "good at",
+      "expert",
+      "proficient",
+      "react",
+      "next",
+      "python",
+      "java",
+      "figma",
+      "مهارات",
+      "مهاراته",
+      "أقوى",
+      "اقوى",
+      "تقنيات",
+      "لغات",
+      "إطار",
+      "يجيد",
+      "خبير",
+      "برمجة",
+    ],
   },
-
-  /* ---- Leadership / organizations ---- */
   {
-    id: "leadership",
-    keywords: ["leadership", "lead", "leader", "community", "organiz", "organis", "event", "events", "bootcamp", "prehack", "hackwave", "drone", "club", "gdgoc", "gdsc", "google", "volunteer", "impact"],
-    answer: {
-      title: "Leadership & community impact",
-      lead: "Albaraa has organized large-scale tech communities and events across Jeddah:",
-      bullets: [
-        "Google × GDSC Data Science Bootcamp — managed with 5,000+ participants (Project Management Lead, GDGoC On Campus UJ).",
-        "Hackwave at University of Jeddah — helped organize one of the Western Region's largest tech events, 450+ participants (PreHack, Admin & Voice Host).",
-        "AI & Cybersecurity bootcamps — managed training for 150+ participants; hosted live sessions and Twitter Spaces reaching 200+ attendees.",
-        "Drone Club, University of Jeddah — Vice Leader; revived the club, established 5 committees, recruited 65+ active members, ran 3+ workshops.",
-        "Summer programs — led 8+ teachers and 70+ students across 5 levels.",
-      ],
-      sources: ["Résumé"],
-    },
+    key: "experience",
+    keywords: [
+      "experience",
+      "work history",
+      "job",
+      "jobs",
+      "intern",
+      "internship",
+      "career",
+      "employ",
+      "soum",
+      "smart method",
+      "robotic",
+      "al-aqsa",
+      "alaqsa",
+      "summer program",
+      "professional",
+      "خبرة",
+      "خبرته",
+      "تجربة عمل",
+      "وظيفة",
+      "تدريب",
+      "متدرب",
+      "سوم",
+      "روبوت",
+      "مسيرة",
+      "مهنية",
+    ],
   },
-
-  /* ---- Availability ---- */
   {
-    id: "availability",
-    keywords: ["available", "availability", "hire", "hiring", "open to", "opportunit", "role", "freelance", "collaborate", "collaboration", "work together", "speaking", "speak", "looking for"],
-    answer: {
-      title: "What Albaraa is open to",
-      lead: "Albaraa is open to building and contributing across several directions:",
-      bullets: [
-        "AI-powered products and software engineering roles.",
-        "Product conversations and user-centric problem solving.",
-        "Collaboration on meaningful projects.",
-        "Speaking and community/event involvement.",
-      ],
-      sources: ["Résumé", "Contact"],
-      contactCta: true,
-    },
+    key: "leadership",
+    keywords: [
+      "leadership",
+      "lead",
+      "leader",
+      "community",
+      "organiz",
+      "organis",
+      "event",
+      "events",
+      "bootcamp",
+      "prehack",
+      "hackwave",
+      "drone",
+      "club",
+      "gdgoc",
+      "gdsc",
+      "google",
+      "volunteer",
+      "impact",
+      "قيادة",
+      "قيادي",
+      "أثر قيادي",
+      "مجتمع",
+      "مبادرات",
+      "مبادرة",
+      "تطوع",
+      "فعاليات",
+      "فعالية",
+      "نادي",
+      "معسكر",
+      "ورش",
+      "تنظيم",
+    ],
   },
-
-  /* ---- Contact ---- */
   {
-    id: "contact",
-    keywords: ["contact", "email", "reach", "get in touch", "message", "linkedin", "github", "twitter", "x.com", "social", "connect", "dm", "talk", "collaborate"],
-    answer: {
-      title: "How to contact or collaborate",
-      lead: `The most direct route is email — ${CONTACT.email} — or the Contact page, which routes messages to Albaraa personally.`,
-      bullets: [
-        `Email: ${CONTACT.email}`,
-        "LinkedIn: linkedin.com/in/albaraa-alnahari",
-        "GitHub: github.com/AlbaraaAlnahari",
-        "X / Twitter: x.com/x_ff",
-      ],
-      sources: ["Contact"],
-      contactCta: true,
-    },
+    key: "availability",
+    keywords: [
+      "available",
+      "availability",
+      "hire",
+      "hiring",
+      "open to",
+      "opportunit",
+      "role",
+      "freelance",
+      "speaking",
+      "speak",
+      "looking for",
+      "متاح",
+      "توظيف",
+      "يوظف",
+      "فرص",
+      "وظيفة شاغرة",
+    ],
+  },
+  {
+    key: "contact",
+    keywords: [
+      "contact",
+      "email",
+      "reach",
+      "get in touch",
+      "message",
+      "linkedin",
+      "github",
+      "twitter",
+      "x.com",
+      "social",
+      "connect",
+      "dm",
+      "talk",
+      "collaborate",
+      "collaboration",
+      "work together",
+      "تواصل",
+      "أتواصل",
+      "اتواصل",
+      "تعاون",
+      "أتعاون",
+      "اتعاون",
+      "بريد",
+      "ايميل",
+      "إيميل",
+      "راسل",
+      "لينكدإن",
+    ],
   },
 ];
 
@@ -299,13 +405,27 @@ const PRIVATE_KEYWORDS = [
   "gpa",
   "grade",
   "password",
+  "راتب",
+  "الراتب",
+  "دخل",
+  "كم عمر",
+  "هاتف",
+  "جوال",
+  "رقم",
+  "عنوان",
+  "متزوج",
+  "علاقة",
+  "دين",
+  "معدل",
+  "كلمة المرور",
+  "كلمة السر",
 ];
 
 /* ------------------------------------------------------------------ *
  * Matcher — deterministic, local, no external calls
  * ------------------------------------------------------------------ */
 
-function scoreEntry(text: string, entry: KnowledgeEntry): number {
+function scoreEntry(text: string, entry: Entry): number {
   let score = 0;
   for (const kw of entry.keywords) {
     if (text.includes(kw)) {
@@ -317,29 +437,28 @@ function scoreEntry(text: string, entry: KnowledgeEntry): number {
 }
 
 /**
- * Resolve a free-text question to a verified answer. Pure function — given the
- * same input it always returns the same output, and it never reaches the
- * network. Order of precedence: private guard → best keyword match → fallback.
+ * Resolve a free-text question (Arabic or English) to a verified answer KEY +
+ * provenance. Pure + offline. Precedence: empty → unknown; private guard →
+ * private; best keyword match → that key; else → unknown.
  */
-export function answerQuestion(rawInput: string): KnowledgeAnswer {
+export function answerQuestion(rawInput: string): KnowledgeResult {
   const text = rawInput.toLowerCase().trim();
-  if (!text) return UNKNOWN_FALLBACK;
+  if (!text) return resultForKey("unknown");
 
-  // Private/unsupported topics: answer safely instead of guessing.
   if (PRIVATE_KEYWORDS.some((kw) => text.includes(kw))) {
-    return PRIVATE_FALLBACK;
+    return resultForKey("private");
   }
 
-  let best: KnowledgeEntry | null = null;
+  let best: AnswerKey | null = null;
   let bestScore = 0;
   for (const entry of ENTRIES) {
     const score = scoreEntry(text, entry);
     if (score > bestScore) {
       bestScore = score;
-      best = entry;
+      best = entry.key;
     }
   }
 
-  if (best && bestScore > 0) return best.answer;
-  return UNKNOWN_FALLBACK;
+  if (best && bestScore > 0) return resultForKey(best);
+  return resultForKey("unknown");
 }

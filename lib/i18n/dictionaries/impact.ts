@@ -14,14 +14,12 @@ export const impact = {
       // ── Leadership / Community Impact section ─────────────────────────
       leadership: {
         eyebrow: "القيادة / الأثر المجتمعي",
-        recordsLabel: "04 / سجلّات الأثر",
         headingBefore: "قيادةٌ بُنيت عبر المجتمعات والبرامج",
         headingAccent: "وعلى نطاقٍ واسع",
         headingAfter: ".",
         intro:
           "من تأسيس مبادرات طلابية إلى إدارة برامج تقنية واسعة، توثّق هذه السجلّات قيادةً ملموسة عبر مشاركةٍ قابلة للقياس وعملياتٍ منظّمة ونموٍّ مجتمعي.",
         currentCommand: "القيادة الحالية",
-        currentAppointment: "تكليف حالي",
         currentAria: (role: string, org: string) =>
           `التكليف القيادي الحالي: ${role}، ${org}`,
         tuwaiq: {
@@ -29,8 +27,8 @@ export const impact = {
           role: "شريك مؤسس ونائب الرئيس",
         },
         flagship: {
-          channel: "النشر الرائد / إدارة المشاريع",
-          coord: "إدارة مشاريع · 01",
+          channel: "إدارة المشاريع",
+          coord: "",
           org: "Google Developer Groups On Campus UJ",
           shorthand: "GDGoC UJ",
           role: "قائد إدارة المشاريع",
@@ -47,8 +45,8 @@ export const impact = {
         },
         operations: {
           prehack: {
-            channel: "العمليات المجتمعية / 01",
-            coord: "عمليات مجتمعية · 01",
+            channel: "مجتمع تقني / 01",
+            coord: "",
             org: "PreHack",
             role: "مشرف ومضيف صوتي",
             period: "05/2024 – الآن",
@@ -62,8 +60,8 @@ export const impact = {
             tags: ["استضافة", "تنظيم فعاليات", "مجتمع تقني", "معسكرات"],
           },
           droneclub: {
-            channel: "العمليات المجتمعية / 02",
-            coord: "قيادة طلابية · 02",
+            channel: "قيادة طلابية / 02",
+            coord: "",
             org: "University of Jeddah",
             role: "نائب قائد نادي الطائرات بدون طيار",
             period: "03/2024 – الآن",
@@ -80,16 +78,15 @@ export const impact = {
       },
       // ── Experience / Mission Deployment Log section ───────────────────
       experience: {
-        eyebrow: "سجلّ المهام / الخبرة التطبيقية",
-        recordsLabel: "03 / سجلّات المهام",
+        eyebrow: "الخبرة التطبيقية",
         headingLine1Before: "عملٌ تطبيقي، ",
         headingLine1Accent: "منشورٌ",
         headingLine2: "في بيئاتٍ حقيقية.",
         intro:
           "خبرةٌ تطبيقية تمتدّ عبر إدارة المنتجات وهندسة الروبوتات والقيادة التعليمية — مُقاسةٌ بالنتائج.",
-        logLabel: "سجلّ",
+        logLabel: "",
         completed: "مكتمل",
-        verifiedOutcome: "نتيجة موثّقة",
+        verifiedOutcome: "النتائج",
         recordAria: (index: string, role: string, org: string, period: string) =>
           `سجلّ المهمة ${index}: ${role} في ${org}، ${period}`,
         missions: {
@@ -105,7 +102,12 @@ export const impact = {
               benchmarks: "مقارنة سوقية",
               useCases: "حالة استخدام",
             },
-            tags: ["بحث المستخدم", "تطوير المنتج", "تحليل البيانات", "المقارنات السوقية"],
+            tags: [
+              "بحث المستخدم",
+              "تطوير المنتج",
+              "تحليل البيانات",
+              "المقارنات السوقية",
+            ],
           },
           smartmethod: {
             role: "متدرّب في هندسة الروبوتات",
@@ -116,11 +118,15 @@ export const impact = {
               "بنيت ذراعًا روبوتية مدعومة بالذكاء الاصطناعي، وطوّرت نموذجًا أوليًا لروبوت محادثة، مع نمذجةٍ ثلاثية الأبعاد وحلولٍ تطبيقية لتحديات روبوتية واقعية.",
             outcomes: {
               arm: "ذراع روبوتية بالذكاء الاصطناعي",
-              chatbot: "نموذج أولي لروبوت محادثة",
+              chatbot: "نموذج أولي لبوت محادثة",
               modeling: "نمذجة ثلاثية الأبعاد",
               certification: "شهادة مهندس روبوتات",
             },
-            tags: ["روبوتات الذكاء الاصطناعي", "النمذجة ثلاثية الأبعاد", "حلول تطبيقية"],
+            tags: [
+              "روبوتات الذكاء الاصطناعي",
+              "النمذجة ثلاثية الأبعاد",
+              "حلول تطبيقية",
+            ],
           },
           alaqsa: {
             role: "مدير ومشرف البرنامج الصيفي",
@@ -141,7 +147,6 @@ export const impact = {
       // ── Official Presence & Talent (recognition) section ──────────────
       recognition: {
         eyebrow: "الحضور الرسمي والموهبة",
-        recordsLabel: "05 / سجلّ الحضور",
         headingBefore: "حضورٌ رسمي، وموهبةٌ ",
         headingAccent: "موثّقة",
         headingAfter: ".",
@@ -149,7 +154,7 @@ export const impact = {
           "حضورٌ على منصّات جامعة جدة الرسمية، وعضويةٌ في مسار رعاية الموهوبين، وساعاتُ تطوّعٍ ممتدة — أثرٌ يتجاوز التقنية إلى المجتمع والمنصّة.",
         presenter: {
           channel: "الحضور الرسمي / 01",
-          coord: "حضور رسمي · 01",
+          coord: "",
           title: "مقدّم رسمي",
           org: "فعاليات جامعة جدة",
           metricLabel: "فعالية رسمية",
@@ -163,7 +168,7 @@ export const impact = {
           tags: ["تقديم رسمي", "جامعة جدة", "إدارة حضور", "تواصل جماهيري"],
         },
         talent: {
-          coord: "موهبة · 02",
+          coord: "",
           title: "طالب موهوب بجامعة جدة",
           org: "إدارة الاستقطاب ورعاية الموهوبين",
           description:
@@ -171,7 +176,7 @@ export const impact = {
           tags: ["موهبة", "جامعة جدة", "رعاية الموهوبين", "تميّز طلابي"],
         },
         volunteer: {
-          coord: "تطوع · 03",
+          coord: "",
           title: "ساعات تطوعية",
           metricLabel: "ساعة تطوعية",
           description:
@@ -185,15 +190,13 @@ export const impact = {
     impact: {
       // ── Leadership / Community Impact section ─────────────────────────
       leadership: {
-        eyebrow: "LEADERSHIP COMMAND / COMMUNITY IMPACT",
-        recordsLabel: "04 / IMPACT RECORDS",
+        eyebrow: "LEADERSHIP / COMMUNITY IMPACT",
         headingBefore: "Leadership built through communities, programs, and",
         headingAccent: "scale",
         headingAfter: ".",
         intro:
           "From founding student initiatives to managing large-scale technical programs, these records capture leadership through measurable participation, structured operations, and community growth.",
-        currentCommand: "CURRENT COMMAND",
-        currentAppointment: "CURRENT APPOINTMENT",
+        currentCommand: "CURRENT ROLE",
         currentAria: (role: string, org: string) =>
           `Current command appointment: ${role}, ${org}`,
         tuwaiq: {
@@ -201,8 +204,8 @@ export const impact = {
           role: "Co-Founder & Vice President",
         },
         flagship: {
-          channel: "FLAGSHIP DEPLOYMENT / PROJECT MANAGEMENT",
-          coord: "PROJECT MGMT · 01",
+          channel: "PROJECT MANAGEMENT",
+          coord: "",
           org: "Google Developer Groups On Campus UJ",
           shorthand: "GDGoC UJ",
           role: "Project Management Lead",
@@ -219,10 +222,10 @@ export const impact = {
         },
         operations: {
           prehack: {
-            channel: "COMMUNITY OPERATIONS / 01",
-            coord: "COMMUNITY OPS · 01",
+            channel: "TECH COMMUNITY / 01",
+            coord: "",
             org: "PreHack",
-            role: "Admin & Voice Host",
+            role: "Moderator & Voice Host",
             period: "05/2024 – Present",
             metrics: {
               hackwave: "Hackwave Participants",
@@ -234,8 +237,8 @@ export const impact = {
             tags: ["Hosting", "Event Operations", "Tech Community", "Bootcamps"],
           },
           droneclub: {
-            channel: "COMMUNITY OPERATIONS / 02",
-            coord: "STUDENT LEAD · 02",
+            channel: "STUDENT LEADERSHIP / 02",
+            coord: "",
             org: "University of Jeddah",
             role: "Vice Leader — Drone Club",
             period: "03/2024 – Present",
@@ -252,16 +255,15 @@ export const impact = {
       },
       // ── Experience / Mission Deployment Log section ───────────────────
       experience: {
-        eyebrow: "MISSION LOG / APPLIED EXPERIENCE",
-        recordsLabel: "03 / MISSION RECORDS",
+        eyebrow: "APPLIED EXPERIENCE",
         headingLine1Before: "Applied work, ",
         headingLine1Accent: "deployed",
         headingLine2: "in real environments.",
         intro:
           "Applied experience across product management, robotics engineering, and education leadership — measured by outcome.",
-        logLabel: "LOG",
+        logLabel: "",
         completed: "COMPLETED",
-        verifiedOutcome: "VERIFIED OUTCOME",
+        verifiedOutcome: "OUTCOMES",
         recordAria: (index: string, role: string, org: string, period: string) =>
           `Mission log ${index}: ${role} at ${org}, ${period}`,
         missions: {
@@ -275,9 +277,14 @@ export const impact = {
             outcomes: {
               users: "USERS RESEARCHED",
               benchmarks: "MARKET BENCHMARKS",
-              useCases: "PRIORITY USE CASES",
+              useCases: "USE CASES",
             },
-            tags: ["User Research", "Product Development", "Data Analysis", "Market Benchmarks"],
+            tags: [
+              "User Research",
+              "Product Development",
+              "Data Analysis",
+              "Market Benchmarks",
+            ],
           },
           smartmethod: {
             role: "Robotics Engineering Intern",
@@ -306,14 +313,18 @@ export const impact = {
               teachers: "TEACHERS COORDINATED",
               growth: "ENROLLMENT GROWTH",
             },
-            tags: ["Program Direction", "Team Coordination", "Education", "Performance Tracking"],
+            tags: [
+              "Program Direction",
+              "Team Coordination",
+              "Education",
+              "Performance Tracking",
+            ],
           },
         },
       },
       // ── Official Presence & Talent (recognition) section ──────────────
       recognition: {
         eyebrow: "OFFICIAL PRESENCE & TALENT",
-        recordsLabel: "05 / PRESENCE RECORDS",
         headingBefore: "Official presence and ",
         headingAccent: "documented",
         headingAfter: " talent.",
@@ -321,7 +332,7 @@ export const impact = {
           "Hosting official University of Jeddah platforms, membership in the gifted-talent track, and sustained volunteering — impact beyond technical work, into community and stage.",
         presenter: {
           channel: "OFFICIAL PRESENCE / 01",
-          coord: "OFFICIAL · 01",
+          coord: "",
           title: "Official Presenter",
           org: "University of Jeddah Events",
           metricLabel: "OFFICIAL EVENTS",
@@ -332,10 +343,15 @@ export const impact = {
             "Dr. Manal Faqih Scientific Chair for Studies on Substance Use, Addiction & Rehabilitation",
             "First International Forum for Talent in University Education",
           ],
-          tags: ["Official Hosting", "University of Jeddah", "Stage Presence", "Public Engagement"],
+          tags: [
+            "Official Hosting",
+            "University of Jeddah",
+            "Stage Presence",
+            "Public Engagement",
+          ],
         },
         talent: {
-          coord: "TALENT · 02",
+          coord: "",
           title: "Talented Student — University of Jeddah",
           org: "Talent Attraction & Gifted Care Dept.",
           description:
@@ -343,7 +359,7 @@ export const impact = {
           tags: ["Talent", "University of Jeddah", "Gifted Care", "Student Excellence"],
         },
         volunteer: {
-          coord: "VOLUNTEER · 03",
+          coord: "",
           title: "Volunteer Hours",
           metricLabel: "VOLUNTEER HOURS",
           description:
