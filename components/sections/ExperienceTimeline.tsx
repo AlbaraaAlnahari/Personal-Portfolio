@@ -182,7 +182,7 @@ function MissionRecord({
       {!isLast && (
         <span
           aria-hidden="true"
-          className="absolute left-[18px] sm:left-5 top-6 w-px h-full transition-all duration-300"
+          className="absolute start-[18px] sm:start-5 top-6 w-px h-full transition-all duration-300"
           style={{
             background: active
               ? `linear-gradient(to bottom, rgba(${rgb},0.85), rgba(${rgb},0.25))`
@@ -194,7 +194,7 @@ function MissionRecord({
       {/* Mission anchor node — framed index ("terminal port") on the spine */}
       <span
         aria-hidden="true"
-        className="absolute left-0 top-1 z-10 grid place-items-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border font-mono text-sm font-bold transition-all duration-300"
+        className="absolute start-0 top-1 z-10 grid place-items-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border font-mono text-sm font-bold transition-all duration-300"
         style={{
           borderColor: active ? `rgba(${rgb},0.85)` : `rgba(${rgb},0.4)`,
           background: active ? `rgba(${rgb},0.16)` : `rgba(${rgb},0.08)`,
@@ -213,7 +213,7 @@ function MissionRecord({
         onMouseLeave={() => setActive(false)}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        className="ie-focus relative ml-[2.75rem] sm:ml-[3.75rem] md:ml-[4.5rem] rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-3 sm:p-5 md:p-5 transition-all duration-300 outline-none"
+        className="ie-focus relative ms-[2.75rem] sm:ms-[3.75rem] md:ms-[4.5rem] rounded-2xl border bg-background-primary/40 t-warm-surface backdrop-blur-md p-3 sm:p-5 md:p-5 transition-all duration-300 outline-none"
         style={{
           borderColor: active ? `rgba(${rgb},0.42)` : `rgba(${rgb},0.2)`,
           boxShadow: active
@@ -224,7 +224,7 @@ function MissionRecord({
         {/* Domain edge accent */}
         <span
           aria-hidden="true"
-          className="absolute left-0 top-5 bottom-5 w-[2px] rounded-full transition-all duration-300"
+          className="absolute start-0 top-5 bottom-5 w-[2px] rounded-full transition-all duration-300"
           style={{
             background: active
               ? `linear-gradient(to bottom, rgba(${rgb},0.9), rgba(${rgb},0.3))`

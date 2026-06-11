@@ -28,8 +28,8 @@ export const PAGE_META = {
       en: "About Albaraa - Albaraa Alnahari",
     },
     description: {
-      ar: "نبذة عن البراء النهاري؛ طالب هندسة برمجيات يصنع منتجات وتجارب رقمية تجمع بين الذكاء الاصطناعي، التفكير المنتج، والقيادة التقنية.",
-      en: "Learn about Albaraa Alnahari, a software engineering student building digital products shaped by AI, product thinking, and technical leadership.",
+      ar: "نبذة عن البراء عبدالباري النهاري؛ طالب هندسة برمجيات يصنع منتجات وتجارب رقمية تجمع بين الذكاء الاصطناعي، التفكير المنتج، والقيادة التقنية.",
+      en: "Learn about Albaraa Abdulbari Alnahari, a software engineering student building digital products shaped by AI, product thinking, and technical leadership.",
     },
   },
   "/work": {

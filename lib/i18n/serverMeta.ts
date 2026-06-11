@@ -7,20 +7,21 @@ import { PAGE_META, type PageRoute } from "./pageMeta";
  * Final site identity / SEO constants.
  *
  * SITE_URL is the canonical origin used by metadataBase, canonical/og URLs, and
- * JSON-LD. Set to the real domain albaraa.sa, matching the brand OG image (which
- * renders "albaraa.sa"). Change here in one place if the origin ever moves.
+ * JSON-LD. Set to the official domain albaraa-alnahari.sa. Change here in one
+ * place if the origin ever moves.
  */
-export const SITE_URL = "https://albaraa.sa";
+export const SITE_URL = "https://albaraa-alnahari.sa";
 export const SITE_NAME = "Albaraa Alnahari Space";
 
 /**
- * Final, approved 1200×630 social/OG preview image — the albaraa.sa brand
- * portrait card (logo + portrait + name + role). Doubles as the structured-data
- * Person image. Served from public/images/final/ and returns 200.
+ * Final 1200×630 social/OG preview image — the brand portrait card (logo +
+ * portrait + name + role), rendering the official albaraa-alnahari.sa domain.
+ * Doubles as the structured-data Person image. Served from public/images/final/
+ * and returns 200.
  */
-export const OG_IMAGE = "/images/final/profile_pic_albaraa_sa.png";
+export const OG_IMAGE = "/images/final/profile_pic_albaraa_alnahari_sa_clean.png";
 /** Person/profile image used in structured data (same brand portrait card). */
-export const PROFILE_IMAGE = "/images/final/profile_pic_albaraa_sa.png";
+export const PROFILE_IMAGE = "/images/final/profile_pic_albaraa_alnahari_sa_clean.png";
 
 /**
  * Full localized metadata for a route — title, description, canonical, and the

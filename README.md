@@ -13,13 +13,13 @@ A bilingual personal portfolio and digital space for Albaraa Alnahari — showca
 
 ---
 
-![Albaraa Alnahari Space Preview](public/images/final/profile_pic_albaraa_sa.png)
+![Albaraa Alnahari Space Preview](public/images/final/profile_pic_albaraa_alnahari_sa_clean.png)
 
 ---
 
 ## Links
 
-- **Live site:** https://albaraa.sa
+- **Live site:** https://albaraa-alnahari.sa
 - **Repository:** https://github.com/AlbaraaAlnahari/Personal-Portfolio
 
 ## Overview
@@ -119,7 +119,7 @@ Designed to deploy on **Vercel**:
 
 1. Connect the GitHub repository to a Vercel project (Next.js is auto-detected).
 2. Set the environment variables (`RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`) in the Vercel project settings.
-3. Add the custom domain **albaraa.sa**.
+3. Add the custom domain **albaraa-alnahari.sa**.
 4. Verify DNS and SSL for the domain in Vercel.
 5. Deploy.
 
@@ -138,7 +138,7 @@ The project was reviewed during final QA for responsive behavior, accessibility 
 
 ## Contact
 
-- **Website:** https://albaraa.sa
+- **Website:** https://albaraa-alnahari.sa
 - **Email:** albaraa.a.alnahari@gmail.com
 - **LinkedIn:** https://www.linkedin.com/in/albaraa-alnahari
 - **GitHub:** https://github.com/AlbaraaAlnahari

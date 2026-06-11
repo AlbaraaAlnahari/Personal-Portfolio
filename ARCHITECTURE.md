@@ -382,7 +382,7 @@ Floating particles:
 og:title, og:description, og:image
 og:type: website
 og:locale: en_US
-og:url: https://albaraa.sa
+og:url: https://albaraa-alnahari.sa
 ```
 
 ### Twitter Card

@@ -14,6 +14,7 @@ import {
 } from "@/lib/i18n/serverMeta";
 import { FaviconThemeSync } from "@/components/environment/FaviconThemeSync";
 import { DocumentTitleSync } from "@/components/environment/DocumentTitleSync";
+import { ScrollReset } from "@/components/environment/ScrollReset";
 
 // Default/home metadata = the hybrid Arabic/English brand identity, localized
 // from the `albaraa-language` cookie (Arabic when absent). Home is a client
@@ -29,7 +30,13 @@ export async function generateMetadata(): Promise<Metadata> {
     ...base,
     keywords: [
       "Albaraa Alnahari",
+      "Albaraa Abdulbari Alnahari",
+      "Albaraa",
       "البراء النهاري",
+      "البراء عبدالباري النهاري",
+      "البراء",
+      "Albaraa Alnahari Space",
+      "مساحة البراء النهاري",
       "software engineering",
       "AI products",
       "product thinking",
@@ -72,8 +79,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const dir = dirFor(lang);
 
   // Structured data (JSON-LD): Person + WebSite. Absolute URLs use SITE_URL
-  // (the canonical origin, albaraa.sa). Helps search engines understand the
-  // brand identity and improves rich-result eligibility.
+  // (the canonical origin, albaraa-alnahari.sa). Helps search engines understand
+  // the brand identity and improves rich-result eligibility.
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -83,6 +90,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         name: "Albaraa Alnahari",
         alternateName: [
           "البراء النهاري",
+          "البراء عبدالباري النهاري",
+          "البراء",
+          "Albaraa Abdulbari Alnahari",
+          "Albaraa",
           "Albaraa Alnahari Space",
           "مساحة البراء النهاري",
         ],
@@ -101,16 +112,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         name: SITE_NAME,
-        alternateName: ["مساحة البراء النهاري", "Albaraa Alnahari", "البراء النهاري"],
+        alternateName: [
+          "مساحة البراء النهاري",
+          "مساحة البراء",
+          "Albaraa Alnahari",
+          "Albaraa Space",
+          "البراء النهاري",
+        ],
         url: SITE_URL,
-        inLanguage: ["ar", "en"],
+        inLanguage: ["ar-SA", "en-US"],
         publisher: { "@id": `${SITE_URL}/#person` },
       },
     ],
   };
 
   return (
-    <html lang={lang} dir={dir} suppressHydrationWarning>
+    <html lang={lang} dir={dir} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -161,9 +178,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             above), so there is no flash or hydration mismatch. */}
         <LanguageProvider initialLang={lang}>
           {/* Tab favicon follows the active theme; tab title follows the active
-              language. Both are headless (render null) and touch no visible UI. */}
+              language; scroll resets to the true top on every route change.
+              All headless (render null) and touch no visible UI. */}
           <FaviconThemeSync />
           <DocumentTitleSync />
+          <ScrollReset />
 
           {/* Navigation */}
           <Navigation />
